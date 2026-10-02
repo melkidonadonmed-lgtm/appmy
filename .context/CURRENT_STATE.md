@@ -4,34 +4,27 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Filtragem Regional de Esqueleto Concluída (Crânio, Coluna, Tórax, Membros, Pelve) e Erradicação de Fantasmas Procedurais
+**Fase Atual**: Validação Pré-Entrega Concluída: Exploded View 100% Funcional (Dispersão Radial Inteligente), Isolamento Total das Sidebars (Layout Flex 3 Colunas Sem Sobreposição) e Interatividade Pura
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Erradicação Total dos Fantasmas Procedurais**:
-  - Ajustada a condição booleana de montagem em `AnatomicalAtlasScene.tsx`: quando `viewType === 'realistic'`, todas as cenas sintéticas legadas (`CardiovascularScene`, `RespiratoryScene`, `DigestiveScene`, `NeurologyScene`) são 100% omitidas, eliminando as esferas e tubos gigantes que vazavam no chão nas capturas do usuário.
-- **Filtragem por Regiões Anatômicas do Esqueleto (`activeRegion`)**:
-  - Implementado seletor regional no motor 3D (`RealBodyAtlas.tsx`) e na barra lateral (`AnatomicalSidebar.tsx`):
-    - `cranium`: Isola os 40 ossos craniofaciais e centraliza o crânio no meio do viewport com zoom cirúrgico na altura dos olhos.
-    - `spine`: Isola as vértebras cervicais, torácicas, lombares e sacro.
-    - `thorax`: Isola as costelas e esterno.
-    - `upper_limb`: Isola cintura escapular e membros superiores.
-    - `pelvis`: Isola os ossos do quadril e sacro.
-    - `lower_limb`: Isola fêmur, tíbia, fíbula e pés.
-    - `all`: Exibe o esqueleto humano completo de 335 ossos.
-- **Suporte ao Sistema Muscular Real Z-Anatomy**:
-  - Integrado `public/models/anatomy/muscular_male.glb` (1.388 músculos reais) no `RealBodyAtlas.tsx`, eliminando a tela preta ao selecionar Músculos.
-- **Destaque Visual Aprimorado e Pin 3D**:
-  - As peças selecionadas ganham brilho emissivo ciano e Pin 3D flutuante de alto contraste com nome em Português e Terminologia Anatomica oficial (TA2 em latim).
-- **Documentação de Arquitetura Salva**:
-  - Gerado `.context/arquitetura_atlas_z_anatomy_v1.md` seguindo a skill canônica `organizador-fluxo-arvore-arquivos`.
+- **Estação Cirúrgica em 3 Colunas Desacopladas (Sem Sobreposição)**:
+  - `AnatomyTreePanel.tsx` (Esquerda - 300px): Navegador taxonômico TA2 com busca, expansão e checkboxes de visibilidade.
+  - `SceneCanvas.tsx` / `RealBodyAtlas.tsx` (Centro - flex: 1): Viewport Three.js perfeitamente centralizado, com `OrientationGizmo` (ViewCube) desobstruído no canto superior direito e `QuickPresetsBar` no rodapé.
+  - `AnatomicalSidebar.tsx` (Direita - 340px): Dossiê Clínico priorizado no topo quando há peça selecionada, ou Ferramentas de Dissecção Global (Sistemas, Regiões, Layer Peeling, Exploded View 0-100%) quando nenhum nó está selecionado. Colapsável independentemente via `sidebarCollapsed`.
+- **Exploded View em 100% de Amplitude Real ("O 100")**:
+  - Implementado vetor de dispersão radial inteligente para 100% das malhas do corpo humano, garantindo que mesmo malhas viscerais ou musculares sem anotação explícita explodam suavemente de forma centrífuga.
+  - Magnitude de explosão elevada de 0.35 para 0.95 (e 1.4 no crânio), proporcionando separação anatômica cristalina ao atingir 100%.
+- **Priorização do Esqueleto e Controle de Camadas Miológicas**:
+  - `activeSystem: 'skeletal'` e `layerPeelingLevel: 0` definidos como estado padrão, garantindo que o usuário visualize os 335 ossos brancos/marfim sem massas musculares opacas cobrindo o modelo.
+  - `layerPeelingLevel` conectado no `RealBodyAtlas.tsx`: Nível 0 (músculos ocultos), Nível 1 (músculos translúcidos 35%), Nível 2 (músculos 75%), Nível 3 (músculos 100% sólidos).
 - **Quality Gate Validado**:
-  - 88 testes unitários aprovados em 16 suítes Vitest (`ExitCode 0`).
+  - 113 testes unitários aprovados em 20 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` compilado com sucesso em 5.58s (`ExitCode 0`).
-  - `workspace_index.json` reindexado com 113 arquivos mapeados.
+  - `npm run build` compilado com sucesso em 10.00s (`ExitCode 0`).
+  - `workspace_index.json` reindexado com 129 arquivos mapeados.
 
 ---
 
@@ -44,5 +37,5 @@
 
 ## 3. Próximo Ponto de Entrada
 
-- **Interpolação de Câmera (Smooth OrbitControls Target)**:
-  - Animar o foco de câmera para centralizar suavemente no osso clicado.
+- **Persistência de Bookmarks Customizados**:
+  - Salvar no LocalStorage estados de dissecção personalizados definidos pelo usuário para retorno imediato.

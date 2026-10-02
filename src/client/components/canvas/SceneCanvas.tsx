@@ -1,5 +1,6 @@
 import { Suspense, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Center, Environment } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { AnatomicalAtlasScene, ActiveAnatomicalSystem, AnyAnatomicalNode, AnatomicalRegion } from './AnatomicalAtlasScene.tsx';
@@ -7,6 +8,7 @@ import { DissectionController } from './DissectionController.tsx';
 import { TelemetryCollector } from '../telemetry/TelemetryOverlay.tsx';
 import { SkullDivision } from '../../../shared/constants/cranium.ts';
 import { DissectionState } from '../../../shared/types/dissection.ts';
+import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 
 interface SceneCanvasProps {
   viewType: 'exploded' | 'realistic';
@@ -22,6 +24,41 @@ interface SceneCanvasProps {
   layerPeelingLevel: number;
   dissection: DissectionState;
   onTelemetryUpdate: (data: { fps: number; triangles: number; drawCalls: number }) => void;
+}
+
+/**
+ * Anima suavemente o ponto focal (target) do OrbitControls quando uma nova
+ * estrutura for selecionada na árvore ou no viewport 3D.
+ */
+function SmoothCameraController({
+  controlsRef,
+}: {
+  controlsRef: React.RefObject<OrbitControlsImpl | null>;
+}) {
+  const cameraFocusTarget = useAnatomyStore((s) => s.cameraFocusTarget);
+  const cameraPositionTarget = useAnatomyStore((s) => s.cameraPositionTarget);
+
+  useFrame(({ camera }) => {
+    if (controlsRef.current && cameraFocusTarget) {
+      const [tx, ty, tz] = cameraFocusTarget;
+      const targetVec = controlsRef.current.target;
+
+      targetVec.x = THREE.MathUtils.lerp(targetVec.x, tx, 0.08);
+      targetVec.y = THREE.MathUtils.lerp(targetVec.y, ty, 0.08);
+      targetVec.z = THREE.MathUtils.lerp(targetVec.z, tz, 0.08);
+
+      controlsRef.current.update();
+    }
+
+    if (cameraPositionTarget) {
+      const [px, py, pz] = cameraPositionTarget;
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.08);
+      camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.08);
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.08);
+    }
+  });
+
+  return null;
 }
 
 export function SceneCanvas({
@@ -101,7 +138,7 @@ export function SceneCanvas({
           position={[0, -1.8, 0]}
         />
 
-        {/* Controles de Câmera */}
+        {/* Controles de Câmera e Foco Suave Automático */}
         <OrbitControls
           ref={controlsRef}
           makeDefault
@@ -111,6 +148,7 @@ export function SceneCanvas({
           maxDistance={12}
           maxPolarAngle={Math.PI / 1.8}
         />
+        <SmoothCameraController controlsRef={controlsRef} />
       </Canvas>
     </div>
   );

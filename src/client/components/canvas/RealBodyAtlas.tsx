@@ -4,11 +4,13 @@ import { useFrame } from '@react-three/fiber';
 import { useGLTF, Html } from '@react-three/drei';
 import {
   Z_ANATOMY_BY_NODE,
+  Z_ANATOMY_BY_ID,
   ZAnatomyItem,
 } from '../../../shared/constants/zAnatomyCatalog.ts';
 import { AnyAnatomicalNode, GeneralAnatomicalNode, AnatomicalRegion } from './AnatomicalAtlasScene.tsx';
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
+import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 
 // Configuração do decodificador Draco local offline em public/draco/gltf/
 const DRACO_DECODER_PATH = '/draco/gltf/';
@@ -21,6 +23,7 @@ export interface RealBodyAtlasProps {
   isolatedOnly: boolean;
   activeSystem: string;
   activeRegion?: AnatomicalRegion;
+  layerPeelingLevel?: number;
   realSkullOpacity?: number;
   visualMode?: DissectionVisualMode;
 }
@@ -161,6 +164,16 @@ function RealSystemModel({
   const clonedScene = useMemo(() => scene.clone(true), [scene]);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
+  const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
+  const storeHoveredNode = useAnatomyStore((s) => s.hoveredNodeId);
+  const storeSelectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
+  const setStoreHoveredNode = useAnatomyStore((s) => s.setHoveredNode);
+  const setStoreSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
+  const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
+
+  const effectiveSelectedId = selectedNodeId || storeSelectedNodeId;
+  const effectiveHovered = storeHoveredNode || hoveredNode;
+
   // Mapeia todas as malhas e guarda suas posições anatômicas de descanso
   const animNodes = useMemo(() => {
     const list: MeshAnimData[] = [];
@@ -172,13 +185,27 @@ function RealSystemModel({
         mesh.receiveShadow = true;
 
         const item = Z_ANATOMY_BY_NODE[mesh.name] || null;
-        const ev = item?.explosionVector
-          ? new THREE.Vector3(item.explosionVector.x, item.explosionVector.y, item.explosionVector.z)
-          : new THREE.Vector3(0, 0, 0);
+        let ev: THREE.Vector3;
+
+        if (
+          item?.explosionVector &&
+          (item.explosionVector.x !== 0 || item.explosionVector.y !== 0 || item.explosionVector.z !== 0)
+        ) {
+          ev = new THREE.Vector3(item.explosionVector.x, item.explosionVector.y, item.explosionVector.z);
+        } else {
+          // Dispersão anatômica radial inteligente a partir das coordenadas espaciais da peça
+          const posX = mesh.position.x;
+          const posY = mesh.position.y;
+          const posZ = mesh.position.z;
+          const dirX = Math.abs(posX) > 0.01 ? Math.sign(posX) * (Math.abs(posX) * 2.2 + 0.4) : (Math.random() - 0.5) * 0.4;
+          const dirY = posY > 1.35 ? (posY - 1.35) * 1.6 + 0.3 : posY < 0.45 ? -0.4 : 0;
+          const dirZ = Math.abs(posZ) > 0.01 ? Math.sign(posZ) * (Math.abs(posZ) * 2.0 + 0.35) : 0.4;
+          ev = new THREE.Vector3(dirX, dirY, dirZ);
+        }
 
         // Se for crânio, ampliar deslocamento relativo para visualização clara de suturas
-        const isCranial = item?.path.some((p) => p.toLowerCase().includes('cranium')) || false;
-        const mult = isCranial ? 1.8 : 1.0;
+        const isCranial = item?.path?.some((p) => p.toLowerCase().includes('cranium')) || mesh.position.y > 1.4;
+        const mult = isCranial ? 2.2 : 1.2;
 
         const mat = new THREE.MeshStandardMaterial({
           color: new THREE.Color(defaultColor),
@@ -206,14 +233,17 @@ function RealSystemModel({
   // Atualização em tempo real das cores, visibilidade por região, seleção e hover
   useEffect(() => {
     animNodes.forEach(({ mesh, item, baseMaterial }) => {
-      const isSelected = selectedNodeId === item?.id || selectedNodeId === mesh.name;
-      const isHovered = hoveredNode === mesh.name;
-      const isHiddenIsolated = isolatedOnly && selectedNodeId !== null && !isSelected;
+      const isSelected = effectiveSelectedId === item?.id || effectiveSelectedId === mesh.name;
+      const isHovered = effectiveHovered === mesh.name || (item?.id && effectiveHovered === item.id);
+      const isHiddenIsolated = isolatedOnly && effectiveSelectedId !== null && !isSelected;
 
       // Filtragem por região (ex: só ver o crânio, só a coluna, etc.)
       const isRegionVisible = systemName === 'skeletal' ? isNodeInRegion(item, mesh.name, activeRegion) : true;
 
-      mesh.visible = isRegionVisible && !isHiddenIsolated;
+      // Filtragem por checkboxes do Outliner
+      const isHiddenByTree = hiddenNodeIds.has(item?.id || '') || hiddenNodeIds.has(mesh.name);
+
+      mesh.visible = isRegionVisible && !isHiddenIsolated && !isHiddenByTree;
 
       if (!mesh.visible) return;
 
@@ -226,16 +256,16 @@ function RealSystemModel({
       } else if (isHovered) {
         baseMaterial.color.set('#bae6fd');
         baseMaterial.emissive.set('#0369a1');
-        baseMaterial.emissiveIntensity = 0.45;
+        baseMaterial.emissiveIntensity = 0.55;
       } else {
         baseMaterial.color.set(defaultColor);
         baseMaterial.emissive.set('#000000');
         baseMaterial.emissiveIntensity = 0;
-        baseMaterial.transparent = isXRay || (ghostMode && selectedNodeId !== null) || opacity < 0.99;
-        baseMaterial.opacity = isXRay ? 0.22 : ghostMode && selectedNodeId !== null ? 0.12 : opacity;
+        baseMaterial.transparent = isXRay || (ghostMode && effectiveSelectedId !== null) || opacity < 0.99;
+        baseMaterial.opacity = isXRay ? 0.22 : ghostMode && effectiveSelectedId !== null ? 0.12 : opacity;
       }
     });
-  }, [animNodes, selectedNodeId, hoveredNode, ghostMode, isolatedOnly, activeRegion, systemName, opacity, isXRay, defaultColor]);
+  }, [animNodes, effectiveSelectedId, effectiveHovered, ghostMode, isolatedOnly, activeRegion, systemName, opacity, isXRay, defaultColor, hiddenNodeIds]);
 
   // Animação da Exploded View no loop Three.js useFrame
   useFrame(() => {
@@ -255,11 +285,20 @@ function RealSystemModel({
     }
   });
 
-  // Localiza o item atualmente selecionado para renderizar o Pin 3D com precisão
+  // Localiza o item atualmente selecionado para renderizar o Pin 3D e guiar a câmera
   const selectedMeshItem = useMemo(() => {
-    if (!selectedNodeId) return null;
-    return animNodes.find((d) => d.item?.id === selectedNodeId || d.mesh.name === selectedNodeId) || null;
-  }, [selectedNodeId, animNodes]);
+    if (!effectiveSelectedId) return null;
+    return animNodes.find((d) => d.item?.id === effectiveSelectedId || d.mesh.name === effectiveSelectedId) || null;
+  }, [effectiveSelectedId, animNodes]);
+
+  // Centralização suave de câmera ao selecionar a peça
+  useEffect(() => {
+    if (selectedMeshItem && selectedMeshItem.mesh.visible) {
+      const box = new THREE.Box3().setFromObject(selectedMeshItem.mesh);
+      const center = box.getCenter(new THREE.Vector3());
+      setCameraFocusTarget([center.x, center.y, center.z]);
+    }
+  }, [selectedMeshItem, setCameraFocusTarget]);
 
   return (
     <group>
@@ -268,27 +307,41 @@ function RealSystemModel({
         onPointerOver={(e: { stopPropagation: () => void; object: THREE.Object3D }) => {
           e.stopPropagation();
           setHoveredNode(e.object.name);
+          setStoreHoveredNode(e.object.name);
         }}
         onPointerOut={(e: { stopPropagation: () => void }) => {
           e.stopPropagation();
           setHoveredNode(null);
+          setStoreHoveredNode(null);
         }}
         onClick={(e: { stopPropagation: () => void; object: THREE.Object3D }) => {
           e.stopPropagation();
           const target = animNodes.find((d) => d.mesh === e.object);
           if (target && target.item) {
             const node = toAnatomicalNode(target.item);
-            onSelectNode(selectedNodeId === node.id ? null : node);
+            const nextVal = effectiveSelectedId === node.id ? null : node;
+            setStoreSelectedNode(nextVal ? node.id : null);
+            onSelectNode(nextVal);
           } else if (e.object.name) {
+            const cleanName = e.object.name
+              .replace(/[()]/g, '')
+              .replace(/\.[lr]$/i, (m) => (m.toLowerCase() === '.l' ? ' (Esquerdo)' : ' (Direito)'));
             const fallbackNode: GeneralAnatomicalNode = {
               id: `za:${e.object.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-              namePtBr: e.object.name,
+              namePtBr: cleanName,
               nameLatin: e.object.name,
-              chapter: 2,
-              systemName: systemName,
+              chapter: systemName === 'muscular' ? 3 : 2,
+              systemName: systemName === 'muscular' ? 'Sistema Muscular (Miologia)' : systemName,
               meshName: e.object.name,
+              clinicalData: {
+                origin: `Estrutura integrante do ${systemName}`,
+                insertion: 'Plano anatômico dissecado',
+                clinicalSignificance: `Módulo anatômico Z-Anatomy: ${cleanName}.`,
+              },
             };
-            onSelectNode(selectedNodeId === fallbackNode.id ? null : fallbackNode);
+            const nextVal = effectiveSelectedId === fallbackNode.id ? null : fallbackNode;
+            setStoreSelectedNode(nextVal ? fallbackNode.id : null);
+            onSelectNode(nextVal);
           }
         }}
       />
@@ -351,11 +404,27 @@ export function RealBodyAtlas({
   isolatedOnly,
   activeSystem,
   activeRegion = 'all',
+  layerPeelingLevel = 0,
   realSkullOpacity = 1.0,
   visualMode = 'solid',
 }: RealBodyAtlasProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const isXRay = visualMode === 'xray';
+  const storeModules = useAnatomyStore((s) => s.modules);
+  const storeSelectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
+
+  // Sincroniza a seleção na aplicação quando o nó for clicado na árvore
+  useEffect(() => {
+    if (storeSelectedNodeId && storeSelectedNodeId !== selectedNodeId) {
+      const item = Z_ANATOMY_BY_ID[storeSelectedNodeId] || Z_ANATOMY_BY_NODE[storeSelectedNodeId];
+      if (item) {
+        onSelectNode(toAnatomicalNode(item));
+      }
+    }
+  }, [storeSelectedNodeId, selectedNodeId, onSelectNode]);
+
+  const effectiveExplosion = explosionProgress > 0 ? explosionProgress : storeModules.explodedProgress;
+  const effectiveOpacity = realSkullOpacity !== 1.0 ? realSkullOpacity : storeModules.solidOpacity;
+  const effectiveXRay = visualMode === 'xray' || storeModules.xRayMode;
 
   // Coleta de Lixo WebGL Determinística ao desmontar
   useEffect(() => {
@@ -369,7 +438,16 @@ export function RealBodyAtlas({
 
   // Determina quais sistemas devem ser exibidos
   const showSkeletal = activeSystem === 'skeletal' || activeSystem === 'all';
-  const showMuscular = activeSystem === 'muscular' || activeSystem === 'all';
+  // O sistema muscular só aparece quando selecionado explicitamente ou quando 'all' com camada > 0
+  const showMuscular = activeSystem === 'muscular' || (activeSystem === 'all' && layerPeelingLevel > 0);
+  const muscularOpacity = activeSystem === 'muscular'
+    ? effectiveOpacity
+    : layerPeelingLevel === 1
+    ? 0.35
+    : layerPeelingLevel === 2
+    ? 0.75
+    : effectiveOpacity;
+
   const showRespiratory = activeSystem === 'respiratory' || activeSystem === 'all';
   const showCardiovascular = activeSystem === 'cardiovascular' || activeSystem === 'all';
   const showDigestive = activeSystem === 'digestive' || activeSystem === 'all';
@@ -424,15 +502,15 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/skeletal_male.glb"
           systemName="skeletal"
           defaultColor="#f4ede2" // Marfim cortical PBR
-          explosionProgress={explosionProgress}
+          explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={realSkullOpacity}
-          isXRay={isXRay}
-          magnitude={activeRegion === 'cranium' ? 0.45 : 0.35}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={activeRegion === 'cranium' ? 1.4 : 0.95}
         />
       )}
 
@@ -442,15 +520,15 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/muscular_male.glb"
           systemName="muscular"
           defaultColor="#b91c1c" // Tom avermelhado muscular realista
-          explosionProgress={explosionProgress}
+          explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={realSkullOpacity}
-          isXRay={isXRay}
-          magnitude={0.25}
+          opacity={muscularOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.85}
         />
       )}
 
@@ -460,15 +538,15 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/respiratory_male.glb"
           systemName="respiratory"
           defaultColor="#67e8f9" // Tom ciano pulmonar
-          explosionProgress={explosionProgress}
+          explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={realSkullOpacity}
-          isXRay={isXRay}
-          magnitude={0.25}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.8}
         />
       )}
 
@@ -478,15 +556,15 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/cardiovascular_male.glb"
           systemName="cardiovascular"
           defaultColor="#ef4444" // Vermelho vascular cardíaco
-          explosionProgress={explosionProgress}
+          explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={realSkullOpacity}
-          isXRay={isXRay}
-          magnitude={0.25}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.8}
         />
       )}
 
@@ -496,15 +574,15 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/digestive_male.glb"
           systemName="digestive"
           defaultColor="#f59e0b" // Âmbar digestório
-          explosionProgress={explosionProgress}
+          explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={realSkullOpacity}
-          isXRay={isXRay}
-          magnitude={0.25}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.8}
         />
       )}
 
@@ -514,15 +592,15 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/nervous_male.glb"
           systemName="nervous"
           defaultColor="#eab308" // Amarelo neuro
-          explosionProgress={explosionProgress}
+          explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={realSkullOpacity}
-          isXRay={isXRay}
-          magnitude={0.3}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.85}
         />
       )}
 
@@ -532,15 +610,15 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/renal_male.glb"
           systemName="urinary"
           defaultColor="#a855f7" // Púrpura urológico
-          explosionProgress={explosionProgress}
+          explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={realSkullOpacity}
-          isXRay={isXRay}
-          magnitude={0.25}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.8}
         />
       )}
     </group>

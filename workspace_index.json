@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T08:09:06.125617+00:00",
+  "timestamp_utc": "2026-10-02T10:36:16.229980+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -45,13 +45,13 @@
     },
     {
       "path": "package-lock.json",
-      "size_bytes": 258431,
-      "hash": "ecc82e2e4bd1"
+      "size_bytes": 258461,
+      "hash": "96173a1e22c2"
     },
     {
       "path": "package.json",
-      "size_bytes": 1383,
-      "hash": "5b6074538bed"
+      "size_bytes": 1409,
+      "hash": "840c1c7262fc"
     },
     {
       "path": "README.md",
@@ -75,8 +75,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 14197,
-      "hash": "7c96a0a58fcd"
+      "size_bytes": 16149,
+      "hash": "d60189e6d5a2"
     },
     {
       "path": "public/draco/draco_decoder.js",
@@ -250,13 +250,13 @@
     },
     {
       "path": "src/client/App.tsx",
-      "size_bytes": 13839,
-      "hash": "3d1bedccb51a"
+      "size_bytes": 17736,
+      "hash": "99eb1a3a6d74"
     },
     {
       "path": "src/client/index.css",
-      "size_bytes": 15546,
-      "hash": "9f515708430d"
+      "size_bytes": 35192,
+      "hash": "a94e632aa00c"
     },
     {
       "path": "src/client/main.tsx",
@@ -265,8 +265,8 @@
     },
     {
       "path": "src/client/components/canvas/AnatomicalAtlasScene.tsx",
-      "size_bytes": 19842,
-      "hash": "39e92192a305"
+      "size_bytes": 19890,
+      "hash": "d45cea879174"
     },
     {
       "path": "src/client/components/canvas/CardiovascularScene.tsx",
@@ -314,9 +314,14 @@
       "hash": "c35d863100f7"
     },
     {
+      "path": "src/client/components/canvas/OrientationGizmo.tsx",
+      "size_bytes": 3722,
+      "hash": "986cb99d09b4"
+    },
+    {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 19332,
-      "hash": "bde91a933b93"
+      "size_bytes": 23415,
+      "hash": "b13f66d539c4"
     },
     {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
@@ -335,8 +340,8 @@
     },
     {
       "path": "src/client/components/canvas/SceneCanvas.tsx",
-      "size_bytes": 3872,
-      "hash": "565e7357350c"
+      "size_bytes": 5242,
+      "hash": "3461bdb3a961"
     },
     {
       "path": "src/client/components/canvas/SensoryScene.tsx",
@@ -350,18 +355,48 @@
     },
     {
       "path": "src/client/components/telemetry/TelemetryOverlay.tsx",
-      "size_bytes": 2852,
-      "hash": "973ad4ad67a2"
+      "size_bytes": 3063,
+      "hash": "82a8df744f00"
     },
     {
       "path": "src/client/components/ui/AnatomicalSidebar.tsx",
-      "size_bytes": 34022,
-      "hash": "0de59157b5c4"
+      "size_bytes": 24142,
+      "hash": "bb049a436c28"
     },
     {
       "path": "src/client/components/ui/DissectionToolbar.tsx",
       "size_bytes": 7924,
       "hash": "f04b76558f71"
+    },
+    {
+      "path": "src/client/components/ui/QuickPresetsBar.tsx",
+      "size_bytes": 3296,
+      "hash": "f4f67e42f317"
+    },
+    {
+      "path": "src/client/components/ui/tree/AnatomyTreePanel.tsx",
+      "size_bytes": 6284,
+      "hash": "be9106be5312"
+    },
+    {
+      "path": "src/client/components/ui/tree/ModuleLayersSection.tsx",
+      "size_bytes": 6275,
+      "hash": "f9894b8ac6da"
+    },
+    {
+      "path": "src/client/components/ui/tree/TreeGroup.tsx",
+      "size_bytes": 5529,
+      "hash": "f91fd8a2e1bb"
+    },
+    {
+      "path": "src/client/components/ui/tree/TreeItem.tsx",
+      "size_bytes": 4049,
+      "hash": "894a16169f29"
+    },
+    {
+      "path": "src/client/hooks/useAnatomicalHotkeys.ts",
+      "size_bytes": 2958,
+      "hash": "c670f8b01e2c"
     },
     {
       "path": "src/client/hooks/useAnatomicalModel.ts",
@@ -382,6 +417,11 @@
       "path": "src/client/lib/webgl-gc.ts",
       "size_bytes": 3392,
       "hash": "1a2b7235ad9e"
+    },
+    {
+      "path": "src/client/stores/useAnatomyStore.ts",
+      "size_bytes": 9642,
+      "hash": "a27417ada18a"
     },
     {
       "path": "src/server/app.ts",
@@ -469,6 +509,11 @@
       "hash": "0dd47ea085e1"
     },
     {
+      "path": "src/shared/constants/taxonomicMetadata.ts",
+      "size_bytes": 3097,
+      "hash": "bade1c4adf4b"
+    },
+    {
       "path": "src/shared/constants/urinary.ts",
       "size_bytes": 9580,
       "hash": "c54101b54713"
@@ -487,6 +532,21 @@
       "path": "src/shared/types/dissection.ts",
       "size_bytes": 869,
       "hash": "9b11f7865ece"
+    },
+    {
+      "path": "src/shared/types/taxonomicTree.ts",
+      "size_bytes": 517,
+      "hash": "7bb2a2f6118e"
+    },
+    {
+      "path": "src/shared/utils/buildTaxonomicTree.ts",
+      "size_bytes": 8086,
+      "hash": "8d5740876100"
+    },
+    {
+      "path": "src/shared/utils/filterTaxonomicTree.ts",
+      "size_bytes": 2379,
+      "hash": "0ac52f39f37f"
     },
     {
       "path": "tests/anatomy.test.ts",
@@ -534,6 +594,16 @@
       "hash": "9c5380cd8e1d"
     },
     {
+      "path": "tests/outliner-a11y.test.ts",
+      "size_bytes": 3902,
+      "hash": "b8bfe43cf64f"
+    },
+    {
+      "path": "tests/pre-delivery-validation.test.ts",
+      "size_bytes": 5782,
+      "hash": "94ef65949134"
+    },
+    {
       "path": "tests/reproductive.test.ts",
       "size_bytes": 3458,
       "hash": "9ae06acce8cf"
@@ -552,6 +622,16 @@
       "path": "tests/server.test.ts",
       "size_bytes": 3373,
       "hash": "a3314533ef03"
+    },
+    {
+      "path": "tests/state-sync.test.ts",
+      "size_bytes": 4262,
+      "hash": "183aa21264d6"
+    },
+    {
+      "path": "tests/taxonomic-tree.test.ts",
+      "size_bytes": 5419,
+      "hash": "8e6a6729a9ff"
     },
     {
       "path": "tests/urinary.test.ts",

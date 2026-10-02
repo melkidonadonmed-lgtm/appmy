@@ -339,6 +339,7 @@ export function AnatomicalAtlasScene({
           isolatedOnly={isolatedOnly}
           activeSystem={activeSystem}
           activeRegion={activeRegion}
+          layerPeelingLevel={layerPeelingLevel}
           realSkullOpacity={realSkullOpacity}
           visualMode={visualMode}
         />

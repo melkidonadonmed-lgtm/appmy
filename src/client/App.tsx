@@ -8,15 +8,23 @@ import {
   CheckCircle2,
   AlertCircle,
   ShieldCheck,
-  RotateCcw
+  RotateCcw,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { SceneCanvas } from './components/canvas/SceneCanvas.tsx';
 import { AnatomicalSidebar } from './components/ui/AnatomicalSidebar.tsx';
 import { DissectionToolbar } from './components/ui/DissectionToolbar.tsx';
 import { TelemetryOverlay } from './components/telemetry/TelemetryOverlay.tsx';
-import { SkullDivision } from '../shared/constants/cranium.ts';
-import { ActiveAnatomicalSystem, AnyAnatomicalNode, AnatomicalRegion } from './components/canvas/AnatomicalAtlasScene.tsx';
-import { DissectionState } from '../shared/types/dissection.ts';
+import { AnatomyTreePanel } from './components/ui/tree/AnatomyTreePanel.tsx';
+import { OrientationGizmo } from './components/canvas/OrientationGizmo.tsx';
+import { QuickPresetsBar } from './components/ui/QuickPresetsBar.tsx';
+import { useAnatomicalHotkeys } from './hooks/useAnatomicalHotkeys.ts';
+import { useAnatomyStore } from './stores/useAnatomyStore.ts';
+import { SkullDivision, CRANIUM_22_NODES } from '../shared/constants/cranium.ts';
+import { CRANIOFACIAL_MUSCLES } from '../shared/constants/myology.ts';
+import { AnyAnatomicalNode } from './components/canvas/AnatomicalAtlasScene.tsx';
+import { Z_ANATOMY_BY_ID, Z_ANATOMY_BY_NODE } from '../shared/constants/zAnatomyCatalog.ts';
 import { isFirebaseConfigured } from './lib/firebase.ts';
 
 interface HealthStatus {
@@ -31,27 +39,43 @@ interface HealthStatus {
 export default function App() {
   const [activeMode, setActiveMode] = useState<'3d-atlas' | 'infra-dashboard'>('3d-atlas');
 
-  // Estado do Motor 3D (Z-Anatomy: Esqueleto de 335 Ossos + Órgãos Reais)
-  const [viewType, setViewType] = useState<'exploded' | 'realistic'>('realistic');
-  const [realSkullOpacity, setRealSkullOpacity] = useState<number>(1.0);
-  const [activeDivision, setActiveDivision] = useState<SkullDivision | 'all'>('all');
-  const [activeSystem, setActiveSystem] = useState<ActiveAnatomicalSystem>('all');
-  const [activeRegion, setActiveRegion] = useState<AnatomicalRegion>('all');
-  const [layerPeelingLevel, setLayerPeelingLevel] = useState<number>(2);
-  const [explosionProgress, setExplosionProgress] = useState<number>(0.0);
-  const [selectedNode, setSelectedNode] = useState<AnyAnatomicalNode | null>(null);
-  const [ghostMode, setGhostMode] = useState<boolean>(false);
-  const [isolatedOnly, setIsolatedOnly] = useState<boolean>(false);
-  const [telemetry, setTelemetry] = useState({ fps: 60, triangles: 0, drawCalls: 0 });
+  // Ativa os atalhos de teclado clínicos (H, I, F, Esc, R)
+  useAnatomicalHotkeys();
 
-  // Estado da Ferramenta de Dissecção Tomográfica Multiplanar (MPR)
-  const [dissection, setDissection] = useState<DissectionState>({
-    visualMode: 'solid',
-    activePlane: 'sagittal',
-    offset: 0.0,
-    inverted: false,
-    showHelper: true,
-  });
+  // Estado Centralizado Reativo no Zustand (Single Source of Truth)
+  const viewType = useAnatomyStore((s) => s.viewType);
+  const setViewType = useAnatomyStore((s) => s.setViewType);
+
+  const solidOpacity = useAnatomyStore((s) => s.solidOpacity);
+  const setSolidOpacity = useAnatomyStore((s) => s.setSolidOpacity);
+
+  const explosionProgress = useAnatomyStore((s) => s.explosionProgress);
+  const setExplosionProgress = useAnatomyStore((s) => s.setExplosionProgress);
+
+  const activeDivision = useAnatomyStore((s) => (s.activeRegion === 'cranium' ? 'all' : 'all')) as SkullDivision | 'all';
+  const activeSystem = useAnatomyStore((s) => s.activeSystem);
+  const setActiveSystem = useAnatomyStore((s) => s.setActiveSystem);
+
+  const activeRegion = useAnatomyStore((s) => s.activeRegion);
+  const setActiveRegion = useAnatomyStore((s) => s.setActiveRegion);
+
+  const layerPeelingLevel = useAnatomyStore((s) => s.layerPeelingLevel);
+  const setLayerPeelingLevel = useAnatomyStore((s) => s.setLayerPeelingLevel);
+
+  const ghostMode = useAnatomyStore((s) => s.ghostMode);
+  const toggleGhostMode = useAnatomyStore((s) => s.toggleGhostMode);
+
+  const isolatedOnly = useAnatomyStore((s) => s.isolatedOnly);
+  const toggleIsolatedOnly = useAnatomyStore((s) => s.toggleIsolatedOnly);
+
+  const dissection = useAnatomyStore((s) => s.dissection);
+  const setDissection = useAnatomyStore((s) => s.setDissection);
+
+  const storeSelectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
+  const setStoreSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
+
+  const [selectedNode, setSelectedNode] = useState<AnyAnatomicalNode | null>(null);
+  const [telemetry, setTelemetry] = useState({ fps: 60, triangles: 0, drawCalls: 0 });
 
   // Estado da Infraestrutura (Cloud Run / Firebase)
   const [health, setHealth] = useState<HealthStatus | null>(null);
@@ -76,9 +100,51 @@ export default function App() {
     }
   };
 
+  // Sincroniza a Ficha Clínica quando uma estrutura for selecionada ou desselecionada
   useEffect(() => {
-    fetchHealth();
-  }, []);
+    if (!storeSelectedNodeId) {
+      setSelectedNode(null);
+      return;
+    }
+
+    const item = Z_ANATOMY_BY_ID[storeSelectedNodeId] || Z_ANATOMY_BY_NODE[storeSelectedNodeId];
+    if (item) {
+      setSelectedNode({
+        id: item.id,
+        fmaId: item.fmaId,
+        namePtBr: item.namePtBr,
+        nameLatin: item.nameLatin,
+        chapter: item.chapter as 2 | 4 | 5 | 7 | 8 | 9,
+        systemName: item.system === 'skeletal' ? 'Sistema Esquelético (Osteologia)' : item.system,
+        meshName: item.node,
+        parentId: item.path.length > 0 ? item.path[item.path.length - 1] : undefined,
+        colorHex: item.system === 'skeletal' ? '#f4ede2' : '#38bdf8',
+        explosionVector: item.explosionVector,
+        clinicalData: {
+          origin: item.path.join(' > '),
+          insertion: `Estrutura integrante do ${item.system}`,
+          clinicalSignificance: `Peça anatômica real escaneada do catálogo médico Z-Anatomy (Terminologia Anatomica TA2: ${item.nameLatin}).`,
+        },
+      } as AnyAnatomicalNode);
+      return;
+    }
+
+    // Suporte aos nós de crânio e miologia da vista explodida
+    const craniumNode = CRANIUM_22_NODES.find(
+      (c) => c.id === storeSelectedNodeId || c.meshName === storeSelectedNodeId
+    );
+    if (craniumNode) {
+      setSelectedNode(craniumNode);
+      return;
+    }
+
+    const muscleNode = CRANIOFACIAL_MUSCLES.find(
+      (m) => m.id === storeSelectedNodeId || m.meshName === storeSelectedNodeId
+    );
+    if (muscleNode) {
+      setSelectedNode(muscleNode);
+    }
+  }, [storeSelectedNodeId]);
 
   return (
     <div className="app-shell">
@@ -116,25 +182,28 @@ export default function App() {
               {viewType === 'realistic' && (
                 <div className="mode-toggle-group" style={{ borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '0.5rem' }}>
                   <button
-                    className={`mode-btn ${realSkullOpacity === 1.0 ? 'active' : ''}`}
-                    onClick={() => setRealSkullOpacity(1.0)}
+                    className={`mode-btn ${solidOpacity === 1.0 ? 'active' : ''}`}
+                    onClick={() => setSolidOpacity(1.0)}
                     title="Densidade 100% - Totalmente Sólido e Vívido"
                   >
-                    🦴 Sólido (100%)
+                    <CheckCircle2 size={13} aria-hidden="true" />
+                    <span>Sólido (100%)</span>
                   </button>
                   <button
-                    className={`mode-btn ${realSkullOpacity === 0.35 ? 'active' : ''}`}
-                    onClick={() => setRealSkullOpacity(0.35)}
+                    className={`mode-btn ${solidOpacity === 0.35 ? 'active' : ''}`}
+                    onClick={() => setSolidOpacity(0.35)}
                     title="Densidade 35% - Translúcido (Permite visualizar estruturas internas)"
                   >
-                    ✨ Translúcido
+                    <Eye size={13} aria-hidden="true" />
+                    <span>Translúcido (35%)</span>
                   </button>
                   <button
-                    className={`mode-btn ${realSkullOpacity === 0.0 ? 'active' : ''}`}
-                    onClick={() => setRealSkullOpacity(0.0)}
+                    className={`mode-btn ${solidOpacity === 0.0 ? 'active' : ''}`}
+                    onClick={() => setSolidOpacity(0.0)}
                     title="Ocultar Esqueleto para foco nas estruturas internas"
                   >
-                    👁️ Oculto
+                    <EyeOff size={13} aria-hidden="true" />
+                    <span>Oculto (0%)</span>
                   </button>
                 </div>
               )}
@@ -161,49 +230,75 @@ export default function App() {
       {/* Conteúdo Principal */}
       <main className="main-viewport">
         {activeMode === '3d-atlas' ? (
-          <>
-            {/* Medidor flutuante de Telemetria (FPS / VRAM) */}
-            <TelemetryOverlay
-              fps={telemetry.fps}
-              triangles={telemetry.triangles}
-              drawCalls={telemetry.drawCalls}
+          <div className="atlas-workspace">
+            {/* 1. Painel Outliner Ancorado à Esquerda */}
+            <AnatomyTreePanel
+              onToggleMpr={() =>
+                setDissection((prev) => ({
+                  ...prev,
+                  showHelper: !prev.showHelper,
+                }))
+              }
+              mprActive={dissection.showHelper}
             />
 
-            {/* Barra Clínica Flutuante de Dissecção Tomográfica Multiplanar (MPR) */}
-            <DissectionToolbar
-              dissection={dissection}
-              onChange={setDissection}
-            />
+            {/* 2. Área Central: Viewport 3D + HUD Flutuante */}
+            <div className="viewport-center-area">
+              {/* Medidor flutuante de Telemetria (FPS / VRAM) */}
+              <TelemetryOverlay
+                fps={telemetry.fps}
+                triangles={telemetry.triangles}
+                drawCalls={telemetry.drawCalls}
+              />
 
-            {/* Canvas 3D WebGL */}
-            <SceneCanvas
-              viewType={viewType}
-              realSkullOpacity={realSkullOpacity}
-              explosionProgress={explosionProgress}
-              selectedNode={selectedNode}
-              onSelectNode={setSelectedNode}
-              ghostMode={ghostMode}
-              isolatedOnly={isolatedOnly}
-              activeDivision={activeDivision}
-              activeSystem={activeSystem}
-              activeRegion={activeRegion}
-              layerPeelingLevel={layerPeelingLevel}
-              dissection={dissection}
-              onTelemetryUpdate={setTelemetry}
-            />
+              {/* Barra Clínica Flutuante de Dissecção Tomográfica Multiplanar (MPR) */}
+              <DissectionToolbar
+                dissection={dissection}
+                onChange={setDissection}
+              />
 
-            {/* Painel Lateral / Bottom Sheet Adaptativo */}
+              {/* Cubo de Orientação 3D (ViewCube com Projeções Anatômicas Canônicas) */}
+              <OrientationGizmo />
+
+              {/* Barra Inferior de Presets Anatômicos Canônicos Rápidos */}
+              <QuickPresetsBar />
+
+              {/* Canvas 3D WebGL */}
+              <SceneCanvas
+                viewType={viewType}
+                realSkullOpacity={solidOpacity}
+                explosionProgress={explosionProgress}
+                selectedNode={selectedNode}
+                onSelectNode={(node) => {
+                  setSelectedNode(node);
+                  setStoreSelectedNode(node?.id || null);
+                }}
+                ghostMode={ghostMode}
+                isolatedOnly={isolatedOnly}
+                activeDivision={activeDivision}
+                activeSystem={activeSystem}
+                activeRegion={activeRegion}
+                layerPeelingLevel={layerPeelingLevel}
+                dissection={dissection}
+                onTelemetryUpdate={setTelemetry}
+              />
+            </div>
+
+            {/* 3. Painel Lateral Direito: Dossiê Clínico Adaptativo */}
             <AnatomicalSidebar
               explosionProgress={explosionProgress}
               onExplosionChange={setExplosionProgress}
               selectedNode={selectedNode}
-              onSelectNode={setSelectedNode}
+              onSelectNode={(node) => {
+                setSelectedNode(node);
+                setStoreSelectedNode(node?.id || null);
+              }}
               ghostMode={ghostMode}
-              onToggleGhost={() => setGhostMode(!ghostMode)}
+              onToggleGhost={toggleGhostMode}
               isolatedOnly={isolatedOnly}
-              onToggleIsolated={() => setIsolatedOnly(!isolatedOnly)}
+              onToggleIsolated={toggleIsolatedOnly}
               activeDivision={activeDivision}
-              onDivisionChange={setActiveDivision}
+              onDivisionChange={() => {}}
               activeSystem={activeSystem}
               onSystemChange={setActiveSystem}
               activeRegion={activeRegion}
@@ -211,7 +306,7 @@ export default function App() {
               layerPeelingLevel={layerPeelingLevel}
               onLayerPeelingChange={setLayerPeelingLevel}
             />
-          </>
+          </div>
         ) : (
           /* Dashboard de Infraestrutura e Prontidão de Nuvem */
           <div className="dashboard-view">

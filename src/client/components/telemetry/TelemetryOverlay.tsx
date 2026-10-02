@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 import { Activity, Cpu, Layers } from 'lucide-react';
+import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 
 export function TelemetryCollector({ onUpdate }: { onUpdate: (data: { fps: number; triangles: number; drawCalls: number }) => void }) {
   const { gl } = useThree();
@@ -41,16 +42,17 @@ export const TelemetryOverlay: React.FC<{
   triangles: number;
   drawCalls: number;
 }> = ({ fps, triangles, drawCalls }) => {
-  const [visible, setVisible] = useState(true);
+  const storeVisible = useAnatomyStore((s) => s.modules.telemetryVisible);
+  const setModuleState = useAnatomyStore((s) => s.setModuleState);
 
-  if (!visible) {
+  if (!storeVisible) {
     return (
       <button
-        onClick={() => setVisible(true)}
+        onClick={() => setModuleState({ telemetryVisible: true })}
         className="telemetry-toggle-btn"
         title="Exibir Telemetria 3D"
       >
-        <Activity size={14} /> 60 FPS
+        <Activity size={14} /> {fps} FPS
       </button>
     );
   }
@@ -65,7 +67,7 @@ export const TelemetryOverlay: React.FC<{
           <span style={{ fontWeight: 600, color: fpsColor }}>{fps} FPS</span>
         </div>
         <button
-          onClick={() => setVisible(false)}
+          onClick={() => setModuleState({ telemetryVisible: false })}
           className="telemetry-close"
           title="Minimizar"
         >
