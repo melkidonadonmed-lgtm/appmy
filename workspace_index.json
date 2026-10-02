@@ -1,0 +1,137 @@
+{
+  "timestamp_utc": "2026-10-02T03:19:42.040169+00:00",
+  "project": "appmy",
+  "description": "Base Fullstack Cloud Run & Firebase",
+  "files": [
+    {
+      "path": "deploy-cloudrun.ps1",
+      "size_bytes": 2507,
+      "hash": "9e79f2083250"
+    },
+    {
+      "path": "deploy-cloudrun.sh",
+      "size_bytes": 1283,
+      "hash": "7c29600199e1"
+    },
+    {
+      "path": "Dockerfile",
+      "size_bytes": 1459,
+      "hash": "20ac06e59dc3"
+    },
+    {
+      "path": "firebase.json",
+      "size_bytes": 715,
+      "hash": "176a5bd18682"
+    },
+    {
+      "path": "firestore.indexes.json",
+      "size_bytes": 44,
+      "hash": "6742255415c3"
+    },
+    {
+      "path": "firestore.rules",
+      "size_bytes": 619,
+      "hash": "a4a482b665e2"
+    },
+    {
+      "path": "generate_workspace_index.py",
+      "size_bytes": 1630,
+      "hash": "c5b3b23d79a3"
+    },
+    {
+      "path": "index.html",
+      "size_bytes": 683,
+      "hash": "0ffd28a5de4e"
+    },
+    {
+      "path": "package-lock.json",
+      "size_bytes": 233030,
+      "hash": "73d4c064b20a"
+    },
+    {
+      "path": "package.json",
+      "size_bytes": 1254,
+      "hash": "2cc27a93dcf4"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 8731,
+      "hash": "dca43e56f961"
+    },
+    {
+      "path": "tsconfig.json",
+      "size_bytes": 588,
+      "hash": "0ecae23e7655"
+    },
+    {
+      "path": "tsconfig.server.json",
+      "size_bytes": 427,
+      "hash": "03204820eff9"
+    },
+    {
+      "path": "vite.config.ts",
+      "size_bytes": 365,
+      "hash": "1bec13a57ce9"
+    },
+    {
+      "path": "workspace_index.json",
+      "size_bytes": 2897,
+      "hash": "f7d6d3497c0a"
+    },
+    {
+      "path": "src/client/App.tsx",
+      "size_bytes": 6710,
+      "hash": "53caa8447edc"
+    },
+    {
+      "path": "src/client/index.css",
+      "size_bytes": 3122,
+      "hash": "2b7e27b5d9ac"
+    },
+    {
+      "path": "src/client/main.tsx",
+      "size_bytes": 240,
+      "hash": "288e42c2a3bf"
+    },
+    {
+      "path": "src/client/lib/firebase.ts",
+      "size_bytes": 1284,
+      "hash": "f235834e5d21"
+    },
+    {
+      "path": "src/server/app.ts",
+      "size_bytes": 2315,
+      "hash": "8cf4828f8eca"
+    },
+    {
+      "path": "src/server/index.ts",
+      "size_bytes": 1212,
+      "hash": "ab38798645c7"
+    },
+    {
+      "path": "src/server/config/firebase-admin.ts",
+      "size_bytes": 633,
+      "hash": "69f131c21ce0"
+    },
+    {
+      "path": "src/server/middleware/auth.ts",
+      "size_bytes": 1194,
+      "hash": "91ac78d601d1"
+    },
+    {
+      "path": "src/server/routes/api.ts",
+      "size_bytes": 1416,
+      "hash": "e635750e23fa"
+    },
+    {
+      "path": "src/server/routes/health.ts",
+      "size_bytes": 670,
+      "hash": "3ff4b73d44c9"
+    },
+    {
+      "path": "tests/server.test.ts",
+      "size_bytes": 3373,
+      "hash": "a3314533ef03"
+    }
+  ]
+}

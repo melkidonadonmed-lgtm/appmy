@@ -1,0 +1,34 @@
+name: CI - Integracao Continua
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    name: Validacao, Tipagem e Testes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Instalar Dependencias
+        run: npm ci
+
+      - name: Checagem de Tipagem Estrita (Client + Server)
+        run: npm run typecheck
+
+      - name: Executar Testes Unitarios Deterministicos
+        run: npm test
+
+      - name: Validar Build de Producao
+        run: npm run build
