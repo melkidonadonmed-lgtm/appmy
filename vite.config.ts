@@ -5,7 +5,16 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist/client',
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
+          'react-vendor': ['react', 'react-dom'],
+          'icons-vendor': ['lucide-react']
+        }
+      }
+    }
   },
   server: {
     port: 3000,

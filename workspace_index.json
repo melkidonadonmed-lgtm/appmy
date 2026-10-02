@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T03:19:42.040169+00:00",
+  "timestamp_utc": "2026-10-02T05:47:44.127587+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -45,13 +45,13 @@
     },
     {
       "path": "package-lock.json",
-      "size_bytes": 233030,
-      "hash": "73d4c064b20a"
+      "size_bytes": 258431,
+      "hash": "ecc82e2e4bd1"
     },
     {
       "path": "package.json",
-      "size_bytes": 1254,
-      "hash": "2cc27a93dcf4"
+      "size_bytes": 1383,
+      "hash": "5b6074538bed"
     },
     {
       "path": "README.md",
@@ -60,8 +60,8 @@
     },
     {
       "path": "tsconfig.json",
-      "size_bytes": 588,
-      "hash": "0ecae23e7655"
+      "size_bytes": 602,
+      "hash": "c7dc5aa0e969"
     },
     {
       "path": "tsconfig.server.json",
@@ -70,23 +70,28 @@
     },
     {
       "path": "vite.config.ts",
-      "size_bytes": 365,
-      "hash": "1bec13a57ce9"
+      "size_bytes": 624,
+      "hash": "5acdd16bdea8"
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 2897,
-      "hash": "f7d6d3497c0a"
+      "size_bytes": 7955,
+      "hash": "a9fd8d7194de"
+    },
+    {
+      "path": "public/models/cranium.glb",
+      "size_bytes": 8959044,
+      "hash": "339eafce3fdb"
     },
     {
       "path": "src/client/App.tsx",
-      "size_bytes": 6710,
-      "hash": "53caa8447edc"
+      "size_bytes": 12046,
+      "hash": "2cd31e53bce4"
     },
     {
       "path": "src/client/index.css",
-      "size_bytes": 3122,
-      "hash": "2b7e27b5d9ac"
+      "size_bytes": 15546,
+      "hash": "9f515708430d"
     },
     {
       "path": "src/client/main.tsx",
@@ -94,9 +99,109 @@
       "hash": "288e42c2a3bf"
     },
     {
+      "path": "src/client/components/canvas/CardiovascularScene.tsx",
+      "size_bytes": 10051,
+      "hash": "e90039c81e53"
+    },
+    {
+      "path": "src/client/components/canvas/DigestiveScene.tsx",
+      "size_bytes": 18645,
+      "hash": "ad4a4f0fc377"
+    },
+    {
+      "path": "src/client/components/canvas/DissectionController.tsx",
+      "size_bytes": 1494,
+      "hash": "6030d390820c"
+    },
+    {
+      "path": "src/client/components/canvas/DissectionPlaneHelper.tsx",
+      "size_bytes": 2258,
+      "hash": "48d6464e2b2a"
+    },
+    {
+      "path": "src/client/components/canvas/EndocrineScene.tsx",
+      "size_bytes": 13018,
+      "hash": "1d4a12cdf174"
+    },
+    {
+      "path": "src/client/components/canvas/ExplodedCraniumScene.tsx",
+      "size_bytes": 16582,
+      "hash": "8ecc4f631700"
+    },
+    {
+      "path": "src/client/components/canvas/LymphaticScene.tsx",
+      "size_bytes": 11025,
+      "hash": "f75809698326"
+    },
+    {
+      "path": "src/client/components/canvas/MuscleMeshItem.tsx",
+      "size_bytes": 5639,
+      "hash": "ce32d825c3ba"
+    },
+    {
+      "path": "src/client/components/canvas/NeurologyScene.tsx",
+      "size_bytes": 6226,
+      "hash": "c35d863100f7"
+    },
+    {
+      "path": "src/client/components/canvas/RealCraniumModel.tsx",
+      "size_bytes": 2881,
+      "hash": "72b5d2c64fa0"
+    },
+    {
+      "path": "src/client/components/canvas/ReproductiveScene.tsx",
+      "size_bytes": 15630,
+      "hash": "c382e9f52266"
+    },
+    {
+      "path": "src/client/components/canvas/RespiratoryScene.tsx",
+      "size_bytes": 13315,
+      "hash": "be63bb393537"
+    },
+    {
+      "path": "src/client/components/canvas/SceneCanvas.tsx",
+      "size_bytes": 4529,
+      "hash": "fe909f83acaf"
+    },
+    {
+      "path": "src/client/components/canvas/UrinaryScene.tsx",
+      "size_bytes": 14238,
+      "hash": "736e688d90d4"
+    },
+    {
+      "path": "src/client/components/telemetry/TelemetryOverlay.tsx",
+      "size_bytes": 2852,
+      "hash": "973ad4ad67a2"
+    },
+    {
+      "path": "src/client/components/ui/AnatomicalSidebar.tsx",
+      "size_bytes": 26421,
+      "hash": "dfbe2e7a2efc"
+    },
+    {
+      "path": "src/client/components/ui/DissectionToolbar.tsx",
+      "size_bytes": 7924,
+      "hash": "f04b76558f71"
+    },
+    {
+      "path": "src/client/hooks/useAnatomicalModel.ts",
+      "size_bytes": 3629,
+      "hash": "891ae9127c72"
+    },
+    {
+      "path": "src/client/lib/dissection-planes.ts",
+      "size_bytes": 7537,
+      "hash": "24da5e8088f0"
+    },
+    {
       "path": "src/client/lib/firebase.ts",
       "size_bytes": 1284,
       "hash": "f235834e5d21"
+    },
+    {
+      "path": "src/client/lib/webgl-gc.ts",
+      "size_bytes": 3392,
+      "hash": "1a2b7235ad9e"
     },
     {
       "path": "src/server/app.ts",
@@ -129,9 +234,129 @@
       "hash": "3ff4b73d44c9"
     },
     {
+      "path": "src/shared/constants/cardiovascular.ts",
+      "size_bytes": 8815,
+      "hash": "aa71419ae675"
+    },
+    {
+      "path": "src/shared/constants/cranium.ts",
+      "size_bytes": 16785,
+      "hash": "372e4b7ba7bd"
+    },
+    {
+      "path": "src/shared/constants/digestive.ts",
+      "size_bytes": 9488,
+      "hash": "9b1aae813d94"
+    },
+    {
+      "path": "src/shared/constants/endocrine.ts",
+      "size_bytes": 7151,
+      "hash": "52f93b60d6e1"
+    },
+    {
+      "path": "src/shared/constants/lymphatic.ts",
+      "size_bytes": 9741,
+      "hash": "e0affe86ea85"
+    },
+    {
+      "path": "src/shared/constants/myology.ts",
+      "size_bytes": 9587,
+      "hash": "2e06db7082e9"
+    },
+    {
+      "path": "src/shared/constants/neurology.ts",
+      "size_bytes": 11717,
+      "hash": "00a0056ab556"
+    },
+    {
+      "path": "src/shared/constants/reproductive.ts",
+      "size_bytes": 8415,
+      "hash": "2d17ccab3126"
+    },
+    {
+      "path": "src/shared/constants/respiratory.ts",
+      "size_bytes": 10756,
+      "hash": "7d6f85a5816c"
+    },
+    {
+      "path": "src/shared/constants/urinary.ts",
+      "size_bytes": 9580,
+      "hash": "c54101b54713"
+    },
+    {
+      "path": "src/shared/types/anatomy.ts",
+      "size_bytes": 2396,
+      "hash": "1c2b2c56517c"
+    },
+    {
+      "path": "src/shared/types/dissection.ts",
+      "size_bytes": 869,
+      "hash": "9b11f7865ece"
+    },
+    {
+      "path": "tests/anatomy.test.ts",
+      "size_bytes": 2422,
+      "hash": "1caef3866d43"
+    },
+    {
+      "path": "tests/cardiovascular.test.ts",
+      "size_bytes": 3737,
+      "hash": "b4bce84dd5f0"
+    },
+    {
+      "path": "tests/digestive.test.ts",
+      "size_bytes": 4282,
+      "hash": "72c6f447d97b"
+    },
+    {
+      "path": "tests/dissection.test.ts",
+      "size_bytes": 4638,
+      "hash": "db20797e257b"
+    },
+    {
+      "path": "tests/endocrine.test.ts",
+      "size_bytes": 3579,
+      "hash": "0b6ae2e8972d"
+    },
+    {
+      "path": "tests/lymphatic.test.ts",
+      "size_bytes": 3599,
+      "hash": "02dea78b93e3"
+    },
+    {
+      "path": "tests/myology.test.ts",
+      "size_bytes": 2718,
+      "hash": "7a603ac4d6b6"
+    },
+    {
+      "path": "tests/neurology.test.ts",
+      "size_bytes": 3601,
+      "hash": "9c5380cd8e1d"
+    },
+    {
+      "path": "tests/reproductive.test.ts",
+      "size_bytes": 3458,
+      "hash": "9ae06acce8cf"
+    },
+    {
+      "path": "tests/respiratory.test.ts",
+      "size_bytes": 4119,
+      "hash": "5809cce87335"
+    },
+    {
       "path": "tests/server.test.ts",
       "size_bytes": 3373,
       "hash": "a3314533ef03"
+    },
+    {
+      "path": "tests/urinary.test.ts",
+      "size_bytes": 4071,
+      "hash": "bdb1b1212910"
+    },
+    {
+      "path": "tests/webgl-gc.test.ts",
+      "size_bytes": 2405,
+      "hash": "c54a8da78ea5"
     }
   ]
 }

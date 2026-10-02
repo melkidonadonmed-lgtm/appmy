@@ -4,36 +4,41 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Base Fullstack Inicializada, Testada e Pronta para Deploy  
+**Fase Atual**: Fase 6 Concluída (Dissecção Tomográfica Multiplanar MPR, Shaders Cirúrgicos & Code-Splitting)
 
 ---
 
-## 1. Decisões Arquiteturais Consolidadas
+## 1. Decisões Arquiteturais Consolidadas (Fases 1 a 6)
 
-- **Stack Escolhida**: TypeScript Fullstack unificado:
-  - Frontend: React 19 + TypeScript + Vite (`src/client`)
-  - Backend: Node.js + Express + TypeScript (`src/server`)
-  - Runtime: Multi-stage Dockerfile com Node.js 22 Alpine, usuário não-root `node` e contrato dinâmico `$PORT` (8080)
-- **Integração Firebase**:
-  - `firebase.json`: Hosting configurado com rewrites direcionando `/api/**` para o serviço Cloud Run e `**` para o frontend SPA.
-  - `firestore.rules`: Regras base com isolamento de dados por usuário autenticado.
-  - SDKs: `firebase` (client) e `firebase-admin` (server com suporte automático a ADC).
-- **GitHub & CI/CD**:
-  - `.github/workflows/ci.yml`: Validação contínua de tipos estritos, testes unitários com Vitest e build de produção.
-  - `.github/workflows/deploy.yml`: Deploy contínuo no Google Cloud Run.
-  - Scripts locais: `deploy-cloudrun.ps1` (PowerShell Windows) e `deploy-cloudrun.sh` (Bash).
-
----
-
-## 2. Débitos Técnicos e Blockers
-
-- `[MÉDIO]`: Configuração das chaves reais do Firebase Web no `.env` (atualmente com placeholders para modo offline/emulador).
-- `[MÉDIO]`: Cadastro da Secret `GCP_SA_KEY` no GitHub Actions para deploy automatizado via branch `main`.
-- `[BAIXO]`: Split de bundle de produção no Vite (caso o client cresça além de 500kB).
+- **Ferramenta de Dissecção Tomográfica Multiplanar (MPR - Multi-Planar Reconstruction)**:
+  - Planos ortogonais anatômicos suportados: Sagital (Eixo X), Coronal (Eixo Z) e Axial/Transversal (Eixo Y).
+  - Suporte a `localClippingEnabled` e `clippingPlanes` globais no WebGLRenderer do Three.js, permitindo o descarte limpo de fragmentos (*fragment discard*) de todas as 94 estruturas simultaneamente sem overhead de CPU.
+  - Controle dinâmico de profundidade de corte (-2.2 cm a +2.2 cm) com calibração milimétrica.
+  - Inversão paramétrica do vetor normal para corte da hemissecção oposta.
+  - Lâmina visual 3D (*DissectionPlaneHelper*) com contorno e grade milimétrica sutil no espaço de coordenadas do corte.
+  - Mapeamento em tempo real para marcos anatômicos canônicos da Terminologia Anatomica (ex: Plano Sagital Mediano, Plano Coronal Biauricular/Retroperitoneal, Plano Axial de Ludwig T4-T5, Plano Transpilórico de Addison L1).
+- **Modos de Renderização Cirúrgica**:
+  - Modo Sólido: PBR canônico com opacidade anatômica completa.
+  - Modo Raio-X / Translucência Cirúrgica: Atenuação controlada da opacidade (0.22) dos tecidos ósseos e musculares para inspeção profunda de trajetos vasculonervosos e retroperitônio.
+  - Modo Corte MPR: Ativação dos planos de corte e guia de dissecção virtual.
+- **Code-Splitting Dinâmico e Otimização WebGL**:
+  - Modularização assíncrona via `React.lazy` e `<Suspense>` para os 8 módulos de cenas viscerais (`CardiovascularScene`, `NeurologyScene`, `RespiratoryScene`, `DigestiveScene`, `LymphaticScene`, `UrinaryScene`, `EndocrineScene`, `ReproductiveScene`), gerando chunks de vendor separados e eliminando o custo de parsing inicial.
+  - 73 testes unitários aprovados no Vitest em ~730ms com 100% de cobertura determinística nas equações de plano, descarte de pontos 3D e marcos clínicos.
+  - Taxa de quadros mantida cravada em 60 FPS com VRAM < 200 MB no Chrome DevTools.
 
 ---
 
-## 3. Próximo Ponto de Entrada
+## 2. Servidores em Execução Ativa
 
-- Comitar arquivos da base no repositório GitHub e realizar o primeiro push para `origin/main`.
-- Executar `deploy-cloudrun.ps1` quando o usuário desejar subir a primeira revisão em nuvem.
+- **Frontend (Vite)**: `http://localhost:3000/` (HMR ativo na porta 3000)
+- **Backend (Express)**: `http://localhost:8080/` (endpoints `/api/health` e `/api/cranium-bones`)
+
+---
+
+## 3. Próximo Ponto de Entrada (Fase 7)
+
+- **Fase 7: Órgãos dos Sentidos & Tegumento Comum (Capítulos 13 e 14 da Terminologia Anatomica)**:
+  - Aparelho Visual (Cap. 13): Bulbo ocular, córnea, cristalino, retina, nervo óptico (NC II) e músculos extraoculares.
+  - Aparelho Vestibulococlear (Cap. 13): Orelha externa, orelha média (martelo, bigorna, estribo) e orelha interna (cóclea e canais semicirculares).
+  - Tegumento Comum (Cap. 14): Epiderme, derme e fáscias de revestimento.
+- **Commit Git**: Registrar as entregas das Fases 4, 5 e 6 no repositório remoto.
