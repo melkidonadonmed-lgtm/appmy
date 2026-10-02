@@ -94,7 +94,15 @@ export default function App() {
     }
   };
 
-  // Sincroniza a Ficha Clínica quando uma estrutura for selecionada ou desselecionada
+  // Dispara checagem imediata e polling contínuo (10s) quando o dashboard de infraestrutura for aberto
+  useEffect(() => {
+    if (activeMode === 'infra-dashboard') {
+      fetchHealth();
+      const timer = setInterval(fetchHealth, 10000);
+      return () => clearInterval(timer);
+    }
+  }, [activeMode]);
+
   useEffect(() => {
     if (!storeSelectedNodeId) {
       setSelectedNode(null);
