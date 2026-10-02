@@ -3,6 +3,7 @@
 .gitignore
 .github/
 .context/
+gha-creds-*.json
 node_modules/
 dist/
 .env*
