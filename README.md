@@ -167,6 +167,13 @@ npm start
 
 O projeto possui container Docker multi-stage otimizado para a porta dinâmica `$PORT` do Cloud Run.
 
+### Deploy via GitHub Actions
+
+O workflow `.github/workflows/deploy.yml` executa no push para `main` ou manualmente via `workflow_dispatch`.
+Configure o secret de repositório `GCP_SA_KEY` em **Settings → Secrets and variables → Actions** com o JSON da chave de uma conta de serviço autorizada a fazer deploy no projeto.
+A autenticação é obrigatória e ocorre antes da configuração do gcloud; sem esse secret, o workflow falha na etapa de autenticação.
+Os arquivos temporários `gha-creds-*.json` gerados pela autenticação são excluídos do Git, do upload para o Cloud Build e do contexto Docker.
+
 ### Deploy Direto via gcloud CLI
 ```powershell
 gcloud run deploy appmy `

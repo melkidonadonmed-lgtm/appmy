@@ -35,9 +35,8 @@ jobs:
           npm run typecheck
           npm test
 
-      # Autenticação no GCP (aceita Secret GCP_SA_KEY ou Workload Identity)
+      # Autenticação no GCP via Secret GCP_SA_KEY (obrigatório)
       - name: Autenticar no Google Cloud
-        if: env.GCP_SA_KEY != ''
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
