@@ -4,27 +4,24 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Fase 6 Concluída (Dissecção Tomográfica Multiplanar MPR, Shaders Cirúrgicos & Code-Splitting)
+**Fase Atual**: Fase 7 Concluída (Órgãos dos Sentidos & Tegumento Comum - Capítulos 13 e 14) -> Rumo ao Fechamento do Atlas Clínico Integral
 
 ---
 
-## 1. Decisões Arquiteturais Consolidadas (Fases 1 a 6)
+## 1. Decisões Arquiteturais Consolidadas (Fases 1 a 7)
 
-- **Ferramenta de Dissecção Tomográfica Multiplanar (MPR - Multi-Planar Reconstruction)**:
-  - Planos ortogonais anatômicos suportados: Sagital (Eixo X), Coronal (Eixo Z) e Axial/Transversal (Eixo Y).
-  - Suporte a `localClippingEnabled` e `clippingPlanes` globais no WebGLRenderer do Three.js, permitindo o descarte limpo de fragmentos (*fragment discard*) de todas as 94 estruturas simultaneamente sem overhead de CPU.
-  - Controle dinâmico de profundidade de corte (-2.2 cm a +2.2 cm) com calibração milimétrica.
-  - Inversão paramétrica do vetor normal para corte da hemissecção oposta.
-  - Lâmina visual 3D (*DissectionPlaneHelper*) com contorno e grade milimétrica sutil no espaço de coordenadas do corte.
-  - Mapeamento em tempo real para marcos anatômicos canônicos da Terminologia Anatomica (ex: Plano Sagital Mediano, Plano Coronal Biauricular/Retroperitoneal, Plano Axial de Ludwig T4-T5, Plano Transpilórico de Addison L1).
-- **Modos de Renderização Cirúrgica**:
-  - Modo Sólido: PBR canônico com opacidade anatômica completa.
-  - Modo Raio-X / Translucência Cirúrgica: Atenuação controlada da opacidade (0.22) dos tecidos ósseos e musculares para inspeção profunda de trajetos vasculonervosos e retroperitônio.
-  - Modo Corte MPR: Ativação dos planos de corte e guia de dissecção virtual.
-- **Code-Splitting Dinâmico e Otimização WebGL**:
-  - Modularização assíncrona via `React.lazy` e `<Suspense>` para os 8 módulos de cenas viscerais (`CardiovascularScene`, `NeurologyScene`, `RespiratoryScene`, `DigestiveScene`, `LymphaticScene`, `UrinaryScene`, `EndocrineScene`, `ReproductiveScene`), gerando chunks de vendor separados e eliminando o custo de parsing inicial.
-  - 73 testes unitários aprovados no Vitest em ~730ms com 100% de cobertura determinística nas equações de plano, descarte de pontos 3D e marcos clínicos.
-  - Taxa de quadros mantida cravada em 60 FPS com VRAM < 200 MB no Chrome DevTools.
+- **Catálogo de Órgãos dos Sentidos (Capítulo 13 - Terminologia Anatomica e FMA)**:
+  - Aparelho Visual: Bulbos Oculares D/E (`FMA:58296`, `FMA:58297`), Córnea (`FMA:58238`), Cristalino biconvexo (`FMA:58241`), Retina interna (`FMA:58243`), Nervos Ópticos e Quiasma Óptico (`FMA:50862`) e Músculos Extraoculares da Órbita (`FMA:49035`).
+  - Aparelho Vestibulococlear: Cadeia Ossicular da Orelha Média (`FMA:52748` - martelo, bigorna e estribo com relação à otosclerose), Labirinto Ósseo da Orelha Interna (`FMA:60907` - cóclea espiralada e canais semicirculares ortogonais para tonotopia e VPPB) e Nervo Vestibulococlear NC VIII (`FMA:50868`).
+- **Catálogo do Tegumento Comum (Capítulo 14 - Terminologia Anatomica e FMA)**:
+  - Epiderme e Derme Crânio-Facial (`FMA:7163` - inervação trigeminal V1, V2, V3 e linhas de Langer), Gálea Aponeurótica (`FMA:46554` - acrônimo cirúrgico SCALP e área perigosa da cabeça), Pele Nasal e Periorbital (`FMA:70544`) e Tecido Subcutâneo com coxins de Bichat e SMAS (`FMA:9630`).
+  - Integração com o controle de dissecção por `layerPeelingLevel` (Nível 0: Esqueleto, Nível 1: Músc. Profundos, Nível 2: Músc. Superficiais, Nível 3: Pele e Fáscias).
+- **Total de Estruturas e Telemetria WebGL**:
+  - Total de **108 estruturas anatômicas canônicas** unificadas sob ontologia FMA e Terminologia Anatomica internacional.
+  - Suporte completo aos 13 sistemas anatômicos canônicos.
+  - Taxa de quadros fixa a 60 FPS com VRAM < 200 MB no Chrome DevTools.
+  - 83 testes unitários aprovados em 15 suítes no Vitest com exit code 0 em ~800ms.
+  - Modularização dinâmica com 10 chunks assíncronos no Vite com `React.lazy` e `<Suspense>`.
 
 ---
 
@@ -35,10 +32,9 @@
 
 ---
 
-## 3. Próximo Ponto de Entrada (Fase 7)
+## 3. Próximo Ponto de Entrada (Fase 8: Modos de Ensino Clínico & Casos Radiológicos)
 
-- **Fase 7: Órgãos dos Sentidos & Tegumento Comum (Capítulos 13 e 14 da Terminologia Anatomica)**:
-  - Aparelho Visual (Cap. 13): Bulbo ocular, córnea, cristalino, retina, nervo óptico (NC II) e músculos extraoculares.
-  - Aparelho Vestibulococlear (Cap. 13): Orelha externa, orelha média (martelo, bigorna, estribo) e orelha interna (cóclea e canais semicirculares).
-  - Tegumento Comum (Cap. 14): Epiderme, derme e fáscias de revestimento.
-- **Commit Git**: Registrar as entregas das Fases 4, 5 e 6 no repositório remoto.
+- **Fase 8: Quiz Interativo de Identificação Anatômica & Simulações Clínico-Cirúrgicas**:
+  - Modo Quiz / Avaliação Médica: estruturação de casos clínicos com identificação em tempo real no grafo 3D.
+  - Exportação de dados e relatórios de dissecção para PDF médico profissional.
+- **Commit Git**: Criar commit atômico consolidando a Fase 7.

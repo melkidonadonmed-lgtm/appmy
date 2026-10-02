@@ -23,6 +23,8 @@ import { LYMPHATIC_NODES } from '../../../shared/constants/lymphatic.ts';
 import { URINARY_NODES } from '../../../shared/constants/urinary.ts';
 import { ENDOCRINE_NODES } from '../../../shared/constants/endocrine.ts';
 import { REPRODUCTIVE_NODES } from '../../../shared/constants/reproductive.ts';
+import { SENSORY_NODES } from '../../../shared/constants/sensory.ts';
+import { INTEGUMENTARY_NODES } from '../../../shared/constants/integumentary.ts';
 import { ActiveAnatomicalSystem, AnyAnatomicalNode } from '../canvas/ExplodedCraniumScene.tsx';
 
 interface AnatomicalSidebarProps {
@@ -120,6 +122,16 @@ export function AnatomicalSidebar({
     // 10. Sistema Reprodutor (Cap. 10)
     if (activeSystem === 'reproductive' || activeSystem === 'all') {
       list.push(...REPRODUCTIVE_NODES);
+    }
+
+    // 11. Órgãos dos Sentidos (Cap. 13)
+    if (activeSystem === 'sensory' || activeSystem === 'all') {
+      list.push(...SENSORY_NODES);
+    }
+
+    // 12. Sistema Tegumentar (Cap. 14)
+    if (activeSystem === 'integumentary' || activeSystem === 'all') {
+      list.push(...INTEGUMENTARY_NODES);
     }
 
     const q = searchQuery.toLowerCase().trim();
@@ -223,6 +235,18 @@ export function AnatomicalSidebar({
           >
             🧬 Reprodutor (Cap. 10)
           </button>
+          <button
+            className={`btn-tag ${activeSystem === 'sensory' ? 'active' : ''}`}
+            onClick={() => onSystemChange('sensory')}
+          >
+            👁️ Sentidos (Cap. 13)
+          </button>
+          <button
+            className={`btn-tag ${activeSystem === 'integumentary' ? 'active' : ''}`}
+            onClick={() => onSystemChange('integumentary')}
+          >
+            🧴 Tegumento (Cap. 14)
+          </button>
         </div>
 
         {/* Sub-filtro de divisões cranianas */}
@@ -265,7 +289,7 @@ export function AnatomicalSidebar({
             <input
               type="range"
               min="0"
-              max="2"
+              max="3"
               step="1"
               value={layerPeelingLevel}
               onChange={(e) => onLayerPeelingChange(parseInt(e.target.value))}
@@ -279,7 +303,7 @@ export function AnatomicalSidebar({
               className={`btn-tag ${layerPeelingLevel === 0 ? 'active' : ''}`}
               onClick={() => onLayerPeelingChange(0)}
             >
-              0: Oculto
+              0: Esqueleto
             </button>
             <button
               className={`btn-tag ${layerPeelingLevel === 1 ? 'active' : ''}`}
@@ -292,6 +316,12 @@ export function AnatomicalSidebar({
               onClick={() => onLayerPeelingChange(2)}
             >
               2: Superficiais
+            </button>
+            <button
+              className={`btn-tag ${layerPeelingLevel === 3 ? 'active' : ''}`}
+              onClick={() => onLayerPeelingChange(3)}
+            >
+              3: Pele e Fáscias
             </button>
           </div>
         </div>
@@ -609,13 +639,22 @@ export function AnatomicalSidebar({
               } else if (node.chapter === 11) {
                 dotColor = node.colorHex || '#f43f5e';
                 badgeLabel = 'Endócrino';
+              } else if (node.chapter === 13) {
+                dotColor = node.colorHex || '#38bdf8';
+                badgeLabel = ('sensoryType' in node && node.sensoryType === 'visual') ? 'Visão' : 'Audição';
+              } else if (node.chapter === 14) {
+                dotColor = node.colorHex || '#fdba74';
+                badgeLabel = 'Tegumento';
               }
 
               return (
                 <div
                   key={node.id}
                   className={`tree-item ${isSelected ? 'selected' : ''}`}
-                  onClick={() => onSelectNode(isSelected ? null : node)}
+                  onClick={() => {
+                    onSelectNode(isSelected ? null : node);
+                    setActiveTab('details');
+                  }}
                 >
                   <span
                     className="tree-color-dot"

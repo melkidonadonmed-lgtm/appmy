@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T05:47:44.127587+00:00",
+  "timestamp_utc": "2026-10-02T06:01:21.258116+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -75,8 +75,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 7955,
-      "hash": "a9fd8d7194de"
+      "size_bytes": 8742,
+      "hash": "0b1f65cb0c87"
     },
     {
       "path": "public/models/cranium.glb",
@@ -85,8 +85,8 @@
     },
     {
       "path": "src/client/App.tsx",
-      "size_bytes": 12046,
-      "hash": "2cd31e53bce4"
+      "size_bytes": 12043,
+      "hash": "a30b9bf23513"
     },
     {
       "path": "src/client/index.css",
@@ -125,8 +125,13 @@
     },
     {
       "path": "src/client/components/canvas/ExplodedCraniumScene.tsx",
-      "size_bytes": 16582,
-      "hash": "8ecc4f631700"
+      "size_bytes": 18244,
+      "hash": "13ff4920f313"
+    },
+    {
+      "path": "src/client/components/canvas/IntegumentaryScene.tsx",
+      "size_bytes": 8015,
+      "hash": "63f8fec13134"
     },
     {
       "path": "src/client/components/canvas/LymphaticScene.tsx",
@@ -164,6 +169,11 @@
       "hash": "fe909f83acaf"
     },
     {
+      "path": "src/client/components/canvas/SensoryScene.tsx",
+      "size_bytes": 13136,
+      "hash": "9d351db09f75"
+    },
+    {
       "path": "src/client/components/canvas/UrinaryScene.tsx",
       "size_bytes": 14238,
       "hash": "736e688d90d4"
@@ -175,8 +185,8 @@
     },
     {
       "path": "src/client/components/ui/AnatomicalSidebar.tsx",
-      "size_bytes": 26421,
-      "hash": "dfbe2e7a2efc"
+      "size_bytes": 28009,
+      "hash": "ceebf21239c9"
     },
     {
       "path": "src/client/components/ui/DissectionToolbar.tsx",
@@ -254,6 +264,11 @@
       "hash": "52f93b60d6e1"
     },
     {
+      "path": "src/shared/constants/integumentary.ts",
+      "size_bytes": 5205,
+      "hash": "172297045117"
+    },
+    {
       "path": "src/shared/constants/lymphatic.ts",
       "size_bytes": 9741,
       "hash": "e0affe86ea85"
@@ -279,14 +294,19 @@
       "hash": "7d6f85a5816c"
     },
     {
+      "path": "src/shared/constants/sensory.ts",
+      "size_bytes": 11976,
+      "hash": "0dd47ea085e1"
+    },
+    {
       "path": "src/shared/constants/urinary.ts",
       "size_bytes": 9580,
       "hash": "c54101b54713"
     },
     {
       "path": "src/shared/types/anatomy.ts",
-      "size_bytes": 2396,
-      "hash": "1c2b2c56517c"
+      "size_bytes": 2539,
+      "hash": "6f0e6f3f8a5e"
     },
     {
       "path": "src/shared/types/dissection.ts",
@@ -319,6 +339,11 @@
       "hash": "0b6ae2e8972d"
     },
     {
+      "path": "tests/integumentary.test.ts",
+      "size_bytes": 1896,
+      "hash": "e003a203929e"
+    },
+    {
       "path": "tests/lymphatic.test.ts",
       "size_bytes": 3599,
       "hash": "02dea78b93e3"
@@ -342,6 +367,11 @@
       "path": "tests/respiratory.test.ts",
       "size_bytes": 4119,
       "hash": "5809cce87335"
+    },
+    {
+      "path": "tests/sensory.test.ts",
+      "size_bytes": 3396,
+      "hash": "1d06a232dca8"
     },
     {
       "path": "tests/server.test.ts",

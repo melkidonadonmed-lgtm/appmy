@@ -12,12 +12,14 @@ import { LymphaticNode } from '../../../shared/constants/lymphatic.ts';
 import { UrinaryNode } from '../../../shared/constants/urinary.ts';
 import { EndocrineNode } from '../../../shared/constants/endocrine.ts';
 import { ReproductiveNode } from '../../../shared/constants/reproductive.ts';
+import { SensoryNode } from '../../../shared/constants/sensory.ts';
+import { IntegumentaryNode } from '../../../shared/constants/integumentary.ts';
 import { ActiveAnatomicalSystem } from '../../../shared/types/anatomy.ts';
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { MuscleMeshItem } from './MuscleMeshItem.tsx';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
 
-// Code Splitting & Dynamic Lazy Loading dos Módulos Viscerais (Fase 6)
+// Code Splitting & Dynamic Lazy Loading dos Módulos Viscerais e Sensoriais (Fases 6 e 7)
 const CardiovascularScene = lazy(() => import('./CardiovascularScene.tsx').then((m) => ({ default: m.CardiovascularScene })));
 const NeurologyScene = lazy(() => import('./NeurologyScene.tsx').then((m) => ({ default: m.NeurologyScene })));
 const RespiratoryScene = lazy(() => import('./RespiratoryScene.tsx').then((m) => ({ default: m.RespiratoryScene })));
@@ -26,6 +28,8 @@ const LymphaticScene = lazy(() => import('./LymphaticScene.tsx').then((m) => ({ 
 const UrinaryScene = lazy(() => import('./UrinaryScene.tsx').then((m) => ({ default: m.UrinaryScene })));
 const EndocrineScene = lazy(() => import('./EndocrineScene.tsx').then((m) => ({ default: m.EndocrineScene })));
 const ReproductiveScene = lazy(() => import('./ReproductiveScene.tsx').then((m) => ({ default: m.ReproductiveScene })));
+const SensoryScene = lazy(() => import('./SensoryScene.tsx').then((m) => ({ default: m.SensoryScene })));
+const IntegumentaryScene = lazy(() => import('./IntegumentaryScene.tsx').then((m) => ({ default: m.IntegumentaryScene })));
 
 export type { ActiveAnatomicalSystem };
 
@@ -39,7 +43,9 @@ export type AnyAnatomicalNode =
   | LymphaticNode
   | UrinaryNode
   | EndocrineNode
-  | ReproductiveNode;
+  | ReproductiveNode
+  | SensoryNode
+  | IntegumentaryNode;
 
 interface ExplodedCraniumSceneProps {
   explosionProgress: number; // 0.0 a 1.0
@@ -277,6 +283,10 @@ export function ExplodedCraniumScene({
   const showUrinary = activeSystem === 'urinary' || activeSystem === 'all';
   const showEndocrine = activeSystem === 'endocrine' || activeSystem === 'all';
   const showReproductive = activeSystem === 'reproductive' || activeSystem === 'all';
+  const showSensory = activeSystem === 'sensory' || activeSystem === 'all';
+  const showIntegumentary =
+    (activeSystem === 'integumentary' || activeSystem === 'all') &&
+    (layerPeelingLevel >= 3 || activeSystem === 'integumentary');
 
   // Coleta de Lixo WebGL Determinística ao desmontar a cena (ex: alternar para o Crânio Real .GLB)
   useEffect(() => {
@@ -422,6 +432,31 @@ export function ExplodedCraniumScene({
             onSelectNode={onSelectNode}
             ghostMode={Boolean(selectedNodeId && ghostMode)}
             isolatedOnly={Boolean(selectedNodeId && isolatedOnly)}
+          />
+        )}
+
+        {/* 11. Órgãos dos Sentidos: Bulbo Ocular, Retina e Labirinto Vestibulococlear (Cap. 13) */}
+        {showSensory && (
+          <SensoryScene
+            explosionProgress={explosionProgress}
+            selectedNodeId={selectedNodeId}
+            onSelectNode={onSelectNode}
+            ghostMode={Boolean(selectedNodeId && ghostMode)}
+            isolatedOnly={Boolean(selectedNodeId && isolatedOnly)}
+            xrayMode={isXRay}
+          />
+        )}
+
+        {/* 12. Sistema Tegumentar: Pele Facial, Gálea e Tecido Subcutâneo (Cap. 14) */}
+        {showIntegumentary && (
+          <IntegumentaryScene
+            explosionProgress={explosionProgress}
+            selectedNodeId={selectedNodeId}
+            onSelectNode={onSelectNode}
+            ghostMode={Boolean(selectedNodeId && ghostMode)}
+            isolatedOnly={Boolean(selectedNodeId && isolatedOnly)}
+            layerPeelingLevel={layerPeelingLevel}
+            xrayMode={isXRay}
           />
         )}
       </Suspense>

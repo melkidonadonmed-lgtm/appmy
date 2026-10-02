@@ -22,7 +22,9 @@ export type AnatomicalChapter =
   | 8 // Sistema Digestório
   | 9 // Sistema Urinário
   | 10 // Sistema Reprodutor
-  | 11; // Sistema Endócrino
+  | 11 // Sistema Endócrino
+  | 13 // Órgãos dos Sentidos (Visão e Audição/Equilíbrio)
+  | 14; // Tegumento Comum (Pele e Fáscias)
 
 export interface ClinicalReference {
   origin?: string;
@@ -76,5 +78,7 @@ export type ActiveAnatomicalSystem =
   | 'urinary'
   | 'reproductive'
   | 'endocrine'
+  | 'sensory'
+  | 'integumentary'
   | 'all';
 

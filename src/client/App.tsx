@@ -87,7 +87,7 @@ export default function App() {
           <h1>Atlas 3D de Anatomia</h1>
           <span className="status-badge" style={{ padding: '0.15rem 0.5rem', fontSize: '0.6875rem' }}>
             <span className="status-dot"></span>
-            <span>Fase 6: Dissecção Tomográfica Multiplanar (MPR)</span>
+            <span>Fase 7: Órgãos dos Sentidos & Tegumento Comum</span>
           </span>
         </div>
 
