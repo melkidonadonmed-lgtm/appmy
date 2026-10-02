@@ -3,8 +3,13 @@
 .gitignore
 .github/
 .context/
+.agents/
+.claude/
+.gemini/
+tests/
 node_modules/
 dist/
 .env*
 !.env.example
 *.md
+
