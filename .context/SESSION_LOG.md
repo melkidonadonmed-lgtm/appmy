@@ -1,39 +1,45 @@
 # CHECKPOINT DA SESSÃO (NÍVEL 3)
 
-**Data/Hora**: 2026-10-02 06:36 (UTC-4)  
+**Data/Hora**: 2026-10-02 07:38 (UTC-4)  
 **Operador**: Antigravity  
 
 ---
 
-## 1. Arquivos Criados e Modificados (Validação Pré-Entrega, Exploded View e Layout 3 Colunas)
+## 1. Arquivos Criados e Modificados (Auditoria, Otimização de VRAM, Zen Mode e Bookmarks)
 
-- `src/client/index.css` [MODIFICADO]: `.anatomical-panel` alterado de `position: absolute` para `position: relative; width: 340px; flex-shrink: 0;`, transformando o workspace em um flexbox canônico de 3 colunas. O Viewport central ocupa `flex: 1`, desobstruindo completamente o `OrientationGizmo` (ViewCube) e o modelo 3D. Adicionado `.sidebar-collapsed-btn`.
-- `src/client/stores/useAnatomyStore.ts` [MODIFICADO]: Estado inicial alterado para `activeSystem: 'skeletal'` e `layerPeelingLevel: 0`, garantindo que o usuário veja os 335 ossos imediatamente ao entrar. Adicionado `sidebarCollapsed` e `toggleSidebarCollapsed`.
-- `src/client/components/canvas/RealBodyAtlas.tsx` [MODIFICADO]:
-  - Conexão do `layerPeelingLevel` para controlar a visibilidade e opacidade das camadas musculares.
-  - Implementado algoritmo de dispersão anatômica radial inteligente para malhas sem vetor explícito no catálogo.
-  - Magnitude de explosão elevada de 0.35 para 0.95 (e 1.4 no crânio), tornando o valor 1.0 (100%) dramaticamente visível e funcional.
-  - Tratamento aprimorado de clique e seleção com fallback humanizado.
-- `src/client/components/canvas/AnatomicalAtlasScene.tsx` [MODIFICADO]: Repasse de `layerPeelingLevel` para o `RealBodyAtlas`.
-- `src/client/components/ui/AnatomicalSidebar.tsx` [MODIFICADO]:
-  - Adicionado cabeçalho cirúrgico com botão para colapsar o painel (`PanelRightClose`/`PanelRightOpen`).
-  - Priorização absoluta do Dossiê Clínico no topo quando há peça selecionada.
-  - Exibição limpa das ferramentas de dissecção global quando nenhum nó está selecionado.
-- `tests/pre-delivery-validation.test.ts` [NOVO]: 8 testes determinísticos comprovando o funcionamento da Exploded View a 100%, dispersão radial inteligente, layout relativo sem sobreposição, independência de colapso das sidebars e ausência de emojis.
-- `workspace_index.json`: Reindexado com 129 arquivos mapeados.
+- `src/client/stores/useAnatomyStore.ts` [MODIFICADO]:
+  - Adicionados `zenMode`, `preZenOutlinerCollapsed`, `preZenSidebarCollapsed`, `toggleZenMode`, `setZenMode` e `restoreState`.
+- `src/client/hooks/useAnatomicalHotkeys.ts` [MODIFICADO]:
+  - Registrado atalho de teclado `Z` para alternar instantaneamente o Modo Foco Cirúrgico (100% de tela).
+- `src/client/components/canvas/SceneCanvas.tsx` [MODIFICADO]:
+  - Otimizado `SmoothCameraController` com convergência por tolerância (`distSq < 0.0001`), limpando o alvo e liberando o ciclo de CPU.
+  - Registrados listeners de proteção contra perda e restauração de contexto WebGL (`webglcontextlost` / `webglcontextrestored`).
+- `src/client/components/canvas/RealCraniumModel.tsx` [MODIFICADO]:
+  - Conectado `disposeHierarchy` e `logWebGLGarbageCollection` no ciclo de desmontagem e troca de modelo para liberação imediata de VRAM.
+- `src/client/lib/bookmarks-storage.ts` [NOVO]:
+  - Implementado sistema resiliente de persistência no LocalStorage para salvar, listar, aplicar e excluir marcadores anatômicos clínicos customizados.
+- `src/client/components/ui/QuickPresetsBar.tsx` [MODIFICADO]:
+  - Integrado popover clínico de marcadores com formulário de salvamento rápido, listagem e restauração direta no store.
+- `src/client/App.tsx` [MODIFICADO]:
+  - Adicionado botão de alternância do Modo Foco Cirúrgico (`Maximize2`/`Minimize2`) na barra superior e badge flutuante de restauração rápida no centro do viewport.
+- `src/client/index.css` [MODIFICADO]:
+  - Adicionados estilos refinados para `.zen-mode-badge`, `.quick-presets-container`, `.bookmarks-popover` e seus subelementos.
+- `tests/zen-mode-and-lifecycle.test.ts` [NOVO]:
+  - 7 testes determinísticos cobrindo ciclo de Zen Mode, preservação assimétrica de estado prévio, persistência/remoção de bookmarks, resiliência a JSON corrompido, descarte de VRAM WebGL e ausência estrita de emojis.
+- `workspace_index.json`: Reindexado com 131 arquivos mapeados.
 
 ---
 
 ## 2. Comandos Validados no Terminal (Quality Gate)
 
 - `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript no cliente e servidor).
-- `npm test` -> Exit Code 0 (113 testes unitários aprovados em 20 suítes vitest).
-- `npm run build` -> Exit Code 0 (Compilação do Vite em 10.00s + tsc server concluídos com sucesso).
-- `python generate_workspace_index.py` -> Exit Code 0 (129 arquivos mapeados).
+- `npm test` -> Exit Code 0 (120 testes unitários aprovados em 21 suítes vitest).
+- `npm run build` -> Exit Code 0 (Compilação do Vite em 9.69s + tsc server concluídos com sucesso).
+- `python generate_workspace_index.py` -> Exit Code 0 (131 arquivos mapeados).
 
 ---
 
 ## 3. Próximo Ponto de Entrada
 
-- **Persistência de Bookmarks Customizados**:
-  - Salvar no LocalStorage estados de dissecção personalizados definidos pelo usuário para retorno imediato.
+- **Exportação e Compartilhamento de Bookmarks**:
+  - Permitir exportar snapshots de dissecção em arquivo JSON ou URL parametrizada para compartilhamento entre cirurgiões e residentes.

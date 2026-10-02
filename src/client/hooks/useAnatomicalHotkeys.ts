@@ -7,6 +7,7 @@ import { Z_ANATOMY_CATALOG } from '../../shared/constants/zAnatomyCatalog.ts';
  * - 'H': Alternar visibilidade (Hide / Show) da peça selecionada
  * - 'I': Alternar isolamento da peça selecionada
  * - 'F': Focar / Centralizar câmera na peça selecionada
+ * - 'Z': Alternar Modo Foco Cirúrgico (Zen Mode 100% Viewport)
  * - 'Escape': Limpar seleção ativa
  * - 'R': Resetar câmera para posição anatômica frontal padrão
  */
@@ -17,6 +18,7 @@ export function useAnatomicalHotkeys() {
   const isolateNode = useAnatomyStore((s) => s.isolateNode);
   const showAll = useAnatomyStore((s) => s.showAll);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
+  const toggleZenMode = useAnatomyStore((s) => s.toggleZenMode);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -67,6 +69,12 @@ export function useAnatomicalHotkeys() {
           break;
         }
 
+        case 'z': {
+          e.preventDefault();
+          toggleZenMode();
+          break;
+        }
+
         case 'escape': {
           e.preventDefault();
           setSelectedNode(null);
@@ -94,5 +102,6 @@ export function useAnatomicalHotkeys() {
     isolateNode,
     showAll,
     setCameraFocusTarget,
+    toggleZenMode,
   ]);
 }

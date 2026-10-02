@@ -39,6 +39,9 @@ interface AnatomyStore {
   // 5. Layout da Interface
   outlinerCollapsed: boolean;
   sidebarCollapsed: boolean;
+  zenMode: boolean;
+  preZenOutlinerCollapsed: boolean;
+  preZenSidebarCollapsed: boolean;
 
   // --- Ações de Visibilidade ---
   toggleVisibility: (id: string) => void;
@@ -70,6 +73,9 @@ interface AnatomyStore {
   setModuleState: (partial: Partial<ActiveModulesState>) => void;
   toggleOutlinerCollapsed: () => void;
   toggleSidebarCollapsed: () => void;
+  toggleZenMode: () => void;
+  setZenMode: (zen: boolean) => void;
+  restoreState: (snapshot: Partial<AnatomyStore>) => void;
 
   // --- Presets Anatômicos Canônicos ---
   applyPreset: (presetKey: 'all' | 'skeletal' | 'cranium' | 'cardiorespiratory' | 'visceral') => void;
@@ -111,6 +117,9 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
 
   outlinerCollapsed: false,
   sidebarCollapsed: false,
+  zenMode: false,
+  preZenOutlinerCollapsed: false,
+  preZenSidebarCollapsed: false,
 
   // --- Ações de Visibilidade ---
   toggleVisibility: (id: string) => {
@@ -264,6 +273,56 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
 
   toggleSidebarCollapsed: () =>
     set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+
+  toggleZenMode: () => {
+    set((state) => {
+      if (!state.zenMode) {
+        // Ativa o Modo Foco Cirúrgico (100% da tela para a cena 3D)
+        return {
+          zenMode: true,
+          preZenOutlinerCollapsed: state.outlinerCollapsed,
+          preZenSidebarCollapsed: state.sidebarCollapsed,
+          outlinerCollapsed: true,
+          sidebarCollapsed: true,
+        };
+      } else {
+        // Restaura a visualização anterior dos painéis
+        return {
+          zenMode: false,
+          outlinerCollapsed: state.preZenOutlinerCollapsed,
+          sidebarCollapsed: state.preZenSidebarCollapsed,
+        };
+      }
+    });
+  },
+
+  setZenMode: (zen: boolean) => {
+    set((state) => {
+      if (zen === state.zenMode) return state;
+      if (zen) {
+        return {
+          zenMode: true,
+          preZenOutlinerCollapsed: state.outlinerCollapsed,
+          preZenSidebarCollapsed: state.sidebarCollapsed,
+          outlinerCollapsed: true,
+          sidebarCollapsed: true,
+        };
+      } else {
+        return {
+          zenMode: false,
+          outlinerCollapsed: state.preZenOutlinerCollapsed,
+          sidebarCollapsed: state.preZenSidebarCollapsed,
+        };
+      }
+    });
+  },
+
+  restoreState: (snapshot: Partial<AnatomyStore>) => {
+    set((state) => ({
+      ...state,
+      ...snapshot,
+    }));
+  },
 
   // --- Presets Anatômicos Rápidos ---
   applyPreset: (presetKey: 'all' | 'skeletal' | 'cranium' | 'cardiorespiratory' | 'visceral') => {

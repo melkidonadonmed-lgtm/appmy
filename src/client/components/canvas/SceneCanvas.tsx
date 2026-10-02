@@ -29,6 +29,7 @@ interface SceneCanvasProps {
 /**
  * Anima suavemente o ponto focal (target) do OrbitControls quando uma nova
  * estrutura for selecionada na árvore ou no viewport 3D.
+ * Conclui a interpolação ao atingir o limiar de tolerância, evitando queima contínua de ciclos de CPU.
  */
 function SmoothCameraController({
   controlsRef,
@@ -37,6 +38,8 @@ function SmoothCameraController({
 }) {
   const cameraFocusTarget = useAnatomyStore((s) => s.cameraFocusTarget);
   const cameraPositionTarget = useAnatomyStore((s) => s.cameraPositionTarget);
+  const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
+  const setCameraPositionTarget = useAnatomyStore((s) => s.setCameraPositionTarget);
 
   useFrame(({ camera }) => {
     if (controlsRef.current && cameraFocusTarget) {
@@ -48,6 +51,12 @@ function SmoothCameraController({
       targetVec.z = THREE.MathUtils.lerp(targetVec.z, tz, 0.08);
 
       controlsRef.current.update();
+
+      const distSq = (targetVec.x - tx) ** 2 + (targetVec.y - ty) ** 2 + (targetVec.z - tz) ** 2;
+      if (distSq < 0.0001) {
+        targetVec.set(tx, ty, tz);
+        setCameraFocusTarget(null);
+      }
     }
 
     if (cameraPositionTarget) {
@@ -55,6 +64,12 @@ function SmoothCameraController({
       camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.08);
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.08);
       camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.08);
+
+      const pDistSq = (camera.position.x - px) ** 2 + (camera.position.y - py) ** 2 + (camera.position.z - pz) ** 2;
+      if (pDistSq < 0.0001) {
+        camera.position.set(px, py, pz);
+        setCameraPositionTarget(null);
+      }
     }
   });
 
@@ -88,6 +103,19 @@ export function SceneCanvas({
           powerPreference: 'high-performance',
           preserveDrawingBuffer: false,
           localClippingEnabled: true,
+        }}
+        onCreated={({ gl }) => {
+          const dom = gl.domElement;
+          const handleContextLost = (event: Event) => {
+            event.preventDefault();
+            console.warn('[WebGL] Contexto perdido. Recursos protegidos da VRAM.');
+          };
+          const handleContextRestored = () => {
+            console.info('[WebGL] Contexto restaurado com sucesso.');
+          };
+
+          dom.addEventListener('webglcontextlost', handleContextLost, false);
+          dom.addEventListener('webglcontextrestored', handleContextRestored, false);
         }}
         onPointerMissed={() => onSelectNode(null)}
       >

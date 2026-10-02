@@ -11,6 +11,8 @@ import {
   RotateCcw,
   Eye,
   EyeOff,
+  Maximize2,
+  Minimize2,
 } from 'lucide-react';
 import { SceneCanvas } from './components/canvas/SceneCanvas.tsx';
 import { AnatomicalSidebar } from './components/ui/AnatomicalSidebar.tsx';
@@ -67,6 +69,9 @@ export default function App() {
 
   const isolatedOnly = useAnatomyStore((s) => s.isolatedOnly);
   const toggleIsolatedOnly = useAnatomyStore((s) => s.toggleIsolatedOnly);
+
+  const zenMode = useAnatomyStore((s) => s.zenMode);
+  const toggleZenMode = useAnatomyStore((s) => s.toggleZenMode);
 
   const dissection = useAnatomyStore((s) => s.dissection);
   const setDissection = useAnatomyStore((s) => s.setDissection);
@@ -210,6 +215,18 @@ export default function App() {
             </div>
           )}
 
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.5rem' }}>
+            <button
+              className={`mode-btn ${zenMode ? 'active' : ''}`}
+              onClick={toggleZenMode}
+              title="Modo Foco Cirúrgico (Atalho: Z) - Expande o Viewport 3D para 100% da tela"
+              style={{ borderColor: zenMode ? 'var(--primary)' : undefined }}
+            >
+              {zenMode ? <Minimize2 size={13} aria-hidden="true" /> : <Maximize2 size={13} aria-hidden="true" />}
+              <span>{zenMode ? 'Sair do Foco' : 'Foco Cirúrgico (Z)'}</span>
+            </button>
+          </div>
+
           <div className="mode-toggle-group">
             <button
               className={`mode-btn ${activeMode === '3d-atlas' ? 'active' : ''}`}
@@ -244,6 +261,23 @@ export default function App() {
 
             {/* 2. Área Central: Viewport 3D + HUD Flutuante */}
             <div className="viewport-center-area">
+              {/* Indicador Flutuante do Modo Foco Cirúrgico (100% Tela) */}
+              {zenMode && (
+                <div
+                  className="zen-mode-badge"
+                  onClick={toggleZenMode}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') toggleZenMode();
+                  }}
+                  title="Clique ou pressione Z para restaurar as barras laterais"
+                >
+                  <Minimize2 size={13} aria-hidden="true" />
+                  <span>Modo Foco Cirúrgico (100%) - Pressione Z para restaurar</span>
+                </div>
+              )}
+
               {/* Medidor flutuante de Telemetria (FPS / VRAM) */}
               <TelemetryOverlay
                 fps={telemetry.fps}

@@ -4,27 +4,29 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Validação Pré-Entrega Concluída: Exploded View 100% Funcional (Dispersão Radial Inteligente), Isolamento Total das Sidebars (Layout Flex 3 Colunas Sem Sobreposição) e Interatividade Pura
+**Fase Atual**: Concluída Auditoria e Reestruturação Técnica: Modo Foco Cirúrgico (Zen Mode 100% Viewport), Persistência de Bookmarks Clínicos no LocalStorage, Otimização de VRAM e Ciclo de Renderização
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Estação Cirúrgica em 3 Colunas Desacopladas (Sem Sobreposição)**:
-  - `AnatomyTreePanel.tsx` (Esquerda - 300px): Navegador taxonômico TA2 com busca, expansão e checkboxes de visibilidade.
-  - `SceneCanvas.tsx` / `RealBodyAtlas.tsx` (Centro - flex: 1): Viewport Three.js perfeitamente centralizado, com `OrientationGizmo` (ViewCube) desobstruído no canto superior direito e `QuickPresetsBar` no rodapé.
-  - `AnatomicalSidebar.tsx` (Direita - 340px): Dossiê Clínico priorizado no topo quando há peça selecionada, ou Ferramentas de Dissecção Global (Sistemas, Regiões, Layer Peeling, Exploded View 0-100%) quando nenhum nó está selecionado. Colapsável independentemente via `sidebarCollapsed`.
-- **Exploded View em 100% de Amplitude Real ("O 100")**:
-  - Implementado vetor de dispersão radial inteligente para 100% das malhas do corpo humano, garantindo que mesmo malhas viscerais ou musculares sem anotação explícita explodam suavemente de forma centrífuga.
-  - Magnitude de explosão elevada de 0.35 para 0.95 (e 1.4 no crânio), proporcionando separação anatômica cristalina ao atingir 100%.
-- **Priorização do Esqueleto e Controle de Camadas Miológicas**:
-  - `activeSystem: 'skeletal'` e `layerPeelingLevel: 0` definidos como estado padrão, garantindo que o usuário visualize os 335 ossos brancos/marfim sem massas musculares opacas cobrindo o modelo.
-  - `layerPeelingLevel` conectado no `RealBodyAtlas.tsx`: Nível 0 (músculos ocultos), Nível 1 (músculos translúcidos 35%), Nível 2 (músculos 75%), Nível 3 (músculos 100% sólidos).
+- **Modo Foco Cirúrgico (Zen Mode 100% Viewport)**:
+  - Acionamento unificado via botão superior na `top-nav` ou tecla de atalho clínico `Z`.
+  - Colapsa simultaneamente o outliner taxonômico (esquerda) e a sidebar clínica (direita), liberando 100% da viewport para a cena 3D.
+  - Preserva de forma idempotente e determinística o estado prévio de cada painel ao sair do modo Zen.
+  - Indicador flutuante elegante (`.zen-mode-badge`) no topo do canvas permitindo restaurar a interface com um clique ou via teclado.
+- **Persistência de Bookmarks Clínicos (`bookmarks-storage.ts`)**:
+  - Módulo resiliente com suporte dual (Browser e Node/SSR) para salvar perspectivas, planos de corte MPR, densidades ósseas, visibilidade de malhas e alvos de câmera no LocalStorage.
+  - Interface integrada na `QuickPresetsBar` com lista de marcadores, data de criação, restauração atômica no `useAnatomyStore` e exclusão limpa.
+- **Otimização de VRAM e Ciclo de Renderização Three.js / R3F**:
+  - `SmoothCameraController` otimizado: limpa alvos de foco ao convergir (distância < 0.0001), eliminando queima desnecessária de ciclos de CPU por frame.
+  - Tratamento resiliente de perda e restauração de contexto WebGL (`webglcontextlost` / `webglcontextrestored`) prevenindo crashes de VRAM.
+  - `RealCraniumModel` equipado com descarte determinístico de geometrias, materiais e texturas (`disposeHierarchy` em `webgl-gc.ts`) no ciclo de unmount.
 - **Quality Gate Validado**:
-  - 113 testes unitários aprovados em 20 suítes Vitest (`ExitCode 0`).
+  - 120 testes unitários aprovados em 21 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` compilado com sucesso em 10.00s (`ExitCode 0`).
-  - `workspace_index.json` reindexado com 129 arquivos mapeados.
+  - `npm run build` compilado com sucesso em 9.69s (`ExitCode 0`).
+  - `workspace_index.json` reindexado com 131 arquivos mapeados.
 
 ---
 
@@ -37,5 +39,5 @@
 
 ## 3. Próximo Ponto de Entrada
 
-- **Persistência de Bookmarks Customizados**:
-  - Salvar no LocalStorage estados de dissecção personalizados definidos pelo usuário para retorno imediato.
+- **Exportação e Compartilhamento de Bookmarks**:
+  - Permitir exportar snapshots de dissecção em arquivo JSON ou URL parametrizada para compartilhamento entre cirurgiões e residentes.

@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { useGLTF, Center, Html } from '@react-three/drei';
 import { AnyAnatomicalNode } from './AnatomicalAtlasScene.tsx';
+import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
 
 interface RealCraniumModelProps {
   onSelectNode?: (node: AnyAnatomicalNode | null) => void;
@@ -94,6 +95,14 @@ export function RealCraniumModel({
       }
     });
   }, [boneScene, hovered, isSelected, isGhost, opacity]);
+
+  // Limpeza de recursos WebGL ao desmontar ou trocar de modelo
+  useEffect(() => {
+    return () => {
+      const report = disposeHierarchy(boneScene);
+      logWebGLGarbageCollection('RealCraniumModel', report);
+    };
+  }, [boneScene]);
 
   if (opacity <= 0.005) return null;
 

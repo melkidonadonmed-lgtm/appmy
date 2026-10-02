@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T10:36:16.229980+00:00",
+  "timestamp_utc": "2026-10-02T11:38:28.323068+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -75,8 +75,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 16149,
-      "hash": "d60189e6d5a2"
+      "size_bytes": 16277,
+      "hash": "6dba79a1fd49"
     },
     {
       "path": "public/draco/draco_decoder.js",
@@ -250,13 +250,13 @@
     },
     {
       "path": "src/client/App.tsx",
-      "size_bytes": 17736,
-      "hash": "99eb1a3a6d74"
+      "size_bytes": 19231,
+      "hash": "b05e496142fc"
     },
     {
       "path": "src/client/index.css",
-      "size_bytes": 35192,
-      "hash": "a94e632aa00c"
+      "size_bytes": 39491,
+      "hash": "abc17cb1af75"
     },
     {
       "path": "src/client/main.tsx",
@@ -325,8 +325,8 @@
     },
     {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
-      "size_bytes": 4473,
-      "hash": "eb6b2f27b9d6"
+      "size_bytes": 4810,
+      "hash": "5e5fa476f9b2"
     },
     {
       "path": "src/client/components/canvas/ReproductiveScene.tsx",
@@ -340,8 +340,8 @@
     },
     {
       "path": "src/client/components/canvas/SceneCanvas.tsx",
-      "size_bytes": 5242,
-      "hash": "3461bdb3a961"
+      "size_bytes": 6523,
+      "hash": "1e182d963444"
     },
     {
       "path": "src/client/components/canvas/SensoryScene.tsx",
@@ -370,8 +370,8 @@
     },
     {
       "path": "src/client/components/ui/QuickPresetsBar.tsx",
-      "size_bytes": 3296,
-      "hash": "f4f67e42f317"
+      "size_bytes": 8394,
+      "hash": "f4b46de6350f"
     },
     {
       "path": "src/client/components/ui/tree/AnatomyTreePanel.tsx",
@@ -395,13 +395,18 @@
     },
     {
       "path": "src/client/hooks/useAnatomicalHotkeys.ts",
-      "size_bytes": 2958,
-      "hash": "c670f8b01e2c"
+      "size_bytes": 3212,
+      "hash": "0518adc19edc"
     },
     {
       "path": "src/client/hooks/useAnatomicalModel.ts",
       "size_bytes": 3629,
       "hash": "891ae9127c72"
+    },
+    {
+      "path": "src/client/lib/bookmarks-storage.ts",
+      "size_bytes": 4165,
+      "hash": "cb07736f5b5a"
     },
     {
       "path": "src/client/lib/dissection-planes.ts",
@@ -420,8 +425,8 @@
     },
     {
       "path": "src/client/stores/useAnatomyStore.ts",
-      "size_bytes": 9642,
-      "hash": "a27417ada18a"
+      "size_bytes": 11291,
+      "hash": "ab8fa9635804"
     },
     {
       "path": "src/server/app.ts",
@@ -647,6 +652,11 @@
       "path": "tests/z-anatomy.test.ts",
       "size_bytes": 3121,
       "hash": "a7e0481ff4c1"
+    },
+    {
+      "path": "tests/zen-mode-and-lifecycle.test.ts",
+      "size_bytes": 7399,
+      "hash": "978fdddee806"
     }
   ]
 }
