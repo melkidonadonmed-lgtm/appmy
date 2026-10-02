@@ -38,6 +38,7 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 .idea/
+.gemini/
 
 # Cobertura de testes e relatórios
 coverage/

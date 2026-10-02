@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T22:05:44.316937+00:00",
+  "timestamp_utc": "2026-10-02T23:06:05.880461+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -12,6 +12,11 @@
       "path": "deploy-cloudrun.sh",
       "size_bytes": 1283,
       "hash": "7c29600199e1"
+    },
+    {
+      "path": "designer.md",
+      "size_bytes": 23337,
+      "hash": "37616f4da213"
     },
     {
       "path": "Dockerfile",
@@ -70,8 +75,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 10864,
-      "hash": "6a27c3e90bf0"
+      "size_bytes": 22828,
+      "hash": "5ad95a7c33c7"
     },
     {
       "path": "skills-lock.json",
@@ -95,8 +100,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 16531,
-      "hash": "3454cefeb5ad"
+      "size_bytes": 19233,
+      "hash": "b791c431f61c"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
