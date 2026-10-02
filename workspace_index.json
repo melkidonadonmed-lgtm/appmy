@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T06:01:21.258116+00:00",
+  "timestamp_utc": "2026-10-02T06:17:52.203530+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -75,8 +75,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 8742,
-      "hash": "0b1f65cb0c87"
+      "size_bytes": 9502,
+      "hash": "9aef822d8d43"
     },
     {
       "path": "public/models/cranium.glb",
@@ -85,8 +85,8 @@
     },
     {
       "path": "src/client/App.tsx",
-      "size_bytes": 12043,
-      "hash": "a30b9bf23513"
+      "size_bytes": 13527,
+      "hash": "a90f9f7bcbff"
     },
     {
       "path": "src/client/index.css",
@@ -125,8 +125,8 @@
     },
     {
       "path": "src/client/components/canvas/ExplodedCraniumScene.tsx",
-      "size_bytes": 18244,
-      "hash": "13ff4920f313"
+      "size_bytes": 18854,
+      "hash": "c600f6ef4f60"
     },
     {
       "path": "src/client/components/canvas/IntegumentaryScene.tsx",
@@ -150,8 +150,8 @@
     },
     {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
-      "size_bytes": 2881,
-      "hash": "72b5d2c64fa0"
+      "size_bytes": 4473,
+      "hash": "3d343b0e0430"
     },
     {
       "path": "src/client/components/canvas/ReproductiveScene.tsx",
@@ -165,8 +165,8 @@
     },
     {
       "path": "src/client/components/canvas/SceneCanvas.tsx",
-      "size_bytes": 4529,
-      "hash": "fe909f83acaf"
+      "size_bytes": 3799,
+      "hash": "be5af91e5036"
     },
     {
       "path": "src/client/components/canvas/SensoryScene.tsx",

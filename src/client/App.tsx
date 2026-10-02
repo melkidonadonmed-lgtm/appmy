@@ -33,6 +33,7 @@ export default function App() {
 
   // Estado do Motor 3D (Osteologia, Miologia, Cardiovascular e Neurologia)
   const [viewType, setViewType] = useState<'exploded' | 'realistic'>('exploded');
+  const [realSkullOpacity, setRealSkullOpacity] = useState<number>(0.35);
   const [activeDivision, setActiveDivision] = useState<SkullDivision | 'all'>('all');
   const [activeSystem, setActiveSystem] = useState<ActiveAnatomicalSystem>('all');
   const [layerPeelingLevel, setLayerPeelingLevel] = useState<number>(2);
@@ -93,21 +94,49 @@ export default function App() {
 
         <div className="nav-actions">
           {activeMode === '3d-atlas' && (
-            <div className="mode-toggle-group" style={{ marginRight: '0.5rem' }}>
-              <button
-                className={`mode-btn ${viewType === 'exploded' ? 'active' : ''}`}
-                onClick={() => setViewType('exploded')}
-                title="Vista Explodida por Peças Segmentadas"
-              >
-                Vista Explodida
-              </button>
-              <button
-                className={`mode-btn ${viewType === 'realistic' ? 'active' : ''}`}
-                onClick={() => setViewType('realistic')}
-                title="Crânio Real Completo em formato .GLB"
-              >
-                Crânio Real (.GLB)
-              </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.5rem' }}>
+              <div className="mode-toggle-group">
+                <button
+                  className={`mode-btn ${viewType === 'exploded' ? 'active' : ''}`}
+                  onClick={() => setViewType('exploded')}
+                  title="Vista Explodida por Peças Segmentadas"
+                >
+                  Vista Explodida
+                </button>
+                <button
+                  className={`mode-btn ${viewType === 'realistic' ? 'active' : ''}`}
+                  onClick={() => setViewType('realistic')}
+                  title="Crânio Real Completo em formato .GLB"
+                >
+                  Crânio Real (.GLB)
+                </button>
+              </div>
+
+              {viewType === 'realistic' && (
+                <div className="mode-toggle-group" style={{ borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '0.5rem' }}>
+                  <button
+                    className={`mode-btn ${realSkullOpacity === 1.0 ? 'active' : ''}`}
+                    onClick={() => setRealSkullOpacity(1.0)}
+                    title="Osso Real Totalmente Opaco / Sólido"
+                  >
+                    🦴 Sólido
+                  </button>
+                  <button
+                    className={`mode-btn ${realSkullOpacity === 0.35 ? 'active' : ''}`}
+                    onClick={() => setRealSkullOpacity(0.35)}
+                    title="Osso Translúcido (Permite visualizar cérebro, olhos e vasos internos)"
+                  >
+                    ✨ Translúcido
+                  </button>
+                  <button
+                    className={`mode-btn ${realSkullOpacity === 0.0 ? 'active' : ''}`}
+                    onClick={() => setRealSkullOpacity(0.0)}
+                    title="Ocultar Osso Real para foco nas estruturas internas"
+                  >
+                    👁️ Oculto
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
@@ -148,6 +177,7 @@ export default function App() {
             {/* Canvas 3D WebGL */}
             <SceneCanvas
               viewType={viewType}
+              realSkullOpacity={realSkullOpacity}
               explosionProgress={explosionProgress}
               selectedNode={selectedNode}
               onSelectNode={setSelectedNode}

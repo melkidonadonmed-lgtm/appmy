@@ -17,6 +17,7 @@ import { IntegumentaryNode } from '../../../shared/constants/integumentary.ts';
 import { ActiveAnatomicalSystem } from '../../../shared/types/anatomy.ts';
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { MuscleMeshItem } from './MuscleMeshItem.tsx';
+import { RealCraniumModel } from './RealCraniumModel.tsx';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
 
 // Code Splitting & Dynamic Lazy Loading dos Módulos Viscerais e Sensoriais (Fases 6 e 7)
@@ -48,6 +49,8 @@ export type AnyAnatomicalNode =
   | IntegumentaryNode;
 
 interface ExplodedCraniumSceneProps {
+  viewType?: 'exploded' | 'realistic';
+  realSkullOpacity?: number;
   explosionProgress: number; // 0.0 a 1.0
   selectedNodeId: string | null;
   onSelectNode: (node: AnyAnatomicalNode | null) => void;
@@ -260,6 +263,8 @@ function BoneMeshItem({
 }
 
 export function ExplodedCraniumScene({
+  viewType = 'exploded',
+  realSkullOpacity = 0.35,
   explosionProgress,
   selectedNodeId,
   onSelectNode,
@@ -288,7 +293,7 @@ export function ExplodedCraniumScene({
     (activeSystem === 'integumentary' || activeSystem === 'all') &&
     (layerPeelingLevel >= 3 || activeSystem === 'integumentary');
 
-  // Coleta de Lixo WebGL Determinística ao desmontar a cena (ex: alternar para o Crânio Real .GLB)
+  // Coleta de Lixo WebGL Determinística ao desmontar a cena
   useEffect(() => {
     return () => {
       if (sceneGroupRef.current) {
@@ -300,28 +305,38 @@ export function ExplodedCraniumScene({
 
   return (
     <group ref={sceneGroupRef} position={[0, 0, 0]}>
-      {/* 1. Arcabouço Ósseo (Osteologia - Cap. 2) */}
-      {showSkeletal &&
-        CRANIUM_22_NODES.map((node) => {
-          const isSelected = selectedNodeId === node.id;
-          const isGhost = Boolean(selectedNodeId && !isSelected && ghostMode);
-          const isIsolatedHidden = Boolean(selectedNodeId && !isSelected && isolatedOnly);
-          const isVisibleInDivision = activeDivision === 'all' || node.division === activeDivision;
+      {/* 1. Arcabouço Ósseo (Osteologia - Cap. 2): Crânio Real .GLB ou Peças Explodidas */}
+      {showSkeletal && (
+        viewType === 'realistic' ? (
+          <RealCraniumModel
+            onSelectNode={onSelectNode}
+            isSelected={selectedNodeId === 'fma:cranium_overview'}
+            isGhost={Boolean(selectedNodeId && selectedNodeId !== 'fma:cranium_overview' && ghostMode)}
+            opacity={visualMode === 'xray' ? 0.25 : realSkullOpacity}
+          />
+        ) : (
+          CRANIUM_22_NODES.map((node) => {
+            const isSelected = selectedNodeId === node.id;
+            const isGhost = Boolean(selectedNodeId && !isSelected && ghostMode);
+            const isIsolatedHidden = Boolean(selectedNodeId && !isSelected && isolatedOnly);
+            const isVisibleInDivision = activeDivision === 'all' || node.division === activeDivision;
 
-          return (
-            <BoneMeshItem
-              key={node.id}
-              node={node}
-              explosionProgress={explosionProgress}
-              isSelected={isSelected}
-              isGhost={isGhost}
-              isIsolatedHidden={isIsolatedHidden}
-              isVisibleInDivision={isVisibleInDivision}
-              isXRay={isXRay}
-              onSelect={() => onSelectNode(isSelected ? null : node)}
-            />
-          );
-        })}
+            return (
+              <BoneMeshItem
+                key={node.id}
+                node={node}
+                explosionProgress={explosionProgress}
+                isSelected={isSelected}
+                isGhost={isGhost}
+                isIsolatedHidden={isIsolatedHidden}
+                isVisibleInDivision={isVisibleInDivision}
+                isXRay={isXRay}
+                onSelect={() => onSelectNode(isSelected ? null : node)}
+              />
+            );
+          })
+        )
+      )}
 
       {/* 2. Músculos Mastigatórios e Mímica Facial (Miologia - Cap. 3) */}
       {showMuscular &&

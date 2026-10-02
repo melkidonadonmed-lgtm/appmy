@@ -16,12 +16,12 @@
 - **Catálogo do Tegumento Comum (Capítulo 14 - Terminologia Anatomica e FMA)**:
   - Epiderme e Derme Crânio-Facial (`FMA:7163` - inervação trigeminal V1, V2, V3 e linhas de Langer), Gálea Aponeurótica (`FMA:46554` - acrônimo cirúrgico SCALP e área perigosa da cabeça), Pele Nasal e Periorbital (`FMA:70544`) e Tecido Subcutâneo com coxins de Bichat e SMAS (`FMA:9630`).
   - Integração com o controle de dissecção por `layerPeelingLevel` (Nível 0: Esqueleto, Nível 1: Músc. Profundos, Nível 2: Músc. Superficiais, Nível 3: Pele e Fáscias).
-- **Total de Estruturas e Telemetria WebGL**:
-  - Total de **108 estruturas anatômicas canônicas** unificadas sob ontologia FMA e Terminologia Anatomica internacional.
-  - Suporte completo aos 13 sistemas anatômicos canônicos.
-  - Taxa de quadros fixa a 60 FPS com VRAM < 200 MB no Chrome DevTools.
-  - 83 testes unitários aprovados em 15 suítes no Vitest com exit code 0 em ~800ms.
-  - Modularização dinâmica com 10 chunks assíncronos no Vite com `React.lazy` e `<Suspense>`.
+- **Crânio Real (.GLB) Unificado com Estruturas Anatômicas In Situ**:
+  - Integração topográfica do modelo escaneado fotorealista de alta densidade (`cranium.glb` com ~188k polígonos) com as 108 estruturas dos 13 sistemas anatômicos (órgãos dos sentidos nas órbitas, encéfalo na fossa craniana, vasos carotídeos, vias aéreas e músculos).
+  - Três modos de densidade óssea na interface: `🦴 Sólido (100%)`, `✨ Translúcido (35%)` e `👁️ Oculto (0%)`.
+  - Dissecção Tomográfica Multiplanar (MPR) em tempo real: o plano de secção (sagital, coronal e axial) corta simultaneamente o crânio escaneado real e as estruturas viscerais/sensoriais internas via GPU clipping.
+  - Taxa de quadros estável em 60 FPS com 441k polígonos e VRAM < 200 MB no Chrome DevTools.
+  - 83 testes unitários aprovados em 15 suítes no Vitest com exit code 0.
 
 ---
 
@@ -32,9 +32,10 @@
 
 ---
 
-## 3. Próximo Ponto de Entrada (Fase 8: Modos de Ensino Clínico & Casos Radiológicos)
+## 3. Próximo Ponto de Entrada (Fase 8: Módulos de Ensino Clínico & Casos Radiológicos)
 
-- **Fase 8: Quiz Interativo de Identificação Anatômica & Simulações Clínico-Cirúrgicas**:
-  - Modo Quiz / Avaliação Médica: estruturação de casos clínicos com identificação em tempo real no grafo 3D.
-  - Exportação de dados e relatórios de dissecção para PDF médico profissional.
-- **Commit Git**: Criar commit atômico consolidando a Fase 7.
+- **Fase 8: Casos Clínicos Interativos, Quiz Anatômico & Correlação Radiológica**:
+  - Desafios clínicos com perguntas e identificação direta no modelo 3D (real ou explodido).
+  - Correlação com imagens tomográficas / RM reais ao lado da lâmina MPR 3D.
+  - Exportação de fichas e relatórios clínicos de dissecção para PDF médico profissional.
+

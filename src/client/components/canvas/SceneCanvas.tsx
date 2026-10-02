@@ -7,11 +7,11 @@ import { DissectionController } from './DissectionController.tsx';
 import { TelemetryCollector } from '../telemetry/TelemetryOverlay.tsx';
 import { SkullDivision } from '../../../shared/constants/cranium.ts';
 import { DissectionState } from '../../../shared/types/dissection.ts';
-import { RealCraniumModel } from './RealCraniumModel.tsx';
 import { ActiveAnatomicalSystem, AnyAnatomicalNode } from './ExplodedCraniumScene.tsx';
 
 interface SceneCanvasProps {
   viewType: 'exploded' | 'realistic';
+  realSkullOpacity?: number;
   explosionProgress: number;
   selectedNode: AnyAnatomicalNode | null;
   onSelectNode: (node: AnyAnatomicalNode | null) => void;
@@ -26,6 +26,7 @@ interface SceneCanvasProps {
 
 export function SceneCanvas({
   viewType,
+  realSkullOpacity = 0.35,
   explosionProgress,
   selectedNode,
   onSelectNode,
@@ -75,40 +76,21 @@ export function SceneCanvas({
         <Environment preset="city" />
 
         <Suspense fallback={null}>
-          {viewType === 'realistic' ? (
-            <RealCraniumModel
-              onSelectNode={() => {
-                onSelectNode({
-                  id: 'fma:cranium_overview',
-                  fmaId: 'FMA:46565',
-                  namePtBr: 'Crânio Humano (Visão Geral)',
-                  nameLatin: 'Cranium',
-                  chapter: 2,
-                  systemName: 'Sistema Esquelético',
-                  meshName: 'skull',
-                  division: 'neurocranium',
-                  paired: false,
-                  clinicalData: {
-                    clinicalSignificance: 'Arcabouço ósseo composto por 22 ossos divididos em Neurocrânio e Viscerocrânio.',
-                  },
-                });
-              }}
+          <Center>
+            <ExplodedCraniumScene
+              viewType={viewType}
+              realSkullOpacity={realSkullOpacity}
+              explosionProgress={explosionProgress}
+              selectedNodeId={selectedNode?.id || null}
+              onSelectNode={onSelectNode}
+              ghostMode={ghostMode}
+              isolatedOnly={isolatedOnly}
+              activeDivision={activeDivision}
+              activeSystem={activeSystem}
+              layerPeelingLevel={layerPeelingLevel}
+              visualMode={dissection.visualMode}
             />
-          ) : (
-            <Center>
-              <ExplodedCraniumScene
-                explosionProgress={explosionProgress}
-                selectedNodeId={selectedNode?.id || null}
-                onSelectNode={onSelectNode}
-                ghostMode={ghostMode}
-                isolatedOnly={isolatedOnly}
-                activeDivision={activeDivision}
-                activeSystem={activeSystem}
-                layerPeelingLevel={layerPeelingLevel}
-                visualMode={dissection.visualMode}
-              />
-            </Center>
-          )}
+          </Center>
         </Suspense>
 
         {/* Grid de referência espacial anatômica */}
