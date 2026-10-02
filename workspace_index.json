@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T06:17:52.203530+00:00",
+  "timestamp_utc": "2026-10-02T08:09:06.125617+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -55,8 +55,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 8731,
-      "hash": "dca43e56f961"
+      "size_bytes": 10864,
+      "hash": "6a27c3e90bf0"
     },
     {
       "path": "tsconfig.json",
@@ -75,8 +75,43 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 9502,
-      "hash": "9aef822d8d43"
+      "size_bytes": 14197,
+      "hash": "7c96a0a58fcd"
+    },
+    {
+      "path": "public/draco/draco_decoder.js",
+      "size_bytes": 719410,
+      "hash": "30e4d486fa02"
+    },
+    {
+      "path": "public/draco/draco_decoder.wasm",
+      "size_bytes": 285747,
+      "hash": "c55a594e8ffd"
+    },
+    {
+      "path": "public/draco/draco_wasm_wrapper.js",
+      "size_bytes": 58763,
+      "hash": "e8049906ef3f"
+    },
+    {
+      "path": "public/draco/README.md",
+      "size_bytes": 1395,
+      "hash": "839850a67c93"
+    },
+    {
+      "path": "public/draco/gltf/draco_decoder.js",
+      "size_bytes": 512465,
+      "hash": "8625489da79a"
+    },
+    {
+      "path": "public/draco/gltf/draco_decoder.wasm",
+      "size_bytes": 192420,
+      "hash": "a680d927bed9"
+    },
+    {
+      "path": "public/draco/gltf/draco_wasm_wrapper.js",
+      "size_bytes": 58456,
+      "hash": "8bb2952d2ba7"
     },
     {
       "path": "public/models/cranium.glb",
@@ -84,9 +119,139 @@
       "hash": "339eafce3fdb"
     },
     {
+      "path": "public/models/anatomy/articular_male.glb",
+      "size_bytes": 1541408,
+      "hash": "894533f99658"
+    },
+    {
+      "path": "public/models/anatomy/cardiovascular_female.glb",
+      "size_bytes": 448900,
+      "hash": "271dac2d304a"
+    },
+    {
+      "path": "public/models/anatomy/cardiovascular_male.glb",
+      "size_bytes": 7217588,
+      "hash": "05f373a294ab"
+    },
+    {
+      "path": "public/models/anatomy/digestive_female.glb",
+      "size_bytes": 476856,
+      "hash": "88e0ab948110"
+    },
+    {
+      "path": "public/models/anatomy/digestive_male.glb",
+      "size_bytes": 929984,
+      "hash": "0f6b1ddc17ba"
+    },
+    {
+      "path": "public/models/anatomy/endocrine_male.glb",
+      "size_bytes": 39824,
+      "hash": "44ffd5a7de67"
+    },
+    {
+      "path": "public/models/anatomy/integumentary_female.glb",
+      "size_bytes": 2183908,
+      "hash": "f419dd4df08b"
+    },
+    {
+      "path": "public/models/anatomy/LICENSE",
+      "size_bytes": 2342,
+      "hash": "a95547fc9944"
+    },
+    {
+      "path": "public/models/anatomy/lymphatic_female.glb",
+      "size_bytes": 42572,
+      "hash": "fce4af675132"
+    },
+    {
+      "path": "public/models/anatomy/lymphatic_male.glb",
+      "size_bytes": 509592,
+      "hash": "b73830220fb9"
+    },
+    {
+      "path": "public/models/anatomy/manifest.json",
+      "size_bytes": 1336181,
+      "hash": "1f34f2c4bfae"
+    },
+    {
+      "path": "public/models/anatomy/manifest_female.json",
+      "size_bytes": 89748,
+      "hash": "4fb7b206e391"
+    },
+    {
+      "path": "public/models/anatomy/muscular_male.glb",
+      "size_bytes": 11972116,
+      "hash": "53a004c7b8af"
+    },
+    {
+      "path": "public/models/anatomy/nervous_male.glb",
+      "size_bytes": 8535424,
+      "hash": "e7a3a2de6c6f"
+    },
+    {
+      "path": "public/models/anatomy/NOTICE",
+      "size_bytes": 8359,
+      "hash": "1e6b2739f95a"
+    },
+    {
+      "path": "public/models/anatomy/regional_male.glb",
+      "size_bytes": 765860,
+      "hash": "ffb30c89330a"
+    },
+    {
+      "path": "public/models/anatomy/renal_female.glb",
+      "size_bytes": 617164,
+      "hash": "8e233626a031"
+    },
+    {
+      "path": "public/models/anatomy/renal_male.glb",
+      "size_bytes": 59040,
+      "hash": "4a3f95dbf851"
+    },
+    {
+      "path": "public/models/anatomy/reproductive_female.glb",
+      "size_bytes": 428960,
+      "hash": "894d3319a995"
+    },
+    {
+      "path": "public/models/anatomy/reproductive_male.glb",
+      "size_bytes": 63600,
+      "hash": "2402674f2d22"
+    },
+    {
+      "path": "public/models/anatomy/respiratory_male.glb",
+      "size_bytes": 585232,
+      "hash": "afc1f18329b8"
+    },
+    {
+      "path": "public/models/anatomy/skeletal_female.glb",
+      "size_bytes": 1356072,
+      "hash": "be7a2d4866a9"
+    },
+    {
+      "path": "public/models/anatomy/skeletal_male.glb",
+      "size_bytes": 2823900,
+      "hash": "b49d71788bfa"
+    },
+    {
+      "path": "public/models/anatomy/visceral_male.glb",
+      "size_bytes": 1700280,
+      "hash": "5b336f2e8964"
+    },
+    {
+      "path": "public/models/head/cranium.glb",
+      "size_bytes": 8959044,
+      "hash": "339eafce3fdb"
+    },
+    {
+      "path": "scripts/build_z_anatomy_catalog.py",
+      "size_bytes": 14234,
+      "hash": "2d9b08d41b6f"
+    },
+    {
       "path": "src/client/App.tsx",
-      "size_bytes": 13527,
-      "hash": "a90f9f7bcbff"
+      "size_bytes": 13839,
+      "hash": "3d1bedccb51a"
     },
     {
       "path": "src/client/index.css",
@@ -97,6 +262,11 @@
       "path": "src/client/main.tsx",
       "size_bytes": 240,
       "hash": "288e42c2a3bf"
+    },
+    {
+      "path": "src/client/components/canvas/AnatomicalAtlasScene.tsx",
+      "size_bytes": 19842,
+      "hash": "39e92192a305"
     },
     {
       "path": "src/client/components/canvas/CardiovascularScene.tsx",
@@ -124,11 +294,6 @@
       "hash": "1d4a12cdf174"
     },
     {
-      "path": "src/client/components/canvas/ExplodedCraniumScene.tsx",
-      "size_bytes": 18854,
-      "hash": "c600f6ef4f60"
-    },
-    {
       "path": "src/client/components/canvas/IntegumentaryScene.tsx",
       "size_bytes": 8015,
       "hash": "63f8fec13134"
@@ -149,9 +314,14 @@
       "hash": "c35d863100f7"
     },
     {
+      "path": "src/client/components/canvas/RealBodyAtlas.tsx",
+      "size_bytes": 19332,
+      "hash": "bde91a933b93"
+    },
+    {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
       "size_bytes": 4473,
-      "hash": "3d343b0e0430"
+      "hash": "eb6b2f27b9d6"
     },
     {
       "path": "src/client/components/canvas/ReproductiveScene.tsx",
@@ -165,8 +335,8 @@
     },
     {
       "path": "src/client/components/canvas/SceneCanvas.tsx",
-      "size_bytes": 3799,
-      "hash": "be5af91e5036"
+      "size_bytes": 3872,
+      "hash": "565e7357350c"
     },
     {
       "path": "src/client/components/canvas/SensoryScene.tsx",
@@ -185,8 +355,8 @@
     },
     {
       "path": "src/client/components/ui/AnatomicalSidebar.tsx",
-      "size_bytes": 28009,
-      "hash": "ceebf21239c9"
+      "size_bytes": 34022,
+      "hash": "0de59157b5c4"
     },
     {
       "path": "src/client/components/ui/DissectionToolbar.tsx",
@@ -304,6 +474,11 @@
       "hash": "c54101b54713"
     },
     {
+      "path": "src/shared/constants/zAnatomyCatalog.ts",
+      "size_bytes": 877893,
+      "hash": "306d9318791e"
+    },
+    {
       "path": "src/shared/types/anatomy.ts",
       "size_bytes": 2539,
       "hash": "6f0e6f3f8a5e"
@@ -387,6 +562,11 @@
       "path": "tests/webgl-gc.test.ts",
       "size_bytes": 2405,
       "hash": "c54a8da78ea5"
+    },
+    {
+      "path": "tests/z-anatomy.test.ts",
+      "size_bytes": 3121,
+      "hash": "a7e0481ff4c1"
     }
   ]
 }

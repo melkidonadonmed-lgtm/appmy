@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import * as THREE from 'three';
 import { useGLTF, Center, Html } from '@react-three/drei';
-import { AnyAnatomicalNode } from './ExplodedCraniumScene.tsx';
+import { AnyAnatomicalNode } from './AnatomicalAtlasScene.tsx';
 
 interface RealCraniumModelProps {
   onSelectNode?: (node: AnyAnatomicalNode | null) => void;

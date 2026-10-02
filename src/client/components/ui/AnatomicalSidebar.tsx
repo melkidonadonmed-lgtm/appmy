@@ -25,7 +25,8 @@ import { ENDOCRINE_NODES } from '../../../shared/constants/endocrine.ts';
 import { REPRODUCTIVE_NODES } from '../../../shared/constants/reproductive.ts';
 import { SENSORY_NODES } from '../../../shared/constants/sensory.ts';
 import { INTEGUMENTARY_NODES } from '../../../shared/constants/integumentary.ts';
-import { ActiveAnatomicalSystem, AnyAnatomicalNode } from '../canvas/ExplodedCraniumScene.tsx';
+import { Z_ANATOMY_SKELETAL } from '../../../shared/constants/zAnatomyCatalog.ts';
+import { ActiveAnatomicalSystem, AnyAnatomicalNode, GeneralAnatomicalNode, AnatomicalRegion } from '../canvas/AnatomicalAtlasScene.tsx';
 
 interface AnatomicalSidebarProps {
   explosionProgress: number;
@@ -40,6 +41,8 @@ interface AnatomicalSidebarProps {
   onDivisionChange: (div: SkullDivision | 'all') => void;
   activeSystem: ActiveAnatomicalSystem;
   onSystemChange: (sys: ActiveAnatomicalSystem) => void;
+  activeRegion?: AnatomicalRegion;
+  onRegionChange?: (reg: AnatomicalRegion) => void;
   layerPeelingLevel: number; // 0 = Esqueleto, 1 = Profundo, 2 = Superficial
   onLayerPeelingChange: (level: number) => void;
 }
@@ -57,6 +60,8 @@ export function AnatomicalSidebar({
   onDivisionChange,
   activeSystem,
   onSystemChange,
+  activeRegion = 'all',
+  onRegionChange,
   layerPeelingLevel,
   onLayerPeelingChange,
 }: AnatomicalSidebarProps) {
@@ -68,12 +73,38 @@ export function AnatomicalSidebar({
   const filteredNodes = useMemo(() => {
     const list: AnyAnatomicalNode[] = [];
 
-    // 1. Osteologia (Cap. 2)
+    // 1. Osteologia (Cap. 2): Crânio e Esqueleto Z-Anatomy Completo (335 ossos)
     if (activeSystem === 'skeletal' || activeSystem === 'all') {
       const filteredBones = CRANIUM_22_NODES.filter((n) => {
         return activeDivision === 'all' || n.division === activeDivision;
       });
       list.push(...filteredBones);
+
+      // Adiciona o esqueleto axial e apendicular completo (coluna, tórax, membros, pelve)
+      const skeletalZNodes: GeneralAnatomicalNode[] = Z_ANATOMY_SKELETAL.map((s) => ({
+        id: s.id,
+        fmaId: s.fmaId,
+        namePtBr: s.namePtBr,
+        nameLatin: s.nameLatin,
+        chapter: 2,
+        systemName: 'Sistema Esquelético (Osteologia)',
+        meshName: s.node,
+        parentId: s.path.length > 0 ? s.path[s.path.length - 1] : undefined,
+        colorHex: '#f4ede2',
+        explosionVector: s.explosionVector,
+        clinicalData: {
+          origin: s.path.join(' > '),
+          insertion: 'Esqueleto axial/apendicular humano',
+          clinicalSignificance: `Peça óssea legítima escaneada em alta resolução (TA2: ${s.nameLatin}).`,
+        },
+      }));
+
+      const existingIds = new Set(list.map((n) => n.id));
+      skeletalZNodes.forEach((sn) => {
+        if (!existingIds.has(sn.id)) {
+          list.push(sn);
+        }
+      });
     }
 
     // 2. Miologia (Cap. 3)
@@ -134,17 +165,43 @@ export function AnatomicalSidebar({
       list.push(...INTEGUMENTARY_NODES);
     }
 
-    const q = searchQuery.toLowerCase().trim();
-    if (!q) return list;
+    let result = list;
 
-    return list.filter((n) => {
+    // Filtragem por região anatômica do esqueleto (ex: crânio, coluna, tórax, etc.)
+    if (activeRegion !== 'all') {
+      result = result.filter((n) => {
+        if (n.chapter !== 2) return true;
+        const text = (n.namePtBr + ' ' + n.nameLatin + ' ' + (n.clinicalData?.origin || '')).toLowerCase();
+        switch (activeRegion) {
+          case 'cranium':
+            return ['frontal', 'pariet', 'occipit', 'tempor', 'esfeno', 'etmoi', 'mandíb', 'maxil', 'zigom', 'nasal', 'lacrim', 'vômer', 'palat', 'concha', 'dente', 'canino', 'molar', 'incisivo', 'crânio', 'cranium', 'head'].some((k) => text.includes(k));
+          case 'spine':
+            return ['cervical', 'torácica', 'lombar', 'sacro', 'cóccix', 'atlas', 'áxis', 'vertebra', 'coluna'].some((k) => text.includes(k));
+          case 'thorax':
+            return ['costela', 'costal', 'esterno', 'xifoide', 'manúbrio', 'tórax', 'torácic'].some((k) => text.includes(k)) && !text.includes('vértebra torácica');
+          case 'upper_limb':
+            return ['clavícula', 'escápula', 'úmero', 'rádio', 'ulna', 'carpo', 'metacarpo', 'falange', 'mão', 'polegar', 'upper limb'].some((k) => text.includes(k));
+          case 'pelvis':
+            return ['quadril', 'ílio', 'ísquio', 'púbis', 'pelve', 'sacro'].some((k) => text.includes(k));
+          case 'lower_limb':
+            return ['fêmur', 'patela', 'tíbia', 'fíbula', 'calcâneo', 'tálus', 'metatarso', 'tarso', 'pé', 'lower limb'].some((k) => text.includes(k));
+          default:
+            return true;
+        }
+      });
+    }
+
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return result;
+
+    return result.filter((n) => {
       return (
         n.namePtBr.toLowerCase().includes(q) ||
         n.nameLatin.toLowerCase().includes(q) ||
         (n.fmaId && n.fmaId.toLowerCase().includes(q))
       );
     });
-  }, [activeSystem, activeDivision, layerPeelingLevel, searchQuery]);
+  }, [activeSystem, activeDivision, activeRegion, layerPeelingLevel, searchQuery]);
 
   return (
     <aside className={`anatomical-panel ${mobileExpanded ? 'expanded' : ''}`}>
@@ -249,27 +306,90 @@ export function AnatomicalSidebar({
           </button>
         </div>
 
-        {/* Sub-filtro de divisões cranianas */}
+        {/* Seletor de Região Anatômica do Esqueleto (Filtragem Regional Z-Anatomy) */}
         {(activeSystem === 'skeletal' || activeSystem === 'all') && (
-          <div className="button-group" style={{ marginTop: '0.375rem' }}>
-            <button
-              className={`btn-tag ${activeDivision === 'all' ? 'active' : ''}`}
-              onClick={() => onDivisionChange('all')}
-            >
-              Todos os Ossos (22)
-            </button>
-            <button
-              className={`btn-tag ${activeDivision === 'neurocranium' ? 'active' : ''}`}
-              onClick={() => onDivisionChange('neurocranium')}
-            >
-              Neurocrânio (8)
-            </button>
-            <button
-              className={`btn-tag ${activeDivision === 'viscerocranium' ? 'active' : ''}`}
-              onClick={() => onDivisionChange('viscerocranium')}
-            >
-              Viscerocrânio (14)
-            </button>
+          <div style={{ marginTop: '0.625rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            <div style={{ fontSize: '0.75rem', color: '#38bdf8', marginBottom: '0.35rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <span>📍 Região do Esqueleto:</span>
+            </div>
+            <div className="button-group" style={{ flexWrap: 'wrap', gap: '0.3rem' }}>
+              <button
+                className={`btn-tag ${activeRegion === 'all' ? 'active' : ''}`}
+                onClick={() => onRegionChange?.('all')}
+                title="Visualizar os 335 ossos do esqueleto humano completo"
+              >
+                🧍 Todo o Esqueleto
+              </button>
+              <button
+                className={`btn-tag ${activeRegion === 'cranium' ? 'active' : ''}`}
+                onClick={() => onRegionChange?.('cranium')}
+                title="Foco exclusivo no Crânio e Viscerocrânio Facial"
+              >
+                💀 Crânio & Face
+              </button>
+              <button
+                className={`btn-tag ${activeRegion === 'spine' ? 'active' : ''}`}
+                onClick={() => onRegionChange?.('spine')}
+                title="Foco na Coluna Vertebral Cervical, Torácica, Lombar e Sacro"
+              >
+                🦴 Coluna (C1-L5)
+              </button>
+              <button
+                className={`btn-tag ${activeRegion === 'thorax' ? 'active' : ''}`}
+                onClick={() => onRegionChange?.('thorax')}
+                title="Foco nas Costelas e Esterno"
+              >
+                🫁 Caixa Torácica
+              </button>
+              <button
+                className={`btn-tag ${activeRegion === 'upper_limb' ? 'active' : ''}`}
+                onClick={() => onRegionChange?.('upper_limb')}
+                title="Foco em Clavícula, Escápula, Úmero, Braço e Mão"
+              >
+                💪 Membros Sup.
+              </button>
+              <button
+                className={`btn-tag ${activeRegion === 'pelvis' ? 'active' : ''}`}
+                onClick={() => onRegionChange?.('pelvis')}
+                title="Foco na Pelve e Cintura Pélvica"
+              >
+                🩻 Pelve & Quadril
+              </button>
+              <button
+                className={`btn-tag ${activeRegion === 'lower_limb' ? 'active' : ''}`}
+                onClick={() => onRegionChange?.('lower_limb')}
+                title="Foco em Fêmur, Patela, Tíbia, Fíbula e Pé"
+              >
+                🦵 Membros Inf.
+              </button>
+            </div>
+
+            {/* Sub-filtro fino de Neurocrânio e Viscerocrânio quando em foco no Crânio */}
+            {activeRegion === 'cranium' && (
+              <div className="button-group" style={{ marginTop: '0.35rem', gap: '0.25rem' }}>
+                <button
+                  className={`btn-tag ${activeDivision === 'all' ? 'active' : ''}`}
+                  onClick={() => onDivisionChange('all')}
+                  style={{ fontSize: '0.6875rem' }}
+                >
+                  Todos do Crânio
+                </button>
+                <button
+                  className={`btn-tag ${activeDivision === 'neurocranium' ? 'active' : ''}`}
+                  onClick={() => onDivisionChange('neurocranium')}
+                  style={{ fontSize: '0.6875rem' }}
+                >
+                  Neurocrânio (8)
+                </button>
+                <button
+                  className={`btn-tag ${activeDivision === 'viscerocranium' ? 'active' : ''}`}
+                  onClick={() => onDivisionChange('viscerocranium')}
+                  style={{ fontSize: '0.6875rem' }}
+                >
+                  Viscerocrânio (14)
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -15,7 +15,7 @@ import { AnatomicalSidebar } from './components/ui/AnatomicalSidebar.tsx';
 import { DissectionToolbar } from './components/ui/DissectionToolbar.tsx';
 import { TelemetryOverlay } from './components/telemetry/TelemetryOverlay.tsx';
 import { SkullDivision } from '../shared/constants/cranium.ts';
-import { ActiveAnatomicalSystem, AnyAnatomicalNode } from './components/canvas/ExplodedCraniumScene.tsx';
+import { ActiveAnatomicalSystem, AnyAnatomicalNode, AnatomicalRegion } from './components/canvas/AnatomicalAtlasScene.tsx';
 import { DissectionState } from '../shared/types/dissection.ts';
 import { isFirebaseConfigured } from './lib/firebase.ts';
 
@@ -31,13 +31,14 @@ interface HealthStatus {
 export default function App() {
   const [activeMode, setActiveMode] = useState<'3d-atlas' | 'infra-dashboard'>('3d-atlas');
 
-  // Estado do Motor 3D (Osteologia, Miologia, Cardiovascular e Neurologia)
-  const [viewType, setViewType] = useState<'exploded' | 'realistic'>('exploded');
-  const [realSkullOpacity, setRealSkullOpacity] = useState<number>(0.35);
+  // Estado do Motor 3D (Z-Anatomy: Esqueleto de 335 Ossos + Órgãos Reais)
+  const [viewType, setViewType] = useState<'exploded' | 'realistic'>('realistic');
+  const [realSkullOpacity, setRealSkullOpacity] = useState<number>(1.0);
   const [activeDivision, setActiveDivision] = useState<SkullDivision | 'all'>('all');
   const [activeSystem, setActiveSystem] = useState<ActiveAnatomicalSystem>('all');
+  const [activeRegion, setActiveRegion] = useState<AnatomicalRegion>('all');
   const [layerPeelingLevel, setLayerPeelingLevel] = useState<number>(2);
-  const [explosionProgress, setExplosionProgress] = useState<number>(0.25);
+  const [explosionProgress, setExplosionProgress] = useState<number>(0.0);
   const [selectedNode, setSelectedNode] = useState<AnyAnatomicalNode | null>(null);
   const [ghostMode, setGhostMode] = useState<boolean>(false);
   const [isolatedOnly, setIsolatedOnly] = useState<boolean>(false);
@@ -88,7 +89,7 @@ export default function App() {
           <h1>Atlas 3D de Anatomia</h1>
           <span className="status-badge" style={{ padding: '0.15rem 0.5rem', fontSize: '0.6875rem' }}>
             <span className="status-dot"></span>
-            <span>Fase 7: Órgãos dos Sentidos & Tegumento Comum</span>
+            <span>Z-Anatomy: Esqueleto Completo (335 Ossos) & Órgãos Reais</span>
           </span>
         </div>
 
@@ -97,18 +98,18 @@ export default function App() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.5rem' }}>
               <div className="mode-toggle-group">
                 <button
-                  className={`mode-btn ${viewType === 'exploded' ? 'active' : ''}`}
-                  onClick={() => setViewType('exploded')}
-                  title="Vista Explodida por Peças Segmentadas"
-                >
-                  Vista Explodida
-                </button>
-                <button
                   className={`mode-btn ${viewType === 'realistic' ? 'active' : ''}`}
                   onClick={() => setViewType('realistic')}
-                  title="Crânio Real Completo em formato .GLB"
+                  title="Corpo Humano Completo Z-Anatomy (335 Ossos + Vísceras com Exploded View Real)"
                 >
-                  Crânio Real (.GLB)
+                  Corpo Real (.GLB)
+                </button>
+                <button
+                  className={`mode-btn ${viewType === 'exploded' ? 'active' : ''}`}
+                  onClick={() => setViewType('exploded')}
+                  title="Vista Didática por Peças Anatômicas Segmentadas"
+                >
+                  Vista Didática (Crânio)
                 </button>
               </div>
 
@@ -117,21 +118,21 @@ export default function App() {
                   <button
                     className={`mode-btn ${realSkullOpacity === 1.0 ? 'active' : ''}`}
                     onClick={() => setRealSkullOpacity(1.0)}
-                    title="Osso Real Totalmente Opaco / Sólido"
+                    title="Densidade 100% - Totalmente Sólido e Vívido"
                   >
-                    🦴 Sólido
+                    🦴 Sólido (100%)
                   </button>
                   <button
                     className={`mode-btn ${realSkullOpacity === 0.35 ? 'active' : ''}`}
                     onClick={() => setRealSkullOpacity(0.35)}
-                    title="Osso Translúcido (Permite visualizar cérebro, olhos e vasos internos)"
+                    title="Densidade 35% - Translúcido (Permite visualizar estruturas internas)"
                   >
                     ✨ Translúcido
                   </button>
                   <button
                     className={`mode-btn ${realSkullOpacity === 0.0 ? 'active' : ''}`}
                     onClick={() => setRealSkullOpacity(0.0)}
-                    title="Ocultar Osso Real para foco nas estruturas internas"
+                    title="Ocultar Esqueleto para foco nas estruturas internas"
                   >
                     👁️ Oculto
                   </button>
@@ -185,6 +186,7 @@ export default function App() {
               isolatedOnly={isolatedOnly}
               activeDivision={activeDivision}
               activeSystem={activeSystem}
+              activeRegion={activeRegion}
               layerPeelingLevel={layerPeelingLevel}
               dissection={dissection}
               onTelemetryUpdate={setTelemetry}
@@ -204,6 +206,8 @@ export default function App() {
               onDivisionChange={setActiveDivision}
               activeSystem={activeSystem}
               onSystemChange={setActiveSystem}
+              activeRegion={activeRegion}
+              onRegionChange={setActiveRegion}
               layerPeelingLevel={layerPeelingLevel}
               onLayerPeelingChange={setLayerPeelingLevel}
             />

@@ -14,13 +14,13 @@ import { EndocrineNode } from '../../../shared/constants/endocrine.ts';
 import { ReproductiveNode } from '../../../shared/constants/reproductive.ts';
 import { SensoryNode } from '../../../shared/constants/sensory.ts';
 import { IntegumentaryNode } from '../../../shared/constants/integumentary.ts';
-import { ActiveAnatomicalSystem } from '../../../shared/types/anatomy.ts';
+import { ActiveAnatomicalSystem, AnatomicalNode } from '../../../shared/types/anatomy.ts';
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { MuscleMeshItem } from './MuscleMeshItem.tsx';
-import { RealCraniumModel } from './RealCraniumModel.tsx';
+import { RealBodyAtlas } from './RealBodyAtlas.tsx';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
 
-// Code Splitting & Dynamic Lazy Loading dos Módulos Viscerais e Sensoriais (Fases 6 e 7)
+// Code Splitting & Dynamic Lazy Loading dos Módulos Regionais e Viscerais do Corpo Humano
 const CardiovascularScene = lazy(() => import('./CardiovascularScene.tsx').then((m) => ({ default: m.CardiovascularScene })));
 const NeurologyScene = lazy(() => import('./NeurologyScene.tsx').then((m) => ({ default: m.NeurologyScene })));
 const RespiratoryScene = lazy(() => import('./RespiratoryScene.tsx').then((m) => ({ default: m.RespiratoryScene })));
@@ -34,6 +34,11 @@ const IntegumentaryScene = lazy(() => import('./IntegumentaryScene.tsx').then((m
 
 export type { ActiveAnatomicalSystem };
 
+export interface GeneralAnatomicalNode extends AnatomicalNode {
+  division?: string;
+  paired?: boolean;
+}
+
 export type AnyAnatomicalNode =
   | SkullAnatomicalNode
   | MuscleAnatomicalNode
@@ -46,9 +51,19 @@ export type AnyAnatomicalNode =
   | EndocrineNode
   | ReproductiveNode
   | SensoryNode
-  | IntegumentaryNode;
+  | IntegumentaryNode
+  | GeneralAnatomicalNode;
 
-interface ExplodedCraniumSceneProps {
+export type AnatomicalRegion =
+  | 'all'
+  | 'cranium'
+  | 'spine'
+  | 'thorax'
+  | 'upper_limb'
+  | 'pelvis'
+  | 'lower_limb';
+
+export interface AnatomicalAtlasSceneProps {
   viewType?: 'exploded' | 'realistic';
   realSkullOpacity?: number;
   explosionProgress: number; // 0.0 a 1.0
@@ -58,6 +73,7 @@ interface ExplodedCraniumSceneProps {
   isolatedOnly: boolean;
   activeDivision: SkullDivision | 'all';
   activeSystem: ActiveAnatomicalSystem;
+  activeRegion?: AnatomicalRegion;
   layerPeelingLevel: number; // 0 = Esqueleto, 1 = Profundo, 2 = Superficial, 3 = Pele
   visualMode?: DissectionVisualMode;
 }
@@ -262,9 +278,9 @@ function BoneMeshItem({
   );
 }
 
-export function ExplodedCraniumScene({
+export function AnatomicalAtlasScene({
   viewType = 'exploded',
-  realSkullOpacity = 0.35,
+  realSkullOpacity = 1.0,
   explosionProgress,
   selectedNodeId,
   onSelectNode,
@@ -272,24 +288,32 @@ export function ExplodedCraniumScene({
   isolatedOnly,
   activeDivision,
   activeSystem,
+  activeRegion = 'all',
   layerPeelingLevel,
   visualMode = 'solid',
-}: ExplodedCraniumSceneProps) {
+}: AnatomicalAtlasSceneProps) {
   const sceneGroupRef = useRef<THREE.Group>(null);
   const isXRay = visualMode === 'xray';
 
-  const showSkeletal = activeSystem === 'skeletal' || activeSystem === 'all';
-  const showMuscular = (activeSystem === 'muscular' || activeSystem === 'all') && layerPeelingLevel > 0;
-  const showCardiovascular = activeSystem === 'cardiovascular' || activeSystem === 'all';
-  const showNervous = activeSystem === 'nervous' || activeSystem === 'all';
-  const showRespiratory = activeSystem === 'respiratory' || activeSystem === 'all';
-  const showDigestive = activeSystem === 'digestive' || activeSystem === 'all';
-  const showLymphatic = activeSystem === 'lymphatic' || activeSystem === 'all';
-  const showUrinary = activeSystem === 'urinary' || activeSystem === 'all';
-  const showEndocrine = activeSystem === 'endocrine' || activeSystem === 'all';
-  const showReproductive = activeSystem === 'reproductive' || activeSystem === 'all';
-  const showSensory = activeSystem === 'sensory' || activeSystem === 'all';
+  const isRealistic = viewType === 'realistic';
+
+  // No modo Modelo Real (.GLB), NENHUMA cena procedural sintética é renderizada!
+  // O RealBodyAtlas gerencia com exclusividade os modelos médicos autênticos do Z-Anatomy.
+  const showProcedural = !isRealistic;
+
+  const showSkeletal = showProcedural && (activeSystem === 'skeletal' || activeSystem === 'all');
+  const showMuscular = showProcedural && (activeSystem === 'muscular' || activeSystem === 'all') && layerPeelingLevel > 0;
+  const showCardiovascular = showProcedural && (activeSystem === 'cardiovascular' || activeSystem === 'all');
+  const showNervous = showProcedural && (activeSystem === 'nervous' || activeSystem === 'all');
+  const showRespiratory = showProcedural && (activeSystem === 'respiratory' || activeSystem === 'all');
+  const showDigestive = showProcedural && (activeSystem === 'digestive' || activeSystem === 'all');
+  const showLymphatic = showProcedural && (activeSystem === 'lymphatic' || activeSystem === 'all');
+  const showUrinary = showProcedural && (activeSystem === 'urinary' || activeSystem === 'all');
+  const showEndocrine = showProcedural && (activeSystem === 'endocrine' || activeSystem === 'all');
+  const showReproductive = showProcedural && (activeSystem === 'reproductive' || activeSystem === 'all');
+  const showSensory = showProcedural && (activeSystem === 'sensory' || activeSystem === 'all');
   const showIntegumentary =
+    showProcedural &&
     (activeSystem === 'integumentary' || activeSystem === 'all') &&
     (layerPeelingLevel >= 3 || activeSystem === 'integumentary');
 
@@ -298,23 +322,28 @@ export function ExplodedCraniumScene({
     return () => {
       if (sceneGroupRef.current) {
         const report = disposeHierarchy(sceneGroupRef.current);
-        logWebGLGarbageCollection('ExplodedCraniumScene', report);
+        logWebGLGarbageCollection('AnatomicalAtlasScene', report);
       }
     };
   }, []);
 
   return (
     <group ref={sceneGroupRef} position={[0, 0, 0]}>
-      {/* 1. Arcabouço Ósseo (Osteologia - Cap. 2): Crânio Real .GLB ou Peças Explodidas */}
-      {showSkeletal && (
-        viewType === 'realistic' ? (
-          <RealCraniumModel
-            onSelectNode={onSelectNode}
-            isSelected={selectedNodeId === 'fma:cranium_overview'}
-            isGhost={Boolean(selectedNodeId && selectedNodeId !== 'fma:cranium_overview' && ghostMode)}
-            opacity={visualMode === 'xray' ? 0.25 : realSkullOpacity}
-          />
-        ) : (
+      {/* 1. Arcabouço Ósseo e Visceral Real Z-Anatomy (.GLB) ou Peças Didáticas */}
+      {viewType === 'realistic' ? (
+        <RealBodyAtlas
+          explosionProgress={explosionProgress}
+          selectedNodeId={selectedNodeId}
+          onSelectNode={onSelectNode}
+          ghostMode={ghostMode}
+          isolatedOnly={isolatedOnly}
+          activeSystem={activeSystem}
+          activeRegion={activeRegion}
+          realSkullOpacity={realSkullOpacity}
+          visualMode={visualMode}
+        />
+      ) : (
+        showSkeletal && (
           CRANIUM_22_NODES.map((node) => {
             const isSelected = selectedNodeId === node.id;
             const isGhost = Boolean(selectedNodeId && !isSelected && ghostMode);
@@ -360,9 +389,9 @@ export function ExplodedCraniumScene({
           );
         })}
 
-      {/* Módulos Viscerais com Code-Splitting e Carregamento Dinâmico (Fase 6) */}
+      {/* Módulos Viscerais e Sistêmicos do Corpo Humano com Carregamento Dinâmico */}
       <Suspense fallback={null}>
-        {/* 3. Sistema Cardiovascular: Câmaras Cardíacas e Vasos Tubulares (Cap. 5) */}
+        {/* 3. Sistema Cardiovascular: Câmaras Cardíacas e Grandes Vasos (Cap. 5) */}
         {showCardiovascular && (
           <CardiovascularScene
             explosionProgress={explosionProgress}
@@ -384,7 +413,7 @@ export function ExplodedCraniumScene({
           />
         )}
 
-        {/* 5. Sistema Respiratório: Laringe, Traqueia, Árvore Brônquica e Lobos Pulmonares (Cap. 7) */}
+        {/* 5. Sistema Respiratório: Laringe, Traqueia, Árvore Brônquica e Pulmões (Cap. 7) */}
         {showRespiratory && (
           <RespiratoryScene
             explosionProgress={explosionProgress}
@@ -395,7 +424,7 @@ export function ExplodedCraniumScene({
           />
         )}
 
-        {/* 6. Sistema Digestório Superior & Médio: Esôfago, Estômago, Fígado e Vias Biliares (Cap. 8) */}
+        {/* 6. Sistema Digestório: Esôfago, Estômago, Fígado e Vias Biliares (Cap. 8) */}
         {showDigestive && (
           <DigestiveScene
             explosionProgress={explosionProgress}
@@ -406,7 +435,7 @@ export function ExplodedCraniumScene({
           />
         )}
 
-        {/* 7. Sistema Linfático: Grandes Ductos, Cisterna do Quilo e Cadeias Ganglionares (Cap. 6) */}
+        {/* 7. Sistema Linfático: Grandes Ductos, Cisterna do Quilo e Linfonodos (Cap. 6) */}
         {showLymphatic && (
           <LymphaticScene
             explosionProgress={explosionProgress}
@@ -450,7 +479,7 @@ export function ExplodedCraniumScene({
           />
         )}
 
-        {/* 11. Órgãos dos Sentidos: Bulbo Ocular, Retina e Labirinto Vestibulococlear (Cap. 13) */}
+        {/* 11. Órgãos dos Sentidos: Aparelho Visual e Vestibulococlear (Cap. 13) */}
         {showSensory && (
           <SensoryScene
             explosionProgress={explosionProgress}
@@ -462,7 +491,7 @@ export function ExplodedCraniumScene({
           />
         )}
 
-        {/* 12. Sistema Tegumentar: Pele Facial, Gálea e Tecido Subcutâneo (Cap. 14) */}
+        {/* 12. Sistema Tegumentar: Pele, Fáscias e Gálea Aponeurótica (Cap. 14) */}
         {showIntegumentary && (
           <IntegumentaryScene
             explosionProgress={explosionProgress}
@@ -478,3 +507,6 @@ export function ExplodedCraniumScene({
     </group>
   );
 }
+
+// Alias de retrocompatibilidade para garantir que nenhum import legado quebre
+export const ExplodedCraniumScene = AnatomicalAtlasScene;

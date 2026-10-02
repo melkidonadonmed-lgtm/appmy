@@ -2,12 +2,11 @@ import { Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Center, Environment } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
-import { ExplodedCraniumScene } from './ExplodedCraniumScene.tsx';
+import { AnatomicalAtlasScene, ActiveAnatomicalSystem, AnyAnatomicalNode, AnatomicalRegion } from './AnatomicalAtlasScene.tsx';
 import { DissectionController } from './DissectionController.tsx';
 import { TelemetryCollector } from '../telemetry/TelemetryOverlay.tsx';
 import { SkullDivision } from '../../../shared/constants/cranium.ts';
 import { DissectionState } from '../../../shared/types/dissection.ts';
-import { ActiveAnatomicalSystem, AnyAnatomicalNode } from './ExplodedCraniumScene.tsx';
 
 interface SceneCanvasProps {
   viewType: 'exploded' | 'realistic';
@@ -19,6 +18,7 @@ interface SceneCanvasProps {
   isolatedOnly: boolean;
   activeDivision: SkullDivision | 'all';
   activeSystem: ActiveAnatomicalSystem;
+  activeRegion?: AnatomicalRegion;
   layerPeelingLevel: number;
   dissection: DissectionState;
   onTelemetryUpdate: (data: { fps: number; triangles: number; drawCalls: number }) => void;
@@ -26,7 +26,7 @@ interface SceneCanvasProps {
 
 export function SceneCanvas({
   viewType,
-  realSkullOpacity = 0.35,
+  realSkullOpacity = 1.0,
   explosionProgress,
   selectedNode,
   onSelectNode,
@@ -34,6 +34,7 @@ export function SceneCanvas({
   isolatedOnly,
   activeDivision,
   activeSystem,
+  activeRegion = 'all',
   layerPeelingLevel,
   dissection,
   onTelemetryUpdate,
@@ -77,7 +78,7 @@ export function SceneCanvas({
 
         <Suspense fallback={null}>
           <Center>
-            <ExplodedCraniumScene
+            <AnatomicalAtlasScene
               viewType={viewType}
               realSkullOpacity={realSkullOpacity}
               explosionProgress={explosionProgress}
@@ -87,6 +88,7 @@ export function SceneCanvas({
               isolatedOnly={isolatedOnly}
               activeDivision={activeDivision}
               activeSystem={activeSystem}
+              activeRegion={activeRegion}
               layerPeelingLevel={layerPeelingLevel}
               visualMode={dissection.visualMode}
             />
