@@ -1,0 +1,134 @@
+mutation CreateUser($data: User_Data!) @auth(level: USER) {
+  user_insert(data: $data)
+}
+
+mutation UpdateUser($key: User_Key!, $data: User_Data!) @auth(level: USER) {
+  user_update(key: $key, data: $data)
+}
+
+mutation DeleteUser($key: User_Key!) @auth(level: USER) {
+  user_delete(key: $key)
+}
+
+query GetUser($key: User_Key!) @auth(level: USER) {
+  user(key: $key) {
+    name
+    email
+    role
+  }
+}
+
+query ListUsers @auth(level: USER) {
+  users {
+    name
+    email
+  }
+}
+
+mutation CreateProcess($data: Process_Data!) @auth(level: USER) {
+  process_insert(data: $data)
+}
+
+mutation UpdateProcess($key: Process_Key!, $data: Process_Data!) @auth(level: USER) {
+  process_update(key: $key, data: $data)
+}
+
+mutation DeleteProcess($key: Process_Key!) @auth(level: USER) {
+  process_delete(key: $key)
+}
+
+query GetProcess($key: Process_Key!) @auth(level: USER) {
+  process(key: $key) {
+    name
+    status
+    dueDate
+  }
+}
+
+query ListProcesses @auth(level: USER) {
+  processes {
+    name
+    status
+  }
+}
+
+mutation CreateRequirement($data: Requirement_Data!) @auth(level: USER) {
+  requirement_insert(data: $data)
+}
+
+mutation UpdateRequirement($key: Requirement_Key!, $data: Requirement_Data!) @auth(level: USER) {
+  requirement_update(key: $key, data: $data)
+}
+
+mutation DeleteRequirement($key: Requirement_Key!) @auth(level: USER) {
+  requirement_delete(key: $key)
+}
+
+query GetRequirement($key: Requirement_Key!) @auth(level: USER) {
+  requirement(key: $key) {
+    title
+    description
+    isMandatory
+  }
+}
+
+query ListRequirements @auth(level: USER) {
+  requirements {
+    title
+    description
+  }
+}
+
+mutation CreateSubmission($data: Submission_Data!) @auth(level: USER) {
+  submission_insert(data: $data)
+}
+
+mutation UpdateSubmission($key: Submission_Key!, $data: Submission_Data!) @auth(level: USER) {
+  submission_update(key: $key, data: $data)
+}
+
+mutation DeleteSubmission($key: Submission_Key!) @auth(level: USER) {
+  submission_delete(key: $key)
+}
+
+query GetSubmission($key: Submission_Key!) @auth(level: USER) {
+  submission(key: $key) {
+    status
+    fileUrl
+    rejectionReason
+  }
+}
+
+query ListSubmissions @auth(level: USER) {
+  submissions(where: {userId: {eq_expr: "auth.uid"}}) {
+    status
+    uploadDate
+    fileUrl
+  }
+}
+
+mutation CreateNotification($data: Notification_Data!) @auth(level: USER) {
+  notification_insert(data: $data)
+}
+
+mutation UpdateNotification($key: Notification_Key!, $data: Notification_Data!) @auth(level: USER) {
+  notification_update(key: $key, data: $data)
+}
+
+mutation DeleteNotification($key: Notification_Key!) @auth(level: USER) {
+  notification_delete(key: $key)
+}
+
+query GetNotification($key: Notification_Key!) @auth(level: USER) {
+  notification(key: $key) {
+    message
+    isRead
+  }
+}
+
+query ListMyNotifications @auth(level: USER) {
+  notifications(where: {userId: {eq_expr: "auth.uid"}}) {
+    message
+    isRead
+  }
+}

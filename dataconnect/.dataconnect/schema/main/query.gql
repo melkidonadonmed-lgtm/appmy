@@ -1,0 +1,267 @@
+extend type Query {
+  """
+  ✨ Look up a single `Notification` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  notification(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Notification_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Notification_FirstRow
+  ): Notification @fdc_generated(from: "Notification", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Process` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  process(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Process_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Process_FirstRow
+  ): Process @fdc_generated(from: "Process", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Requirement` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  requirement(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Requirement_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Requirement_FirstRow
+  ): Requirement @fdc_generated(from: "Requirement", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Submission` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  submission(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Submission_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Submission_FirstRow
+  ): Submission @fdc_generated(from: "Submission", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `User` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  user(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+  ): User @fdc_generated(from: "User", purpose: QUERY_SINGLE)
+  """
+  ✨ List `Notification` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  notifications(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Notification_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Notification_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Notification_Having
+  ): [Notification!]! @fdc_generated(from: "Notification", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Process` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  processes(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Process_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Process_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Process_Having
+  ): [Process!]! @fdc_generated(from: "Process", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Requirement` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  requirements(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Requirement_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Requirement_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Requirement_Having
+  ): [Requirement!]! @fdc_generated(from: "Requirement", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Submission` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  submissions(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Submission_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Submission_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Submission_Having
+  ): [Submission!]! @fdc_generated(from: "Submission", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `User` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  users(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: User_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [User_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: User_Having
+  ): [User!]! @fdc_generated(from: "User", purpose: QUERY_MULTIPLE)
+}

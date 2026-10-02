@@ -4,29 +4,28 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Concluída Auditoria e Reestruturação Técnica: Modo Foco Cirúrgico (Zen Mode 100% Viewport), Persistência de Bookmarks Clínicos no LocalStorage, Otimização de VRAM e Ciclo de Renderização
+**Fase Atual**: Concluída Unificação na Sidebar Esquerda: Remoção da Sidebar Direita, Expansão Máxima do Campo de Visão 3D (+360px), Integração de Filtros Selecionáveis de Sistemas/Regiões e Ficha Clínica Compacta
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Modo Foco Cirúrgico (Zen Mode 100% Viewport)**:
-  - Acionamento unificado via botão superior na `top-nav` ou tecla de atalho clínico `Z`.
-  - Colapsa simultaneamente o outliner taxonômico (esquerda) e a sidebar clínica (direita), liberando 100% da viewport para a cena 3D.
-  - Preserva de forma idempotente e determinística o estado prévio de cada painel ao sair do modo Zen.
-  - Indicador flutuante elegante (`.zen-mode-badge`) no topo do canvas permitindo restaurar a interface com um clique ou via teclado.
-- **Persistência de Bookmarks Clínicos (`bookmarks-storage.ts`)**:
-  - Módulo resiliente com suporte dual (Browser e Node/SSR) para salvar perspectivas, planos de corte MPR, densidades ósseas, visibilidade de malhas e alvos de câmera no LocalStorage.
-  - Interface integrada na `QuickPresetsBar` com lista de marcadores, data de criação, restauração atômica no `useAnatomyStore` e exclusão limpa.
-- **Otimização de VRAM e Ciclo de Renderização Three.js / R3F**:
-  - `SmoothCameraController` otimizado: limpa alvos de foco ao convergir (distância < 0.0001), eliminando queima desnecessária de ciclos de CPU por frame.
-  - Tratamento resiliente de perda e restauração de contexto WebGL (`webglcontextlost` / `webglcontextrestored`) prevenindo crashes de VRAM.
-  - `RealCraniumModel` equipado com descarte determinístico de geometrias, materiais e texturas (`disposeHierarchy` em `webgl-gc.ts`) no ciclo de unmount.
+- **Unificação de Controles na Sidebar Esquerda (`AnatomyTreePanel.tsx`)**:
+  - Consolidados os filtros rápidos selecionáveis de Sistemas Anatômicos (11 sistemas médicos) e Regiões do Esqueleto (7 regiões) diretamente no painel esquerdo (`AnatomyFiltersSection.tsx`).
+  - Preservadas e aprimoradas as caixas de seleção tri-state (`TreeGroup.tsx`) para controle granular de visibilidade em massa ou individual.
+  - Sincronização reativa da árvore taxonômica com o sistema ativo selecionado.
+- **Expansão de Viewport 3D (Campo de Visão Total)**:
+  - Desacoplada a renderização da `AnatomicalSidebar` em `App.tsx`, eliminando a disputa de espaço entre duas barras simultâneas.
+  - A área central `.viewport-center-area` agora ocupa 100% da largura restante da tela, liberando mais de 360px horizontais para visualização imersiva do modelo anatômico.
+  - O Modo Foco Cirúrgico (`Zen Mode` / tecla `Z`) continua operacional, colapsando a barra esquerda para entregar 100% de tela cheia.
+- **Dossiê Clínico Compacto Integrado (`AnatomyClinicalCard.tsx`)**:
+  - Exibido no topo da barra esquerda quando uma peça é selecionada no 3D ou na árvore.
+  - Inclui identificação bilingue (PT-BR e Latim TA2), código FMA, atalhos de Foco (`F`), Isolar (`I`), Ocultar (`H`) e Fechar (`X` / `Esc`), além de correlações médicas e funcionais.
 - **Quality Gate Validado**:
-  - 120 testes unitários aprovados em 21 suítes Vitest (`ExitCode 0`).
+  - 135 testes unitários aprovados em 23 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` compilado com sucesso em 9.69s (`ExitCode 0`).
-  - `workspace_index.json` reindexado com 131 arquivos mapeados.
+  - `npm run build` compilado com sucesso em 5.27s (`ExitCode 0`).
+  - `workspace_index.json` reindexado com 151 arquivos mapeados.
 
 ---
 
@@ -41,5 +40,5 @@
 
 ## 3. Próximo Ponto de Entrada
 
-- **Exportação e Compartilhamento de Bookmarks**:
-  - Permitir exportar snapshots de dissecção em arquivo JSON ou URL parametrizada para compartilhamento entre cirurgiões e residentes.
+- **Persistência de Filtros Ativos no LocalStorage**:
+  - Salvar o sistema/região ativo nas preferências locais para manter a mesma perspectiva entre recarregamentos.

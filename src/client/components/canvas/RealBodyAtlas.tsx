@@ -6,7 +6,9 @@ import {
   Z_ANATOMY_BY_NODE,
   Z_ANATOMY_BY_ID,
   ZAnatomyItem,
+  sanitizeNodeName,
 } from '../../../shared/constants/zAnatomyCatalog.ts';
+import { detectRegion } from '../../../shared/utils/buildTaxonomicTree.ts';
 import { AnyAnatomicalNode, GeneralAnatomicalNode, AnatomicalRegion } from './AnatomicalAtlasScene.tsx';
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
@@ -42,14 +44,21 @@ interface MeshAnimData {
 function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: AnatomicalRegion): boolean {
   if (region === 'all' || !region) return true;
   
+  if (item) {
+    const detected = detectRegion(item);
+    if (region === 'spine' && detected === 'vertebral_column') return true;
+    if (region === detected) return true;
+  }
+
   const pathStr = (item?.path || []).join(' ').toLowerCase();
-  const nameLower = (item?.nameEn || meshName).toLowerCase();
+  const nameLower = (item?.nameEn || item?.namePtBr || meshName).toLowerCase();
 
   switch (region) {
     case 'cranium':
       return (
         pathStr.includes('cranium') ||
         pathStr.includes('head') ||
+        pathStr.includes('skull') ||
         pathStr.includes('mandible') ||
         [
           'frontal', 'parietal', 'occipital', 'temporal', 'sphenoid', 'ethmoid',
@@ -62,6 +71,7 @@ function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: Ana
       return (
         pathStr.includes('vertebral') ||
         pathStr.includes('vertebra') ||
+        pathStr.includes('spine') ||
         [
           'atlas', 'axis', 'cervical', 'thoracic vertebra', 'lumbar', 'sacrum', 'coccyx'
         ].some((k) => nameLower.includes(k))
@@ -79,6 +89,7 @@ function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: Ana
       return (
         pathStr.includes('upper limb') ||
         pathStr.includes('pectoral') ||
+        pathStr.includes('arm') ||
         [
           'clavicle', 'scapula', 'humerus', 'radius', 'ulna',
           'carpal', 'metacarpal', 'phalanx', 'scaphoid', 'lunate',
@@ -95,6 +106,7 @@ function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: Ana
     case 'lower_limb':
       return (
         pathStr.includes('lower limb') ||
+        pathStr.includes('leg') ||
         [
           'femur', 'patella', 'tibia', 'fibula', 'calcaneus', 'talus',
           'navicular', 'cuneiform', 'cuboid', 'metatarsal', 'sesamoid'
@@ -184,7 +196,7 @@ function RealSystemModel({
         mesh.castShadow = true;
         mesh.receiveShadow = true;
 
-        const item = Z_ANATOMY_BY_NODE[mesh.name] || null;
+        const item = Z_ANATOMY_BY_NODE[mesh.name] || Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] || null;
         let ev: THREE.Vector3;
 
         if (
@@ -241,7 +253,11 @@ function RealSystemModel({
       const isRegionVisible = systemName === 'skeletal' ? isNodeInRegion(item, mesh.name, activeRegion) : true;
 
       // Filtragem por checkboxes do Outliner
-      const isHiddenByTree = hiddenNodeIds.has(item?.id || '') || hiddenNodeIds.has(mesh.name);
+      const isHiddenByTree =
+        hiddenNodeIds.has(item?.id || '') ||
+        hiddenNodeIds.has(item?.node || '') ||
+        hiddenNodeIds.has(mesh.name) ||
+        (item ? hiddenNodeIds.has(sanitizeNodeName(item.node)) : false);
 
       mesh.visible = isRegionVisible && !isHiddenIsolated && !isHiddenByTree;
 
@@ -317,8 +333,13 @@ function RealSystemModel({
         onClick={(e: { stopPropagation: () => void; object: THREE.Object3D }) => {
           e.stopPropagation();
           const target = animNodes.find((d) => d.mesh === e.object);
-          if (target && target.item) {
-            const node = toAnatomicalNode(target.item);
+          const resolvedItem =
+            target?.item ||
+            Z_ANATOMY_BY_NODE[e.object.name] ||
+            Z_ANATOMY_BY_NODE[sanitizeNodeName(e.object.name)] ||
+            null;
+          if (resolvedItem) {
+            const node = toAnatomicalNode(resolvedItem);
             const nextVal = effectiveSelectedId === node.id ? null : node;
             setStoreSelectedNode(nextVal ? node.id : null);
             onSelectNode(nextVal);
@@ -453,6 +474,9 @@ export function RealBodyAtlas({
   const showDigestive = activeSystem === 'digestive' || activeSystem === 'all';
   const showNervous = activeSystem === 'nervous' || activeSystem === 'all';
   const showRenal = activeSystem === 'urinary' || activeSystem === 'renal' || activeSystem === 'all';
+  const showLymphatic = activeSystem === 'lymphatic' || activeSystem === 'all';
+  const showEndocrine = activeSystem === 'endocrine' || activeSystem === 'all';
+  const showReproductive = activeSystem === 'reproductive' || activeSystem === 'all';
 
   // Centralização e Escala Adaptativa conforme a região selecionada:
   // Se o usuário selecionou apenas o Crânio, centralizamos a cabeça no meio do viewport com zoom cirúrgico!
@@ -610,6 +634,60 @@ export function RealBodyAtlas({
           glbPath="/models/anatomy/renal_male.glb"
           systemName="urinary"
           defaultColor="#a855f7" // Púrpura urológico
+          explosionProgress={effectiveExplosion}
+          selectedNodeId={selectedNodeId}
+          onSelectNode={onSelectNode}
+          ghostMode={ghostMode}
+          isolatedOnly={isolatedOnly}
+          activeRegion={activeRegion}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.8}
+        />
+      )}
+
+      {/* 8. Sistema Linfático Real (Vasos e Linfonodos) */}
+      {showLymphatic && (
+        <RealSystemModel
+          glbPath="/models/anatomy/lymphatic_male.glb"
+          systemName="lymphatic"
+          defaultColor="#10b981" // Verde linfático
+          explosionProgress={effectiveExplosion}
+          selectedNodeId={selectedNodeId}
+          onSelectNode={onSelectNode}
+          ghostMode={ghostMode}
+          isolatedOnly={isolatedOnly}
+          activeRegion={activeRegion}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.8}
+        />
+      )}
+
+      {/* 9. Sistema Endócrino Real (Tireoide, Suprarrenais, Hipófise) */}
+      {showEndocrine && (
+        <RealSystemModel
+          glbPath="/models/anatomy/endocrine_male.glb"
+          systemName="endocrine"
+          defaultColor="#8b5cf6" // Violeta endócrino
+          explosionProgress={effectiveExplosion}
+          selectedNodeId={selectedNodeId}
+          onSelectNode={onSelectNode}
+          ghostMode={ghostMode}
+          isolatedOnly={isolatedOnly}
+          activeRegion={activeRegion}
+          opacity={effectiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.8}
+        />
+      )}
+
+      {/* 10. Sistema Reprodutor Real */}
+      {showReproductive && (
+        <RealSystemModel
+          glbPath="/models/anatomy/reproductive_male.glb"
+          systemName="reproductive"
+          defaultColor="#f43f5e" // Coral reprodutor
           explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}

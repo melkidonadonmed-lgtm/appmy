@@ -1,0 +1,562 @@
+extend type Mutation {
+  """
+  ✨ Insert a single `Notification` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  notification_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Notification_Data!
+  ): Notification_KeyOutput! @fdc_generated(from: "Notification", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Process` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  process_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Process_Data!
+  ): Process_KeyOutput! @fdc_generated(from: "Process", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Requirement` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  requirement_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Requirement_Data!
+  ): Requirement_KeyOutput! @fdc_generated(from: "Requirement", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Submission` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  submission_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Submission_Data!
+  ): Submission_KeyOutput! @fdc_generated(from: "Submission", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `User` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  user_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: User_Data!
+  ): User_KeyOutput! @fdc_generated(from: "User", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `Notification` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  notification_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Notification_Data!]!
+  ): [Notification_KeyOutput!]! @fdc_generated(from: "Notification", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Process` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  process_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Process_Data!]!
+  ): [Process_KeyOutput!]! @fdc_generated(from: "Process", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Requirement` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  requirement_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Requirement_Data!]!
+  ): [Requirement_KeyOutput!]! @fdc_generated(from: "Requirement", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Submission` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  submission_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Submission_Data!]!
+  ): [Submission_KeyOutput!]! @fdc_generated(from: "Submission", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `User` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  user_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [User_Data!]!
+  ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert or update a single `Notification` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Notification`.
+  """
+  notification_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Notification_Data!
+  ): Notification_KeyOutput! @fdc_generated(from: "Notification", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Process` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Process`.
+  """
+  process_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Process_Data!
+  ): Process_KeyOutput! @fdc_generated(from: "Process", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Requirement` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Requirement`.
+  """
+  requirement_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Requirement_Data!
+  ): Requirement_KeyOutput! @fdc_generated(from: "Requirement", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Submission` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Submission`.
+  """
+  submission_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Submission_Data!
+  ): Submission_KeyOutput! @fdc_generated(from: "Submission", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `User` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
+  """
+  user_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: User_Data!
+  ): User_KeyOutput! @fdc_generated(from: "User", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update `Notification` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Notification`.
+  """
+  notification_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Notification_Data!]!
+  ): [Notification_KeyOutput!]! @fdc_generated(from: "Notification", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Process` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Process`.
+  """
+  process_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Process_Data!]!
+  ): [Process_KeyOutput!]! @fdc_generated(from: "Process", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Requirement` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Requirement`.
+  """
+  requirement_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Requirement_Data!]!
+  ): [Requirement_KeyOutput!]! @fdc_generated(from: "Requirement", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Submission` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Submission`.
+  """
+  submission_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Submission_Data!]!
+  ): [Submission_KeyOutput!]! @fdc_generated(from: "Submission", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `User` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
+  """
+  user_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [User_Data!]!
+  ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `Notification` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Notification` or `null` if not found.
+  """
+  notification_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Notification_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Notification_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Notification_Data!
+  ): Notification_KeyOutput @fdc_generated(from: "Notification", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Process` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Process` or `null` if not found.
+  """
+  process_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Process_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Process_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Process_Data!
+  ): Process_KeyOutput @fdc_generated(from: "Process", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Requirement` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Requirement` or `null` if not found.
+  """
+  requirement_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Requirement_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Requirement_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Requirement_Data!
+  ): Requirement_KeyOutput @fdc_generated(from: "Requirement", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Submission` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Submission` or `null` if not found.
+  """
+  submission_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Submission_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Submission_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Submission_Data!
+  ): Submission_KeyOutput @fdc_generated(from: "Submission", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `User` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `User` or `null` if not found.
+  """
+  user_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: User_Data!
+  ): User_KeyOutput @fdc_generated(from: "User", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update `Notification` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  notification_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Notification_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Notification_Data!
+  ): Int! @fdc_generated(from: "Notification", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Process` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  process_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Process_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Process_Data!
+  ): Int! @fdc_generated(from: "Process", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Requirement` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  requirement_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Requirement_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Requirement_Data!
+  ): Int! @fdc_generated(from: "Requirement", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Submission` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  submission_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Submission_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Submission_Data!
+  ): Int! @fdc_generated(from: "Submission", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `User` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  user_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: User_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: User_Data!
+  ): Int! @fdc_generated(from: "User", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `Notification` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  notification_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Notification_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Notification_FirstRow
+  ): Notification_KeyOutput @fdc_generated(from: "Notification", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Process` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  process_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Process_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Process_FirstRow
+  ): Process_KeyOutput @fdc_generated(from: "Process", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Requirement` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  requirement_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Requirement_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Requirement_FirstRow
+  ): Requirement_KeyOutput @fdc_generated(from: "Requirement", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Submission` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  submission_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Submission_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Submission_FirstRow
+  ): Submission_KeyOutput @fdc_generated(from: "Submission", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `User` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  user_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+  ): User_KeyOutput @fdc_generated(from: "User", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `Notification` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  notification_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Notification_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Notification", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Process` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  process_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Process_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Process", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Requirement` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  requirement_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Requirement_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Requirement", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Submission` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  submission_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Submission_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Submission", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `User` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  user_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: User_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "User", purpose: DELETE_MULTIPLE)
+}

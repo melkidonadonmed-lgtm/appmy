@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-02T11:38:28.323068+00:00",
+  "timestamp_utc": "2026-10-02T22:05:44.316937+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -20,8 +20,8 @@
     },
     {
       "path": "firebase.json",
-      "size_bytes": 715,
-      "hash": "176a5bd18682"
+      "size_bytes": 850,
+      "hash": "86449155664b"
     },
     {
       "path": "firestore.indexes.json",
@@ -44,6 +44,21 @@
       "hash": "0ffd28a5de4e"
     },
     {
+      "path": "live_screenshot.png",
+      "size_bytes": 348792,
+      "hash": "f73c7a1cf4da"
+    },
+    {
+      "path": "live_screenshot_cranio_hidden.png",
+      "size_bytes": 349234,
+      "hash": "bad184caf113"
+    },
+    {
+      "path": "live_screenshot_region_cranium.png",
+      "size_bytes": 293404,
+      "hash": "7ddca45a92cd"
+    },
+    {
       "path": "package-lock.json",
       "size_bytes": 258461,
       "hash": "96173a1e22c2"
@@ -59,6 +74,11 @@
       "hash": "6a27c3e90bf0"
     },
     {
+      "path": "skills-lock.json",
+      "size_bytes": 3456,
+      "hash": "27215e6ab31e"
+    },
+    {
       "path": "tsconfig.json",
       "size_bytes": 602,
       "hash": "c7dc5aa0e969"
@@ -70,13 +90,73 @@
     },
     {
       "path": "vite.config.ts",
-      "size_bytes": 624,
-      "hash": "5acdd16bdea8"
+      "size_bytes": 723,
+      "hash": "5916a65c93b9"
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 16277,
-      "hash": "6dba79a1fd49"
+      "size_bytes": 16531,
+      "hash": "3454cefeb5ad"
+    },
+    {
+      "path": "dataconnect/dataconnect.yaml",
+      "size_bytes": 466,
+      "hash": "97a1b22a8321"
+    },
+    {
+      "path": "dataconnect/seed_data.gql",
+      "size_bytes": 1771,
+      "hash": "1553027eab4e"
+    },
+    {
+      "path": "dataconnect/.dataconnect/schema/prelude.gql",
+      "size_bytes": 84995,
+      "hash": "20da15cc7537"
+    },
+    {
+      "path": "dataconnect/.dataconnect/schema/main/implicit.gql",
+      "size_bytes": 2312,
+      "hash": "59ff480d34c7"
+    },
+    {
+      "path": "dataconnect/.dataconnect/schema/main/input.gql",
+      "size_bytes": 36186,
+      "hash": "ca5a8bb5e0b6"
+    },
+    {
+      "path": "dataconnect/.dataconnect/schema/main/mutation.gql",
+      "size_bytes": 17355,
+      "hash": "d7bc5376b1aa"
+    },
+    {
+      "path": "dataconnect/.dataconnect/schema/main/query.gql",
+      "size_bytes": 6415,
+      "hash": "61090fe06f3d"
+    },
+    {
+      "path": "dataconnect/.dataconnect/schema/main/relation.gql",
+      "size_bytes": 15575,
+      "hash": "3ab70b2a5dbd"
+    },
+    {
+      "path": "dataconnect/example/connector.yaml",
+      "size_bytes": 371,
+      "hash": "1461f280a3f5"
+    },
+    {
+      "path": "dataconnect/example/queries.gql",
+      "size_bytes": 2871,
+      "hash": "5df309ff987c"
+    },
+    {
+      "path": "dataconnect/schema/schema.gql",
+      "size_bytes": 559,
+      "hash": "e56e94676ef9"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-02-unificacao-outliner-e-filtros.md",
+      "size_bytes": 7089,
+      "hash": "1a8f49e955d6"
     },
     {
       "path": "public/draco/draco_decoder.js",
@@ -250,18 +330,18 @@
     },
     {
       "path": "src/client/App.tsx",
-      "size_bytes": 19231,
-      "hash": "b05e496142fc"
+      "size_bytes": 18030,
+      "hash": "2aa7fb092e50"
     },
     {
       "path": "src/client/index.css",
-      "size_bytes": 39491,
-      "hash": "abc17cb1af75"
+      "size_bytes": 42692,
+      "hash": "3790e6f99d4c"
     },
     {
       "path": "src/client/main.tsx",
-      "size_bytes": 240,
-      "hash": "288e42c2a3bf"
+      "size_bytes": 395,
+      "hash": "5ad78d54f732"
     },
     {
       "path": "src/client/components/canvas/AnatomicalAtlasScene.tsx",
@@ -320,8 +400,8 @@
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 23415,
-      "hash": "b13f66d539c4"
+      "size_bytes": 26298,
+      "hash": "2511f27b50c7"
     },
     {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
@@ -340,8 +420,8 @@
     },
     {
       "path": "src/client/components/canvas/SceneCanvas.tsx",
-      "size_bytes": 6523,
-      "hash": "1e182d963444"
+      "size_bytes": 6705,
+      "hash": "6e2805cee2a5"
     },
     {
       "path": "src/client/components/canvas/SensoryScene.tsx",
@@ -374,9 +454,19 @@
       "hash": "f4b46de6350f"
     },
     {
+      "path": "src/client/components/ui/tree/AnatomyClinicalCard.tsx",
+      "size_bytes": 6767,
+      "hash": "6c4ba2eecbc6"
+    },
+    {
+      "path": "src/client/components/ui/tree/AnatomyFiltersSection.tsx",
+      "size_bytes": 6719,
+      "hash": "7f0e65f22944"
+    },
+    {
       "path": "src/client/components/ui/tree/AnatomyTreePanel.tsx",
-      "size_bytes": 6284,
-      "hash": "be9106be5312"
+      "size_bytes": 7480,
+      "hash": "0ac39545fac5"
     },
     {
       "path": "src/client/components/ui/tree/ModuleLayersSection.tsx",
@@ -385,13 +475,13 @@
     },
     {
       "path": "src/client/components/ui/tree/TreeGroup.tsx",
-      "size_bytes": 5529,
-      "hash": "f91fd8a2e1bb"
+      "size_bytes": 6237,
+      "hash": "f26a7c30fe30"
     },
     {
       "path": "src/client/components/ui/tree/TreeItem.tsx",
-      "size_bytes": 4049,
-      "hash": "894a16169f29"
+      "size_bytes": 4025,
+      "hash": "641269163968"
     },
     {
       "path": "src/client/hooks/useAnatomicalHotkeys.ts",
@@ -525,8 +615,8 @@
     },
     {
       "path": "src/shared/constants/zAnatomyCatalog.ts",
-      "size_bytes": 877893,
-      "hash": "306d9318791e"
+      "size_bytes": 878297,
+      "hash": "09181c5c6019"
     },
     {
       "path": "src/shared/types/anatomy.ts",
@@ -545,8 +635,8 @@
     },
     {
       "path": "src/shared/utils/buildTaxonomicTree.ts",
-      "size_bytes": 8086,
-      "hash": "8d5740876100"
+      "size_bytes": 8237,
+      "hash": "b485816cb1c2"
     },
     {
       "path": "src/shared/utils/filterTaxonomicTree.ts",
@@ -577,6 +667,11 @@
       "path": "tests/endocrine.test.ts",
       "size_bytes": 3579,
       "hash": "0b6ae2e8972d"
+    },
+    {
+      "path": "tests/filters-and-sync.test.ts",
+      "size_bytes": 6366,
+      "hash": "2222f5bc295c"
     },
     {
       "path": "tests/integumentary.test.ts",
@@ -637,6 +732,11 @@
       "path": "tests/taxonomic-tree.test.ts",
       "size_bytes": 5419,
       "hash": "8e6a6729a9ff"
+    },
+    {
+      "path": "tests/unified-outliner-layout.test.ts",
+      "size_bytes": 4878,
+      "hash": "ee4c61426e9c"
     },
     {
       "path": "tests/urinary.test.ts",

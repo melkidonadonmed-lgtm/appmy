@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ChevronDown,
   ChevronRight,
@@ -14,16 +14,24 @@ interface TreeGroupProps {
   node: TaxonomicTreeNode;
   allCatalogIds: string[];
   initialExpanded?: boolean;
+  isSearchActive?: boolean;
 }
 
 export const TreeGroup: React.FC<TreeGroupProps> = ({
   node,
   allCatalogIds,
   initialExpanded = false,
+  isSearchActive = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(
     initialExpanded || node.depth <= 1
   );
+
+  useEffect(() => {
+    if (isSearchActive) {
+      setIsExpanded(true);
+    }
+  }, [isSearchActive]);
 
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
   const toggleGroupVisibility = useAnatomyStore((s) => s.toggleGroupVisibility);
@@ -97,6 +105,15 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
             onClick={(e) => {
               e.stopPropagation();
               toggleGroupVisibility(node.descendantIds);
+              if (node.type === 'system' && node.systemId) {
+                const currentActive = useAnatomyStore.getState().activeSystem;
+                if (!isChecked) {
+                  // Se estava desmarcado e o usuário marcou, assegurar que o sistema esteja montado no 3D
+                  if (currentActive !== 'all' && currentActive !== node.systemId) {
+                    useAnatomyStore.getState().setActiveSystem('all');
+                  }
+                }
+              }
             }}
             title={
               isChecked
@@ -168,6 +185,7 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
                 key={child.id}
                 node={child}
                 allCatalogIds={allCatalogIds}
+                isSearchActive={isSearchActive}
               />
             )
           )}

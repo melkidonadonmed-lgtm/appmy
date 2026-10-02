@@ -1,0 +1,33 @@
+type User @table {
+  name: String!
+  email: String!
+  role: String! # Ex: "Admin" ou "Client"
+}
+
+type Process @table {
+  name: String!
+  status: String!
+  dueDate: Date
+}
+
+type Requirement @table {
+  title: String!
+  description: String!
+  isMandatory: Boolean
+  process: Process
+}
+
+type Submission @table {
+  status: String! # Ex: "Pending", "Approved", "Rejected"
+  uploadDate: Timestamp
+  fileUrl: String
+  rejectionReason: String
+  user: User!
+  requirement: Requirement!
+}
+
+type Notification @table {
+  message: String!
+  isRead: Boolean!
+  user: User!
+}

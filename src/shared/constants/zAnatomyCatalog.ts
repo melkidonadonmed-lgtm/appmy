@@ -32425,10 +32425,21 @@ export const Z_ANATOMY_CATALOG: ZAnatomyItem[] = [
   }
 ];
 
-// Índice de lookup O(1) por nome exato do nó GLTF
-export const Z_ANATOMY_BY_NODE: Record<string, ZAnatomyItem> = Object.fromEntries(
-  Z_ANATOMY_CATALOG.map((item) => [item.node, item])
-);
+// Normalização de nomes de malha idêntica à do Three.js (THREE.PropertyBinding.sanitizeNodeName)
+export function sanitizeNodeName(name: string): string {
+  if (!name) return '';
+  return name.replace(/\s+/g, '_').replace(/[\.\:\/]/g, '');
+}
+
+// Índice de lookup O(1) por nome exato do nó GLTF e por nome sanitizado Three.js em runtime
+export const Z_ANATOMY_BY_NODE: Record<string, ZAnatomyItem> = {};
+for (const item of Z_ANATOMY_CATALOG) {
+  Z_ANATOMY_BY_NODE[item.node] = item;
+  const san = sanitizeNodeName(item.node);
+  if (san) {
+    Z_ANATOMY_BY_NODE[san] = item;
+  }
+}
 
 // Índice de lookup O(1) por ID único
 export const Z_ANATOMY_BY_ID: Record<string, ZAnatomyItem> = Object.fromEntries(

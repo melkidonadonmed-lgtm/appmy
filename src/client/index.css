@@ -440,6 +440,175 @@ code, pre {
   color: var(--accent);
 }
 
+/* Filtros Selecionáveis na Barra Lateral Esquerda */
+.outliner-filter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.outliner-filter-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.45rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.15s ease;
+}
+
+.outliner-filter-btn:hover {
+  background: #334155;
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+.outliner-filter-btn.active {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border-color: #38bdf8;
+  font-weight: 600;
+}
+
+/* Dossiê Clínico Compacto Integrado no Outliner */
+.outliner-clinical-card {
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 0.625rem 0.875rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.outliner-clinical-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.outliner-clinical-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #38bdf8;
+}
+
+.outliner-clinical-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.outliner-clinical-name-pt {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
+.outliner-clinical-name-latin {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #94a3b8;
+}
+
+.outliner-clinical-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.outliner-system-tag {
+  font-size: 0.625rem;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #7dd3fc;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.outliner-clinical-actions {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.outliner-action-pill {
+  flex: 1;
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  transition: all 0.12s ease;
+}
+
+.outliner-action-pill:hover {
+  background: #334155;
+  color: #ffffff;
+  border-color: #475569;
+}
+
+.outliner-action-pill.active {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.outliner-action-pill.active-warning {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: #f43f5e;
+  color: #fda4af;
+}
+
+.outliner-clinical-details {
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  max-height: 140px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.outliner-clinical-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.outliner-field-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #7dd3fc;
+  letter-spacing: 0.03em;
+}
+
+.outliner-field-text {
+  font-size: 0.6875rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+  margin: 0;
+}
+
 /* Caixa de Busca */
 .outliner-search-box {
   padding: 0.5rem 0.75rem;

@@ -14,16 +14,23 @@ import { buildTaxonomicTree } from '../../../../shared/utils/buildTaxonomicTree.
 import { filterTaxonomicTree } from '../../../../shared/utils/filterTaxonomicTree.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 import { ModuleLayersSection } from './ModuleLayersSection.tsx';
+import { AnatomyFiltersSection } from './AnatomyFiltersSection.tsx';
+import { AnatomyClinicalCard } from './AnatomyClinicalCard.tsx';
 import { TreeGroup } from './TreeGroup.tsx';
+import { AnyAnatomicalNode } from '../../canvas/AnatomicalAtlasScene.tsx';
 
 interface AnatomyTreePanelProps {
   onToggleMpr?: () => void;
   mprActive?: boolean;
+  selectedNode?: AnyAnatomicalNode | null;
+  onSelectNode?: (node: AnyAnatomicalNode | null) => void;
 }
 
 export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   onToggleMpr,
   mprActive,
+  selectedNode,
+  onSelectNode,
 }) => {
   const [search, setSearch] = useState('');
 
@@ -34,6 +41,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   const showAll = useAnatomyStore((s) => s.showAll);
   const hideAll = useAnatomyStore((s) => s.hideAll);
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
+  const activeSystem = useAnatomyStore((s) => s.activeSystem);
 
   // 1. Constrói a árvore canônica a partir do catálogo uma única vez
   const fullTree = useMemo(() => buildTaxonomicTree(Z_ANATOMY_CATALOG), []);
@@ -48,10 +56,20 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
     return Array.from(set);
   }, []);
 
-  // 3. Filtra a árvore dinamicamente conforme o usuário digita
+  // 3. Filtra a árvore dinamicamente conforme sistema ativo e busca textual
   const visibleTree = useMemo(() => {
-    return filterTaxonomicTree(fullTree, search);
-  }, [fullTree, search]);
+    let base = fullTree;
+    if (activeSystem !== 'all') {
+      const filteredBySys = fullTree.filter(
+        (node) =>
+          node.systemId === activeSystem || node.id === `sys_${activeSystem}`
+      );
+      if (filteredBySys.length > 0) {
+        base = filteredBySys;
+      }
+    }
+    return filterTaxonomicTree(base, search);
+  }, [fullTree, search, activeSystem]);
 
   const totalStructures = Z_ANATOMY_CATALOG.length;
   const hiddenCount = hiddenNodeIds.size;
@@ -81,9 +99,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         <div className="outliner-brand">
           <Layers size={16} className="outliner-brand-icon" aria-hidden="true" />
           <div className="outliner-brand-text">
-            <span className="outliner-title">
-              Navegador Anatômico
-            </span>
+            <span className="outliner-title">Navegador Anatômico</span>
             <span className="outliner-subtitle">
               {totalStructures} peças TA2 mapeadas
             </span>
@@ -118,10 +134,22 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         </div>
       </div>
 
-      {/* 2. Seção de Módulos & Camadas Funcionais */}
+      {/* 2. Dossiê Clínico Compacto (Exibido quando houver estrutura selecionada) */}
+      {selectedNode && (
+        <AnatomyClinicalCard
+          selectedNode={selectedNode}
+          onClose={() => onSelectNode?.(null)}
+          allCatalogIds={allCatalogIds}
+        />
+      )}
+
+      {/* 3. Seção de Filtros Selecionáveis (Sistemas e Regiões) */}
+      <AnatomyFiltersSection />
+
+      {/* 4. Seção de Módulos & Camadas Funcionais (MPR, Exploded View, Densidade) */}
       <ModuleLayersSection onToggleMpr={onToggleMpr} mprActive={mprActive} />
 
-      {/* 3. Campo de Busca em Tempo Real */}
+      {/* 5. Campo de Busca em Tempo Real */}
       <div className="outliner-search-box">
         <div className="outliner-search-input-wrap">
           <Search
@@ -153,7 +181,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         </div>
       </div>
 
-      {/* 4. Lista da Árvore Hierárquica */}
+      {/* 6. Lista da Árvore Hierárquica com Caixas de Seleção */}
       <div
         className="outliner-tree-viewport scrollbar-thin"
         role="tree"
@@ -165,6 +193,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
               key={sysNode.id}
               node={sysNode}
               allCatalogIds={allCatalogIds}
+              isSearchActive={Boolean(search.trim())}
             />
           ))
         ) : (
@@ -181,7 +210,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         )}
       </div>
 
-      {/* 5. Rodapé Informativo */}
+      {/* 7. Rodapé Informativo */}
       <div className="outliner-footer">
         <span>Ocultos: {hiddenCount} nós</span>
         <span className="outliner-footer-source">Z-Anatomy CC BY-SA 4.0</span>

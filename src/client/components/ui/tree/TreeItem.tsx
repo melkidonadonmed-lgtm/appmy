@@ -14,14 +14,16 @@ export const TreeItem: React.FC<TreeItemProps> = ({ node, allCatalogIds }) => {
   const hoveredNodeId = useAnatomyStore((s) => s.hoveredNodeId);
   const selectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
 
-  const toggleVisibility = useAnatomyStore((s) => s.toggleVisibility);
+  const toggleGroupVisibility = useAnatomyStore((s) => s.toggleGroupVisibility);
   const setHoveredNode = useAnatomyStore((s) => s.setHoveredNode);
   const setSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
   const isolateNode = useAnatomyStore((s) => s.isolateNode);
 
-  // Um nó está oculto se seu ID principal ou nome de malha constar no Set
+  // Um nó está oculto se qualquer de seus IDs ou nós sanitizados constar no Set
   const isHidden =
-    hiddenNodeIds.has(node.id) || (node.meshName ? hiddenNodeIds.has(node.meshName) : false);
+    node.descendantIds.some((id) => hiddenNodeIds.has(id)) ||
+    hiddenNodeIds.has(node.id) ||
+    (node.meshName ? hiddenNodeIds.has(node.meshName) : false);
 
   const isHovered =
     hoveredNodeId === node.id || (node.meshName ? hoveredNodeId === node.meshName : false);
@@ -65,10 +67,7 @@ export const TreeItem: React.FC<TreeItemProps> = ({ node, allCatalogIds }) => {
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            toggleVisibility(node.id);
-            if (node.meshName && node.meshName !== node.id) {
-              toggleVisibility(node.meshName);
-            }
+            toggleGroupVisibility(node.descendantIds);
           }}
           title={isHidden ? `Exibir ${node.namePt} no 3D` : `Ocultar ${node.namePt} no 3D`}
           aria-label={isHidden ? `Exibir ${node.namePt} no modelo 3D` : `Ocultar ${node.namePt} no modelo 3D`}

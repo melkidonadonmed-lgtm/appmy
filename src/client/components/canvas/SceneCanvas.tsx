@@ -1,6 +1,6 @@
 import { Suspense, useRef } from 'react';
 import * as THREE from 'three';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Center, Environment } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { AnatomicalAtlasScene, ActiveAnatomicalSystem, AnyAnatomicalNode, AnatomicalRegion } from './AnatomicalAtlasScene.tsx';
@@ -36,6 +36,10 @@ function SmoothCameraController({
 }: {
   controlsRef: React.RefObject<OrbitControlsImpl | null>;
 }) {
+  const { scene } = useThree();
+  if (typeof window !== 'undefined') {
+    (window as any).__threeScene = scene;
+  }
   const cameraFocusTarget = useAnatomyStore((s) => s.cameraFocusTarget);
   const cameraPositionTarget = useAnatomyStore((s) => s.cameraPositionTarget);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
@@ -104,7 +108,8 @@ export function SceneCanvas({
           preserveDrawingBuffer: false,
           localClippingEnabled: true,
         }}
-        onCreated={({ gl }) => {
+        onCreated={({ gl, scene }) => {
+          (window as any).__threeScene = scene;
           const dom = gl.domElement;
           const handleContextLost = (event: Event) => {
             event.preventDefault();

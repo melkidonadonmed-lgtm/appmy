@@ -15,7 +15,6 @@ import {
   Minimize2,
 } from 'lucide-react';
 import { SceneCanvas } from './components/canvas/SceneCanvas.tsx';
-import { AnatomicalSidebar } from './components/ui/AnatomicalSidebar.tsx';
 import { DissectionToolbar } from './components/ui/DissectionToolbar.tsx';
 import { TelemetryOverlay } from './components/telemetry/TelemetryOverlay.tsx';
 import { AnatomyTreePanel } from './components/ui/tree/AnatomyTreePanel.tsx';
@@ -52,23 +51,13 @@ export default function App() {
   const setSolidOpacity = useAnatomyStore((s) => s.setSolidOpacity);
 
   const explosionProgress = useAnatomyStore((s) => s.explosionProgress);
-  const setExplosionProgress = useAnatomyStore((s) => s.setExplosionProgress);
 
   const activeDivision = useAnatomyStore((s) => (s.activeRegion === 'cranium' ? 'all' : 'all')) as SkullDivision | 'all';
   const activeSystem = useAnatomyStore((s) => s.activeSystem);
-  const setActiveSystem = useAnatomyStore((s) => s.setActiveSystem);
-
   const activeRegion = useAnatomyStore((s) => s.activeRegion);
-  const setActiveRegion = useAnatomyStore((s) => s.setActiveRegion);
-
   const layerPeelingLevel = useAnatomyStore((s) => s.layerPeelingLevel);
-  const setLayerPeelingLevel = useAnatomyStore((s) => s.setLayerPeelingLevel);
-
   const ghostMode = useAnatomyStore((s) => s.ghostMode);
-  const toggleGhostMode = useAnatomyStore((s) => s.toggleGhostMode);
-
   const isolatedOnly = useAnatomyStore((s) => s.isolatedOnly);
-  const toggleIsolatedOnly = useAnatomyStore((s) => s.toggleIsolatedOnly);
 
   const zenMode = useAnatomyStore((s) => s.zenMode);
   const toggleZenMode = useAnatomyStore((s) => s.toggleZenMode);
@@ -248,7 +237,7 @@ export default function App() {
       <main className="main-viewport">
         {activeMode === '3d-atlas' ? (
           <div className="atlas-workspace">
-            {/* 1. Painel Outliner Ancorado à Esquerda */}
+            {/* 1. Painel Outliner Ancorado à Esquerda (Filtros Selecionáveis, Caixas de Seleção e Ficha Clínica) */}
             <AnatomyTreePanel
               onToggleMpr={() =>
                 setDissection((prev) => ({
@@ -257,9 +246,14 @@ export default function App() {
                 }))
               }
               mprActive={dissection.showHelper}
+              selectedNode={selectedNode}
+              onSelectNode={(node) => {
+                setSelectedNode(node);
+                setStoreSelectedNode(node?.id || null);
+              }}
             />
 
-            {/* 2. Área Central: Viewport 3D + HUD Flutuante */}
+            {/* 2. Área Central: Viewport 3D Expandido + HUD Flutuante (Campo de Visão Máximo) */}
             <div className="viewport-center-area">
               {/* Indicador Flutuante do Modo Foco Cirúrgico (100% Tela) */}
               {zenMode && (
@@ -317,29 +311,6 @@ export default function App() {
                 onTelemetryUpdate={setTelemetry}
               />
             </div>
-
-            {/* 3. Painel Lateral Direito: Dossiê Clínico Adaptativo */}
-            <AnatomicalSidebar
-              explosionProgress={explosionProgress}
-              onExplosionChange={setExplosionProgress}
-              selectedNode={selectedNode}
-              onSelectNode={(node) => {
-                setSelectedNode(node);
-                setStoreSelectedNode(node?.id || null);
-              }}
-              ghostMode={ghostMode}
-              onToggleGhost={toggleGhostMode}
-              isolatedOnly={isolatedOnly}
-              onToggleIsolated={toggleIsolatedOnly}
-              activeDivision={activeDivision}
-              onDivisionChange={() => {}}
-              activeSystem={activeSystem}
-              onSystemChange={setActiveSystem}
-              activeRegion={activeRegion}
-              onRegionChange={setActiveRegion}
-              layerPeelingLevel={layerPeelingLevel}
-              onLayerPeelingChange={setLayerPeelingLevel}
-            />
           </div>
         ) : (
           /* Dashboard de Infraestrutura e Prontidão de Nuvem */

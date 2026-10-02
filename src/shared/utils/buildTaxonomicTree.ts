@@ -1,4 +1,4 @@
-import { ZAnatomyItem } from '../constants/zAnatomyCatalog.ts';
+import { ZAnatomyItem, sanitizeNodeName } from '../constants/zAnatomyCatalog.ts';
 import { TaxonomicTreeNode } from '../types/taxonomicTree.ts';
 import { SYSTEM_METADATA, REGION_METADATA } from '../constants/taxonomicMetadata.ts';
 
@@ -66,8 +66,7 @@ export function detectRegion(item: ZAnatomyItem): string {
     fullText.includes('trachea') ||
     fullText.includes('heart') ||
     fullText.includes('cardiac') ||
-    fullText.includes('mediastin') ||
-    fullText.includes('pectoral')
+    fullText.includes('mediastin')
   ) {
     return 'thorax';
   }
@@ -86,7 +85,8 @@ export function detectRegion(item: ZAnatomyItem): string {
     fullText.includes('metacarpal') ||
     fullText.includes('brachial') ||
     fullText.includes('finger') ||
-    fullText.includes('thumb')
+    fullText.includes('thumb') ||
+    fullText.includes('pectoral')
   ) {
     return 'upper_limb';
   }
@@ -188,6 +188,10 @@ export function buildTaxonomicTree(catalog: ZAnatomyItem[]): TaxonomicTreeNode[]
           const ids = [item.id];
           if (item.node && item.node !== item.id) {
             ids.push(item.node);
+          }
+          const san = sanitizeNodeName(item.node);
+          if (san && !ids.includes(san)) {
+            ids.push(san);
           }
           return {
             id: item.id,
