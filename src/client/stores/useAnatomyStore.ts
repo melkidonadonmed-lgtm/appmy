@@ -27,6 +27,7 @@ interface AnatomyStore {
   activeSystem: ActiveAnatomicalSystem;
   activeRegion: AnatomicalRegion;
   layerPeelingLevel: number;
+  activeDepth: number; // 1 a 6 (dissecação por camadas cirúrgicas)
   ghostMode: boolean;
   isolatedOnly: boolean;
 
@@ -65,6 +66,7 @@ interface AnatomyStore {
   setActiveSystem: (sys: ActiveAnatomicalSystem) => void;
   setActiveRegion: (reg: AnatomicalRegion) => void;
   setLayerPeelingLevel: (level: number) => void;
+  setActiveDepth: (depth: number) => void;
   toggleGhostMode: () => void;
   toggleIsolatedOnly: () => void;
   setDissection: (updater: DissectionState | ((prev: DissectionState) => DissectionState)) => void;
@@ -96,6 +98,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   activeSystem: 'skeletal',
   activeRegion: 'all',
   layerPeelingLevel: 0,
+  activeDepth: 1,
   ghostMode: false,
   isolatedOnly: false,
 
@@ -227,7 +230,19 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
 
   setActiveRegion: (reg: AnatomicalRegion) => set({ activeRegion: reg }),
 
-  setLayerPeelingLevel: (level: number) => set({ layerPeelingLevel: level }),
+  setLayerPeelingLevel: (level: number) =>
+    set({
+      layerPeelingLevel: level,
+      activeDepth: level > 0 ? Math.min(6, Math.max(1, level)) : 1,
+    }),
+
+  setActiveDepth: (depth: number) => {
+    const clamped = Math.min(6, Math.max(1, Math.round(depth)));
+    set({
+      activeDepth: clamped,
+      layerPeelingLevel: clamped,
+    });
+  },
 
   toggleGhostMode: () => set((state) => ({ ghostMode: !state.ghostMode })),
 

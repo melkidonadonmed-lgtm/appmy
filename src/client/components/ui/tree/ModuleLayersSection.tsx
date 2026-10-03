@@ -9,6 +9,8 @@ import {
   Activity,
 } from 'lucide-react';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
+import { SURGICAL_LAYERS } from '../../../../core/visibilityManager.ts';
+import { SurgicalLayerDepth } from '../../../../shared/types/anatomy.ts';
 
 interface ModuleLayersSectionProps {
   onToggleMpr?: () => void;
@@ -20,7 +22,7 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
   mprActive = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const { modules, setModuleState } = useAnatomyStore();
+  const { modules, setModuleState, activeDepth, setActiveDepth } = useAnatomyStore();
 
   return (
     <div className="outliner-modules-card">
@@ -99,6 +101,42 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
               aria-valuetext={`${Math.round(modules.explodedProgress * 100)}%`}
               className="outliner-range-input"
             />
+          </div>
+
+          {/* Módulo 3: Planos Cirúrgicos de Dissecação (1 a 6) */}
+          <div className="outliner-slider-container">
+            <div className="outliner-slider-header">
+              <span className="outliner-module-label">
+                <Sliders size={13} style={{ color: '#a78bfa' }} aria-hidden="true" />
+                <span>Dissecação (Camadas 1 a 6)</span>
+              </span>
+              <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: '#a78bfa', fontWeight: 600 }}>
+                {activeDepth}/6: {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
+              </span>
+            </div>
+            <input
+              type="range"
+              min="1"
+              max="6"
+              step="1"
+              value={activeDepth}
+              onChange={(e) => setActiveDepth(parseInt(e.target.value, 10))}
+              aria-label="Plano cirúrgico de dissecação anatômica de 1 a 6"
+              aria-valuenow={activeDepth}
+              aria-valuemin={1}
+              aria-valuemax={6}
+              aria-valuetext={SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
+              className="outliner-range-input"
+            />
+            <div style={{ fontSize: '0.6875rem', color: '#94a3b8', marginTop: '0.2rem', lineHeight: '1.25' }}>
+              <span style={{ color: '#cbd5e1', fontWeight: 500, fontStyle: 'italic' }}>
+                {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelLatin}
+              </span>
+              {' — '}
+              <span>
+                {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.desc}
+              </span>
+            </div>
           </div>
 
           {/* Módulo 3: Densidade Óssea */}

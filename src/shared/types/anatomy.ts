@@ -51,6 +51,21 @@ export interface AnatomicalNode {
   clinicalData?: ClinicalReference;
 }
 
+export type SurgicalLayerDepth = 1 | 2 | 3 | 4 | 5 | 6;
+
+export interface AnatomicalMeshUserData {
+  id: string; // Ex: 'za:deltoide_anterior' ou 'fma:skull_frontal_bone'
+  nomePt: string;
+  nomeLatin?: string;
+  sistema: string;
+  regiao?: string;
+  camadaProfundidade: SurgicalLayerDepth;
+  eixoExplosao?: [number, number, number];
+  distanciaMaxima?: number;
+  isAnchor: boolean;
+  ignoreRaycast?: boolean;
+}
+
 export interface ExplodedViewState {
   progress: number; // 0.0 (montado) a 1.0 (explosão máxima)
   isolatedNodeId: string | null; // Nó isolado em foco

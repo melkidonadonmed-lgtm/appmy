@@ -13,6 +13,17 @@ import { AnyAnatomicalNode, GeneralAnatomicalNode, AnatomicalRegion } from './An
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
+import {
+  bindExplodedNode,
+  applyExplodedStep,
+  ExplodedNodeBinding,
+} from '../../../core/explodedEngine.ts';
+import {
+  updateMeshVisibility,
+  determineSurgicalLayer,
+  VisibilityState,
+} from '../../../core/visibilityManager.ts';
+import { AnatomicalMeshUserData } from '../../../shared/types/anatomy.ts';
 
 // Configuração do decodificador Draco local offline em public/draco/gltf/
 const DRACO_DECODER_PATH = '/draco/gltf/';
@@ -32,8 +43,7 @@ export interface RealBodyAtlasProps {
 
 interface MeshAnimData {
   mesh: THREE.Mesh;
-  originalPos: THREE.Vector3;
-  explosionVec: THREE.Vector3;
+  binding: ExplodedNodeBinding;
   item: ZAnatomyItem | null;
   baseMaterial: THREE.MeshStandardMaterial;
 }
@@ -186,7 +196,9 @@ function RealSystemModel({
   const effectiveSelectedId = selectedNodeId || storeSelectedNodeId;
   const effectiveHovered = storeHoveredNode || hoveredNode;
 
-  // Mapeia todas as malhas e guarda suas posições anatômicas de descanso
+  const storeActiveDepth = useAnatomyStore((s) => s.activeDepth);
+
+  // Mapeia todas as malhas, hidrata userData e vincula as âncoras da Exploded View
   const animNodes = useMemo(() => {
     const list: MeshAnimData[] = [];
 
@@ -197,27 +209,21 @@ function RealSystemModel({
         mesh.receiveShadow = true;
 
         const item = Z_ANATOMY_BY_NODE[mesh.name] || Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] || null;
-        let ev: THREE.Vector3;
+        const layer = determineSurgicalLayer(systemName, mesh.name, item?.namePtBr);
 
-        if (
-          item?.explosionVector &&
-          (item.explosionVector.x !== 0 || item.explosionVector.y !== 0 || item.explosionVector.z !== 0)
-        ) {
-          ev = new THREE.Vector3(item.explosionVector.x, item.explosionVector.y, item.explosionVector.z);
-        } else {
-          // Dispersão anatômica radial inteligente a partir das coordenadas espaciais da peça
-          const posX = mesh.position.x;
-          const posY = mesh.position.y;
-          const posZ = mesh.position.z;
-          const dirX = Math.abs(posX) > 0.01 ? Math.sign(posX) * (Math.abs(posX) * 2.2 + 0.4) : (Math.random() - 0.5) * 0.4;
-          const dirY = posY > 1.35 ? (posY - 1.35) * 1.6 + 0.3 : posY < 0.45 ? -0.4 : 0;
-          const dirZ = Math.abs(posZ) > 0.01 ? Math.sign(posZ) * (Math.abs(posZ) * 2.0 + 0.35) : 0.4;
-          ev = new THREE.Vector3(dirX, dirY, dirZ);
-        }
-
-        // Se for crânio, ampliar deslocamento relativo para visualização clara de suturas
-        const isCranial = item?.path?.some((p) => p.toLowerCase().includes('cranium')) || mesh.position.y > 1.4;
-        const mult = isCranial ? 2.2 : 1.2;
+        mesh.userData = {
+          id: item?.id || mesh.name,
+          nomePt: item?.namePtBr || mesh.name,
+          nomeLatin: item?.nameLatin,
+          sistema: systemName,
+          regiao: activeRegion,
+          camadaProfundidade: layer,
+          eixoExplosao: item?.explosionVector
+            ? [item.explosionVector.x, item.explosionVector.y, item.explosionVector.z]
+            : undefined,
+          distanciaMaxima: magnitude,
+          isAnchor: false,
+        } as AnatomicalMeshUserData;
 
         const mat = new THREE.MeshStandardMaterial({
           color: new THREE.Color(defaultColor),
@@ -229,10 +235,11 @@ function RealSystemModel({
         });
         mesh.material = mat;
 
+        const binding = bindExplodedNode(mesh, activeRegion);
+
         list.push({
           mesh,
-          originalPos: mesh.position.clone(),
-          explosionVec: ev.multiplyScalar(mult),
+          binding,
           item,
           baseMaterial: mat,
         });
@@ -240,65 +247,49 @@ function RealSystemModel({
     });
 
     return list;
-  }, [clonedScene, defaultColor, systemName, opacity, isXRay]);
+  }, [clonedScene, defaultColor, systemName, opacity, isXRay, activeRegion, magnitude]);
 
-  // Atualização em tempo real das cores, visibilidade por região, seleção e hover
+  // Atualização em tempo real das cores, visibilidade por região, 6 camadas e blindagem de raycast
   useEffect(() => {
+    const visibilityState: VisibilityState = {
+      hiddenIds: hiddenNodeIds,
+      selectedId: effectiveSelectedId,
+      activeDepth: storeActiveDepth,
+      ghostMode,
+      isolatedOnly,
+    };
+
     animNodes.forEach(({ mesh, item, baseMaterial }) => {
       const isSelected = effectiveSelectedId === item?.id || effectiveSelectedId === mesh.name;
       const isHovered = effectiveHovered === mesh.name || (item?.id && effectiveHovered === item.id);
-      const isHiddenIsolated = isolatedOnly && effectiveSelectedId !== null && !isSelected;
 
       // Filtragem por região (ex: só ver o crânio, só a coluna, etc.)
       const isRegionVisible = systemName === 'skeletal' ? isNodeInRegion(item, mesh.name, activeRegion) : true;
 
-      // Filtragem por checkboxes do Outliner
-      const isHiddenByTree =
-        hiddenNodeIds.has(item?.id || '') ||
-        hiddenNodeIds.has(item?.node || '') ||
-        hiddenNodeIds.has(mesh.name) ||
-        (item ? hiddenNodeIds.has(sanitizeNodeName(item.node)) : false);
+      if (!isRegionVisible) {
+        mesh.visible = false;
+        mesh.raycast = () => {};
+        return;
+      }
 
-      mesh.visible = isRegionVisible && !isHiddenIsolated && !isHiddenByTree;
+      // Máquina de estados determinística de visibilidade e blindagem de raycast
+      updateMeshVisibility(mesh, visibilityState, baseMaterial, defaultColor);
 
-      if (!mesh.visible) return;
-
-      if (isSelected) {
-        baseMaterial.color.set('#38bdf8');
-        baseMaterial.emissive.set('#0284c7');
-        baseMaterial.emissiveIntensity = 0.85;
-        baseMaterial.transparent = false;
-        baseMaterial.opacity = 1.0;
-      } else if (isHovered) {
+      // Destaque de Hover interativo
+      if (mesh.visible && !isSelected && isHovered) {
         baseMaterial.color.set('#bae6fd');
         baseMaterial.emissive.set('#0369a1');
         baseMaterial.emissiveIntensity = 0.55;
-      } else {
-        baseMaterial.color.set(defaultColor);
-        baseMaterial.emissive.set('#000000');
-        baseMaterial.emissiveIntensity = 0;
-        baseMaterial.transparent = isXRay || (ghostMode && effectiveSelectedId !== null) || opacity < 0.99;
-        baseMaterial.opacity = isXRay ? 0.22 : ghostMode && effectiveSelectedId !== null ? 0.12 : opacity;
       }
     });
-  }, [animNodes, effectiveSelectedId, effectiveHovered, ghostMode, isolatedOnly, activeRegion, systemName, opacity, isXRay, defaultColor, hiddenNodeIds]);
+  }, [animNodes, effectiveSelectedId, effectiveHovered, ghostMode, isolatedOnly, activeRegion, systemName, opacity, isXRay, defaultColor, hiddenNodeIds, storeActiveDepth]);
 
-  // Animação da Exploded View no loop Three.js useFrame
+  // Array otimizado de nós vinculados para o loop da GPU
+  const bindings = useMemo(() => animNodes.map((d) => d.binding), [animNodes]);
+
+  // Animação da Exploded View no loop Three.js useFrame com LERP amortecido e âncoras fixas
   useFrame(() => {
-    const factor = explosionProgress * magnitude;
-
-    for (let i = 0; i < animNodes.length; i++) {
-      const { mesh, originalPos, explosionVec } = animNodes[i];
-      if (!mesh.visible) continue;
-
-      const targetX = originalPos.x + explosionVec.x * factor;
-      const targetY = originalPos.y + explosionVec.y * factor;
-      const targetZ = originalPos.z + explosionVec.z * factor;
-
-      mesh.position.x = THREE.MathUtils.lerp(mesh.position.x, targetX, 0.16);
-      mesh.position.y = THREE.MathUtils.lerp(mesh.position.y, targetY, 0.16);
-      mesh.position.z = THREE.MathUtils.lerp(mesh.position.z, targetZ, 0.16);
-    }
+    applyExplodedStep(bindings, explosionProgress * magnitude, 0.16);
   });
 
   // Localiza o item atualmente selecionado para renderizar o Pin 3D e guiar a câmera
