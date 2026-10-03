@@ -92,7 +92,7 @@ function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: Ana
         pathStr.includes('thorax') ||
         pathStr.includes('rib') ||
         pathStr.includes('sternum') ||
-        ['rib', 'sternum', 'xiphoid', 'costal cartilage', 'cartilage of', 'mammary', 'areola', 'nipple', 'lactiferous'].some((k) => nameLower.includes(k))
+        ['rib', 'sternum', 'xiphoid', 'costal cartilage', 'cartilage of'].some((k) => nameLower.includes(k))
       );
 
     case 'upper_limb':
@@ -309,14 +309,28 @@ function RealSystemModel({
     return animNodes.find((d) => d.item?.id === effectiveSelectedId || d.mesh.name === effectiveSelectedId) || null;
   }, [effectiveSelectedId, animNodes]);
 
+  // Posição espacial calculada no topo da malha anatômica para nunca obstruir a visualização clínica
+  const selectedSpatialData = useMemo(() => {
+    if (!selectedMeshItem || !selectedMeshItem.mesh.visible) return null;
+    const box = new THREE.Box3().setFromObject(selectedMeshItem.mesh);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
+    // Posiciona o pin acima do ponto mais alto da peça anatômica para NUNCA cobri-la
+    const elevation = Math.max(0.12, size.y * 0.45);
+    const pinTopY = box.max.y + elevation;
+    return { center, pinTopY, boxMaxY: box.max.y, size };
+  }, [selectedMeshItem, explosionProgress]);
+
   // Centralização suave de câmera ao selecionar a peça
   useEffect(() => {
-    if (selectedMeshItem && selectedMeshItem.mesh.visible) {
-      const box = new THREE.Box3().setFromObject(selectedMeshItem.mesh);
-      const center = box.getCenter(new THREE.Vector3());
-      setCameraFocusTarget([center.x, center.y, center.z]);
+    if (selectedSpatialData) {
+      setCameraFocusTarget([
+        selectedSpatialData.center.x,
+        selectedSpatialData.center.y,
+        selectedSpatialData.center.z,
+      ]);
     }
-  }, [selectedMeshItem, setCameraFocusTarget]);
+  }, [selectedSpatialData, setCameraFocusTarget]);
 
   return (
     <group>
@@ -369,45 +383,77 @@ function RealSystemModel({
         }}
       />
 
-      {/* Pin 3D Flutuante de Alta Definição sobre o Elemento Selecionado */}
-      {selectedMeshItem && selectedMeshItem.mesh.visible && (
+      {/* Pin 3D Elevado com Haste Indicadora - Visão 100% Desobstruída da Peça */}
+      {selectedMeshItem && selectedMeshItem.mesh.visible && selectedSpatialData && (
         <Html
           position={[
-            selectedMeshItem.mesh.position.x,
-            selectedMeshItem.mesh.position.y + 0.06,
-            selectedMeshItem.mesh.position.z,
+            selectedSpatialData.center.x,
+            selectedSpatialData.pinTopY,
+            selectedSpatialData.center.z,
           ]}
-          center
-          distanceFactor={4.5}
+          distanceFactor={5.0}
+          style={{
+            transform: 'translate3d(-50%, -100%, 0)',
+            pointerEvents: 'none',
+          }}
         >
           <div
-            className="annotation-tag-selected"
             style={{
-              backgroundColor: 'rgba(10, 15, 29, 0.94)',
-              color: '#38bdf8',
-              border: '2px solid #38bdf8',
-              boxShadow: '0 6px 20px rgba(2, 132, 199, 0.5)',
-              padding: '0.4rem 0.85rem',
-              borderRadius: '8px',
-              fontSize: '0.8125rem',
-              fontWeight: 700,
-              pointerEvents: 'none',
-              whiteSpace: 'nowrap',
-              textAlign: 'center',
               display: 'flex',
               flexDirection: 'column',
-              gap: '0.15rem',
-              animation: 'pulse 1.8s infinite',
+              alignItems: 'center',
+              userSelect: 'none',
             }}
           >
-            <div style={{ color: '#ffffff' }}>
-              {selectedMeshItem.item?.namePtBr || selectedMeshItem.mesh.name}
-            </div>
-            {selectedMeshItem.item?.nameLatin && (
-              <div style={{ fontSize: '0.6875rem', color: '#94a3b8', fontStyle: 'italic', fontWeight: 500 }}>
-                {selectedMeshItem.item.nameLatin}
+            {/* Tag Elevada Translúcida */}
+            <div
+              className="annotation-tag-selected"
+              style={{
+                backgroundColor: 'rgba(15, 23, 42, 0.90)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                color: '#38bdf8',
+                border: '1px solid rgba(56, 189, 248, 0.75)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(56, 189, 248, 0.3)',
+                padding: '0.35rem 0.75rem',
+                borderRadius: '6px',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                whiteSpace: 'nowrap',
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.1rem',
+              }}
+            >
+              <div style={{ color: '#f8fafc', letterSpacing: '-0.01em' }}>
+                {selectedMeshItem.item?.namePtBr || selectedMeshItem.mesh.name}
               </div>
-            )}
+              {selectedMeshItem.item?.nameLatin && (
+                <div style={{ fontSize: '0.625rem', color: '#94a3b8', fontStyle: 'italic', fontFamily: 'var(--font-mono)' }}>
+                  {selectedMeshItem.item.nameLatin}
+                </div>
+              )}
+            </div>
+
+            {/* Haste Vertical (Needle) apontando para o topo da peça */}
+            <div
+              style={{
+                width: '1px',
+                height: '16px',
+                background: 'linear-gradient(to bottom, rgba(56, 189, 248, 0.9), rgba(56, 189, 248, 0.2))',
+              }}
+            />
+            {/* Ponto focal de toque sobre a peça */}
+            <div
+              style={{
+                width: '5px',
+                height: '5px',
+                borderRadius: '50%',
+                backgroundColor: '#38bdf8',
+                boxShadow: '0 0 8px #38bdf8',
+              }}
+            />
           </div>
         </Html>
       )}

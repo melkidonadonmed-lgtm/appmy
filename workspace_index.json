@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-03T07:39:23.626991+00:00",
+  "timestamp_utc": "2026-10-03T08:12:37.817420+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -100,8 +100,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 19987,
-      "hash": "2f6d7dc8bb7a"
+      "size_bytes": 19715,
+      "hash": "1467456ef0fd"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
@@ -155,8 +155,8 @@
     },
     {
       "path": "dataconnect/schema/schema.gql",
-      "size_bytes": 599,
-      "hash": "788f715aa08f"
+      "size_bytes": 559,
+      "hash": "e56e94676ef9"
     },
     {
       "path": "docs/superpowers/plans/2026-10-02-unificacao-outliner-e-filtros.md",
@@ -400,13 +400,13 @@
     },
     {
       "path": "src/client/components/canvas/OrientationGizmo.tsx",
-      "size_bytes": 3996,
-      "hash": "142cb02b6a2d"
+      "size_bytes": 3722,
+      "hash": "986cb99d09b4"
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 28400,
-      "hash": "2c4082f0a57c"
+      "size_bytes": 30191,
+      "hash": "e377abb7c8fe"
     },
     {
       "path": "src/client/components/canvas/ReproductiveScene.tsx",
@@ -470,8 +470,8 @@
     },
     {
       "path": "src/client/components/ui/tree/TreeGroup.tsx",
-      "size_bytes": 6329,
-      "hash": "c7852e10d290"
+      "size_bytes": 6270,
+      "hash": "facb225f0ffb"
     },
     {
       "path": "src/client/components/ui/tree/TreeItem.tsx",
@@ -510,8 +510,8 @@
     },
     {
       "path": "src/core/explodedEngine.ts",
-      "size_bytes": 6118,
-      "hash": "925451fcbd1a"
+      "size_bytes": 6680,
+      "hash": "535c803ca05a"
     },
     {
       "path": "src/core/visibilityManager.ts",
@@ -670,8 +670,8 @@
     },
     {
       "path": "tests/exploded-engine-and-layers.test.ts",
-      "size_bytes": 9630,
-      "hash": "573486a80042"
+      "size_bytes": 11541,
+      "hash": "c004c2c58f72"
     },
     {
       "path": "tests/filters-and-sync.test.ts",
@@ -715,13 +715,13 @@
     },
     {
       "path": "tests/pre-delivery-validation.test.ts",
-      "size_bytes": 5791,
-      "hash": "004cf3d1a72c"
+      "size_bytes": 5919,
+      "hash": "fc55f12432fe"
     },
     {
       "path": "tests/real-body-atlas-integumentary.test.ts",
-      "size_bytes": 2853,
-      "hash": "3cafff6f80a2"
+      "size_bytes": 2917,
+      "hash": "bf946fe79d7b"
     },
     {
       "path": "tests/reproductive.test.ts",
@@ -745,8 +745,8 @@
     },
     {
       "path": "tests/state-sync.test.ts",
-      "size_bytes": 4271,
-      "hash": "c4b392f11f60"
+      "size_bytes": 4380,
+      "hash": "772fb9fed033"
     },
     {
       "path": "tests/taxonomic-tree.test.ts",
@@ -780,8 +780,8 @@
     },
     {
       "path": "tests/zen-mode-and-lifecycle.test.ts",
-      "size_bytes": 7396,
-      "hash": "f664180c4c6c"
+      "size_bytes": 7590,
+      "hash": "dfa57f6ba55e"
     }
   ]
 }

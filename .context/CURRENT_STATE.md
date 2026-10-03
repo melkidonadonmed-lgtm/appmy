@@ -1,32 +1,34 @@
 # ESTADO ATUAL DO PROJETO (NÍVEL 2)
 
 **Projeto**: appmy  
-**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
+**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git` (Commit: `8dd91a6`)  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Concluído: Integração da Casca Tegumentar Real (.GLB), Saneamento de Órfãos, Acessibilidade ARIA e Refatoração de Domínio no Data Connect
+**Fase Atual**: Concluído e em Produção: Blindagem de Posição Anatômica Imutável, Multi-Seleção Concorrente de Sistemas e Estratigrafia de Fora para Dentro
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Integração da Casca Tegumentar Real (`integumentary_female.glb`) em `RealBodyAtlas.tsx`**:
-  - Modelo 3D da primeira camada externa do corpo humano integrado à estratigrafia canônica (Camada 1).
-  - Controle de visibilidade inteligente integrado ao `layerPeelingLevel` (peeling >= 3 quando em modo "Todos") ou ativado diretamente pelo seletor de sistema `integumentary`.
-  - Pré-carregamento instantâneo via `useGLTF.preload`.
-- **Saneamento e Eliminação Definitiva de Arquivos Órfãos**:
-  - Removidos: `useAnatomicalModel.ts`, `AnatomicalSidebar.tsx` e `RealCraniumModel.tsx`.
-  - Suítes de teste de emojis e layout atualizadas para apontar exclusivamente para componentes ativos (`AnatomyFiltersSection.tsx`, `RealBodyAtlas.tsx`).
-- **Acessibilidade A11y nos Nós Interativos**:
-  - `OrientationGizmo.tsx`: cabeçalho de orientação atualizado com `role="button"`, `tabIndex={0}`, `aria-expanded` e navegação via teclado (`Enter`/`Space`).
-  - `TreeGroup.tsx`: linha de expansão enriquecida com `role="button"` e `aria-expanded`.
-- **Refatoração do Schema de Domínio no Firebase Data Connect (`schema.gql`)**:
-  - Substituição das entidades genéricas de template por entidades médicas legítimas: `User`, `ClinicalBookmark` e `ClinicalAnnotation`.
+- **Blindagem Imutável da Posição Anatômica (`explodedEngine.ts` e `RealBodyAtlas.tsx`)**:
+  - `initialPosition` gravado como referência imutável no momento da clonagem do GLTF.
+  - Eliminação definitiva da corrupção cumulativa de posições em re-renderizações (`useMemo`).
+  - Restauração atômica e exata para a posição anatômica original quando `progress === 0.0`.
+- **Sincronização Bidirecional Árvore <-> Three.js (`TreeGroup.tsx`, `AnatomyTreePanel.tsx`)**:
+  - Checkboxes de nível de sistema na árvore taxonômica agora disparam `addSystem` / `removeSystem` sincronizados com `activeSystems`.
+  - O filtro da árvore (`visibleTree`) agora suporta múltiplos sistemas selecionados simultaneamente em vez de monosseleção restritiva.
+- **Multi-Seleção Concorrente nos Filtros Rápidos (`AnatomyFiltersSection.tsx`)**:
+  - Botões de sistemas agora operam como seletores aditivos/subtrativos (`toggleSystem`), permitindo combinar esqueleto + vascular + linfático à vontade.
+  - Seletor "Todos" restaurado via `setAllSystems`.
+  - Seção de regiões corporais universalizada para orientar a câmera independentemente do sistema ativo.
+- **Ordem Estratigráfica Canônica: De Fora para Dentro**:
+  - `taxonomicMetadata.ts` reordenado: 1. Tegumento (Pele) -> 2. Músculos -> 3. Articulações -> 4. Esqueleto -> 5. Cardio -> 6. Linfático -> 7. Nervoso -> 8. Respiratório -> 9. Digestório -> 10. Urinário -> 11. Endócrino -> 12. Reprodutor.
+  - `AnatomyFiltersSection.tsx` reflete rigorosamente a progressão da periferia para o centro anatômico.
 - **Quality Gates Convalidados**:
-  - 179 testes unitários aprovados em 28 suítes Vitest (`ExitCode 0`).
+  - 174 testes unitários aprovados em 27 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
   - `npm run build` aprovado gerando bundles minificados do Vite e Express (`ExitCode 0`).
-  - `workspace_index.json` atualizado com 156 arquivos mapeados.
+  - `workspace_index.json` atualizado com 158 arquivos mapeados.
 
 ---
 
@@ -41,5 +43,5 @@
 
 ## 3. Próximo Ponto de Entrada
 
-- **Persistência Cloud de Bookmarks Clínicos (Fase 6)**:
-  - Implementar endpoints REST `/api/bookmarks` ou operações GraphQL no Data Connect para sincronizar marcadores salvos entre instâncias do usuário autenticado no Firebase Auth.
+- **Camada de Tegumento Real (.GLB)**:
+  - Carregar o modelo 3D do tegumento superficial (`integumentary_female.glb` ou malha anatômica superficial) como a primeira casca física do corpo.

@@ -230,4 +230,44 @@ describe('Core 3D Engine: Surgical Layers & Visibility Manager', () => {
     useAnatomyStore.getState().setLayerPeelingLevel(2);
     expect(useAnatomyStore.getState().activeDepth).toBe(2);
   });
+
+  it('deve blindar costelas e ossos bilaterais contra inversão de lado (mesmo com vetor invertido)', () => {
+    // Costela Esquerda (.l): situada na hemisseção positiva (posX = +0.073)
+    const leftRibMesh = new THREE.Mesh();
+    leftRibMesh.name = 'Costal cartilage of eighth rib.l';
+    leftRibMesh.position.set(0.073, 1.155, 0.091);
+    leftRibMesh.userData = {
+      // Simula vetor com sinal de X invertido (-1.1) vindo do catálogo
+      eixoExplosao: [-1.1, 0, 0.6],
+      distanciaMaxima: 1.0,
+    } as Partial<AnatomicalMeshUserData>;
+
+    // Costela Direita (.r): situada na hemisseção negativa (posX = -0.073)
+    const rightRibMesh = new THREE.Mesh();
+    rightRibMesh.name = 'Costal cartilage of eighth rib.r';
+    rightRibMesh.position.set(-0.073, 1.155, 0.091);
+    rightRibMesh.userData = {
+      // Simula vetor com sinal de X invertido (+1.1) vindo do catálogo
+      eixoExplosao: [1.1, 0, 0.6],
+      distanciaMaxima: 1.0,
+    } as Partial<AnatomicalMeshUserData>;
+
+    const leftBinding = bindExplodedNode(leftRibMesh, 'thorax');
+    const rightBinding = bindExplodedNode(rightRibMesh, 'thorax');
+
+    // O targetOffset.x DEVE respeitar o lado de origem da peça anatômica
+    // Costela esquerda (+X) DEVE explodir para o lado positivo (+X)
+    expect(leftBinding.targetOffset.x).toBeGreaterThan(0);
+    // Costela direita (-X) DEVE explodir para o lado negativo (-X)
+    expect(rightBinding.targetOffset.x).toBeLessThan(0);
+
+    // Avalia posição final a 100% de explosão
+    const finalLeft = evaluateExplodedPosition(leftBinding, 1.0);
+    const finalRight = evaluateExplodedPosition(rightBinding, 1.0);
+
+    // A costela esquerda NÃO pode ter cruzado para o lado direito da linha média
+    expect(finalLeft.x).toBeGreaterThan(0.073);
+    // A costela direita NÃO pode ter cruzado para o lado esquerdo da linha média
+    expect(finalRight.x).toBeLessThan(-0.073);
+  });
 });
