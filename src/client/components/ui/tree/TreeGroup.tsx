@@ -106,12 +106,11 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
               e.stopPropagation();
               toggleGroupVisibility(node.descendantIds);
               if (node.type === 'system' && node.systemId) {
-                const currentActive = useAnatomyStore.getState().activeSystem;
+                const store = useAnatomyStore.getState();
                 if (!isChecked) {
-                  // Se estava desmarcado e o usuário marcou, assegurar que o sistema esteja montado no 3D
-                  if (currentActive !== 'all' && currentActive !== node.systemId) {
-                    useAnatomyStore.getState().setActiveSystem('all');
-                  }
+                  store.addSystem(node.systemId as any);
+                } else {
+                  store.removeSystem(node.systemId as any);
                 }
               }
             }}

@@ -1,39 +1,48 @@
 # CHECKPOINT DA SESSÃO (NÍVEL 3)
 
-**Data/Hora**: 2026-10-02 23:32 (UTC-4)  
+**Data/Hora**: 2026-10-03 00:35 (UTC-4)  
 **Operador**: Antigravity  
 
 ---
 
-## 1. Entrega e Deploy Concluídos
+## 1. Arquivos Criados e Modificados
 
-- **GitHub Remote (`origin/main`)**:
-  - Hash do Commit: `72563cc`
-  - Mensagem: `feat(atlas): multi-selecao de sistemas sobrepostos, sliders de opacidade e presets cirurgicos`
-  - Repositório: `git@github.com:melkidonadonmed-lgtm/appmy.git`
-- **Google Cloud Run (Produção)**:
-  - Serviço: `appmy`
-  - Região: `us-central1`
-  - Projeto GCP: `agent-md-506215`
-  - Revisão Implantada: `appmy-00005-4g5`
-  - Roteamento: 100% do tráfego ativo
-  - URL Pública: `https://appmy-1044179901556.us-central1.run.app`
-  - Healthcheck: `https://appmy-1044179901556.us-central1.run.app/api/health` -> HTTP 200 OK (`status: ok`, `firebaseAdminReady: true`)
+- `src/core/explodedEngine.ts` [MODIFICADO]:
+  - `bindExplodedNode` atualizado para gravar e reutilizar `initialPosition` imutável em `mesh.userData`.
+  - `applyExplodedStep` garante restauração exata e atômica da posição anatômica quando `progress === 0.0`.
+- `src/client/components/canvas/RealBodyAtlas.tsx` [MODIFICADO]:
+  - `clonedScene` inicializa deterministicamente `initialPosition` em cada malha antes de qualquer animação.
+  - `showMuscular` simplificado para responder de forma consistente com a multi-seleção de sistemas.
+  - Prefixado `layerPeelingLevel: _layerPeelingLevel` sanando TS6133.
+- `src/client/components/ui/tree/AnatomyFiltersSection.tsx` [MODIFICADO]:
+  - Reordenados os sistemas no fluxo de fora para dentro (Pele -> Músculos -> Ossos -> Cardio -> etc.).
+  - Implementada multi-seleção concorrente aditiva/subtrativa (`toggleSystem` e `setAllSystems`).
+  - Painel de regiões corporais universalizado para qualquer sistema.
+- `src/client/components/ui/tree/TreeGroup.tsx` [MODIFICADO]:
+  - Checkboxes de nível de sistema conectados a `addSystem` / `removeSystem` no store para garantir montagem no canvas 3D.
+- `src/client/components/ui/tree/AnatomyTreePanel.tsx` [MODIFICADO]:
+  - Filtro da árvore atualizado para suportar múltiplos sistemas ativos concorrentes.
+- `src/shared/constants/taxonomicMetadata.ts` [MODIFICADO]:
+  - Reordenado `SYSTEM_METADATA` seguindo a estratigrafia cirúrgica canônica de fora para dentro (Tegumento 1 -> Músculos 2 -> Articulações 3 -> Esqueleto 4 -> Vasos/Nervos 5-7 -> Vísceras 8-12).
+  - Sanitizados identificadores de ícones sem emojis.
+- `tests/tree-3d-sync-and-layer-order.test.ts` [NOVO]:
+  - 8 testes determinísticos cobrindo imutabilidade de posições, ordem estratigráfica e multi-seleção concorrente.
+- `workspace_index.json`: Reindexado com 158 arquivos mapeados.
 
 ---
 
 ## 2. Comandos Validados no Terminal (Quality Gate)
 
-- `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript).
-- `npm test` -> Exit Code 0 (166 testes unitários aprovados em 26 suítes vitest).
-- `npm run build` -> Exit Code 0 (Vite client + tsc server).
-- `git push origin main` -> Exit Code 0 (`391ac15..72563cc`).
-- `gcloud run deploy appmy` -> Exit Code 0 (Revisão `appmy-00005-4g5` ativa).
-- `curl -s https://appmy-1044179901556.us-central1.run.app/api/health` -> Exit Code 0 (Status 200).
+- `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript no cliente e servidor).
+- `npm test` -> Exit Code 0 (174 testes unitários aprovados em 27 suítes vitest).
+- `npm run build` -> Exit Code 0 (Build de produção do Vite em 5.94s e tsc server gerados em `dist/`).
+- `python generate_workspace_index.py` -> Exit Code 0 (158 arquivos mapeados).
 
 ---
 
 ## 3. Próximo Ponto de Entrada
 
-- **Modo Corte Seccional / Planos Tomográficos (Axial, Sagital, Coronal)**:
-  - Integrar planos de corte em Three.js (`clippingPlanes`) sincronizados com os filtros multi-sistema.
+- **Commit & Push para GitHub**:
+  - `git add .` e `git push origin main`.
+- **Deploy no Google Cloud Run**:
+  - Deploy da nova revisão com a correção da flutuação de ossos e da estratigrafia de fora para dentro.

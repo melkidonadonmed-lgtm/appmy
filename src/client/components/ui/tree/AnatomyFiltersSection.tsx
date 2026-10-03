@@ -28,13 +28,14 @@ interface SystemOption {
 
 const SYSTEMS: SystemOption[] = [
   { id: 'all', label: 'Todos', icon: Sliders },
-  { id: 'skeletal', label: 'Ossos (Cap. 2)', icon: Bone },
+  { id: 'integumentary', label: 'Tegumento (Pele)', icon: Shield },
   { id: 'muscular', label: 'Músculos (Cap. 3)', icon: Activity },
+  { id: 'skeletal', label: 'Ossos (Cap. 2)', icon: Bone },
   { id: 'cardiovascular', label: 'Cardio (Cap. 5)', icon: HeartPulse },
+  { id: 'lymphatic', label: 'Linfático (Cap. 6)', icon: Shield },
   { id: 'nervous', label: 'Nervoso (Cap. 4)', icon: Brain },
   { id: 'respiratory', label: 'Respiratório (Cap. 7)', icon: Wind },
   { id: 'digestive', label: 'Digestório (Cap. 8)', icon: Utensils },
-  { id: 'lymphatic', label: 'Linfático (Cap. 6)', icon: Shield },
   { id: 'urinary', label: 'Urinário (Cap. 9)', icon: Droplet },
   { id: 'endocrine', label: 'Endócrino (Cap. 11)', icon: Zap },
   { id: 'reproductive', label: 'Reprodutor (Cap. 10)', icon: Dna },
@@ -46,7 +47,7 @@ interface RegionOption {
 }
 
 const REGIONS: RegionOption[] = [
-  { id: 'all', label: 'Todo o Esqueleto' },
+  { id: 'all', label: 'Corpo Inteiro' },
   { id: 'cranium', label: 'Crânio & Face' },
   { id: 'spine', label: 'Coluna (C1-L5)' },
   { id: 'thorax', label: 'Caixa Torácica' },
@@ -58,14 +59,29 @@ const REGIONS: RegionOption[] = [
 export const AnatomyFiltersSection: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(true);
 
-  const activeSystem = useAnatomyStore((s) => s.activeSystem);
-  const setActiveSystem = useAnatomyStore((s) => s.setActiveSystem);
+  const activeSystems = useAnatomyStore((s) => s.activeSystems);
+  const toggleSystem = useAnatomyStore((s) => s.toggleSystem);
+  const setAllSystems = useAnatomyStore((s) => s.setAllSystems);
 
   const activeRegion = useAnatomyStore((s) => s.activeRegion);
   const setActiveRegion = useAnatomyStore((s) => s.setActiveRegion);
 
-  const activeSystemLabel =
-    SYSTEMS.find((s) => s.id === activeSystem)?.label || 'Todos';
+  const activeSystemsLabel = activeSystems.has('all')
+    ? 'Todos'
+    : `${activeSystems.size} ativo${activeSystems.size > 1 ? 's' : ''}`;
+
+  const isSystemActive = (sysId: ActiveAnatomicalSystem) => {
+    if (sysId === 'all') return activeSystems.has('all');
+    return activeSystems.has('all') || activeSystems.has(sysId);
+  };
+
+  const handleSystemClick = (sysId: ActiveAnatomicalSystem) => {
+    if (sysId === 'all') {
+      setAllSystems();
+    } else {
+      toggleSystem(sysId);
+    }
+  };
 
   return (
     <div className="outliner-modules-card">
@@ -83,7 +99,7 @@ export const AnatomyFiltersSection: React.FC = () => {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <span className="outliner-count-badge" style={{ textTransform: 'capitalize' }}>
-            {activeSystemLabel}
+            {activeSystemsLabel}
           </span>
           {isExpanded ? (
             <ChevronDown size={14} aria-hidden="true" />
@@ -101,7 +117,7 @@ export const AnatomyFiltersSection: React.FC = () => {
           aria-labelledby="outliner-filters-header-btn"
           className="outliner-modules-body"
         >
-          {/* Seletor de Sistemas Anatômicos */}
+          {/* Seletor de Sistemas Anatômicos (Multi-seleção Concorrente) */}
           <div style={{ marginBottom: '0.5rem' }}>
             <span
               style={{
@@ -114,7 +130,7 @@ export const AnatomyFiltersSection: React.FC = () => {
                 letterSpacing: '0.04em',
               }}
             >
-              Sistemas Anatômicos
+              Sistemas Anatômicos (De Fora p/ Dentro)
             </span>
             <div
               className="outliner-filter-grid"
@@ -123,14 +139,14 @@ export const AnatomyFiltersSection: React.FC = () => {
             >
               {SYSTEMS.map((sys) => {
                 const Icon = sys.icon;
-                const isActive = activeSystem === sys.id;
+                const isActive = isSystemActive(sys.id);
                 return (
                   <button
                     key={sys.id}
-                    onClick={() => setActiveSystem(sys.id)}
+                    onClick={() => handleSystemClick(sys.id)}
                     aria-pressed={isActive}
                     className={`outliner-filter-btn ${isActive ? 'active' : ''}`}
-                    title={`Filtrar sistema: ${sys.label}`}
+                    title={`Alternar sistema: ${sys.label}`}
                   >
                     <Icon size={11} aria-hidden="true" />
                     <span>{sys.label}</span>
@@ -141,9 +157,8 @@ export const AnatomyFiltersSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Seletor de Regiões do Esqueleto (Quando 'skeletal' ou 'all') */}
-          {(activeSystem === 'skeletal' || activeSystem === 'all') && (
-            <div style={{ paddingTop: '0.45rem', borderTop: '1px solid rgba(255, 255, 255, 0.07)' }}>
+          {/* Seletor de Regiões Corporais */}
+          <div style={{ paddingTop: '0.45rem', borderTop: '1px solid rgba(255, 255, 255, 0.07)' }}>
               <div
                 style={{
                   display: 'flex',
@@ -182,7 +197,6 @@ export const AnatomyFiltersSection: React.FC = () => {
                 })}
               </div>
             </div>
-          )}
         </div>
       )}
     </div>

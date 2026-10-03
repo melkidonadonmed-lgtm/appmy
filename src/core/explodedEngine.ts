@@ -64,7 +64,16 @@ export function bindExplodedNode(
   mesh: THREE.Mesh,
   activeRegion: string = 'all'
 ): ExplodedNodeBinding {
-  const data = (mesh.userData || {}) as Partial<AnatomicalMeshUserData>;
+  if (!mesh.userData) {
+    mesh.userData = {};
+  }
+  // Preserva de forma imutável a posição anatômica original da malha
+  if (!mesh.userData.initialPosition) {
+    mesh.userData.initialPosition = mesh.position.clone();
+  }
+  const originalPosition = (mesh.userData.initialPosition as THREE.Vector3).clone();
+
+  const data = mesh.userData as Partial<AnatomicalMeshUserData>;
   
   // 1. Verifica se foi explicitamente declarado como âncora ou identificado pelo nome
   const isAnchor =
@@ -82,10 +91,10 @@ export function bindExplodedNode(
       const maxDist = data.distanciaMaxima ?? 1.0;
       targetOffset.set(x, y, z).normalize().multiplyScalar(maxDist);
     } else {
-      // Cálculo de dispersão radial inteligente respeitando a simetria corporal
-      const posX = mesh.position.x;
-      const posY = mesh.position.y;
-      const posZ = mesh.position.z;
+      // Cálculo de dispersão radial inteligente respeitando a simetria corporal baseada na posição original
+      const posX = originalPosition.x;
+      const posY = originalPosition.y;
+      const posZ = originalPosition.z;
 
       const dirX = Math.abs(posX) > 0.01 ? Math.sign(posX) * (Math.abs(posX) * 2.2 + 0.4) : (Math.random() - 0.5) * 0.4;
       const dirY = posY > 1.35 ? (posY - 1.35) * 1.6 + 0.3 : posY < 0.45 ? -0.4 : 0;
@@ -100,7 +109,7 @@ export function bindExplodedNode(
 
   return {
     mesh,
-    originalPosition: mesh.position.clone(),
+    originalPosition,
     targetOffset,
     isAnchor,
   };
@@ -109,6 +118,7 @@ export function bindExplodedNode(
 /**
  * Aplica o passo de interpolação linear (LERP) a todas as malhas vinculadas.
  * Garante que peças com isAnchor: true permaneçam absolutamente imóveis.
+ * Quando o progresso for 0.0, restaura de forma atômica e exata a posição anatômica.
  */
 export function applyExplodedStep(
   bindings: ExplodedNodeBinding[],
@@ -122,6 +132,13 @@ export function applyExplodedStep(
     if (b.isAnchor || !b.mesh.visible) {
       // Se for âncora e houver qualquer desvio residual, restaura imediatamente a posição original
       if (b.isAnchor && !b.mesh.position.equals(b.originalPosition)) {
+        b.mesh.position.copy(b.originalPosition);
+      }
+      continue;
+    }
+
+    if (clampedProgress === 0) {
+      if (!b.mesh.position.equals(b.originalPosition)) {
         b.mesh.position.copy(b.originalPosition);
       }
       continue;

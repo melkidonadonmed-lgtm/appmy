@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-03T03:32:08.239067+00:00",
+  "timestamp_utc": "2026-10-03T04:34:28.511585+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -100,8 +100,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 19854,
-      "hash": "99d50df27895"
+      "size_bytes": 19987,
+      "hash": "7e03b24f94d1"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
@@ -405,8 +405,8 @@
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 26830,
-      "hash": "b749d5d70c4d"
+      "size_bytes": 26941,
+      "hash": "f39e5fbb1cc2"
     },
     {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
@@ -465,13 +465,13 @@
     },
     {
       "path": "src/client/components/ui/tree/AnatomyFiltersSection.tsx",
-      "size_bytes": 6719,
-      "hash": "7f0e65f22944"
+      "size_bytes": 7184,
+      "hash": "8cd8180ac169"
     },
     {
       "path": "src/client/components/ui/tree/AnatomyTreePanel.tsx",
-      "size_bytes": 7480,
-      "hash": "0ac39545fac5"
+      "size_bytes": 7549,
+      "hash": "8cb8d82b05fc"
     },
     {
       "path": "src/client/components/ui/tree/ModuleLayersSection.tsx",
@@ -480,8 +480,8 @@
     },
     {
       "path": "src/client/components/ui/tree/TreeGroup.tsx",
-      "size_bytes": 6237,
-      "hash": "f26a7c30fe30"
+      "size_bytes": 6075,
+      "hash": "afa26602a5cd"
     },
     {
       "path": "src/client/components/ui/tree/TreeItem.tsx",
@@ -525,8 +525,8 @@
     },
     {
       "path": "src/core/explodedEngine.ts",
-      "size_bytes": 5361,
-      "hash": "01007fe2aff9"
+      "size_bytes": 5945,
+      "hash": "4a7f8f7c980f"
     },
     {
       "path": "src/core/visibilityManager.ts",
@@ -620,8 +620,8 @@
     },
     {
       "path": "src/shared/constants/taxonomicMetadata.ts",
-      "size_bytes": 3097,
-      "hash": "bade1c4adf4b"
+      "size_bytes": 3135,
+      "hash": "095d557d7103"
     },
     {
       "path": "src/shared/constants/urinary.ts",
@@ -762,6 +762,11 @@
       "path": "tests/taxonomic-tree.test.ts",
       "size_bytes": 5419,
       "hash": "8e6a6729a9ff"
+    },
+    {
+      "path": "tests/tree-3d-sync-and-layer-order.test.ts",
+      "size_bytes": 6259,
+      "hash": "29d09ef80557"
     },
     {
       "path": "tests/unified-outliner-layout.test.ts",

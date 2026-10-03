@@ -41,7 +41,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   const showAll = useAnatomyStore((s) => s.showAll);
   const hideAll = useAnatomyStore((s) => s.hideAll);
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
-  const activeSystem = useAnatomyStore((s) => s.activeSystem);
+  const activeSystems = useAnatomyStore((s) => s.activeSystems);
 
   // 1. Constrói a árvore canônica a partir do catálogo uma única vez
   const fullTree = useMemo(() => buildTaxonomicTree(Z_ANATOMY_CATALOG), []);
@@ -56,20 +56,20 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
     return Array.from(set);
   }, []);
 
-  // 3. Filtra a árvore dinamicamente conforme sistema ativo e busca textual
+  // 3. Filtra a árvore dinamicamente conforme multi-seleção de sistemas e busca textual
   const visibleTree = useMemo(() => {
     let base = fullTree;
-    if (activeSystem !== 'all') {
-      const filteredBySys = fullTree.filter(
-        (node) =>
-          node.systemId === activeSystem || node.id === `sys_${activeSystem}`
-      );
+    if (activeSystems && !activeSystems.has('all')) {
+      const filteredBySys = fullTree.filter((node) => {
+        const sysId = node.systemId || node.id.replace('sys_', '');
+        return activeSystems.has(sysId as any);
+      });
       if (filteredBySys.length > 0) {
         base = filteredBySys;
       }
     }
     return filterTaxonomicTree(base, search);
-  }, [fullTree, search, activeSystem]);
+  }, [fullTree, search, activeSystems]);
 
   const totalStructures = Z_ANATOMY_CATALOG.length;
   const hiddenCount = hiddenNodeIds.size;

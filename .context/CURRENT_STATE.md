@@ -1,41 +1,41 @@
 # ESTADO ATUAL DO PROJETO (NÍVEL 2)
 
 **Projeto**: appmy  
-**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git` (Commit: `72563cc`)  
+**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Concluído e em Produção: Multi-Seleção de Sistemas Anatômicos Sobrepostos, Sliders de Opacidade Individual, Presets Cirúrgicos de Transparência e Sincronização de Bookmarks
+**Fase Atual**: Blindagem de Posição Anatômica Imutável (Fim da Flutuação/Drift), Sincronização Árvore <-> Three.js, Multi-Seleção Concorrente de Sistemas e Ordem Estratigráfica de Fora para Dentro
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Multi-Seleção Concorrente de Sistemas (`useAnatomyStore.ts`)**:
-  - `activeSystems`: Conjunto reativo `Set<ActiveAnatomicalSystem>` permitindo visualização simultânea de múltiplos sistemas (ex: esqueleto + vascular + linfático).
-  - Ações atômicas: `toggleSystem`, `setAllSystems` e retrocompatibilidade com `setActiveSystem`.
-- **Controle Granular de Transparência e Opacidade Individual (`visibilityManager.ts` e `useAnatomyStore.ts`)**:
-  - `systemOpacities`: Mapeamento `Record<string, number>` de $0.0$ a $1.0$ por camada anatômica.
-  - `updateMeshVisibility` enriquecido com suporte a `baseOpacity` com transição automática de `baseMaterial.transparent = baseOpacity < 0.99`.
-  - Injeção em tempo de execução no `RealBodyAtlas.tsx` nos 10 sistemas anatômicos do Z-Anatomy.
-- **Card Clínico com Ações Rápidas de Camada e Presets Cirúrgicos (`AnatomyClinicalCard.tsx`)**:
-  - Compacto por padrão (`detailsExpanded: false`) com seta de 16px para expansão da literatura médica.
-  - Botões de ativação rápida em 1 clique para vasos, nervos, músculos, linfáticos, fáscia e esqueleto.
-  - Sliders individuais de opacidade com display numérico percentual e indicador colorido por sistema.
-  - Presets rápidos de transparência cirúrgica/radiológica: `Angio Focus`, `Neuro Focus`, `Músculo 40%` e `Reset 100%`.
-- **Persistência em Bookmarks Clínicos (`bookmarks-storage.ts`)**:
-  - `activeSystems` e `systemOpacities` integrados e restaurados fielmente via `applyBookmarkToStore`.
+- **Blindagem Imutável da Posição Anatômica (`explodedEngine.ts` e `RealBodyAtlas.tsx`)**:
+  - `initialPosition` gravado como referência imutável no momento da clonagem do GLTF.
+  - Eliminação definitiva da corrupção cumulativa de posições em re-renderizações (`useMemo`).
+  - Restauração atômica e exata para a posição anatômica original quando `progress === 0.0`.
+- **Sincronização Bidirecional Árvore <-> Three.js (`TreeGroup.tsx`, `AnatomyTreePanel.tsx`)**:
+  - Checkboxes de nível de sistema na árvore taxonômica agora disparam `addSystem` / `removeSystem` sincronizados com `activeSystems`.
+  - O filtro da árvore (`visibleTree`) agora suporta múltiplos sistemas selecionados simultaneamente em vez de monosseleção restritiva.
+- **Multi-Seleção Concorrente nos Filtros Rápidos (`AnatomyFiltersSection.tsx`)**:
+  - Botões de sistemas agora operam como seletores aditivos/subtrativos (`toggleSystem`), permitindo combinar esqueleto + vascular + linfático à vontade.
+  - Seletor "Todos" restaurado via `setAllSystems`.
+  - Seção de regiões corporais universalizada para orientar a câmera independentemente do sistema ativo.
+- **Ordem Estratigráfica Canônica: De Fora para Dentro**:
+  - `taxonomicMetadata.ts` reordenado: 1. Tegumento (Pele) -> 2. Músculos -> 3. Articulações -> 4. Esqueleto -> 5. Cardio -> 6. Linfático -> 7. Nervoso -> 8. Respiratório -> 9. Digestório -> 10. Urinário -> 11. Endócrino -> 12. Reprodutor.
+  - `AnatomyFiltersSection.tsx` reflete rigorosamente a progressão da periferia para o centro anatômico.
 - **Quality Gates Convalidados**:
-  - 166 testes unitários aprovados em 26 suítes Vitest (`ExitCode 0`).
+  - 174 testes unitários aprovados em 27 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` aprovado gerando bundles minificados do Vite e Express (`ExitCode 0`).
-  - `workspace_index.json` atualizado com 157 arquivos.
+  - `npm run build` aprovado (`ExitCode 0`).
+  - `workspace_index.json` atualizado com 158 arquivos mapeados.
 
 ---
 
 ## 2. Servidores em Execução Ativa
 
-- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (Ativo e validado, status 200, revisão `appmy-00005-4g5`)
-- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health` (Status 200 OK, `firebaseAdminReady: true`)
+- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/`
+- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health`
 - **Frontend Local (Vite)**: `http://localhost:3000/`
 - **Backend Local (Express)**: `http://localhost:8080/`
 
@@ -43,5 +43,5 @@
 
 ## 3. Próximo Ponto de Entrada
 
-- **Modo Corte Seccional / Planos Tomográficos (Axial, Sagital, Coronal)**:
-  - Adicionar clipping planes para inspeção tomográfica em conjunto com a transparência de sistemas.
+- **Commit e Push para o GitHub e Deploy no Cloud Run**:
+  - Subir a versão com a blindagem das coordenadas dos ossos e a nova estratigrafia canônica de fora para dentro.

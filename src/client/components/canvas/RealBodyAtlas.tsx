@@ -183,7 +183,18 @@ function RealSystemModel({
   magnitude?: number;
 }) {
   const { scene } = useGLTF(glbPath, DRACO_DECODER_PATH);
-  const clonedScene = useMemo(() => scene.clone(true), [scene]);
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true);
+    clone.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        if (!child.userData) child.userData = {};
+        if (!child.userData.initialPosition) {
+          child.userData.initialPosition = child.position.clone();
+        }
+      }
+    });
+    return clone;
+  }, [scene]);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
@@ -416,7 +427,7 @@ export function RealBodyAtlas({
   isolatedOnly,
   activeSystem,
   activeRegion = 'all',
-  layerPeelingLevel = 0,
+  layerPeelingLevel: _layerPeelingLevel = 0,
   realSkullOpacity = 1.0,
   visualMode = 'solid',
 }: RealBodyAtlasProps) {
@@ -469,15 +480,9 @@ export function RealBodyAtlas({
   const showSkeletal = isSysActive('skeletal');
   const skeletalOpacity = getSysOpacity('skeletal');
 
-  // O sistema muscular só aparece quando selecionado explicitamente ou quando 'all' com camada > 0
-  const showMuscular = isSysActive('muscular') || (isSysActive('all') && layerPeelingLevel > 0);
-  const muscularOpacity = isSysActive('muscular')
-    ? getSysOpacity('muscular')
-    : layerPeelingLevel === 1
-    ? 0.35
-    : layerPeelingLevel === 2
-    ? 0.75
-    : getSysOpacity('muscular');
+  // O sistema muscular aparece conforme seleção concorrente ou modo global
+  const showMuscular = isSysActive('muscular');
+  const muscularOpacity = getSysOpacity('muscular');
 
   const showRespiratory = isSysActive('respiratory');
   const respiratoryOpacity = getSysOpacity('respiratory');
