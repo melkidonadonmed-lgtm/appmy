@@ -178,7 +178,7 @@ describe('Zen Mode & Clinical Lifecycle Suite (Fase 1 a 4)', () => {
         path.resolve(__dirname, '../src/client/lib/bookmarks-storage.ts'),
         path.resolve(__dirname, '../src/client/stores/useAnatomyStore.ts'),
         path.resolve(__dirname, '../src/client/components/canvas/SceneCanvas.tsx'),
-        path.resolve(__dirname, '../src/client/components/canvas/RealCraniumModel.tsx'),
+        path.resolve(__dirname, '../src/client/components/canvas/RealBodyAtlas.tsx'),
       ];
 
       for (const file of files) {

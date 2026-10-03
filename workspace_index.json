@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-03T04:40:09.628568+00:00",
+  "timestamp_utc": "2026-10-03T07:39:23.626991+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -101,7 +101,7 @@
     {
       "path": "workspace_index.json",
       "size_bytes": 19987,
-      "hash": "da8c58f2246b"
+      "hash": "2f6d7dc8bb7a"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
@@ -155,8 +155,8 @@
     },
     {
       "path": "dataconnect/schema/schema.gql",
-      "size_bytes": 559,
-      "hash": "e56e94676ef9"
+      "size_bytes": 599,
+      "hash": "788f715aa08f"
     },
     {
       "path": "docs/superpowers/plans/2026-10-02-unificacao-outliner-e-filtros.md",
@@ -400,18 +400,13 @@
     },
     {
       "path": "src/client/components/canvas/OrientationGizmo.tsx",
-      "size_bytes": 3722,
-      "hash": "986cb99d09b4"
+      "size_bytes": 3996,
+      "hash": "142cb02b6a2d"
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 26830,
-      "hash": "b749d5d70c4d"
-    },
-    {
-      "path": "src/client/components/canvas/RealCraniumModel.tsx",
-      "size_bytes": 4810,
-      "hash": "5e5fa476f9b2"
+      "size_bytes": 28400,
+      "hash": "2c4082f0a57c"
     },
     {
       "path": "src/client/components/canvas/ReproductiveScene.tsx",
@@ -444,11 +439,6 @@
       "hash": "82a8df744f00"
     },
     {
-      "path": "src/client/components/ui/AnatomicalSidebar.tsx",
-      "size_bytes": 24142,
-      "hash": "bb049a436c28"
-    },
-    {
       "path": "src/client/components/ui/DissectionToolbar.tsx",
       "size_bytes": 7924,
       "hash": "f04b76558f71"
@@ -465,13 +455,13 @@
     },
     {
       "path": "src/client/components/ui/tree/AnatomyFiltersSection.tsx",
-      "size_bytes": 6719,
-      "hash": "7f0e65f22944"
+      "size_bytes": 7388,
+      "hash": "ac3e6832e1e8"
     },
     {
       "path": "src/client/components/ui/tree/AnatomyTreePanel.tsx",
-      "size_bytes": 7480,
-      "hash": "0ac39545fac5"
+      "size_bytes": 7769,
+      "hash": "7000e8b09e63"
     },
     {
       "path": "src/client/components/ui/tree/ModuleLayersSection.tsx",
@@ -480,8 +470,8 @@
     },
     {
       "path": "src/client/components/ui/tree/TreeGroup.tsx",
-      "size_bytes": 6237,
-      "hash": "f26a7c30fe30"
+      "size_bytes": 6329,
+      "hash": "c7852e10d290"
     },
     {
       "path": "src/client/components/ui/tree/TreeItem.tsx",
@@ -492,11 +482,6 @@
       "path": "src/client/hooks/useAnatomicalHotkeys.ts",
       "size_bytes": 3212,
       "hash": "0518adc19edc"
-    },
-    {
-      "path": "src/client/hooks/useAnatomicalModel.ts",
-      "size_bytes": 3629,
-      "hash": "891ae9127c72"
     },
     {
       "path": "src/client/lib/bookmarks-storage.ts",
@@ -525,8 +510,8 @@
     },
     {
       "path": "src/core/explodedEngine.ts",
-      "size_bytes": 5361,
-      "hash": "01007fe2aff9"
+      "size_bytes": 6118,
+      "hash": "925451fcbd1a"
     },
     {
       "path": "src/core/visibilityManager.ts",
@@ -620,8 +605,8 @@
     },
     {
       "path": "src/shared/constants/taxonomicMetadata.ts",
-      "size_bytes": 3097,
-      "hash": "bade1c4adf4b"
+      "size_bytes": 3280,
+      "hash": "8d7651a57eb6"
     },
     {
       "path": "src/shared/constants/urinary.ts",
@@ -730,8 +715,13 @@
     },
     {
       "path": "tests/pre-delivery-validation.test.ts",
-      "size_bytes": 5782,
-      "hash": "94ef65949134"
+      "size_bytes": 5791,
+      "hash": "004cf3d1a72c"
+    },
+    {
+      "path": "tests/real-body-atlas-integumentary.test.ts",
+      "size_bytes": 2853,
+      "hash": "3cafff6f80a2"
     },
     {
       "path": "tests/reproductive.test.ts",
@@ -755,8 +745,8 @@
     },
     {
       "path": "tests/state-sync.test.ts",
-      "size_bytes": 4262,
-      "hash": "183aa21264d6"
+      "size_bytes": 4271,
+      "hash": "c4b392f11f60"
     },
     {
       "path": "tests/taxonomic-tree.test.ts",
@@ -765,8 +755,8 @@
     },
     {
       "path": "tests/tree-3d-sync-and-layer-order.test.ts",
-      "size_bytes": 0,
-      "hash": "e3b0c44298fc"
+      "size_bytes": 6394,
+      "hash": "929103aa92e5"
     },
     {
       "path": "tests/unified-outliner-layout.test.ts",
@@ -790,8 +780,8 @@
     },
     {
       "path": "tests/zen-mode-and-lifecycle.test.ts",
-      "size_bytes": 7399,
-      "hash": "978fdddee806"
+      "size_bytes": 7396,
+      "hash": "f664180c4c6c"
     }
   ]
 }

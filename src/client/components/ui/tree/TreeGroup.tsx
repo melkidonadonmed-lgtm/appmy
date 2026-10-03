@@ -64,6 +64,8 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
         className="outliner-group-row"
         style={{ paddingLeft: `${Math.max(6, (node.depth - 1) * 12 + 6)}px` }}
         onClick={() => setIsExpanded(!isExpanded)}
+        role="button"
+        aria-expanded={isExpanded}
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {

@@ -1,39 +1,38 @@
 # CHECKPOINT DA SESSÃO (NÍVEL 3)
 
-**Data/Hora**: 2026-10-03 00:40 (UTC-4)  
+**Data/Hora**: 2026-10-03 03:40 (UTC-4)  
 **Operador**: Antigravity  
 
 ---
 
-## 1. Entrega e Deploy Concluídos
+## 1. Entrega Concluída
 
-- **GitHub Remote (`origin/main`)**:
-  - Hash do Commit: `8dd91a6`
-  - Mensagem: `fix(atlas): blindagem de posicao anatomica imutavel, estratigrafia de fora para dentro e multi-selecao de sistemas`
-  - Repositório: `git@github.com:melkidonadonmed-lgtm/appmy.git`
-- **Google Cloud Run (Produção)**:
-  - Serviço: `appmy`
-  - Região: `us-central1`
-  - Projeto GCP: `agent-md-506215`
-  - Revisão Implantada: `appmy-00006-plv`
-  - Roteamento: 100% do tráfego ativo
-  - URL Pública: `https://appmy-1044179901556.us-central1.run.app`
-  - Healthcheck: `https://appmy-1044179901556.us-central1.run.app/api/health` -> HTTP 200 OK (`status: ok`, `uptime: 16.65s`, `firebaseAdminReady: true`)
+- **Saneamento e Limpeza de Arquivos Órfãos**:
+  - Removidos 3 arquivos mortos: `src/client/hooks/useAnatomicalModel.ts`, `src/client/components/ui/AnatomicalSidebar.tsx` e `src/client/components/canvas/RealCraniumModel.tsx`.
+- **Acessibilidade A11y nos Nós Interativos**:
+  - `OrientationGizmo.tsx`: Adicionados `role="button"`, `tabIndex={0}`, `aria-expanded` e `onKeyDown` (`Enter`/`Space`).
+  - `TreeGroup.tsx`: Adicionados `role="button"` e `aria-expanded`.
+- **Integração do Sistema Tegumentar Real (.GLB)**:
+  - Plugado `integumentary_female.glb` (2.18 MB) como a primeira camada externa no `RealBodyAtlas.tsx`.
+  - Integrado ao `layerPeelingLevel` e à multi-seleção de sistemas `integumentary`.
+  - Adicionado preload para evitar travamentos de streaming.
+- **Refatoração do Firebase Data Connect**:
+  - `dataconnect/schema/schema.gql` refatorado para o domínio médico: `User`, `ClinicalBookmark`, `ClinicalAnnotation`.
+- **Nova Suíte de Testes**:
+  - Adicionado `tests/real-body-atlas-integumentary.test.ts` (5 testes unitários).
 
 ---
 
 ## 2. Comandos Validados no Terminal (Quality Gate)
 
 - `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript).
-- `npm test` -> Exit Code 0 (174 testes unitários aprovados em 27 suítes vitest).
-- `npm run build` -> Exit Code 0 (Vite client em 5.94s + tsc server).
-- `git push origin main` -> Exit Code 0 (`2a0ef9b..8dd91a6`).
-- `gcloud run deploy appmy` -> Exit Code 0 (Revisão `appmy-00006-plv` ativa com 100% de tráfego).
-- `curl -s https://appmy-1044179901556.us-central1.run.app/api/health` -> Exit Code 0 (Status 200).
+- `npm test` -> Exit Code 0 (179 testes unitários aprovados em 28 suítes Vitest).
+- `npm run build` -> Exit Code 0 (Vite client em 5.18s + tsc server).
+- `python generate_workspace_index.py` -> Exit Code 0 (156 arquivos mapeados).
 
 ---
 
 ## 3. Próximo Ponto de Entrada
 
-- **Camada de Tegumento Real (.GLB)**:
-  - Carregar o modelo 3D do tegumento superficial como primeira casca física do corpo com controle de dissecação.
+- **Persistência de Bookmarks em Nuvem**:
+  - Conectar marcadores de dissecção com autenticação Firebase e PostgreSQL via Data Connect.

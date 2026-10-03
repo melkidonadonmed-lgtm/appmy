@@ -90,7 +90,7 @@ describe('State Synchronization & Zero-Emoji Medical Quality Suite', () => {
 
     const filesToCheck = [
       path.resolve(__dirname, '../src/client/App.tsx'),
-      path.resolve(__dirname, '../src/client/components/ui/AnatomicalSidebar.tsx'),
+      path.resolve(__dirname, '../src/client/components/ui/tree/AnatomyFiltersSection.tsx'),
       path.resolve(__dirname, '../src/client/components/ui/tree/AnatomyTreePanel.tsx'),
       path.resolve(__dirname, '../src/client/components/ui/tree/ModuleLayersSection.tsx'),
       path.resolve(__dirname, '../src/client/components/canvas/OrientationGizmo.tsx'),

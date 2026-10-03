@@ -14,7 +14,19 @@ export const OrientationGizmo: React.FC = () => {
 
   return (
     <div className="orientation-gizmo-container" aria-label="Widget de Orientação Anatômica 3D">
-      <div className="orientation-gizmo-header" onClick={() => setCollapsed(!collapsed)}>
+      <div
+        className="orientation-gizmo-header"
+        onClick={() => setCollapsed(!collapsed)}
+        role="button"
+        tabIndex={0}
+        aria-expanded={!collapsed}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setCollapsed(!collapsed);
+          }
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
           <Compass size={14} className="text-cyan-400" aria-hidden="true" />
           <span className="orientation-gizmo-title">Orientação 3D</span>

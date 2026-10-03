@@ -92,7 +92,7 @@ function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: Ana
         pathStr.includes('thorax') ||
         pathStr.includes('rib') ||
         pathStr.includes('sternum') ||
-        ['rib', 'sternum', 'xiphoid', 'costal cartilage', 'cartilage of'].some((k) => nameLower.includes(k))
+        ['rib', 'sternum', 'xiphoid', 'costal cartilage', 'cartilage of', 'mammary', 'areola', 'nipple', 'lactiferous'].some((k) => nameLower.includes(k))
       );
 
     case 'upper_limb':
@@ -462,12 +462,26 @@ export function RealBodyAtlas({
   // Determina quais sistemas devem ser exibidos e suas respectivas opacidades individuais
   const storeActiveSystems = useAnatomyStore((s) => s.activeSystems);
   const storeSystemOpacities = useAnatomyStore((s) => s.systemOpacities);
+  const storePeelingLevel = useAnatomyStore((s) => s.layerPeelingLevel);
+  const effectivePeeling = _layerPeelingLevel > 0 ? _layerPeelingLevel : storePeelingLevel;
 
   const isSysActive = (sys: ActiveAnatomicalSystem) => {
     if (storeActiveSystems && storeActiveSystems.size > 0) {
-      return storeActiveSystems.has('all') || storeActiveSystems.has(sys);
+      if (storeActiveSystems.has('all')) {
+        if (sys === 'integumentary') {
+          return effectivePeeling >= 3 || storeActiveSystems.has('integumentary');
+        }
+        return true;
+      }
+      return storeActiveSystems.has(sys);
     }
-    return activeSystem === sys || activeSystem === 'all';
+    if (activeSystem === 'all') {
+      if (sys === 'integumentary') {
+        return effectivePeeling >= 3;
+      }
+      return true;
+    }
+    return activeSystem === sys;
   };
 
   const getSysOpacity = (sys: ActiveAnatomicalSystem, fallback = effectiveOpacity) => {
@@ -476,6 +490,9 @@ export function RealBodyAtlas({
     }
     return fallback;
   };
+
+  const showIntegumentary = isSysActive('integumentary');
+  const integumentaryOpacity = getSysOpacity('integumentary', 0.85);
 
   const showSkeletal = isSysActive('skeletal');
   const skeletalOpacity = getSysOpacity('skeletal');
@@ -550,6 +567,24 @@ export function RealBodyAtlas({
 
   return (
     <group ref={groupRef} position={position} scale={scale}>
+      {/* 0. Sistema Tegumentar Real Z-Anatomy (Pele & Subcutâneo - Cap. 14) */}
+      {showIntegumentary && (
+        <RealSystemModel
+          glbPath="/models/anatomy/integumentary_female.glb"
+          systemName="integumentary"
+          defaultColor="#d49b7a" // Tom de pele anatômico suave
+          explosionProgress={effectiveExplosion}
+          selectedNodeId={selectedNodeId}
+          onSelectNode={onSelectNode}
+          ghostMode={ghostMode}
+          isolatedOnly={isolatedOnly}
+          activeRegion={activeRegion}
+          opacity={integumentaryOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.9}
+        />
+      )}
+
       {/* 1. Esqueleto Humano Completo (335 Ossos Reais com Filtro por Região) */}
       {showSkeletal && (
         <RealSystemModel
@@ -735,5 +770,6 @@ export function RealBodyAtlas({
 
 // Preload dos modelos principais para carregamento instantâneo
 useGLTF.preload('/models/anatomy/skeletal_male.glb', DRACO_DECODER_PATH);
+useGLTF.preload('/models/anatomy/integumentary_female.glb', DRACO_DECODER_PATH);
 
 

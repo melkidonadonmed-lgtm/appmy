@@ -1,33 +1,25 @@
 type User @table {
   name: String!
   email: String!
-  role: String! # Ex: "Admin" ou "Client"
+  role: String! # Ex: "Clinician", "Student", "Admin"
 }
 
-type Process @table {
+type ClinicalBookmark @table {
+  user: User!
   name: String!
-  status: String!
-  dueDate: Date
+  description: String
+  viewType: String! # "realistic" | "exploded"
+  activeRegion: String!
+  solidOpacity: Float!
+  explosionProgress: Float!
+  selectedNodeId: String
+  createdAt: Timestamp! @default(expr: "request.time")
 }
 
-type Requirement @table {
-  title: String!
-  description: String!
-  isMandatory: Boolean
-  process: Process
-}
-
-type Submission @table {
-  status: String! # Ex: "Pending", "Approved", "Rejected"
-  uploadDate: Timestamp
-  fileUrl: String
-  rejectionReason: String
-  user: User!
-  requirement: Requirement!
-}
-
-type Notification @table {
-  message: String!
-  isRead: Boolean!
-  user: User!
+type ClinicalAnnotation @table {
+  bookmark: ClinicalBookmark!
+  structureId: String! # Ex: "za:frontal_bone"
+  noteText: String!
+  author: User!
+  createdAt: Timestamp! @default(expr: "request.time")
 }

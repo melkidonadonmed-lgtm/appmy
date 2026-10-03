@@ -110,7 +110,7 @@ describe('Validação Pré-Entrega: Exploded View, Isolamento das Sidebars e Int
 
     it('deve garantir que nenhum componente da UI contenha emojis gráficos informais', () => {
       const filesToAudit = [
-        '../src/client/components/ui/AnatomicalSidebar.tsx',
+        '../src/client/components/ui/tree/AnatomyFiltersSection.tsx',
         '../src/client/components/ui/tree/AnatomyTreePanel.tsx',
         '../src/client/components/ui/QuickPresetsBar.tsx',
         '../src/client/App.tsx',
