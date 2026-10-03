@@ -9,7 +9,7 @@ import {
   sanitizeNodeName,
 } from '../../../shared/constants/zAnatomyCatalog.ts';
 import { detectRegion } from '../../../shared/utils/buildTaxonomicTree.ts';
-import { AnyAnatomicalNode, GeneralAnatomicalNode, AnatomicalRegion } from './AnatomicalAtlasScene.tsx';
+import { AnyAnatomicalNode, GeneralAnatomicalNode, AnatomicalRegion, ActiveAnatomicalSystem } from './AnatomicalAtlasScene.tsx';
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
@@ -273,7 +273,7 @@ function RealSystemModel({
       }
 
       // Máquina de estados determinística de visibilidade e blindagem de raycast
-      updateMeshVisibility(mesh, visibilityState, baseMaterial, defaultColor);
+      updateMeshVisibility(mesh, visibilityState, baseMaterial, defaultColor, isXRay ? 0.22 : opacity);
 
       // Destaque de Hover interativo
       if (mesh.visible && !isSelected && isHovered) {
@@ -448,26 +448,60 @@ export function RealBodyAtlas({
     };
   }, []);
 
-  // Determina quais sistemas devem ser exibidos
-  const showSkeletal = activeSystem === 'skeletal' || activeSystem === 'all';
+  // Determina quais sistemas devem ser exibidos e suas respectivas opacidades individuais
+  const storeActiveSystems = useAnatomyStore((s) => s.activeSystems);
+  const storeSystemOpacities = useAnatomyStore((s) => s.systemOpacities);
+
+  const isSysActive = (sys: ActiveAnatomicalSystem) => {
+    if (storeActiveSystems && storeActiveSystems.size > 0) {
+      return storeActiveSystems.has('all') || storeActiveSystems.has(sys);
+    }
+    return activeSystem === sys || activeSystem === 'all';
+  };
+
+  const getSysOpacity = (sys: ActiveAnatomicalSystem, fallback = effectiveOpacity) => {
+    if (storeSystemOpacities && typeof storeSystemOpacities[sys] === 'number') {
+      return storeSystemOpacities[sys];
+    }
+    return fallback;
+  };
+
+  const showSkeletal = isSysActive('skeletal');
+  const skeletalOpacity = getSysOpacity('skeletal');
+
   // O sistema muscular só aparece quando selecionado explicitamente ou quando 'all' com camada > 0
-  const showMuscular = activeSystem === 'muscular' || (activeSystem === 'all' && layerPeelingLevel > 0);
-  const muscularOpacity = activeSystem === 'muscular'
-    ? effectiveOpacity
+  const showMuscular = isSysActive('muscular') || (isSysActive('all') && layerPeelingLevel > 0);
+  const muscularOpacity = isSysActive('muscular')
+    ? getSysOpacity('muscular')
     : layerPeelingLevel === 1
     ? 0.35
     : layerPeelingLevel === 2
     ? 0.75
-    : effectiveOpacity;
+    : getSysOpacity('muscular');
 
-  const showRespiratory = activeSystem === 'respiratory' || activeSystem === 'all';
-  const showCardiovascular = activeSystem === 'cardiovascular' || activeSystem === 'all';
-  const showDigestive = activeSystem === 'digestive' || activeSystem === 'all';
-  const showNervous = activeSystem === 'nervous' || activeSystem === 'all';
-  const showRenal = activeSystem === 'urinary' || activeSystem === 'renal' || activeSystem === 'all';
-  const showLymphatic = activeSystem === 'lymphatic' || activeSystem === 'all';
-  const showEndocrine = activeSystem === 'endocrine' || activeSystem === 'all';
-  const showReproductive = activeSystem === 'reproductive' || activeSystem === 'all';
+  const showRespiratory = isSysActive('respiratory');
+  const respiratoryOpacity = getSysOpacity('respiratory');
+
+  const showCardiovascular = isSysActive('cardiovascular');
+  const cardioOpacity = getSysOpacity('cardiovascular');
+
+  const showDigestive = isSysActive('digestive');
+  const digestiveOpacity = getSysOpacity('digestive');
+
+  const showNervous = isSysActive('nervous');
+  const nervousOpacity = getSysOpacity('nervous');
+
+  const showRenal = isSysActive('urinary');
+  const renalOpacity = getSysOpacity('urinary');
+
+  const showLymphatic = isSysActive('lymphatic');
+  const lymphaticOpacity = getSysOpacity('lymphatic');
+
+  const showEndocrine = isSysActive('endocrine');
+  const endocrineOpacity = getSysOpacity('endocrine');
+
+  const showReproductive = isSysActive('reproductive');
+  const reproductiveOpacity = getSysOpacity('reproductive');
 
   // Centralização e Escala Adaptativa conforme a região selecionada:
   // Se o usuário selecionou apenas o Crânio, centralizamos a cabeça no meio do viewport com zoom cirúrgico!
@@ -523,7 +557,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={skeletalOpacity}
           isXRay={effectiveXRay}
           magnitude={activeRegion === 'cranium' ? 1.4 : 0.95}
         />
@@ -559,7 +593,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={respiratoryOpacity}
           isXRay={effectiveXRay}
           magnitude={0.8}
         />
@@ -577,7 +611,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={cardioOpacity}
           isXRay={effectiveXRay}
           magnitude={0.8}
         />
@@ -595,7 +629,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={digestiveOpacity}
           isXRay={effectiveXRay}
           magnitude={0.8}
         />
@@ -613,7 +647,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={nervousOpacity}
           isXRay={effectiveXRay}
           magnitude={0.85}
         />
@@ -631,7 +665,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={renalOpacity}
           isXRay={effectiveXRay}
           magnitude={0.8}
         />
@@ -649,7 +683,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={lymphaticOpacity}
           isXRay={effectiveXRay}
           magnitude={0.8}
         />
@@ -667,7 +701,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={endocrineOpacity}
           isXRay={effectiveXRay}
           magnitude={0.8}
         />
@@ -685,7 +719,7 @@ export function RealBodyAtlas({
           ghostMode={ghostMode}
           isolatedOnly={isolatedOnly}
           activeRegion={activeRegion}
-          opacity={effectiveOpacity}
+          opacity={reproductiveOpacity}
           isXRay={effectiveXRay}
           magnitude={0.8}
         />
@@ -696,3 +730,5 @@ export function RealBodyAtlas({
 
 // Preload dos modelos principais para carregamento instantâneo
 useGLTF.preload('/models/anatomy/skeletal_male.glb', DRACO_DECODER_PATH);
+
+

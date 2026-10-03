@@ -123,7 +123,8 @@ export function updateMeshVisibility(
   mesh: THREE.Mesh,
   state: VisibilityState,
   baseMaterial: THREE.MeshStandardMaterial,
-  defaultColor = '#cbd5e1'
+  defaultColor = '#cbd5e1',
+  baseOpacity = 1.0
 ): boolean {
   const data = (mesh.userData || {}) as Partial<AnatomicalMeshUserData>;
   const id = data.id || mesh.name;
@@ -175,9 +176,10 @@ export function updateMeshVisibility(
     baseMaterial.color.set(defaultColor);
     baseMaterial.emissive.set('#000000');
     baseMaterial.emissiveIntensity = 0;
-    baseMaterial.opacity = 1.0;
-    baseMaterial.transparent = false;
+    baseMaterial.opacity = baseOpacity;
+    baseMaterial.transparent = baseOpacity < 0.99;
   }
 
   return true;
 }
+

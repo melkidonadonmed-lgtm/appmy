@@ -4,41 +4,45 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Concluída Unificação na Sidebar Esquerda: Remoção da Sidebar Direita, Expansão Máxima do Campo de Visão 3D (+360px), Integração de Filtros Selecionáveis de Sistemas/Regiões e Ficha Clínica Compacta
+**Fase Atual**: Multi-Seleção de Sistemas Anatômicos Sobrepostos, Controle Deslizante de Opacidade Individual e Presets Cirúrgicos de Transparência no Atlas 3D
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Unificação de Controles na Sidebar Esquerda (`AnatomyTreePanel.tsx`)**:
-  - Consolidados os filtros rápidos selecionáveis de Sistemas Anatômicos (11 sistemas médicos) e Regiões do Esqueleto (7 regiões) diretamente no painel esquerdo (`AnatomyFiltersSection.tsx`).
-  - Preservadas e aprimoradas as caixas de seleção tri-state (`TreeGroup.tsx`) para controle granular de visibilidade em massa ou individual.
-  - Sincronização reativa da árvore taxonômica com o sistema ativo selecionado.
-- **Expansão de Viewport 3D (Campo de Visão Total)**:
-  - Desacoplada a renderização da `AnatomicalSidebar` em `App.tsx`, eliminando a disputa de espaço entre duas barras simultâneas.
-  - A área central `.viewport-center-area` agora ocupa 100% da largura restante da tela, liberando mais de 360px horizontais para visualização imersiva do modelo anatômico.
-  - O Modo Foco Cirúrgico (`Zen Mode` / tecla `Z`) continua operacional, colapsando a barra esquerda para entregar 100% de tela cheia.
-- **Dossiê Clínico Compacto Integrado (`AnatomyClinicalCard.tsx`)**:
-  - Exibido no topo da barra esquerda quando uma peça é selecionada no 3D ou na árvore.
-  - Inclui identificação bilingue (PT-BR e Latim TA2), código FMA, atalhos de Foco (`F`), Isolar (`I`), Ocultar (`H`) e Fechar (`X` / `Esc`), além de correlações médicas e funcionais.
-- **Quality Gate Validado**:
-  - 135 testes unitários aprovados em 23 suítes Vitest (`ExitCode 0`).
+- **Multi-Seleção Anatômica Concorrente (`useAnatomyStore.ts`)**:
+  - `activeSystems`: Conjunto reativo `Set<ActiveAnatomicalSystem>` permitindo visualização simultânea de múltiplos sistemas (ex: esqueleto + vascular + linfático).
+  - Ações atômicas: `toggleSystem`, `setAllSystems` e retrocompatibilidade com `setActiveSystem`.
+- **Controle Granular de Transparência e Opacidade Individual (`visibilityManager.ts` e `useAnatomyStore.ts`)**:
+  - `systemOpacities`: Mapeamento `Record<string, number>` de $0.0$ a $1.0$ por camada anatômica.
+  - `updateMeshVisibility` enriquecido com suporte a `baseOpacity` com transição automática de `baseMaterial.transparent = baseOpacity < 0.99`.
+  - Injeção em tempo de execução no `RealBodyAtlas.tsx` nos 10 sistemas anatômicos do Z-Anatomy.
+- **Card Clínico com Ações Rápidas de Camada e Presets Cirúrgicos (`AnatomyClinicalCard.tsx`)**:
+  - Compacto por padrão (`detailsExpanded: false`) com seta de 16px para expansão da literatura médica.
+  - Botões de ativação rápida em 1 clique para vasos, nervos, músculos, linfáticos, fáscia e esqueleto.
+  - Sliders individuais de opacidade com display numérico percentual e indicador colorido por sistema.
+  - Presets rápidos de transparência cirúrgica/radiológica: `Angio Focus`, `Neuro Focus`, `Músculo 40%` e `Reset 100%`.
+- **Persistência em Bookmarks Clínicos (`bookmarks-storage.ts`)**:
+  - `activeSystems` e `systemOpacities` integrados e restaurados fielmente via `applyBookmarkToStore`.
+- **Quality Gates Convalidados**:
+  - 166 testes unitários aprovados em 26 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` compilado com sucesso em 5.27s (`ExitCode 0`).
-  - `workspace_index.json` reindexado com 151 arquivos mapeados.
+  - `npm run build` aprovado gerando bundles minificados do Vite e Express (`ExitCode 0`).
+  - `workspace_index.json` atualizado com 157 arquivos.
 
 ---
 
 ## 2. Servidores em Execução Ativa
 
-- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (Ativo e validado, status 200, revisão `appmy-00002-jmf`)
-- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health` (Status 200 OK, `firebaseAdminReady: True`)
-- **Frontend Local (Vite)**: `http://localhost:3000/` (Porta 3000 ativa e operando, status 200)
-- **Backend Local (Express)**: `http://localhost:8080/` (Healthcheck `/api/health`, status 200)
+- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/`
+- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health`
+- **Frontend Local (Vite)**: `http://localhost:3000/`
+- **Backend Local (Express)**: `http://localhost:8080/`
 
 ---
 
 ## 3. Próximo Ponto de Entrada
 
-- **Persistência de Filtros Ativos no LocalStorage**:
-  - Salvar o sistema/região ativo nas preferências locais para manter a mesma perspectiva entre recarregamentos.
+- **Deploy em Produção**:
+  - Executar deploy síncrono no Cloud Run com imagem gerada via Cloud Build.
+  - Validar status 200 no healthcheck em produção pós-deploy.

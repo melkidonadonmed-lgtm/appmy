@@ -15,6 +15,8 @@ export interface ClinicalBookmark {
   hiddenNodeIds: string[];
   cameraFocusTarget?: [number, number, number] | null;
   cameraPositionTarget?: [number, number, number] | null;
+  activeSystems?: ActiveAnatomicalSystem[];
+  systemOpacities?: Record<string, number>;
 }
 
 export const BOOKMARKS_STORAGE_KEY = 'app_anatomy_clinical_bookmarks';
@@ -139,5 +141,18 @@ export function applyBookmarkToStore(
   }
   if (bookmark.cameraPositionTarget) {
     store.setCameraPositionTarget(bookmark.cameraPositionTarget);
+  }
+
+  // Restaura sistemas ativos múltiplos e opacidades granulares se presentes
+  if (bookmark.activeSystems && bookmark.activeSystems.length > 0) {
+    useAnatomyStore.setState({ activeSystems: new Set(bookmark.activeSystems) });
+  }
+  if (bookmark.systemOpacities) {
+    useAnatomyStore.setState((state) => ({
+      systemOpacities: {
+        ...state.systemOpacities,
+        ...bookmark.systemOpacities,
+      },
+    }));
   }
 }

@@ -4,7 +4,7 @@
 [![React 19](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev/)
 [![Three.js](https://img.shields.io/badge/Three.js-r174-black.svg)](https://threejs.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.0-646cff.svg)](https://vitejs.dev/)
-[![Tests](https://img.shields.io/badge/Vitest-145%20passed%20(24%20suites)-brightgreen.svg)](https://vitest.dev/)
+[![Tests](https://img.shields.io/badge/Vitest-135%20passed-brightgreen.svg)](https://vitest.dev/)
 [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud-Run-4285f4.svg)](https://cloud.google.com/run)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
@@ -32,21 +32,11 @@ Consulte também o documento canônico de design e tokens visuais em [`designer.
 - **Membros Inferiores**: Fêmur, joelho, perna e pé.
 - **Todo o Esqueleto**: Arcabouço corporal completo de 2 metros articulado.
 
-### 3. Motor Desacoplado de Exploded View com Âncora Axial Estática (`src/core/explodedEngine.ts`)
-- **Desarticulação Vetorial em Nós Planos**: Desacoplamento estrito entre o grafo de cena Three.js e a taxonomia da UI, garantindo 60 FPS contínuos via `applyExplodedStep` com interpolação linear (`MathUtils.lerp`).
-- **Regra de Ouro da Bússola Axial**: A coluna vertebral e a pelve são travadas como **âncoras imóveis** (`isAnchor: true`, deslocamento 0.0) na visão de corpo inteiro, preservando a referência espacial anatômica. No crânio isolado, o osso esfenoide e occipital funcionam como âncora basal central para a dispersão da calvária e face.
+### 3. Exploded View Tridimensional em GPU (60 FPS)
+- Desarticulação vetorial precisa no espaço 3D via Three.js `useFrame` com interpolação `MathUtils.lerp`.
+- A calvária abre radialmente para cima e para fora, a mandíbula desce, a coluna vertebral expande o espaçamento intervertebral (revelando facetas e forames), a caixa torácica abre em leque e os membros se afastam lateralmente.
 
-### 4. Máquina de Estados de 6 Camadas Cirúrgicas (`src/core/visibilityManager.ts`)
-- Simulação de dissecação por planos fasciais e cirúrgicos reais (níveis 1 a 6):
-  - **Camada 01**: *Tegumento Comum* (Pele e Tecido Subcutâneo)
-  - **Camada 02**: *Muscular Superficial* (Deltoide, Peitoral Maior, Trapézio, Grande Dorsal, Reto Femoral)
-  - **Camada 03**: *Muscular Profundo* (Manguito Rotador, Intercostais, Eretores da Espinha, Psoas)
-  - **Camada 04**: *Esqueleto Axial & Apendicular* (Arcabouço ósseo de sustentação)
-  - **Camada 05**: *Vascular & Nervoso* (Grandes vasos, plexos nervosos e medula espinhal)
-  - **Camada 06**: *Vísceras & Cavidades* (Coração, pulmões, TGI, rins e encéfalo)
-- **Blindagem Ativa de Raycasting na GPU**: Malhas ocultas ou em *Ghosting* (10% de opacidade no modo Solo) têm o método `mesh.raycast = () => {}` anulado, eliminando 100% de cliques falsos ou interceptações fantasma.
-
-### 5. Sistemas Viscerais e Musculares Reais Co-localizados
+### 4. Sistemas Viscerais e Musculares Reais Co-localizados
 - **Sistema Muscular** (`muscular_male.glb`): 1.388 músculos legítimos sobrepostos ao esqueleto.
 - **Sistema Respiratório** (`respiratory_male.glb`): Traqueia, brônquios e pulmões com lobos no tórax.
 - **Sistema Cardiovascular** (`cardiovascular_male.glb`): Coração e árvore arterial/venosa no mediastino.
@@ -55,7 +45,7 @@ Consulte também o documento canônico de design e tokens visuais em [`designer.
 - **Sistema Urinário** (`renal_male.glb`): Rins bilaterais e vias urinárias no retroperitônio.
 - **Sistemas Linfático, Articular, Endócrino e Reprodutor**: Vasos, linfonodos, cápsulas articulares e glândulas.
 
-### 6. Dissecção Tomográfica Multiplanar (MPR)
+### 5. Dissecção Tomográfica Multiplanar (MPR)
 - Ferramenta cirúrgica flutuante para fatiar o corpo humano em tempo real nos três planos ortogonais fundamentais:
   - **Sagital** (Plano Mediano D/E)
   - **Coronal** (Plano Frontal Anterior/Posterior)
@@ -257,9 +247,6 @@ app-anatomy/
 │           ├── endocrine_male.glb       # Glândulas endócrinas
 │           └── reproductive_male.glb    # Órgãos reprodutores
 ├── src/
-│   ├── core/                            # Motor WebGL puro desacoplado (Zero React DOM)
-│   │   ├── explodedEngine.ts            # LERP amortecido, âncoras axiais fixas e vetores
-│   │   └── visibilityManager.ts         # Máquina das 6 camadas cirúrgicas e blindagem de raycast
 │   ├── client/
 │   │   ├── components/
 │   │   │   ├── canvas/
@@ -278,13 +265,12 @@ app-anatomy/
 │   │   │           ├── AnatomyTreePanel.tsx     # Painel unificado da barra esquerda
 │   │   │           ├── AnatomyClinicalCard.tsx  # Ficha anatômica integrada no topo
 │   │   │           ├── AnatomyFiltersSection.tsx# Filtros rápidos de sistemas e regiões
-│   │   │           ├── ModuleLayersSection.tsx  # Slider de 6 planos de dissecação cirúrgica
 │   │   │           ├── TreeGroup.tsx            # Grupos da árvore com tri-state
 │   │   │           └── TreeItem.tsx             # Itens atômicos da árvore taxonômica
 │   │   ├── hooks/
 │   │   │   └── useAnatomicalHotkeys.ts  # Gerenciador global de atalhos de teclado
 │   │   ├── stores/
-│   │   │   └── useAnatomyStore.ts       # Store reativo central Zustand (activeDepth 1-6)
+│   │   │   └── useAnatomyStore.ts       # Store reativo central Zustand
 │   │   ├── App.tsx                      # Orquestrador global e estados da aplicação
 │   │   └── index.css                    # Design system médico executivo e responsivo
 │   ├── server/                          # Backend Express e sondas de saúde
@@ -293,16 +279,15 @@ app-anatomy/
 │       │   ├── zAnatomyCatalog.ts       # 1.584 itens com nomes em PT-BR, TA2 e lookups O(1)
 │       │   └── cranium.ts               # Constantes canônicas cranianas
 │       └── types/
-│           ├── anatomy.ts               # Contratos tipados: AnatomicalMeshUserData e nós
+│           ├── anatomy.ts               # Contratos tipados de nós e sistemas anatômicos
 │           ├── taxonomicTree.ts         # Contratos de tri-state e árvore taxonômica
 │           └── dissection.ts            # Tipos de dissecção MPR e planos de corte
 ├── scripts/
 │   └── build_z_anatomy_catalog.py       # Pipeline gerador do catálogo tipado TypeScript
 └── tests/
-    ├── exploded-engine-and-layers.test.ts # Testes de âncoras axiais, 6 camadas e raycast
     ├── unified-outliner-layout.test.ts  # Testes de layout unificado e zero emojis
     ├── pre-delivery-validation.test.ts  # Quality gates de pré-entrega
-    └── *.test.ts                        # 145 testes unitários aprovados em 24 suítes Vitest
+    └── *.test.ts                        # 135 testes unitários aprovados em 23 suítes Vitest
 ```
 
 ---
@@ -347,7 +332,7 @@ Acesse no navegador:
 # Checagem rigorosa de tipos TypeScript (Cliente + Servidor)
 npm run typecheck
 
-# Execução da suíte completa de testes unitários (145 testes em 24 suítes)
+# Execução da suíte completa de testes unitários (135 testes em 23 suítes)
 npm test
 ```
 
@@ -361,16 +346,17 @@ npm start
 
 ## ☁️ Deploy no Google Cloud Run
 
-O projeto possui container Docker multi-stage otimizado para a porta dinâmica `$PORT` do Cloud Run e script automatizado de validação pré-voo:
+O projeto possui container Docker multi-stage otimizado para a porta dinâmica `$PORT` do Cloud Run.
 
 ```powershell
-# Execução automatizada com Quality Gate (Typecheck + 145 testes + Build + Deploy)
-powershell -ExecutionPolicy Bypass -File .\deploy-cloudrun.ps1
+gcloud run deploy appmy `
+    --source . `
+    --project agent-md-506215 `
+    --region us-central1 `
+    --platform managed `
+    --allow-unauthenticated `
+    --port 8080
 ```
-
-- **Ambiente de Produção Ativo**: [https://appmy-1044179901556.us-central1.run.app](https://appmy-1044179901556.us-central1.run.app)
-- **Healthcheck Live**: [https://appmy-1044179901556.us-central1.run.app/api/health](https://appmy-1044179901556.us-central1.run.app/api/health)
-- **Revisão Ativa**: `appmy-00004-hxb` (`us-central1` / `agent-md-506215`)
 
 ---
 

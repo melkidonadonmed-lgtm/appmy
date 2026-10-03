@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-03T02:25:51.801340+00:00",
+  "timestamp_utc": "2026-10-03T03:26:02.473250+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -75,8 +75,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 24968,
-      "hash": "01532d1f08d2"
+      "size_bytes": 22828,
+      "hash": "5ad95a7c33c7"
     },
     {
       "path": "skills-lock.json",
@@ -100,8 +100,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 19601,
-      "hash": "6b1c69297b5e"
+      "size_bytes": 19854,
+      "hash": "c43b27237228"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
@@ -340,8 +340,8 @@
     },
     {
       "path": "src/client/index.css",
-      "size_bytes": 42692,
-      "hash": "3790e6f99d4c"
+      "size_bytes": 47882,
+      "hash": "0064c88bdac3"
     },
     {
       "path": "src/client/main.tsx",
@@ -405,8 +405,8 @@
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 26298,
-      "hash": "2511f27b50c7"
+      "size_bytes": 26830,
+      "hash": "b749d5d70c4d"
     },
     {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
@@ -460,8 +460,8 @@
     },
     {
       "path": "src/client/components/ui/tree/AnatomyClinicalCard.tsx",
-      "size_bytes": 6767,
-      "hash": "6c4ba2eecbc6"
+      "size_bytes": 18074,
+      "hash": "415db4deb7ee"
     },
     {
       "path": "src/client/components/ui/tree/AnatomyFiltersSection.tsx",
@@ -475,8 +475,8 @@
     },
     {
       "path": "src/client/components/ui/tree/ModuleLayersSection.tsx",
-      "size_bytes": 6275,
-      "hash": "f9894b8ac6da"
+      "size_bytes": 8390,
+      "hash": "de7d36503374"
     },
     {
       "path": "src/client/components/ui/tree/TreeGroup.tsx",
@@ -500,8 +500,8 @@
     },
     {
       "path": "src/client/lib/bookmarks-storage.ts",
-      "size_bytes": 4165,
-      "hash": "cb07736f5b5a"
+      "size_bytes": 4682,
+      "hash": "541d62bbdfe1"
     },
     {
       "path": "src/client/lib/dissection-planes.ts",
@@ -520,8 +520,8 @@
     },
     {
       "path": "src/client/stores/useAnatomyStore.ts",
-      "size_bytes": 11291,
-      "hash": "ab8fa9635804"
+      "size_bytes": 16101,
+      "hash": "90261ba166e5"
     },
     {
       "path": "src/core/explodedEngine.ts",
@@ -530,8 +530,8 @@
     },
     {
       "path": "src/core/visibilityManager.ts",
-      "size_bytes": 6056,
-      "hash": "1708140d9c4d"
+      "size_bytes": 6100,
+      "hash": "79b4cdbf1c1e"
     },
     {
       "path": "src/server/app.ts",
@@ -699,9 +699,19 @@
       "hash": "e003a203929e"
     },
     {
+      "path": "tests/layers-opacity-control.test.ts",
+      "size_bytes": 8255,
+      "hash": "2ce60ddbb27c"
+    },
+    {
       "path": "tests/lymphatic.test.ts",
       "size_bytes": 3599,
       "hash": "02dea78b93e3"
+    },
+    {
+      "path": "tests/multi-system-filters.test.ts",
+      "size_bytes": 6538,
+      "hash": "512a46677c20"
     },
     {
       "path": "tests/myology.test.ts",

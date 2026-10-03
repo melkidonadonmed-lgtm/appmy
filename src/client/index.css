@@ -577,6 +577,249 @@ code, pre {
   color: #fda4af;
 }
 
+/* Camadas Anatômicas Sobrepostas na Ficha Clínica */
+.outliner-clinical-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.45rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-radius: 6px;
+}
+
+.outliner-clinical-layers-title {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.outliner-clinical-layers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem;
+}
+
+.outliner-layer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.45rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  border-radius: 4px;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.outliner-layer-btn:hover {
+  background: rgba(51, 65, 85, 0.8);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+}
+
+.outliner-layer-btn.active {
+  background: rgba(14, 165, 233, 0.25);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.outliner-layer-btn.cardio.active {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.outliner-layer-btn.lymph.active {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+  color: #86efac;
+}
+
+.outliner-layer-btn.nervous.active {
+  background: rgba(234, 179, 8, 0.2);
+  border-color: #eab308;
+  color: #fde047;
+}
+
+.outliner-layer-btn.muscular.active {
+  background: rgba(249, 115, 22, 0.2);
+  border-color: #f97316;
+  color: #fdba74;
+}
+
+.outliner-layer-btn.skeletal.active {
+  background: rgba(148, 163, 184, 0.2);
+  border-color: #94a3b8;
+  color: #f1f5f9;
+}
+
+/* Painel de Controle de Transparência / Opacidade Individual por Camada */
+.outliner-layers-opacity-control {
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.45rem;
+  background: rgba(10, 15, 29, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.12);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.outliner-opacity-control-header {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #7dd3fc;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.outliner-opacity-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.outliner-slider-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  min-width: 54px;
+  flex-shrink: 0;
+}
+
+.outliner-opacity-range {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(51, 65, 85, 0.8);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.outliner-opacity-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #38bdf8;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.outliner-opacity-range::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+.outliner-opacity-range.range-cardio::-webkit-slider-thumb {
+  background: #ef4444;
+}
+
+.outliner-opacity-range.range-muscular::-webkit-slider-thumb {
+  background: #f97316;
+}
+
+.outliner-opacity-range.range-nervous::-webkit-slider-thumb {
+  background: #eab308;
+}
+
+.outliner-opacity-range.range-lymph::-webkit-slider-thumb {
+  background: #10b981;
+}
+
+.outliner-opacity-range.range-skeletal::-webkit-slider-thumb {
+  background: #cbd5e1;
+}
+
+.outliner-slider-value {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  min-width: 28px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Presets Rápidos de Transparência Cirúrgica / Radiológica */
+.outliner-opacity-presets-row {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-wrap: wrap;
+}
+
+.outliner-opacity-preset-btn {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 3px;
+  color: #94a3b8;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  padding: 0.15rem 0.35rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.outliner-opacity-preset-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.outliner-opacity-preset-btn.reset {
+  color: #cbd5e1;
+}
+
+.outliner-opacity-preset-btn.reset:hover {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: #f43f5e;
+  color: #fda4af;
+}
+
+/* Botão de Toggle da Literatura Clínica (Flecha Proeminente de 16px) */
+.outliner-clinical-details-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.5rem;
+  margin-top: 0.35rem;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: #94a3b8;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.outliner-clinical-details-toggle:hover {
+  background: rgba(51, 65, 85, 0.6);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: #e2e8f0;
+}
+
 .outliner-clinical-details {
   margin-top: 0.4rem;
   padding-top: 0.4rem;
@@ -2219,5 +2462,6 @@ code, pre {
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
 }
+
 
 
