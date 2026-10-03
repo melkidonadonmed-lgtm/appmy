@@ -1,16 +1,16 @@
 # ESTADO ATUAL DO PROJETO (NÍVEL 2)
 
 **Projeto**: appmy  
-**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
+**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git` (Commit: `72563cc`)  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Multi-Seleção de Sistemas Anatômicos Sobrepostos, Controle Deslizante de Opacidade Individual e Presets Cirúrgicos de Transparência no Atlas 3D
+**Fase Atual**: Concluído e em Produção: Multi-Seleção de Sistemas Anatômicos Sobrepostos, Sliders de Opacidade Individual, Presets Cirúrgicos de Transparência e Sincronização de Bookmarks
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Multi-Seleção Anatômica Concorrente (`useAnatomyStore.ts`)**:
+- **Multi-Seleção Concorrente de Sistemas (`useAnatomyStore.ts`)**:
   - `activeSystems`: Conjunto reativo `Set<ActiveAnatomicalSystem>` permitindo visualização simultânea de múltiplos sistemas (ex: esqueleto + vascular + linfático).
   - Ações atômicas: `toggleSystem`, `setAllSystems` e retrocompatibilidade com `setActiveSystem`.
 - **Controle Granular de Transparência e Opacidade Individual (`visibilityManager.ts` e `useAnatomyStore.ts`)**:
@@ -34,8 +34,8 @@
 
 ## 2. Servidores em Execução Ativa
 
-- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/`
-- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health`
+- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (Ativo e validado, status 200, revisão `appmy-00005-4g5`)
+- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health` (Status 200 OK, `firebaseAdminReady: true`)
 - **Frontend Local (Vite)**: `http://localhost:3000/`
 - **Backend Local (Express)**: `http://localhost:8080/`
 
@@ -43,6 +43,5 @@
 
 ## 3. Próximo Ponto de Entrada
 
-- **Deploy em Produção**:
-  - Executar deploy síncrono no Cloud Run com imagem gerada via Cloud Build.
-  - Validar status 200 no healthcheck em produção pós-deploy.
+- **Modo Corte Seccional / Planos Tomográficos (Axial, Sagital, Coronal)**:
+  - Adicionar clipping planes para inspeção tomográfica em conjunto com a transparência de sistemas.
