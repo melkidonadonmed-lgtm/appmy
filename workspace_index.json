@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-03T02:07:16.487931+00:00",
+  "timestamp_utc": "2026-10-03T02:25:51.801340+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -75,8 +75,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 22828,
-      "hash": "5ad95a7c33c7"
+      "size_bytes": 24968,
+      "hash": "01532d1f08d2"
     },
     {
       "path": "skills-lock.json",
@@ -100,8 +100,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 19233,
-      "hash": "36740aba0bd0"
+      "size_bytes": 19601,
+      "hash": "6b1c69297b5e"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
@@ -335,8 +335,8 @@
     },
     {
       "path": "src/client/App.tsx",
-      "size_bytes": 18030,
-      "hash": "2aa7fb092e50"
+      "size_bytes": 18684,
+      "hash": "0b4df5a0c130"
     },
     {
       "path": "src/client/index.css",
@@ -405,8 +405,8 @@
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 25317,
-      "hash": "f10ccbe65d63"
+      "size_bytes": 26298,
+      "hash": "2511f27b50c7"
     },
     {
       "path": "src/client/components/canvas/RealCraniumModel.tsx",
@@ -475,8 +475,8 @@
     },
     {
       "path": "src/client/components/ui/tree/ModuleLayersSection.tsx",
-      "size_bytes": 8181,
-      "hash": "6a55375160ed"
+      "size_bytes": 6275,
+      "hash": "f9894b8ac6da"
     },
     {
       "path": "src/client/components/ui/tree/TreeGroup.tsx",
@@ -520,8 +520,8 @@
     },
     {
       "path": "src/client/stores/useAnatomyStore.ts",
-      "size_bytes": 11696,
-      "hash": "559fb0a4bb60"
+      "size_bytes": 11291,
+      "hash": "ab8fa9635804"
     },
     {
       "path": "src/core/explodedEngine.ts",
