@@ -1,10 +1,10 @@
 # ESTADO ATUAL DO PROJETO (NÍVEL 2)
 
 **Projeto**: appmy  
-**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
+**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git` (Commit: `8dd91a6`)  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Blindagem de Posição Anatômica Imutável (Fim da Flutuação/Drift), Sincronização Árvore <-> Three.js, Multi-Seleção Concorrente de Sistemas e Ordem Estratigráfica de Fora para Dentro
+**Fase Atual**: Concluído e em Produção: Blindagem de Posição Anatômica Imutável, Multi-Seleção Concorrente de Sistemas e Estratigrafia de Fora para Dentro
 
 ---
 
@@ -27,15 +27,15 @@
 - **Quality Gates Convalidados**:
   - 174 testes unitários aprovados em 27 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` aprovado (`ExitCode 0`).
+  - `npm run build` aprovado gerando bundles minificados do Vite e Express (`ExitCode 0`).
   - `workspace_index.json` atualizado com 158 arquivos mapeados.
 
 ---
 
 ## 2. Servidores em Execução Ativa
 
-- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/`
-- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health`
+- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (Ativo e validado, status 200, revisão `appmy-00006-plv`)
+- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health` (Status 200 OK, `firebaseAdminReady: true`)
 - **Frontend Local (Vite)**: `http://localhost:3000/`
 - **Backend Local (Express)**: `http://localhost:8080/`
 
@@ -43,5 +43,5 @@
 
 ## 3. Próximo Ponto de Entrada
 
-- **Commit e Push para o GitHub e Deploy no Cloud Run**:
-  - Subir a versão com a blindagem das coordenadas dos ossos e a nova estratigrafia canônica de fora para dentro.
+- **Camada de Tegumento Real (.GLB)**:
+  - Carregar o modelo 3D do tegumento superficial (`integumentary_female.glb` ou malha anatômica superficial) como a primeira casca física do corpo.
