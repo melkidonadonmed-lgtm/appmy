@@ -1,7 +1,8 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF, Html } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
+import { AnatomicalCallout3D } from './AnatomicalCallout3D.tsx';
 import {
   Z_ANATOMY_BY_NODE,
   Z_ANATOMY_BY_ID,
@@ -309,28 +310,14 @@ function RealSystemModel({
     return animNodes.find((d) => d.item?.id === effectiveSelectedId || d.mesh.name === effectiveSelectedId) || null;
   }, [effectiveSelectedId, animNodes]);
 
-  // Posição espacial calculada no topo da malha anatômica para nunca obstruir a visualização clínica
-  const selectedSpatialData = useMemo(() => {
-    if (!selectedMeshItem || !selectedMeshItem.mesh.visible) return null;
-    const box = new THREE.Box3().setFromObject(selectedMeshItem.mesh);
-    const center = box.getCenter(new THREE.Vector3());
-    const size = box.getSize(new THREE.Vector3());
-    // Posiciona o pin acima do ponto mais alto da peça anatômica para NUNCA cobri-la
-    const elevation = Math.max(0.12, size.y * 0.45);
-    const pinTopY = box.max.y + elevation;
-    return { center, pinTopY, boxMaxY: box.max.y, size };
-  }, [selectedMeshItem, explosionProgress]);
-
   // Centralização suave de câmera ao selecionar a peça
   useEffect(() => {
-    if (selectedSpatialData) {
-      setCameraFocusTarget([
-        selectedSpatialData.center.x,
-        selectedSpatialData.center.y,
-        selectedSpatialData.center.z,
-      ]);
+    if (selectedMeshItem && selectedMeshItem.mesh.visible) {
+      const box = new THREE.Box3().setFromObject(selectedMeshItem.mesh);
+      const center = box.getCenter(new THREE.Vector3());
+      setCameraFocusTarget([center.x, center.y, center.z]);
     }
-  }, [selectedSpatialData, setCameraFocusTarget]);
+  }, [selectedMeshItem, setCameraFocusTarget]);
 
   return (
     <group>
@@ -383,79 +370,32 @@ function RealSystemModel({
         }}
       />
 
-      {/* Pin 3D Elevado com Haste Indicadora - Visão 100% Desobstruída da Peça */}
-      {selectedMeshItem && selectedMeshItem.mesh.visible && selectedSpatialData && (
-        <Html
+      {/* Callout 3D Elegante com Linha Guia (Leader Line) Deslocada do Modelo */}
+      {selectedMeshItem && selectedMeshItem.mesh.visible && (
+        <AnatomicalCallout3D
+          node={
+            selectedMeshItem.item
+              ? toAnatomicalNode(selectedMeshItem.item)
+              : ({
+                  id: `za:${selectedMeshItem.mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+                  namePtBr: selectedMeshItem.mesh.name,
+                  nameLatin: selectedMeshItem.mesh.name,
+                  chapter: 2,
+                  systemName: systemName,
+                  meshName: selectedMeshItem.mesh.name,
+                } as AnyAnatomicalNode)
+          }
           position={[
-            selectedSpatialData.center.x,
-            selectedSpatialData.pinTopY,
-            selectedSpatialData.center.z,
+            selectedMeshItem.mesh.position.x,
+            selectedMeshItem.mesh.position.y,
+            selectedMeshItem.mesh.position.z,
           ]}
-          distanceFactor={5.0}
-          style={{
-            transform: 'translate3d(-50%, -100%, 0)',
-            pointerEvents: 'none',
+          onClose={() => {
+            setStoreSelectedNode(null);
+            onSelectNode(null);
           }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              userSelect: 'none',
-            }}
-          >
-            {/* Tag Elevada Translúcida */}
-            <div
-              className="annotation-tag-selected"
-              style={{
-                backgroundColor: 'rgba(15, 23, 42, 0.90)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                color: '#38bdf8',
-                border: '1px solid rgba(56, 189, 248, 0.75)',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(56, 189, 248, 0.3)',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '6px',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                whiteSpace: 'nowrap',
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.1rem',
-              }}
-            >
-              <div style={{ color: '#f8fafc', letterSpacing: '-0.01em' }}>
-                {selectedMeshItem.item?.namePtBr || selectedMeshItem.mesh.name}
-              </div>
-              {selectedMeshItem.item?.nameLatin && (
-                <div style={{ fontSize: '0.625rem', color: '#94a3b8', fontStyle: 'italic', fontFamily: 'var(--font-mono)' }}>
-                  {selectedMeshItem.item.nameLatin}
-                </div>
-              )}
-            </div>
-
-            {/* Haste Vertical (Needle) apontando para o topo da peça */}
-            <div
-              style={{
-                width: '1px',
-                height: '16px',
-                background: 'linear-gradient(to bottom, rgba(56, 189, 248, 0.9), rgba(56, 189, 248, 0.2))',
-              }}
-            />
-            {/* Ponto focal de toque sobre a peça */}
-            <div
-              style={{
-                width: '5px',
-                height: '5px',
-                borderRadius: '50%',
-                backgroundColor: '#38bdf8',
-                boxShadow: '0 0 8px #38bdf8',
-              }}
-            />
-          </div>
-        </Html>
+          onOpenDetailsTab={() => useAnatomyStore.getState().setSidebarTab('details')}
+        />
       )}
     </group>
   );
@@ -508,26 +448,12 @@ export function RealBodyAtlas({
   // Determina quais sistemas devem ser exibidos e suas respectivas opacidades individuais
   const storeActiveSystems = useAnatomyStore((s) => s.activeSystems);
   const storeSystemOpacities = useAnatomyStore((s) => s.systemOpacities);
-  const storePeelingLevel = useAnatomyStore((s) => s.layerPeelingLevel);
-  const effectivePeeling = _layerPeelingLevel > 0 ? _layerPeelingLevel : storePeelingLevel;
 
   const isSysActive = (sys: ActiveAnatomicalSystem) => {
     if (storeActiveSystems && storeActiveSystems.size > 0) {
-      if (storeActiveSystems.has('all')) {
-        if (sys === 'integumentary') {
-          return effectivePeeling >= 3 || storeActiveSystems.has('integumentary');
-        }
-        return true;
-      }
-      return storeActiveSystems.has(sys);
+      return storeActiveSystems.has('all') || storeActiveSystems.has(sys);
     }
-    if (activeSystem === 'all') {
-      if (sys === 'integumentary') {
-        return effectivePeeling >= 3;
-      }
-      return true;
-    }
-    return activeSystem === sys;
+    return activeSystem === sys || activeSystem === 'all';
   };
 
   const getSysOpacity = (sys: ActiveAnatomicalSystem, fallback = effectiveOpacity) => {
@@ -613,12 +539,12 @@ export function RealBodyAtlas({
 
   return (
     <group ref={groupRef} position={position} scale={scale}>
-      {/* 0. Sistema Tegumentar Real Z-Anatomy (Pele & Subcutâneo - Cap. 14) */}
+      {/* 0. Sistema Tegumentar Real (Pele e Tecido Celular Subcutâneo) */}
       {showIntegumentary && (
         <RealSystemModel
           glbPath="/models/anatomy/integumentary_female.glb"
           systemName="integumentary"
-          defaultColor="#d49b7a" // Tom de pele anatômico suave
+          defaultColor="#d4a373" // Tom de pele canônico
           explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}

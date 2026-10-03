@@ -52,9 +52,11 @@ interface AnatomyStore {
   // 6. Layout da Interface
   outlinerCollapsed: boolean;
   sidebarCollapsed: boolean;
+  sidebarTab: 'tree' | 'filters' | 'details';
   zenMode: boolean;
   preZenOutlinerCollapsed: boolean;
   preZenSidebarCollapsed: boolean;
+  setSidebarTab: (tab: 'tree' | 'filters' | 'details') => void;
 
   // --- Ações de Visibilidade ---
   toggleVisibility: (id: string) => void;
@@ -149,9 +151,11 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
 
   outlinerCollapsed: false,
   sidebarCollapsed: false,
+  sidebarTab: 'tree',
   zenMode: false,
   preZenOutlinerCollapsed: false,
   preZenSidebarCollapsed: false,
+  setSidebarTab: (tab: 'tree' | 'filters' | 'details') => set({ sidebarTab: tab }),
 
   // --- Ações de Multi-Seleção e Opacidades ---
   toggleSystem: (sys: ActiveAnatomicalSystem) => {

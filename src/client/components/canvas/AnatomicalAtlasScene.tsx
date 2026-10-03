@@ -1,7 +1,6 @@
 import { useRef, useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
 import { CRANIUM_22_NODES, SkullAnatomicalNode, SkullDivision } from '../../../shared/constants/cranium.ts';
 import { CRANIOFACIAL_MUSCLES, MuscleAnatomicalNode } from '../../../shared/constants/myology.ts';
 import { CardiovascularNode } from '../../../shared/constants/cardiovascular.ts';
@@ -19,6 +18,8 @@ import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { MuscleMeshItem } from './MuscleMeshItem.tsx';
 import { RealBodyAtlas } from './RealBodyAtlas.tsx';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
+import { AnatomicalCallout3D } from './AnatomicalCallout3D.tsx';
+import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 
 // Code Splitting & Dynamic Lazy Loading dos Módulos Regionais e Viscerais do Corpo Humano
 const CardiovascularScene = lazy(() => import('./CardiovascularScene.tsx').then((m) => ({ default: m.CardiovascularScene })));
@@ -267,11 +268,12 @@ function BoneMeshItem({
         />
 
         {isSelected && (
-          <Html position={[0, 0.35, 0]} center distanceFactor={7}>
-            <div className="annotation-tag">
-              <span>{node.namePtBr}</span>
-            </div>
-          </Html>
+          <AnatomicalCallout3D
+            node={node}
+            position={[0, 0.35, 0]}
+            onClose={() => onSelect()}
+            onOpenDetailsTab={() => useAnatomyStore.getState().setSidebarTab('details')}
+          />
         )}
       </mesh>
     </group>

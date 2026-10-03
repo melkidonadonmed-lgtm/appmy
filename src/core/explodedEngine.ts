@@ -87,17 +87,7 @@ export function bindExplodedNode(
       data.eixoExplosao &&
       (data.eixoExplosao[0] !== 0 || data.eixoExplosao[1] !== 0 || data.eixoExplosao[2] !== 0)
     ) {
-      let [x, y, z] = data.eixoExplosao;
-      // Blindagem Anatômica de Simetria Bilateral:
-      // No modelo Z-Anatomy, hemisfério esquerdo (.l) reside em X > 0 e direito (.r) em X < 0.
-      // Se a peça for lateralizada (|posX| > 0.01) e o vetor estiver com sinal oposto,
-      // corrigimos o sinal de X para acompanhar o lado anatômico real e evitar que cruze a linha média:
-      const posX = originalPosition.x;
-      if (Math.abs(posX) > 0.01 && Math.abs(x) > 0.001) {
-        if (Math.sign(x) !== Math.sign(posX)) {
-          x = Math.sign(posX) * Math.abs(x);
-        }
-      }
+      const [x, y, z] = data.eixoExplosao;
       const maxDist = data.distanciaMaxima ?? 1.0;
       targetOffset.set(x, y, z).normalize().multiplyScalar(maxDist);
     } else {

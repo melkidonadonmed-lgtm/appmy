@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-03T08:18:46.837390+00:00",
+  "timestamp_utc": "2026-10-03T17:34:17.130763+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -100,8 +100,8 @@
     },
     {
       "path": "workspace_index.json",
-      "size_bytes": 19715,
-      "hash": "b32e715b51ad"
+      "size_bytes": 20126,
+      "hash": "537c71b0d84d"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
@@ -340,8 +340,8 @@
     },
     {
       "path": "src/client/index.css",
-      "size_bytes": 47882,
-      "hash": "0064c88bdac3"
+      "size_bytes": 47881,
+      "hash": "de43caed6335"
     },
     {
       "path": "src/client/main.tsx",
@@ -350,8 +350,13 @@
     },
     {
       "path": "src/client/components/canvas/AnatomicalAtlasScene.tsx",
-      "size_bytes": 19890,
-      "hash": "d45cea879174"
+      "size_bytes": 20020,
+      "hash": "0e27778977d1"
+    },
+    {
+      "path": "src/client/components/canvas/AnatomicalCallout3D.tsx",
+      "size_bytes": 5173,
+      "hash": "916d0a1019c4"
     },
     {
       "path": "src/client/components/canvas/CardiovascularScene.tsx",
@@ -405,8 +410,8 @@
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 26999,
-      "hash": "0c3991cd8588"
+      "size_bytes": 27473,
+      "hash": "cbf8b621b1b8"
     },
     {
       "path": "src/client/components/canvas/ReproductiveScene.tsx",
@@ -460,8 +465,13 @@
     },
     {
       "path": "src/client/components/ui/tree/AnatomyTreePanel.tsx",
-      "size_bytes": 7769,
-      "hash": "7000e8b09e63"
+      "size_bytes": 13040,
+      "hash": "699d9806ab8e"
+    },
+    {
+      "path": "src/client/components/ui/tree/GlobalSearchBox.tsx",
+      "size_bytes": 9523,
+      "hash": "ca283dc3a933"
     },
     {
       "path": "src/client/components/ui/tree/ModuleLayersSection.tsx",
@@ -505,8 +515,8 @@
     },
     {
       "path": "src/client/stores/useAnatomyStore.ts",
-      "size_bytes": 16101,
-      "hash": "90261ba166e5"
+      "size_bytes": 16316,
+      "hash": "734ad5751288"
     },
     {
       "path": "src/core/explodedEngine.ts",
@@ -747,6 +757,11 @@
       "path": "tests/state-sync.test.ts",
       "size_bytes": 4380,
       "hash": "772fb9fed033"
+    },
+    {
+      "path": "tests/tabs-search-and-callout.test.ts",
+      "size_bytes": 5753,
+      "hash": "d3cdb3aa6968"
     },
     {
       "path": "tests/taxonomic-tree.test.ts",
