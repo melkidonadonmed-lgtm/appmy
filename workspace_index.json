@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-10-03T08:12:37.817420+00:00",
+  "timestamp_utc": "2026-10-03T08:18:46.837390+00:00",
   "project": "appmy",
   "description": "Base Fullstack Cloud Run & Firebase",
   "files": [
@@ -101,7 +101,7 @@
     {
       "path": "workspace_index.json",
       "size_bytes": 19715,
-      "hash": "1467456ef0fd"
+      "hash": "b32e715b51ad"
     },
     {
       "path": "dataconnect/dataconnect.yaml",
@@ -405,8 +405,8 @@
     },
     {
       "path": "src/client/components/canvas/RealBodyAtlas.tsx",
-      "size_bytes": 30191,
-      "hash": "e377abb7c8fe"
+      "size_bytes": 26999,
+      "hash": "0c3991cd8588"
     },
     {
       "path": "src/client/components/canvas/ReproductiveScene.tsx",
@@ -510,8 +510,8 @@
     },
     {
       "path": "src/core/explodedEngine.ts",
-      "size_bytes": 6680,
-      "hash": "535c803ca05a"
+      "size_bytes": 6118,
+      "hash": "925451fcbd1a"
     },
     {
       "path": "src/core/visibilityManager.ts",
@@ -670,8 +670,8 @@
     },
     {
       "path": "tests/exploded-engine-and-layers.test.ts",
-      "size_bytes": 11541,
-      "hash": "c004c2c58f72"
+      "size_bytes": 9630,
+      "hash": "573486a80042"
     },
     {
       "path": "tests/filters-and-sync.test.ts",
