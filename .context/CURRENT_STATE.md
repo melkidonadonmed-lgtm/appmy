@@ -34,7 +34,7 @@
 
 ## 2. Servidores em Execução Ativa
 
-- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (Ativo e validado, status 200, revisão `appmy-00008-wf6`)
+- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (Ativo e validado, status 200, revisão `appmy-00009-tg7`)
 - **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health` (Status 200 OK, `firebaseAdminReady: true`, `status: ok`)
 - **Frontend Local (Vite)**: `http://localhost:3000/`
 - **Backend Local (Express)**: `http://localhost:8080/`
