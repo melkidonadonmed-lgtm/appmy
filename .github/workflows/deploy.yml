@@ -15,6 +15,11 @@ jobs:
     name: Build & Deploy Cloud Run
     runs-on: ubuntu-latest
 
+    env:
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
     permissions:
       contents: read
       id-token: write
@@ -35,12 +40,24 @@ jobs:
           npm run typecheck
           npm test
 
-      # Autenticação no GCP (aceita Secret GCP_SA_KEY ou Workload Identity)
-      - name: Autenticar no Google Cloud
+      - name: Autenticar no Google Cloud com chave de serviço
         if: env.GCP_SA_KEY != ''
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Autenticar no Google Cloud com Workload Identity
+        if: env.GCP_SA_KEY == '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - name: Validar credenciais do Google Cloud
+        if: env.GCP_SA_KEY == '' && (env.GCP_WORKLOAD_IDENTITY_PROVIDER == '' || env.GCP_SERVICE_ACCOUNT == '')
+        run: |
+          echo "::error::Configure GCP_SA_KEY or both GCP_WORKLOAD_IDENTITY_PROVIDER and GCP_SERVICE_ACCOUNT."
+          exit 1
 
       - name: Configurar gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
