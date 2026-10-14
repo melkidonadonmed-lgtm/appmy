@@ -4,36 +4,30 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Higienização da Raiz, Atualização do `README.md` e `designer.md`, Correção do Callout 3D 1:1, Deduplicação Cross-GLB e Estabilização da Exploded View Homolateral
+**Fase Atual**: Refinamento da Exploded View Estratificada, Ancoragem Exata `(0,0)` e Deslocamento Bilateral do Callout 3D, Filtragem de Decalques `.ol/.el` e Seleção com Preservação de Cor + Translucidez Contextual
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Callout 3D Compacto em Escala 1:1 (`AnatomicalCallout3D.tsx`, `index.css`)**:
-  - Remoção de `distanceFactor` nos componentes `<Html>` (`AnatomicalCallout3D.tsx`, `MuscleMeshItem.tsx`, `SensoryScene.tsx`, `IntegumentaryScene.tsx`), eliminando o agigantamento dos quadros ao dar zoom ou inspecionar regiões com escala ampliada (`3.1x`).
-  - Adição das 57 classes CSS ausentes em `src/client/index.css` (`.callout-*` com `max-width: 220px`, `.outliner-tabs-nav`, `.global-search-*`, `.dissection-quick-grid`, `.range-slider` e utilitários cromáticos).
-  - Ancoragem espacial precisa do Callout calculada a partir do centro geométrico real (`getMeshAnatomicalCenter` aplicando `scale`, `quaternion`, `initialPosition` e `modelOffset` + `evaluateExplodedPosition` determinístico).
-- **Eliminação de Modelos Sobrepostos (`RealBodyAtlas.tsx`, `AnatomicalAtlasScene.tsx`)**:
-  - Deduplicação automática via `isDuplicateCrossSystemMesh`: filtragem das 278 malhas musculares exportadas duplicadamente dentro de `nervous_male.glb` e das 31 malhas esqueléticas/esfincterianas duplicadas dentro de `digestive_male.glb` (mesmo sem item catalogado), eliminando *Z-fighting* e interceptação dupla de cliques.
-  - Alinhamento topográfico de `integumentary_female.glb` com `modelOffset={[0, 0.84, 0.03]}` para posicionamento anatômico na parede torácica anterior.
-  - Filtro regional `isNodeInRegion` estendido a todos os sistemas ativos combinando metadados taxonômicos, palavras-chave e coordenadas 3D da caixa delimitadora.
-  - Na Vista Didática (`viewType === 'exploded'`), as cenas procedurais viscerais só são renderizadas quando seu respectivo sistema é selecionado individualmente.
-- **Exploded View Homolateral e Preservação de Função (`explodedEngine.ts`, `RealBodyAtlas.tsx`, `visibilityManager.ts`)**:
-  - Precedência determinística dos sufixos `.l` (`+X`) e `.r` (`-X`) sobre o centroide geométrico (impedindo inversão em nervos/vasos que cruzam o plano mediano como `Vagus nerve (X).r`) e alinhamento homolateral (`Math.sign(effectiveCenter.x) * Math.abs(rawX)`).
-  - Descompactação axial vertical (eixo `Y`) das vértebras quando `activeRegion === 'spine'`, mantendo o sacro como âncora basal.
-  - Preservação estrita de `mesh.userData.initialPosition` e restauração da posição original em `applyExplodedStep` mesmo para malhas temporariamente ocultas (`!mesh.visible`), além de eliminação da dupla multiplicação de `magnitude` no loop `useFrame`.
-  - Correção de seleção, highlight, callout e isolamento para malhas não catalogadas (`fallbackId = za:...`), isolamento de grupos na árvore (`TreeGroup`) e blindagem de raycast para malhas com opacidade `0%` ("Oculto (0%)").
-- **Navegabilidade, Sincronização de Estado, Limpeza da Raiz e Documentação (`useAnatomyStore.ts`, `AnatomyTreePanel.tsx`, `README.md`, `designer.md`)**:
-  - Sincronização bidirecional entre `solidOpacity` e `systemOpacities.skeletal`, entre `xRayMode`/`mprEnabled` e `dissection.visualMode`, e entre todos os aliases do catálogo (`item.id`, `item.node`, `sanitizeNodeName(item.node)`) em `toggleVisibility` e `isolateNode`.
-  - Correção dos botões `Expandir`/`Recolher` recursivos e contagens canônicas na árvore TA2 (`335/335` no esqueleto, `1584` no total).
-  - Remoção de artefatos órfãos/irrelevantes na raiz (`live_screenshot*.png`, `generate_workspace_index.py`, `workspace_index.json`, `skills-lock.json` e `DESIGN.md` duplicado) e atualização integral de `README.md` e `designer.md`.
-- **CI/CD Contínuo no GitHub Actions + Google Cloud Run (`.github/workflows/deploy.yml`, `deploy-cloudrun.ps1`)**:
-  - Provisionamento do pool OIDC `github-actions-pool` e provedor `github-oidc` no GCP (`agent-md-506215`) restrito ao proprietário `melkidonadonmed-lgtm`, com vinculação IAM (`roles/iam.workloadIdentityUser`, `roles/run.admin`, `roles/cloudbuild.builds.editor`, `roles/storage.admin`, `roles/iam.serviceAccountUser`) na conta de serviço `mkd-613@agent-md-506215.iam.gserviceaccount.com`.
-  - Registro dos secrets `GCP_WORKLOAD_IDENTITY_PROVIDER` e `GCP_SERVICE_ACCOUNT` no repositório GitHub `melkidonadonmed-lgtm/appmy`.
-  - Correção de parsing de variáveis de ambiente (`--set-env-vars="NODE_ENV=production,GCP_PROJECT_ID=$ProjectId"`) em `deploy-cloudrun.ps1`, flag `--quiet` não-interativa e compatibilidade multiplataforma (Windows CRLF / Linux LF) em `tests/deploy-workflow.test.ts`.
+- **Callout 3D Compacto com Ancoragem Exata `(0,0)` e Deslocamento Bilateral (`AnatomicalCallout3D.tsx`, `RealBodyAtlas.tsx`, `index.css`)**:
+  - Remoção de `center` e `distanceFactor` no `<Html>` de `AnatomicalCallout3D.tsx`, eliminando o deslocamento de `-50%` (`-141px`) que colocava o card sobre o modelo e empurrava o ponto azul para o vazio à esquerda.
+  - Ponto luminoso (`.callout-anchor-dot`, `10px x 10px`) posicionado em `left: -5px; top: -5px;` sobre a origem `(0,0)` exata da projeção 3D (ou no ponto exato do clique `e.point` na superfície da malha, acompanhando a Exploded View).
+  - Detecção dinâmica do lado da tela (`side-left` vs `side-right`) em relação à linha média corporal em NDC, deslocando o card `132px` para fora da silhueta do modelo em qualquer ângulo de câmera.
+  - Formatação limpa (`formatAnatomicalMeshName`) para malhas com nomes sanitizados pelo Three.js `GLTFLoader` (ex.: `Deltoid_fascial` -> `Deltoid Fáscia (Esquerdo)`, `Temporoparietalis_musclel` -> `Temporoparietalis Músculo (Esquerdo)`, `VH_F_fat_L` -> `Tecido Adiposo Mamário (Esquerdo)`).
+- **Seleção sem Estouramento Branco e com Translucidez Contextual (`visibilityManager.ts`, `RealBodyAtlas.tsx`, `SceneCanvas.tsx`)**:
+  - Substituição do brilho estourado (`emissiveIntensity: 0.85` / hover `#bae6fd` com `0.55`) pela preservação da cor anatômica natural da peça selecionada mesclada em `24%` com `#38bdf8` (`emissiveIntensity: 0.16`, `roughness: 0.34`), mantendo sulcos, fibras e relevo 3D visíveis.
+  - Aplicação automática de leve translucidez/fosqueamento (`opacity: 0.72`, `roughness: 0.68`, suavização cromática de `18%` em `#64748b`) nas estruturas vizinhas não selecionadas quando há seleção ativa.
+  - Equilíbrio da iluminação de estúdio (`ambientLight: 0.48`, `directionalLight: 0.88`, `environmentIntensity: 0.35`) e marfim ósseo (`#e8dfd1`) para evitar saturação branca na tíbia e ossos faciais.
+- **Exploded View Estratificada e Sem Fragmentos (`explodedEngine.ts`, `RealBodyAtlas.tsx`)**:
+  - Filtragem automática dos 705 decalques ósseos de pintura de origem/inserção muscular (`.ol`, `.or`, `.el`, `.er`, `.o1l`, `.e1l`...) em `muscular_male.glb` via `isDuplicateCrossSystemMesh`, eliminando estilhaços vermelhos flutuantes e reduzindo draw calls pela metade.
+  - Exclusão de tratos fasciais, músculos, vasos e nervos (`NON_AXIAL_STRUCTURE_REGEX`, ex.: `Iliotibial tract`, `Iliocostalis`, `Ilio-inguinal nerve`, `Vertebral artery`) de `isAxialAnchor`, mantendo apenas a coluna vertebral e a cintura pélvica óssea como âncora axial estática.
+  - Eliminação dos degraus abruptos em `Y = 0.45` (que separavam a panturrilha da coxa na altura do joelho) e em `Z = ±0.01` (que dividiam músculos anteriores e posteriores em colunas distintas), adotando gradiente contínuo e magnitudes calibradas por camada cirúrgica (`0.22m` a `0.42m`).
+- **Navegabilidade, Sincronização de Estado, Limpeza da Raiz e CI/CD (`useAnatomyStore.ts`, `deploy.yml`)**:
+  - Sincronização bidirecional entre `solidOpacity` e `systemOpacities.skeletal`, `xRayMode`/`mprEnabled` e `dissection.visualMode`, e aliases na árvore TA2 (`335/335` no esqueleto, `1584` no total).
+  - Deploy contínuo via Workload Identity Federation OIDC no GitHub Actions para o Google Cloud Run (`agent-md-506215`, `us-central1`, serviço `appmy`).
 - **Quality Gates Convalidados**:
-  - 207 testes unitários aprovados em 30 suítes Vitest (`ExitCode 0`).
+  - 210 testes unitários aprovados em 30 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
   - `npm run build` aprovado gerando bundles de produção do Vite e Express (`ExitCode 0`).
 

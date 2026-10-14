@@ -130,14 +130,17 @@ describe('Suíte de Testes: Navegabilidade por Abas, Search Global e Callout 3D 
       expect(content).toContain('onOpenDetailsTab=');
     });
 
-    it('AnatomicalCallout3D.tsx não deve usar distanceFactor no Html e index.css deve estilizar os componentes', () => {
+    it('AnatomicalCallout3D.tsx não deve usar distanceFactor nem center no Html e index.css deve estilizar o deslocamento bilateral', () => {
       const calloutPath = path.resolve(__dirname, '../src/client/components/canvas/AnatomicalCallout3D.tsx');
       const calloutContent = fs.readFileSync(calloutPath, 'utf-8');
       expect(calloutContent).not.toContain('distanceFactor=');
+      expect(calloutContent).not.toMatch(/<Html[\s\S]*?\bcenter\b/);
+      expect(calloutContent).toContain('side-${calloutSide}');
 
       const cssPath = path.resolve(__dirname, '../src/client/index.css');
       const cssContent = fs.readFileSync(cssPath, 'utf-8');
       expect(cssContent).toContain('.callout-card-displaced');
+      expect(cssContent).toContain('.callout-card-displaced.side-left');
       expect(cssContent).toContain('max-width: 220px');
       expect(cssContent).toContain('.outliner-tabs-nav');
       expect(cssContent).toContain('.global-search-dropdown');

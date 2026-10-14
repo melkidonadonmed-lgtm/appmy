@@ -54,10 +54,79 @@ interface MeshAnimData {
 const NERVOUS_AND_SENSORY_REGEX =
   /nerve|branch|ramus|rami|ganglion|ganglia|plexus|cord|root|tract|fascicul|funicul|lemnisc|peduncl|cortex|gyrus|gyri|sulcus|sulci|lobe|lobul|nucleus|nuclei|ventric|matter|commissur|fornix|thalam|hypothalam|epithalam|subthalam|pons|medulla|cerebell|cerebr|hippocamp|amygdal|striat|putamen|pallid|caudate|capsul|collicul|chiasm|olfactor|dura|arachnoid|pia|tentor|falx|filum|cauda|conus|mening|cistern|sinus|choroid|ependym|septum|corpus callosum|ansae|ansa|truncus|trunk|fibers|fibres|decussat|olive|olivary|pyramid|tegment|tectum|aqueduct|infundibul|mamillar|habenul|pineal|pituitar|neurohypoph|opercul|insul|cuneus|precuneus|cingul|parahippocamp|uncus|fimbria|indusium|tapetum|alveus|stria|taenia|velum|fastig|floccul|nodul|uvula|tonsil|vermis|hemispher|arbor|dentat|emboliform|globos|claustr|subicul|presubicul|parasubicul|entorhinal|perirhinal|geniculat|pulvinar|lamina|tuber|optic|oculomotor|trochlear|trigemin|abducens|vestibulocochlear|glossopharyng|vagus|accessory|hypogloss|eyeball|cornea|sclera|retina|iris|lens|vitreous|lacrimal|nasolacrimal|cochlea|vestibul|tympan|auditory|midbrain|fossa|pole|plane|culmen|declive|canal|substance|reticular|lat_fis/i;
 
+const INTEGUMENTARY_LABELS_PT: Record<string, { pt: string; latin: string }> = {
+  vh_f_fat: { pt: 'Tecido Adiposo Mamário', latin: 'Corpus adiposum mammae' },
+  vh_f_nipple: { pt: 'Papila Mamária (Mamilo)', latin: 'Papilla mammaria' },
+  vh_f_areola: { pt: 'Aréola Mamária', latin: 'Areola mammae' },
+  vh_f_areolar_tubercles: { pt: 'Glândulas Areolares (de Montgomery)', latin: 'Glandulae areolares' },
+  vh_f_mammary_lobes: { pt: 'Lobos da Glândula Mamária', latin: 'Lobi glandulae mammariae' },
+  vh_f_main_lactiferous_ducts: { pt: 'Ductos Lactíferos Principais', latin: 'Ductus lactiferi' },
+  vh_f_main_lactiferous_sinuses: { pt: 'Seios Lactíferos', latin: 'Sinus lactiferi' },
+  vh_f_suspensory_ligaments: { pt: 'Ligamentos Suspensores da Mama (de Cooper)', latin: 'Ligamenta suspensoria mammaria' },
+};
+
+/**
+ * Formata nomes de malhas não catalogadas (incluindo nomes sanitizados pelo Three.js GLTFLoader
+ * como "Deltoid_fascial", "Temporoparietalis_musclel" ou "VH_F_fat_L") para nomenclatura clínica limpa.
+ */
+export function formatAnatomicalMeshName(rawInput: string): { namePtBr: string; nameLatin: string } {
+  const raw = (rawInput || '').trim();
+  if (!raw) return { namePtBr: 'Estrutura Anatômica', nameLatin: 'Structura anatomica' };
+
+  // 1. Estruturas mamárias/tegumentares (VH_F_*_L / _R)
+  const vhfMatch = raw.match(/^(vh_f_[a-z_]+?)_([lr])$/i);
+  if (vhfMatch) {
+    const baseKey = vhfMatch[1].toLowerCase();
+    const sidePt = vhfMatch[2].toLowerCase() === 'l' ? ' (Esquerdo)' : ' (Direito)';
+    const sideLat = vhfMatch[2].toLowerCase() === 'l' ? ' sinister' : ' dexter';
+    const mapped = INTEGUMENTARY_LABELS_PT[baseKey];
+    if (mapped) {
+      return {
+        namePtBr: `${mapped.pt}${sidePt}`,
+        nameLatin: `${mapped.latin}${sideLat}`,
+      };
+    }
+  }
+
+  // 2. Detecta sufixo de lateralidade tanto no formato original (.l / .r / _L / _R)
+  // quanto no formato sanitizado pelo Three.js GLTFLoader (ex: "Deltoid_fascial", "Temporoparietalis_musclel")
+  let sideSuffixPt = '';
+  let base = raw.replace(/[()]/g, '');
+
+  if (/\.(?:o|e)?\d*([lr])$/i.test(base)) {
+    const m = base.match(/\.(?:o|e)?\d*([lr])$/i)!;
+    sideSuffixPt = m[1].toLowerCase() === 'l' ? ' (Esquerdo)' : ' (Direito)';
+    base = base.replace(/\.(?:o|e)?\d*[lr]$/i, '');
+  } else if (/_([lr])$/i.test(base)) {
+    const m = base.match(/_([lr])$/i)!;
+    sideSuffixPt = m[1].toLowerCase() === 'l' ? ' (Esquerdo)' : ' (Direito)';
+    base = base.replace(/_[lr]$/i, '');
+  } else if (/(muscle|fascia|tendon|bursa|ligament|tract|sheath|aponeurosis|part|head|belly)([lr])$/i.test(base)) {
+    const m = base.match(/(muscle|fascia|tendon|bursa|ligament|tract|sheath|aponeurosis|part|head|belly)([lr])$/i)!;
+    sideSuffixPt = m[2].toLowerCase() === 'l' ? ' (Esquerdo)' : ' (Direito)';
+    base = base.slice(0, -1);
+  }
+
+  const cleanLatin = base.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+  const cleanPt = cleanLatin
+    .replace(/\bmuscle\b/gi, 'Músculo')
+    .replace(/\bfascia\b/gi, 'Fáscia')
+    .replace(/\btendon\b/gi, 'Tendão')
+    .replace(/\bligament\b/gi, 'Ligamento')
+    .replace(/\bbursa\b/gi, 'Bolsa Sinovial')
+    .replace(/\btract\b/gi, 'Trato');
+
+  return {
+    namePtBr: `${cleanPt}${sideSuffixPt}`,
+    nameLatin: cleanLatin,
+  };
+}
+
 /**
  * Detecta malhas duplicadas exportadas acidentalmente em múltiplos arquivos .glb do Z-Anatomy
- * (ex.: 278 músculos dentro de nervous_male.glb e 29 dentes/cartilagens dentro de digestive_male.glb),
- * evitando sobreposição (Z-fighting) e interceptação duplicada de cliques.
+ * (ex.: 278 músculos dentro de nervous_male.glb, 29 dentes/cartilagens dentro de digestive_male.glb
+ * e 705 decalques ósseos de origem/inserção .ol/.or/.el/.er dentro de muscular_male.glb),
+ * evitando sobreposição (Z-fighting), fragmentos flutuantes e interceptação duplicada de cliques.
  */
 export function isDuplicateCrossSystemMesh(
   systemName: string,
@@ -69,6 +138,13 @@ export function isDuplicateCrossSystemMesh(
   if (item && item.system) {
     const normalizedItem = item.system === 'renal' ? 'urinary' : item.system;
     if (normalizedItem !== normalizedCurrent) {
+      return true;
+    }
+  }
+
+  // Descarta decalques de pintura de origem (.ol/.or) e inserção (.el/.er) óssea exportados em muscular_male.glb
+  if (normalizedCurrent === 'muscular') {
+    if (/\.(?:o|e)\d*[lr]$/i.test(meshName) || /(?:[a-z_])(?:o|e)\d+[lr]$/i.test(meshName)) {
       return true;
     }
   }
@@ -316,6 +392,11 @@ function RealSystemModel({
 
   const storeActiveDepth = useAnatomyStore((s) => s.activeDepth);
 
+  const [clickedLocalAnchor, setClickedLocalAnchor] = useState<{
+    mesh: THREE.Mesh;
+    basePoint: [number, number, number];
+  } | null>(null);
+
   // Mapeia todas as malhas, elimina duplicatas entre GLBs, hidrata userData preservando initialPosition e vincula âncoras
   const animNodes = useMemo(() => {
     const list: MeshAnimData[] = [];
@@ -323,10 +404,16 @@ function RealSystemModel({
     clonedScene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
-        const item = Z_ANATOMY_BY_NODE[mesh.name] || Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] || null;
+        const rawName = (mesh.userData?.name as string) || mesh.name;
+        const item =
+          Z_ANATOMY_BY_NODE[rawName] ||
+          Z_ANATOMY_BY_NODE[mesh.name] ||
+          Z_ANATOMY_BY_NODE[sanitizeNodeName(rawName)] ||
+          Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] ||
+          null;
 
-        // Descarta malhas duplicadas que pertencem a outro sistema anatômico (evita Z-fighting e sobreposição)
-        if (isDuplicateCrossSystemMesh(systemName, mesh.name, item)) {
+        // Descarta malhas duplicadas ou decalques ósseos (.ol/.or/.el/.er) que geram fragmentos flutuantes
+        if (isDuplicateCrossSystemMesh(systemName, rawName, item)) {
           mesh.visible = false;
           mesh.raycast = () => {};
           return;
@@ -342,14 +429,15 @@ function RealSystemModel({
           mesh.userData = { ...mesh.userData, initialPosition: mesh.position.clone() };
         }
 
-        const layer = determineSurgicalLayer(systemName, mesh.name, item?.namePtBr);
+        const formatted = formatAnatomicalMeshName(rawName);
+        const layer = determineSurgicalLayer(systemName, rawName, item?.namePtBr || formatted.namePtBr);
         const fallbackId = item?.id || `za:${mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
 
         mesh.userData = {
           ...mesh.userData,
           id: fallbackId,
-          nomePt: item?.namePtBr || mesh.name,
-          nomeLatin: item?.nameLatin,
+          nomePt: item?.namePtBr || formatted.namePtBr,
+          nomeLatin: item?.nameLatin || formatted.nameLatin,
           sistema: systemName,
           regiao: activeRegion,
           camadaProfundidade: layer,
@@ -369,7 +457,7 @@ function RealSystemModel({
             : new THREE.MeshStandardMaterial({
                 color: new THREE.Color(defaultColor),
                 roughness: systemName === 'skeletal' ? 0.54 : 0.42,
-                metalness: 0.05,
+                metalness: 0.04,
                 side: THREE.DoubleSide,
               });
         mesh.userData.__customMat = true;
@@ -421,11 +509,12 @@ function RealSystemModel({
       // Máquina de estados determinística de visibilidade e blindagem de raycast
       updateMeshVisibility(mesh, visibilityState, baseMaterial, defaultColor, isXRay ? 0.22 : opacity);
 
-      // Destaque de Hover interativo
+      // Destaque de Hover suave (sem branqueamento estourado)
       if (mesh.visible && !isSelected && isHovered) {
-        baseMaterial.color.set('#bae6fd');
-        baseMaterial.emissive.set('#0369a1');
-        baseMaterial.emissiveIntensity = 0.55;
+        const hoverColor = new THREE.Color(defaultColor).lerp(new THREE.Color('#38bdf8'), 0.2);
+        baseMaterial.color.copy(hoverColor);
+        baseMaterial.emissive.set('#0284c7');
+        baseMaterial.emissiveIntensity = 0.14;
       }
     });
   }, [animNodes, effectiveSelectedId, effectiveHovered, ghostMode, isolatedOnly, activeRegion, systemName, opacity, isXRay, defaultColor, hiddenNodeIds, storeActiveDepth]);
@@ -475,22 +564,33 @@ function RealSystemModel({
     if (!selectedMeshItem) return [0, 0, 0];
     const mesh = selectedMeshItem.mesh;
     const binding = selectedMeshItem.binding;
-    const anatomicalCenter =
-      (mesh.userData?.anatomicalCenter as THREE.Vector3 | undefined) ||
-      getMeshAnatomicalCenter(mesh);
     const targetMeshPos = binding
       ? evaluateExplodedPosition(binding, explosionProgress)
       : mesh.position;
     const initPos =
       (mesh.userData?.initialPosition as THREE.Vector3 | undefined) ||
       new THREE.Vector3();
+
+    // Se o usuário clicou diretamente sobre a superfície 3D da malha, ancora o ponto exatamente no local clicado
+    // (acompanhando o deslocamento da Exploded View). Se selecionou pela árvore/busca, usa o centro anatômico real.
+    if (clickedLocalAnchor && clickedLocalAnchor.mesh === mesh) {
+      return [
+        clickedLocalAnchor.basePoint[0] + (targetMeshPos.x - initPos.x),
+        clickedLocalAnchor.basePoint[1] + (targetMeshPos.y - initPos.y),
+        clickedLocalAnchor.basePoint[2] + (targetMeshPos.z - initPos.z),
+      ];
+    }
+
+    const anatomicalCenter =
+      (mesh.userData?.anatomicalCenter as THREE.Vector3 | undefined) ||
+      getMeshAnatomicalCenter(mesh);
     // Subtrai modelOffset pois o <AnatomicalCallout3D> já é renderizado dentro de <group position={modelOffset}>
     return [
       anatomicalCenter.x - modelOffset[0] + (targetMeshPos.x - initPos.x),
       anatomicalCenter.y - modelOffset[1] + (targetMeshPos.y - initPos.y),
       anatomicalCenter.z - modelOffset[2] + (targetMeshPos.z - initPos.z),
     ];
-  }, [selectedMeshItem, explosionProgress, modelOffset]);
+  }, [selectedMeshItem, explosionProgress, modelOffset, clickedLocalAnchor]);
 
   return (
     <group position={modelOffset}>
@@ -506,12 +606,32 @@ function RealSystemModel({
           setHoveredNode(null);
           setStoreHoveredNode(null);
         }}
-        onClick={(e: { stopPropagation: () => void; object: THREE.Object3D }) => {
+        onClick={(e: { stopPropagation: () => void; object: THREE.Object3D; point?: THREE.Vector3 }) => {
           e.stopPropagation();
           const target = animNodes.find((d) => d.mesh === e.object);
+          if (target && e.point && e.object.parent) {
+            const localPt = e.object.parent.worldToLocal(e.point.clone());
+            const initPos =
+              (target.mesh.userData?.initialPosition as THREE.Vector3 | undefined) ||
+              target.mesh.position;
+            setClickedLocalAnchor({
+              mesh: target.mesh,
+              basePoint: [
+                localPt.x - (target.mesh.position.x - initPos.x),
+                localPt.y - (target.mesh.position.y - initPos.y),
+                localPt.z - (target.mesh.position.z - initPos.z),
+              ],
+            });
+          } else {
+            setClickedLocalAnchor(null);
+          }
+
+          const rawName = (e.object.userData?.name as string) || e.object.name;
           const resolvedItem =
             target?.item ||
+            Z_ANATOMY_BY_NODE[rawName] ||
             Z_ANATOMY_BY_NODE[e.object.name] ||
+            Z_ANATOMY_BY_NODE[sanitizeNodeName(rawName)] ||
             Z_ANATOMY_BY_NODE[sanitizeNodeName(e.object.name)] ||
             null;
           if (resolvedItem) {
@@ -520,20 +640,23 @@ function RealSystemModel({
             setStoreSelectedNode(nextVal ? node.id : null);
             onSelectNode(nextVal);
           } else if (e.object.name) {
-            const cleanName = e.object.name
-              .replace(/[()]/g, '')
-              .replace(/\.[lr]$/i, (m) => (m.toLowerCase() === '.l' ? ' (Esquerdo)' : ' (Direito)'));
+            const formatted = formatAnatomicalMeshName(rawName);
             const fallbackNode: GeneralAnatomicalNode = {
               id: (e.object.userData?.id as string) || `za:${e.object.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-              namePtBr: cleanName,
-              nameLatin: e.object.name,
+              namePtBr: formatted.namePtBr,
+              nameLatin: formatted.nameLatin,
               chapter: systemName === 'muscular' ? 3 : 2,
-              systemName: systemName === 'muscular' ? 'Sistema Muscular (Miologia)' : systemName,
+              systemName:
+                systemName === 'muscular'
+                  ? 'Sistema Muscular (Miologia)'
+                  : systemName === 'integumentary'
+                  ? 'Sistema Tegumentar'
+                  : systemName,
               meshName: e.object.name,
               clinicalData: {
                 origin: `Estrutura integrante do ${systemName}`,
                 insertion: 'Plano anatômico dissecado',
-                clinicalSignificance: `Módulo anatômico Z-Anatomy: ${cleanName}.`,
+                clinicalSignificance: `Módulo anatômico Z-Anatomy: ${formatted.namePtBr}.`,
               },
             };
             const nextVal = effectiveSelectedId === fallbackNode.id ? null : fallbackNode;
@@ -549,18 +672,27 @@ function RealSystemModel({
           node={
             selectedMeshItem.item
               ? toAnatomicalNode(selectedMeshItem.item)
-              : ({
-                  id:
-                    (selectedMeshItem.mesh.userData?.id as string) ||
-                    `za:${selectedMeshItem.mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-                  namePtBr: selectedMeshItem.mesh.name
-                    .replace(/[()]/g, '')
-                    .replace(/\.[lr]$/i, (m) => (m.toLowerCase() === '.l' ? ' (Esquerdo)' : ' (Direito)')),
-                  nameLatin: selectedMeshItem.mesh.name,
-                  chapter: systemName === 'muscular' ? 3 : 2,
-                  systemName: systemName === 'muscular' ? 'Sistema Muscular (Miologia)' : systemName,
-                  meshName: selectedMeshItem.mesh.name,
-                } as AnyAnatomicalNode)
+              : (() => {
+                  const rawName =
+                    (selectedMeshItem.mesh.userData?.name as string) ||
+                    selectedMeshItem.mesh.name;
+                  const formatted = formatAnatomicalMeshName(rawName);
+                  return {
+                    id:
+                      (selectedMeshItem.mesh.userData?.id as string) ||
+                      `za:${selectedMeshItem.mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+                    namePtBr: formatted.namePtBr,
+                    nameLatin: formatted.nameLatin,
+                    chapter: systemName === 'muscular' ? 3 : 2,
+                    systemName:
+                      systemName === 'muscular'
+                        ? 'Sistema Muscular (Miologia)'
+                        : systemName === 'integumentary'
+                        ? 'Sistema Tegumentar'
+                        : systemName,
+                    meshName: selectedMeshItem.mesh.name,
+                  } as AnyAnatomicalNode;
+                })()
           }
           position={calloutAnchorPosition}
           worldPosition={[
@@ -569,6 +701,7 @@ function RealSystemModel({
             calloutAnchorPosition[2] + modelOffset[2],
           ]}
           onClose={() => {
+            setClickedLocalAnchor(null);
             setStoreSelectedNode(null);
             onSelectNode(null);
           }}
@@ -737,7 +870,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={integumentaryOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.9}
+          magnitude={0.42}
           modelOffset={[0, 0.84, 0.03]}
         />
       )}
@@ -747,7 +880,7 @@ export function RealBodyAtlas({
         <RealSystemModel
           glbPath="/models/anatomy/skeletal_male.glb"
           systemName="skeletal"
-          defaultColor="#f4ede2" // Marfim cortical PBR
+          defaultColor="#e8dfd1" // Marfim cortical PBR equilibrado sem estourar branco
           explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
@@ -756,11 +889,11 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={skeletalOpacity}
           isXRay={effectiveXRay}
-          magnitude={activeRegion === 'cranium' ? 1.4 : 0.95}
+          magnitude={activeRegion === 'cranium' ? 0.45 : 0.28}
         />
       )}
 
-      {/* 2. Sistema Muscular Real Z-Anatomy (1.388 Músculos Reais) */}
+      {/* 2. Sistema Muscular Real Z-Anatomy (Músculos Reais sem decalques ósseos) */}
       {showMuscular && (
         <RealSystemModel
           glbPath="/models/anatomy/muscular_male.glb"
@@ -774,7 +907,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={muscularOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.85}
+          magnitude={0.34}
         />
       )}
 
@@ -792,7 +925,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={respiratoryOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.8}
+          magnitude={0.22}
         />
       )}
 
@@ -810,7 +943,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={cardioOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.8}
+          magnitude={0.25}
         />
       )}
 
@@ -828,7 +961,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={digestiveOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.8}
+          magnitude={0.22}
         />
       )}
 
@@ -846,7 +979,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={nervousOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.85}
+          magnitude={0.26}
         />
       )}
 
@@ -864,7 +997,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={renalOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.8}
+          magnitude={0.22}
         />
       )}
 
@@ -882,7 +1015,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={lymphaticOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.8}
+          magnitude={0.25}
         />
       )}
 
@@ -900,7 +1033,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={endocrineOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.8}
+          magnitude={0.22}
         />
       )}
 
@@ -918,7 +1051,7 @@ export function RealBodyAtlas({
           activeRegion={activeRegion}
           opacity={reproductiveOpacity}
           isXRay={effectiveXRay}
-          magnitude={0.8}
+          magnitude={0.22}
         />
       )}
     </group>

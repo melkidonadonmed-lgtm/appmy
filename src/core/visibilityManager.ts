@@ -173,23 +173,44 @@ export function updateMeshVisibility(
 
   if (!visible) return false;
 
-  // 5. Aplicação de Shading e Destaque Visual
+  // 5. Aplicação de Shading e Destaque Visual (Preservação de Relevo Anatômico + Toque Translúcido Contextual)
+  const isContextAttenuated = !state.ghostMode && state.selectedId !== null && !isSelected;
+  const defaultRoughness = data.sistema === 'skeletal' ? 0.54 : 0.42;
+
   if (isSelected) {
-    baseMaterial.color.set('#38bdf8');
-    baseMaterial.emissive.set('#0284c7');
-    baseMaterial.emissiveIntensity = 0.85;
+    // Preserva a cor anatômica natural da peça mesclada suavemente (24%) com ciano clínico,
+    // evitando o estouramento branco (white washout) que oculta sulcos e fibras da peça.
+    const naturalColor = new THREE.Color(defaultColor);
+    naturalColor.lerp(new THREE.Color('#38bdf8'), 0.24);
+    baseMaterial.color.copy(naturalColor);
+    baseMaterial.emissive.set('#0ea5e9');
+    baseMaterial.emissiveIntensity = 0.16;
+    baseMaterial.roughness = 0.34;
     baseMaterial.opacity = 1.0;
     baseMaterial.transparent = false;
   } else if (isGhost) {
     baseMaterial.color.set('#64748b');
     baseMaterial.emissive.set('#000000');
     baseMaterial.emissiveIntensity = 0;
+    baseMaterial.roughness = 0.72;
     baseMaterial.opacity = 0.10;
+    baseMaterial.transparent = true;
+  } else if (isContextAttenuated) {
+    // Leve toque de translucidez/fosqueamento nas estruturas vizinhas não selecionadas
+    // para destacar a peça ativa em foco nítido sem precisar pintá-la de branco.
+    const softenedColor = new THREE.Color(defaultColor);
+    softenedColor.lerp(new THREE.Color('#64748b'), 0.18);
+    baseMaterial.color.copy(softenedColor);
+    baseMaterial.emissive.set('#000000');
+    baseMaterial.emissiveIntensity = 0;
+    baseMaterial.roughness = 0.68;
+    baseMaterial.opacity = Math.min(baseOpacity, 0.72);
     baseMaterial.transparent = true;
   } else {
     baseMaterial.color.set(defaultColor);
     baseMaterial.emissive.set('#000000');
     baseMaterial.emissiveIntensity = 0;
+    baseMaterial.roughness = defaultRoughness;
     baseMaterial.opacity = baseOpacity;
     baseMaterial.transparent = baseOpacity < 0.99;
   }
