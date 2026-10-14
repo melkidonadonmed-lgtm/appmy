@@ -8,6 +8,9 @@ export interface ExplodedNodeBinding {
   isAnchor: boolean;
 }
 
+const NON_AXIAL_STRUCTURE_REGEX =
+  /\b(muscle|musculi|músculo|musculo|tract|tractus|trato|fascia|fáscia|bursa|tendon|tendão|aponeurosis|aponeurose|sheath|bainha|artery|arteria|artéria|vein|veia|nerve|nervo|plexus|plexo|ganglion|gânglio|duct|ducto|node|linfonodo|trunk|tronco|branch|ramo|ramus|sinus|seio|gland|glândula|ligament|ligamento)\b/i;
+
 /**
  * Identifica se uma estrutura deve permanecer como âncora fixa central estática
  * dependendo da região anatômica sob observação clínica.
@@ -18,6 +21,12 @@ export function isAxialAnchor(
   activeRegion: string = 'all'
 ): boolean {
   const nameLower = (meshName + ' ' + nomePt).toLowerCase();
+
+  // Músculos, tratos fasciais (ex: Iliotibial tract), vasos e nervos (ex: Ilio-inguinal nerve, Vertebral artery)
+  // nunca devem ficar congelados como âncora óssea estática.
+  if (NON_AXIAL_STRUCTURE_REGEX.test(nameLower)) {
+    return false;
+  }
 
   // No Crânio isolado, a base do crânio (esfenoide e occipital) atua como âncora
   if (activeRegion === 'cranium') {
@@ -40,10 +49,11 @@ export function isAxialAnchor(
     );
   }
 
-  // No corpo inteiro ou demais regiões, a coluna vertebral e a pelve são a bússola axial
+  // No corpo inteiro ou demais regiões, a coluna vertebral e a cintura pélvica óssea são a bússola axial
   return (
     nameLower.includes('vertebra') ||
     nameLower.includes('vertebral') ||
+    nameLower.includes('intervertebral') ||
     nameLower.includes('spine') ||
     nameLower.includes('coluna') ||
     nameLower.includes('atlas') ||
@@ -54,16 +64,52 @@ export function isAxialAnchor(
     nameLower.includes('cóccix') ||
     nameLower.includes('coccix') ||
     nameLower.includes('pelvis') ||
-    nameLower.includes('pelvi') ||
     nameLower.includes('hip bone') ||
     nameLower.includes('hip_bone') ||
-    nameLower.includes('ilium') ||
-    nameLower.includes('ilio') ||
-    nameLower.includes('ischium') ||
-    nameLower.includes('isquio') ||
-    nameLower.includes('pubis') ||
-    nameLower.includes('púbis')
+    nameLower.includes('hipbone') ||
+    /\bilium\b|\bischium\b|\bpubis\b|\bílio\b|\bísquio\b|\bpúbis\b|\bosso ilíaco\b|\bosso iliaco\b/i.test(nameLower)
   );
+}
+
+/**
+ * Determina a lateralidade canônica (+1 = Esquerda/+X, -1 = Direita/-X, 0 = Mediano)
+ * suportando tanto nomes originais GLTF (ex: "(Deltoid fascia).l") quanto nomes
+ * sanitizados pelo Three.js GLTFLoader (ex: "Deltoid_fascial", "VH_F_fat_L").
+ */
+export function getMeshLaterality(mesh: THREE.Mesh, effectiveCenterX = 0): -1 | 0 | 1 {
+  const rawName = ((mesh.userData?.name as string) || mesh.name || '').trim();
+  const sanitized = (mesh.name || '').trim();
+  const ptName = ((mesh.userData?.nomePt as string) || '').trim();
+
+  if (
+    /\.(?:o|e)?\d*l$/i.test(rawName) ||
+    /\.(?:o|e)?\d*l$/i.test(sanitized) ||
+    /\(left\)/i.test(rawName)
+  ) {
+    return 1;
+  }
+
+  if (
+    /\.(?:o|e)?\d*r$/i.test(rawName) ||
+    /\.(?:o|e)?\d*r$/i.test(sanitized) ||
+    /\(right\)/i.test(rawName)
+  ) {
+    return -1;
+  }
+
+  if (Math.abs(effectiveCenterX) > 0.008) {
+    return effectiveCenterX > 0 ? 1 : -1;
+  }
+
+  if (/_l$/i.test(rawName) || /_l$/i.test(sanitized) || /\besquerd[oa]\b/i.test(ptName)) {
+    return 1;
+  }
+
+  if (/_r$/i.test(rawName) || /_r$/i.test(sanitized) || /\bdireit[oa]\b/i.test(ptName)) {
+    return -1;
+  }
+
+  return 0;
 }
 
 /**
@@ -112,16 +158,18 @@ export function bindExplodedNode(
   mesh.userData.anatomicalCenter = effectiveCenter;
 
   const data = mesh.userData as Partial<AnatomicalMeshUserData>;
-  
+  const rawMeshName = (mesh.userData?.name as string) || mesh.name;
+
   // 1. Verifica se foi explicitamente declarado como âncora ou identificado pelo nome
   const isAnchor =
     data.isAnchor === true ||
-    isAxialAnchor(mesh.name, data.nomePt || '', activeRegion);
+    isAxialAnchor(rawMeshName, data.nomePt || '', activeRegion);
 
   const targetOffset = new THREE.Vector3(0, 0, 0);
 
   if (!isAnchor) {
-    const nameLower = (mesh.name + ' ' + (data.nomePt || '')).toLowerCase();
+    const nameLower = (rawMeshName + ' ' + (data.nomePt || '')).toLowerCase();
+    const laterality = getMeshLaterality(mesh, effectiveCenter.x);
     const isVertebralSegment =
       activeRegion === 'spine' &&
       (nameLower.includes('vertebra') ||
@@ -146,51 +194,67 @@ export function bindExplodedNode(
       // impedindo que estruturas bilaterais cruzem o plano sagital mediano na Exploded View.
       let alignedX = rawX;
       if (Math.abs(rawX) > 0.001) {
-        if (/\.l$/i.test(mesh.name)) {
-          alignedX = Math.abs(rawX);
-        } else if (/\.r$/i.test(mesh.name)) {
-          alignedX = -Math.abs(rawX);
-        } else if (Math.abs(effectiveCenter.x) > 0.005) {
-          alignedX = Math.sign(effectiveCenter.x) * Math.abs(rawX);
-        } else if (/_l$/i.test(mesh.name)) {
-          alignedX = Math.abs(rawX);
-        } else if (/_r$/i.test(mesh.name)) {
-          alignedX = -Math.abs(rawX);
+        if (laterality !== 0) {
+          alignedX = laterality * Math.abs(rawX);
         }
+      } else if (laterality !== 0 && Math.abs(rawX) <= 0.001 && data.sistema === 'nervous') {
+        // Estruturas nervosas bilaterais com vetor genérico (0, 0.8, 0) recebem abertura radial homolateral suave
+        alignedX = laterality * Math.max(0.28, Math.abs(effectiveCenter.x) * 2.4);
       }
 
-      targetOffset.set(alignedX, rawY, rawZ).normalize().multiplyScalar(maxDist);
+      // Atenua vetores verticais puros do sistema nervoso no modo corpo inteiro para evitar nuvem sobre o crânio
+      const adjustedY =
+        data.sistema === 'nervous' && activeRegion !== 'cranium'
+          ? rawY * 0.35
+          : rawY;
+      const adjustedZ =
+        data.sistema === 'nervous' && Math.abs(rawZ) < 0.01
+          ? (effectiveCenter.z + 0.02) * 1.2
+          : rawZ;
+
+      targetOffset.set(alignedX, adjustedY, adjustedZ).normalize().multiplyScalar(maxDist);
     } else {
-      // Cálculo de dispersão radial determinística respeitando a simetria corporal real
+      // Dispersão radial contínua e estratificada a partir do eixo axial vertebral (X=0, Z=-0.02),
+      // sem degraus abruptos no joelho (Y=0.45) ou no plano coronal (Z=±0.01).
       const posX = effectiveCenter.x;
       const posY = effectiveCenter.y;
       const posZ = effectiveCenter.z;
 
+      const radialX = Math.abs(posX);
       let dirX = 0;
-      if (/\.l$/i.test(mesh.name)) {
-        dirX = Math.abs(posX) * 2.2 + 0.35;
-      } else if (/\.r$/i.test(mesh.name)) {
-        dirX = -(Math.abs(posX) * 2.2 + 0.35);
-      } else if (Math.abs(posX) > 0.008) {
-        dirX = Math.sign(posX) * (Math.abs(posX) * 2.2 + 0.35);
-      } else if (/_l$/i.test(mesh.name)) {
-        dirX = 0.4;
-      } else if (/_r$/i.test(mesh.name)) {
-        dirX = -0.4;
+      if (laterality !== 0) {
+        dirX = laterality * (radialX * 1.85 + 0.22);
+      } else if (radialX > 0.008) {
+        dirX = Math.sign(posX) * (radialX * 1.85 + 0.22);
       }
 
-      const dirY =
-        activeRegion === 'spine'
-          ? (posY - 0.95) * 1.4
-          : posY > 1.35
-          ? (posY - 1.35) * 1.6 + 0.3
-          : posY < 0.45 && posY > 0.001
-          ? -0.35
-          : 0;
-      const dirZ = Math.abs(posZ) > 0.01 ? Math.sign(posZ) * (Math.abs(posZ) * 2.0 + 0.3) : 0.3;
+      // Gradiente vertical suave: evita separar a perna da coxa ou projetar a cabeça excessivamente
+      let dirY = 0;
+      if (activeRegion === 'spine') {
+        dirY = (posY - 0.95) * 1.4;
+      } else if (activeRegion === 'cranium') {
+        dirY = (posY - 1.54) * 1.35;
+      } else if (posY > 1.48) {
+        dirY = (posY - 1.48) * 0.75 + 0.06;
+      } else if (posY > 0.001) {
+        dirY = (posY - 0.98) * 0.12;
+      }
 
-      const isCranial = activeRegion === 'cranium' || posY > 1.4;
-      const mult = (data.distanciaMaxima ?? 1.0) * (isCranial ? 1.8 : 1.0);
+      // Gradiente anteroposterior contínuo relativo à coluna (Z = -0.02), sem salto brusco em Z = 0
+      const relZ = posZ + 0.02;
+      const dirZ =
+        Math.abs(posZ) > 0.005
+          ? relZ * 1.45 + Math.sign(relZ) * 0.08
+          : laterality === 0
+          ? 0.18
+          : 0.06;
+
+      // Estratificação por camada cirúrgica: camadas superficiais abrem levemente mais que as profundas
+      const layer = data.camadaProfundidade ?? 3;
+      const layerFactor =
+        layer === 1 ? 1.22 : layer === 2 ? 1.12 : layer === 3 ? 1.02 : layer === 4 ? 0.95 : 0.85;
+      const regionFactor = activeRegion === 'cranium' ? 1.35 : 1.0;
+      const mult = (data.distanciaMaxima ?? 1.0) * layerFactor * regionFactor;
 
       targetOffset.set(dirX, dirY, dirZ).multiplyScalar(mult);
     }

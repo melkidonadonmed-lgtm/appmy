@@ -425,4 +425,59 @@ describe('Core 3D Engine: Surgical Layers & Visibility Manager', () => {
     boneMesh.raycast(new THREE.Raycaster(), intersects);
     expect(intersects.length).toBe(0);
   });
+
+  it('não deve marcar tratos musculares, vasos ou nervos com prefixo ilio/vertebral como âncoras estáticas', () => {
+    expect(isAxialAnchor('Iliotibial tract.l', 'Trato Iliotibial Esquerdo', 'all')).toBe(false);
+    expect(isAxialAnchor('Iliocostalis lumborum muscle.l', 'Músculo Iliocostal', 'all')).toBe(false);
+    expect(isAxialAnchor('Ilio-inguinal nerve.l', 'Nervo Ilioinguinal', 'all')).toBe(false);
+    expect(isAxialAnchor('Vertebral artery.r', 'Artéria Vertebral Direita', 'all')).toBe(false);
+  });
+
+  it('deve descartar decalques ósseos de origem/inserção (.ol/.or/.el/.er) e formatar nomes sanitizados GLTF', async () => {
+    const { isDuplicateCrossSystemMesh, formatAnatomicalMeshName } = await import(
+      '../src/client/components/canvas/RealBodyAtlas.tsx'
+    );
+
+    expect(isDuplicateCrossSystemMesh('muscular', 'Adductor longus.ol', null)).toBe(true);
+    expect(isDuplicateCrossSystemMesh('muscular', 'Adductor longus.el', null)).toBe(true);
+    expect(isDuplicateCrossSystemMesh('muscular', 'Diaphragm.o4l', null)).toBe(true);
+    expect(isDuplicateCrossSystemMesh('muscular', 'Adductor longus.l', null)).toBe(false);
+
+    expect(formatAnatomicalMeshName('Deltoid_fascial').namePtBr).toContain('Deltoid Fáscia (Esquerdo)');
+    expect(formatAnatomicalMeshName('Temporoparietalis_musclel').namePtBr).toContain(
+      'Temporoparietalis Músculo (Esquerdo)'
+    );
+    expect(formatAnatomicalMeshName('VH_F_fat_L').namePtBr).toBe('Tecido Adiposo Mamário (Esquerdo)');
+  });
+
+  it('updateMeshVisibility deve preservar relevo da peça selecionada (sem branqueamento) e aplicar translucidez suave nas vizinhas', () => {
+    const selectedMesh = new THREE.Mesh();
+    selectedMesh.name = 'Deltoid.l';
+    selectedMesh.userData = { id: 'za:deltoid_l', camadaProfundidade: 2, sistema: 'muscular' };
+    const selectedMat = new THREE.MeshStandardMaterial();
+
+    const neighborMesh = new THREE.Mesh();
+    neighborMesh.name = 'Biceps.l';
+    neighborMesh.userData = { id: 'za:biceps_l', camadaProfundidade: 2, sistema: 'muscular' };
+    const neighborMat = new THREE.MeshStandardMaterial();
+
+    const state: VisibilityState = {
+      hiddenIds: new Set(),
+      selectedId: 'za:deltoid_l',
+      activeDepth: 1,
+      ghostMode: false,
+      isolatedOnly: false,
+    };
+
+    updateMeshVisibility(selectedMesh, state, selectedMat, '#b91c1c', 1.0);
+    updateMeshVisibility(neighborMesh, state, neighborMat, '#b91c1c', 1.0);
+
+    // A peça selecionada tem emissive suave (<= 0.25) para não ficar branca e preserva opacidade 1.0
+    expect(selectedMat.emissiveIntensity).toBeLessThanOrEqual(0.25);
+    expect(selectedMat.opacity).toBe(1.0);
+
+    // A peça vizinha não selecionada recebe leve atenuação translúcida (~0.72)
+    expect(neighborMat.transparent).toBe(true);
+    expect(neighborMat.opacity).toBeCloseTo(0.72, 2);
+  });
 });

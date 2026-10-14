@@ -132,19 +132,19 @@ export function SceneCanvas({
         {/* Controlador de Dissecção Tomográfica Multiplanar e Shaders */}
         <DissectionController dissection={dissection} />
 
-        {/* Iluminação de Estúdio Anatômico */}
-        <ambientLight intensity={0.8} />
+        {/* Iluminação de Estúdio Anatômico Equilibrada (sem estouramento de brancos) */}
+        <ambientLight intensity={0.48} />
         <directionalLight
           position={[5, 8, 5]}
-          intensity={1.2}
+          intensity={0.88}
           castShadow
           shadow-mapSize={[1024, 1024]}
         />
-        <directionalLight position={[-5, -2, -4]} intensity={0.4} color="#60a5fa" />
-        <pointLight position={[0, 4, 0]} intensity={0.5} />
+        <directionalLight position={[-5, -2, -4]} intensity={0.32} color="#60a5fa" />
+        <pointLight position={[0, 4, 0]} intensity={0.28} />
 
-        {/* Iluminação IBL ambiental para relevo 3D vívido */}
-        <Environment preset="city" />
+        {/* Iluminação IBL ambiental controlada para relevo 3D vívido */}
+        <Environment preset="city" environmentIntensity={0.35} />
 
         <Suspense fallback={null}>
           <Center>

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import * as THREE from 'three';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import { Focus, Maximize2, Eye, EyeOff, X, FileText } from 'lucide-react';
 import { AnyAnatomicalNode } from './AnatomicalAtlasScene.tsx';
@@ -26,6 +28,26 @@ export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
   const showAll = useAnatomyStore((s) => s.showAll);
   const isolatedOnly = useAnatomyStore((s) => s.isolatedOnly);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
+
+  const effectiveWorld = worldPosition || position;
+  const [calloutSide, setCalloutSide] = useState<'left' | 'right'>(() =>
+    effectiveWorld[0] < -0.01 ? 'left' : 'right'
+  );
+
+  const { camera } = useThree();
+
+  // Determina em tempo real para qual lado da tela (esquerda ou direita da linha média do corpo)
+  // a caixa deve se deslocar, garantindo que nunca fique em cima do modelo em nenhum ângulo de câmera.
+  useFrame(() => {
+    if (!camera) return;
+    const [wx, wy, wz] = worldPosition || position;
+    const pointNdc = new THREE.Vector3(wx, wy, wz).project(camera);
+    const midlineNdc = new THREE.Vector3(0, wy, 0).project(camera);
+    const nextSide: 'left' | 'right' = pointNdc.x < midlineNdc.x - 0.005 ? 'left' : 'right';
+    if (nextSide !== calloutSide) {
+      setCalloutSide(nextSide);
+    }
+  });
 
   const isCurrentHidden = hiddenNodeIds.has(node.id);
 
@@ -62,43 +84,57 @@ export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
   return (
     <Html
       position={position}
-      center
       style={{
         pointerEvents: 'none',
         zIndex: 30,
       }}
     >
-      <div className="callout-leader-wrapper">
-        {/* 1. Ponto de Ancoragem 3D Centralizado na Malha (Dot Luminoso Pulsante) */}
+      <div className={`callout-leader-wrapper side-${calloutSide}`}>
+        {/* 1. Ponto de Ancoragem 3D Cravado em (0,0) exatamente sobre o centro da peça */}
         <div className="callout-anchor-dot" />
 
-        {/* 2. Linha Guia Vetorial SVG (Leader Line) Deslocando o Card */}
+        {/* 2. Linha Guia Vetorial SVG (Leader Line) Deslocando o Card para fora da silhueta */}
         <svg
-          className="callout-svg-line"
-          width="72"
-          height="52"
-          viewBox="0 0 110 80"
+          className={`callout-svg-line side-${calloutSide}`}
+          width="136"
+          height="54"
+          viewBox="0 0 136 54"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M 0 80 L 45 35 L 105 35"
+            d={
+              calloutSide === 'left'
+                ? 'M 136 54 L 96 16 L 4 16'
+                : 'M 0 54 L 40 16 L 132 16'
+            }
             stroke="url(#lineGradient)"
             strokeWidth="1.8"
             strokeDasharray="3 3"
             className="callout-path-anim"
           />
-          <circle cx="105" cy="35" r="3" fill="#38bdf8" />
+          <circle
+            cx={calloutSide === 'left' ? '4' : '132'}
+            cy="16"
+            r="3"
+            fill="#38bdf8"
+          />
           <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.4" />
+            <linearGradient
+              id="lineGradient"
+              x1={calloutSide === 'left' ? '100%' : '0%'}
+              y1="100%"
+              x2={calloutSide === 'left' ? '0%' : '100%'}
+              y2="0%"
+            >
+              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.95" />
+              <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.45" />
             </linearGradient>
           </defs>
         </svg>
 
         {/* 3. Card Deslocado para Fora da Silhueta do Modelo */}
-        <div className="callout-card-displaced" style={{ pointerEvents: 'auto' }}>
+        <div className={`callout-card-displaced side-${calloutSide}`} style={{ pointerEvents: 'auto' }}>
           <div className="callout-card-header">
             <div className="callout-card-badge">{node.systemName || 'Estrutura'}</div>
             <button
