@@ -61,6 +61,8 @@ export const QuickPresetsBar: React.FC = () => {
     saveBookmark(name, {
       viewType: store.viewType,
       activeSystem: store.activeSystem,
+      activeSystems: Array.from(store.activeSystems),
+      systemOpacities: { ...store.systemOpacities },
       activeRegion: store.activeRegion,
       layerPeelingLevel: store.layerPeelingLevel,
       solidOpacity: store.solidOpacity,

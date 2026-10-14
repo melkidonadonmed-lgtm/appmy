@@ -40,6 +40,9 @@ Thumbs.db
 .idea/
 .gemini/
 
-# Cobertura de testes e relatórios
+# Cobertura de testes, relatórios e artefatos temporários
 coverage/
 .nyc_output/
+live_screenshot*.png
+workspace_index.json
+

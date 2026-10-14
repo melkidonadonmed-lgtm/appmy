@@ -319,7 +319,7 @@ function SensoryItem({
       )}
 
       {isSelected && (
-        <Html position={[0, 0.25, 0]} center distanceFactor={7}>
+        <Html position={[0, 0.25, 0]} center>
           <div className="annotation-tag" style={{ backgroundColor: '#0284c7' }}>
             <span>{node.namePtBr}</span>
           </div>

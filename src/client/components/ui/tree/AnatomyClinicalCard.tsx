@@ -40,7 +40,7 @@ export const AnatomyClinicalCard: React.FC<AnatomyClinicalCardProps> = ({
   const isolateNode = useAnatomyStore((s) => s.isolateNode);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
   const isolatedOnly = useAnatomyStore((s) => s.isolatedOnly);
-  const toggleIsolatedOnly = useAnatomyStore((s) => s.toggleIsolatedOnly);
+  const showAll = useAnatomyStore((s) => s.showAll);
   const toggleSystem = useAnatomyStore((s) => s.toggleSystem);
   const isSystemActive = useAnatomyStore((s) => s.isSystemActive);
   const setSystemOpacity = useAnatomyStore((s) => s.setSystemOpacity);
@@ -61,6 +61,14 @@ export const AnatomyClinicalCard: React.FC<AnatomyClinicalCardProps> = ({
   }, [onClose]);
 
   const handleFocus = () => {
+    const worldCenter =
+      typeof window !== 'undefined'
+        ? (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] }).__selectedMeshWorldCenter
+        : undefined;
+    if (worldCenter) {
+      setCameraFocusTarget([worldCenter[0], worldCenter[1], worldCenter[2]]);
+      return;
+    }
     const item = Z_ANATOMY_CATALOG.find(
       (c) => c.id === selectedNode.id || c.node === selectedNode.id
     );
@@ -76,8 +84,12 @@ export const AnatomyClinicalCard: React.FC<AnatomyClinicalCardProps> = ({
   };
 
   const handleIsolate = () => {
-    isolateNode([selectedNode.id], allCatalogIds);
-    toggleIsolatedOnly();
+    if (isolatedOnly) {
+      showAll();
+    } else {
+      const targetIds = [selectedNode.id, selectedNode.meshName].filter(Boolean) as string[];
+      isolateNode(targetIds, allCatalogIds);
+    }
   };
 
   const isCardioActive = isSystemActive('cardiovascular');

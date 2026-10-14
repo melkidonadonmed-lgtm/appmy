@@ -12,7 +12,7 @@ import {
   ChevronsDown,
   ChevronsUp,
 } from 'lucide-react';
-import { Z_ANATOMY_CATALOG } from '../../../../shared/constants/zAnatomyCatalog.ts';
+import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../../../shared/constants/zAnatomyCatalog.ts';
 import { buildTaxonomicTree } from '../../../../shared/utils/buildTaxonomicTree.ts';
 import { filterTaxonomicTree } from '../../../../shared/utils/filterTaxonomicTree.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
@@ -52,12 +52,15 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   // 1. Constrói a árvore canônica uma única vez
   const fullTree = useMemo(() => buildTaxonomicTree(Z_ANATOMY_CATALOG), []);
 
-  // 2. Lista consolidada de todos os IDs para operações em massa
+  // 2. Lista consolidada de todos os IDs e aliases para operações em massa
   const allCatalogIds = useMemo(() => {
     const set = new Set<string>();
     for (const item of Z_ANATOMY_CATALOG) {
       set.add(item.id);
-      if (item.node) set.add(item.node);
+      if (item.node) {
+        set.add(item.node);
+        set.add(sanitizeNodeName(item.node));
+      }
     }
     return Array.from(set);
   }, []);
@@ -78,7 +81,20 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   }, [fullTree, search, activeSystems]);
 
   const totalStructures = Z_ANATOMY_CATALOG.length;
-  const hiddenCount = hiddenNodeIds.size;
+  const hiddenCount = useMemo(() => {
+    if (hiddenNodeIds.size === 0) return 0;
+    let count = 0;
+    for (const item of Z_ANATOMY_CATALOG) {
+      if (
+        hiddenNodeIds.has(item.id) ||
+        (item.node && hiddenNodeIds.has(item.node)) ||
+        (item.node && hiddenNodeIds.has(sanitizeNodeName(item.node)))
+      ) {
+        count++;
+      }
+    }
+    return count;
+  }, [hiddenNodeIds]);
   const visibleStructuresCount = Math.max(0, totalStructures - hiddenCount);
 
   // Quando o usuário seleciona um nó no 3D ou na busca, mudamos para a aba de Ficha Anatômica

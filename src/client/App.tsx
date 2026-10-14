@@ -248,12 +248,16 @@ export default function App() {
             {/* 1. Painel Outliner Ancorado à Esquerda (Filtros Selecionáveis, Caixas de Seleção e Ficha Clínica) */}
             <AnatomyTreePanel
               onToggleMpr={() =>
-                setDissection((prev) => ({
-                  ...prev,
-                  showHelper: !prev.showHelper,
-                }))
+                setDissection((prev) => {
+                  const nextIsMpr = prev.visualMode !== 'mpr';
+                  return {
+                    ...prev,
+                    visualMode: nextIsMpr ? 'mpr' : 'solid',
+                    showHelper: nextIsMpr ? true : prev.showHelper,
+                  };
+                })
               }
-              mprActive={dissection.showHelper}
+              mprActive={dissection.visualMode === 'mpr'}
               selectedNode={selectedNode}
               onSelectNode={(node) => {
                 setSelectedNode(node);

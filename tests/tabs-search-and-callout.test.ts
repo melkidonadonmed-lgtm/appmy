@@ -129,5 +129,52 @@ describe('Suíte de Testes: Navegabilidade por Abas, Search Global e Callout 3D 
       expect(content).toContain('<AnatomicalCallout3D');
       expect(content).toContain('onOpenDetailsTab=');
     });
+
+    it('AnatomicalCallout3D.tsx não deve usar distanceFactor no Html e index.css deve estilizar os componentes', () => {
+      const calloutPath = path.resolve(__dirname, '../src/client/components/canvas/AnatomicalCallout3D.tsx');
+      const calloutContent = fs.readFileSync(calloutPath, 'utf-8');
+      expect(calloutContent).not.toContain('distanceFactor=');
+
+      const cssPath = path.resolve(__dirname, '../src/client/index.css');
+      const cssContent = fs.readFileSync(cssPath, 'utf-8');
+      expect(cssContent).toContain('.callout-card-displaced');
+      expect(cssContent).toContain('max-width: 220px');
+      expect(cssContent).toContain('.outliner-tabs-nav');
+      expect(cssContent).toContain('.global-search-dropdown');
+      expect(cssContent).toContain('.dissection-quick-grid');
+    });
+
+    it('useAnatomyStore deve sincronizar solidOpacity com systemOpacities.skeletal e sincronizar aliases de visibilidade', () => {
+      const store = useAnatomyStore.getState();
+
+      // 1. Densidade Óssea (100% / 35% / 0%) deve atualizar systemOpacities.skeletal
+      store.setSolidOpacity(0.35);
+      expect(useAnatomyStore.getState().solidOpacity).toBe(0.35);
+      expect(useAnatomyStore.getState().systemOpacities.skeletal).toBe(0.35);
+
+      store.setSolidOpacity(0.0);
+      expect(useAnatomyStore.getState().systemOpacities.skeletal).toBe(0.0);
+
+      store.setSolidOpacity(1.0);
+      expect(useAnatomyStore.getState().systemOpacities.skeletal).toBe(1.0);
+
+      // 2. toggleVisibility deve sincronizar todos os aliases (id, node, sanitizeNodeName)
+      const sample = Z_ANATOMY_CATALOG[0];
+      store.toggleVisibility(sample.id);
+      expect(useAnatomyStore.getState().hiddenNodeIds.has(sample.id)).toBe(true);
+      expect(useAnatomyStore.getState().hiddenNodeIds.has(sample.node)).toBe(true);
+
+      // Desocultar usando o nome do nó (como no TreeItem) deve limpar também o sample.id
+      store.toggleVisibility(sample.node);
+      expect(useAnatomyStore.getState().hiddenNodeIds.has(sample.id)).toBe(false);
+      expect(useAnatomyStore.getState().hiddenNodeIds.has(sample.node)).toBe(false);
+
+      // 3. Sincronização bidirecional entre setXRayMode e dissection.visualMode
+      store.setXRayMode(true);
+      expect(useAnatomyStore.getState().dissection.visualMode).toBe('xray');
+      store.setDissection((prev) => ({ ...prev, visualMode: 'mpr' }));
+      expect(useAnatomyStore.getState().xRayMode).toBe(false);
+      expect(useAnatomyStore.getState().modules.mprEnabled).toBe(true);
+    });
   });
 });

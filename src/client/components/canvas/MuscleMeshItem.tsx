@@ -153,7 +153,7 @@ export function MuscleMeshItem({
         />
 
         {isSelected && (
-          <Html position={[0, 0.35, 0]} center distanceFactor={7}>
+          <Html position={[0, 0.35, 0]} center>
             <div className="annotation-tag" style={{ backgroundColor: '#dc2626' }}>
               <span>{node.namePtBr}</span>
             </div>

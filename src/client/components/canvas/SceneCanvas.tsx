@@ -179,7 +179,7 @@ export function SceneCanvas({
           dampingFactor={0.06}
           minDistance={1.2}
           maxDistance={12}
-          maxPolarAngle={Math.PI / 1.8}
+          maxPolarAngle={Math.PI}
         />
         <SmoothCameraController controlsRef={controlsRef} />
       </Canvas>

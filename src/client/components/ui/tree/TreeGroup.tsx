@@ -20,12 +20,18 @@ interface TreeGroupProps {
 export const TreeGroup: React.FC<TreeGroupProps> = ({
   node,
   allCatalogIds,
-  initialExpanded = false,
+  initialExpanded,
   isSearchActive = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(
-    initialExpanded || node.depth <= 1
+    initialExpanded !== undefined ? initialExpanded : node.depth <= 1
   );
+
+  useEffect(() => {
+    if (typeof initialExpanded === 'boolean') {
+      setIsExpanded(initialExpanded);
+    }
+  }, [initialExpanded]);
 
   useEffect(() => {
     if (isSearchActive) {
@@ -37,17 +43,19 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
   const toggleGroupVisibility = useAnatomyStore((s) => s.toggleGroupVisibility);
   const isolateNode = useAnatomyStore((s) => s.isolateNode);
 
-  // Calcula o estado Tri-State com base nos descendantIds
-  const totalCount = node.descendantIds.length;
+  // Calcula o estado Tri-State com base nos IDs canônicos (evita triplicar contagem por aliases)
+  const canonicalIds = node.descendantIds.filter((id) => id.startsWith('za:'));
+  const effectiveIds = canonicalIds.length > 0 ? canonicalIds : node.descendantIds;
+  const totalCount = effectiveIds.length;
   let hiddenCount = 0;
-  for (const id of node.descendantIds) {
+  for (const id of effectiveIds) {
     if (hiddenNodeIds.has(id)) {
       hiddenCount++;
     }
   }
 
   const isChecked = hiddenCount === 0;
-  const isUnchecked = hiddenCount >= totalCount;
+  const isUnchecked = totalCount > 0 && hiddenCount >= totalCount;
   const isIndeterminate = !isChecked && !isUnchecked;
 
   const visibleCount = Math.max(0, totalCount - hiddenCount);
@@ -184,6 +192,7 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
                 key={child.id}
                 node={child}
                 allCatalogIds={allCatalogIds}
+                initialExpanded={initialExpanded}
                 isSearchActive={isSearchActive}
               />
             )
