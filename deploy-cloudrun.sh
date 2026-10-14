@@ -31,6 +31,7 @@ gcloud run deploy "${SERVICE_NAME}" \
     --platform managed \
     --allow-unauthenticated \
     --port 8080 \
+    --quiet \
     --set-env-vars NODE_ENV=production,GCP_PROJECT_ID="${PROJECT_ID}"
 
 echo "✅ Deploy finalizado com sucesso!"

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAnatomyStore } from '../stores/useAnatomyStore.ts';
-import { Z_ANATOMY_CATALOG } from '../../shared/constants/zAnatomyCatalog.ts';
+import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../shared/constants/zAnatomyCatalog.ts';
 
 /**
  * Hook global de atalhos de teclado clínicos para o visualizador 3D:
@@ -45,8 +45,20 @@ export function useAnatomicalHotkeys() {
         case 'i': {
           if (selectedNodeId) {
             e.preventDefault();
-            const allCatalogIds = Z_ANATOMY_CATALOG.map((item) => item.id);
-            isolateNode(selectedNodeId, allCatalogIds);
+            if (useAnatomyStore.getState().isolatedOnly) {
+              showAll();
+            } else {
+              const allCatalogIds = Z_ANATOMY_CATALOG.flatMap((item) =>
+                item.node ? [item.id, item.node, sanitizeNodeName(item.node)] : [item.id]
+              );
+              const selectedItem = Z_ANATOMY_CATALOG.find(
+                (c) => c.id === selectedNodeId || c.node === selectedNodeId
+              );
+              const targetIds = selectedItem?.node
+                ? [selectedItem.id, selectedItem.node, sanitizeNodeName(selectedItem.node)]
+                : [selectedNodeId];
+              isolateNode(targetIds, allCatalogIds);
+            }
           }
           break;
         }
@@ -54,7 +66,15 @@ export function useAnatomicalHotkeys() {
         case 'f': {
           if (selectedNodeId) {
             e.preventDefault();
-            // Dispara centralização de câmera mantendo o target
+            const worldCenter =
+              typeof window !== 'undefined'
+                ? (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] }).__selectedMeshWorldCenter
+                : undefined;
+            if (worldCenter) {
+              setCameraFocusTarget([worldCenter[0], worldCenter[1], worldCenter[2]]);
+              break;
+            }
+            // Fallback para ambientes de teste sem WebGL
             const item = Z_ANATOMY_CATALOG.find(
               (c) => c.id === selectedNodeId || c.node === selectedNodeId
             );

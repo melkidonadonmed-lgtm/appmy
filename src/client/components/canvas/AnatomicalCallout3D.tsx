@@ -3,10 +3,12 @@ import { Html } from '@react-three/drei';
 import { Focus, Maximize2, Eye, EyeOff, X, FileText } from 'lucide-react';
 import { AnyAnatomicalNode } from './AnatomicalAtlasScene.tsx';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
+import { Z_ANATOMY_CATALOG } from '../../../shared/constants/zAnatomyCatalog.ts';
 
 export interface AnatomicalCallout3DProps {
   node: AnyAnatomicalNode;
   position: [number, number, number];
+  worldPosition?: [number, number, number];
   onClose: () => void;
   onOpenDetailsTab?: () => void;
 }
@@ -14,43 +16,56 @@ export interface AnatomicalCallout3DProps {
 export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
   node,
   position,
+  worldPosition,
   onClose,
   onOpenDetailsTab,
 }) => {
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
   const toggleVisibility = useAnatomyStore((s) => s.toggleVisibility);
   const isolateNode = useAnatomyStore((s) => s.isolateNode);
-  const toggleIsolatedOnly = useAnatomyStore((s) => s.toggleIsolatedOnly);
+  const showAll = useAnatomyStore((s) => s.showAll);
   const isolatedOnly = useAnatomyStore((s) => s.isolatedOnly);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
 
   const isCurrentHidden = hiddenNodeIds.has(node.id);
 
   const handleFocus = () => {
-    if (node.explosionVector) {
+    if (worldPosition) {
+      setCameraFocusTarget([worldPosition[0], worldPosition[1], worldPosition[2]]);
+    } else if (position[0] !== 0 || position[1] !== 0 || position[2] !== 0) {
+      setCameraFocusTarget([position[0], position[1], position[2]]);
+    } else if (node.explosionVector) {
       setCameraFocusTarget([
         node.explosionVector.x * 0.1,
         node.explosionVector.y * 0.1,
         node.explosionVector.z * 0.1,
       ]);
     } else {
-      setCameraFocusTarget([position[0], position[1], position[2]]);
+      setCameraFocusTarget([0, 0, 0]);
     }
   };
 
   const handleIsolate = () => {
-    isolateNode([node.id], []);
-    toggleIsolatedOnly();
+    if (isolatedOnly) {
+      showAll();
+    } else {
+      const allIds: string[] = [];
+      for (const item of Z_ANATOMY_CATALOG) {
+        allIds.push(item.id);
+        if (item.node) allIds.push(item.node);
+      }
+      const targetIds = [node.id, node.meshName].filter(Boolean) as string[];
+      isolateNode(targetIds, allIds);
+    }
   };
 
   return (
     <Html
       position={position}
       center
-      distanceFactor={4.5}
       style={{
         pointerEvents: 'none',
-        zIndex: 50,
+        zIndex: 30,
       }}
     >
       <div className="callout-leader-wrapper">
@@ -60,8 +75,8 @@ export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
         {/* 2. Linha Guia Vetorial SVG (Leader Line) Deslocando o Card */}
         <svg
           className="callout-svg-line"
-          width="110"
-          height="80"
+          width="72"
+          height="52"
           viewBox="0 0 110 80"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -1,45 +1,26 @@
 # CHECKPOINT DA SESSÃO (NÍVEL 3)
 
-## Correção de CI/CD — 2026-10-14
-
-- Job `113591783249`: testes passaram; deploy falhou sem conta ativa porque a condição da autenticação consultava uma variável de ambiente não definida.
-- Workflow corrigido com seleção explícita de chave JSON ou Workload Identity Federation e erro antecipado para configuração ausente/incompleta.
-- Credenciais temporárias `gha-creds-*.json` excluídas do Git, Cloud Build e contexto Docker; configuração documentada no README.
-
-**Data/Hora**: 2026-10-03 13:42 (UTC-4)  
+**Data/Hora**: 2026-10-14 19:15 (UTC-4)  
 **Operador**: Antigravity  
 
 ---
 
-## 1. Entrega e Deploy Concluídos
+## 1. Resumo das Entregas Realizadas
 
-- **GitHub Remote (`origin/main`)**:
-  - Hash do Commit: `770bcaf`
-  - Mensagem: `feat(ui): sidebar em abas, busca global medica com autocomplete e callout 3d com linha guia`
-  - Repositório: `git@github.com:melkidonadonmed-lgtm/appmy.git`
-- **Google Cloud Run (Produção)**:
-  - Serviço: `appmy`
-  - Região: `us-central1`
-  - Projeto GCP: `agent-md-506215`
-  - Revisão Implantada: `appmy-00008-wf6`
-  - Roteamento: 100% do tráfego ativo
-  - URL Pública: `https://appmy-1044179901556.us-central1.run.app`
-  - Healthcheck: `https://appmy-1044179901556.us-central1.run.app/api/health` -> HTTP 200 OK (`status: ok`, `uptime: 36.33s`, `firebaseAdminReady: true`)
+- **Correção Definitiva do Deploy Automático GitHub Actions -> Google Cloud Run (`.github/workflows/deploy.yml`, `deploy-cloudrun.ps1`, `tests/deploy-workflow.test.ts`)**:
+  - **Causa raiz 1 (Autenticação ausente no GitHub Actions)**: O workflow `Deploy - Cloud Run & Firebase` falhava no passo `Validar configuracao de autenticacao` porque o repositório `melkidonadonmed-lgtm/appmy` não possuía secrets configurados e o pool Workload Identity existente no GCP estava em modo `TRUST_DOMAIN` sem provedor OIDC.
+  - **Solução 1 (Workload Identity Federation OIDC)**: Criados no projeto GCP `agent-md-506215` o pool `github-actions-pool` e o provedor OIDC `github-oidc` (`https://token.actions.githubusercontent.com`, condicionado a `assertion.repository_owner == 'melkidonadonmed-lgtm'`), vinculados à conta de serviço `mkd-613@agent-md-506215.iam.gserviceaccount.com` (com `roles/iam.workloadIdentityUser`, `roles/run.admin`, `roles/cloudbuild.builds.editor`, `roles/storage.admin`, `roles/iam.serviceAccountUser` e `roles/serviceusage.serviceUsageConsumer`), e gravados os secrets `GCP_WORKLOAD_IDENTITY_PROVIDER` e `GCP_SERVICE_ACCOUNT` no GitHub.
+  - **Causa raiz 2 (Divergência de branches)**: As entregas recentes estavam na branch `feat/atlas-callout-exploded-cleanup` (PR #3) enquanto `deploy.yml` dispara apenas em `main`. Realizado merge unificado na branch `main`.
+  - **Causa raiz 3 (Quebra de `NODE_ENV` no PowerShell e CRLF no teste do workflow)**: Corrigida a passagem de `--set-env-vars="NODE_ENV=production,GCP_PROJECT_ID=$ProjectId"` em `deploy-cloudrun.ps1` (evitando que a vírgula sem aspas no PowerShell gerasse `NODE_ENV="production GCP_PROJECT_ID=..."`), adicionada a flag `--quiet` no deploy e normalizado CRLF/Git Bash em `tests/deploy-workflow.test.ts`.
+- **Limpeza de Arquivos Irrelevantes na Raiz e Atualização do `README.md`**:
+  - Remoção de capturas temporárias e artefatos obsoletos na raiz (`live_screenshot.png`, `live_screenshot_cranio_hidden.png`, `live_screenshot_region_cranium.png`, `generate_workspace_index.py`, `workspace_index.json`, `skills-lock.json` e `DESIGN.md` duplicado, preservando `designer.md` como documento canônico conforme `AGENTS.md`).
+  - Atualização de `.gitignore`, `.gcloudignore` e `.dockerignore` (incluindo exclusão de `gha-creds-*.json`).
+- **Correção de Quadros Gigantes ao Clicar (`AnatomicalCallout3D.tsx`, `index.css`)**, **Eliminação de Modelos Sobrepostos (`RealBodyAtlas.tsx`, `AnatomicalAtlasScene.tsx`)** e **Exploded View Homolateral (`explodedEngine.ts`)**.
 
 ---
 
 ## 2. Comandos Validados no Terminal (Quality Gate)
 
-- `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript).
-- `npm test` -> Exit Code 0 (188 testes unitários aprovados em 29 suítes Vitest).
-- `npm run build` -> Exit Code 0 (Vite client em 5.22s + tsc server).
-- `git push origin main` -> Exit Code 0 (`712790d..770bcaf`).
-- `gcloud run deploy appmy` -> Exit Code 0 (Revisão `appmy-00008-wf6` ativa com 100% de tráfego).
-- `curl -s https://appmy-1044179901556.us-central1.run.app/api/health` -> Exit Code 0 (Status 200 OK).
-
----
-
-## 3. Próximo Ponto de Entrada
-
-- **Interação Touch / Drag-and-Drop no Callout 3D**:
-  - Permitir arrastar a caixa do callout 3D pela tela reposicionando dinamicamente a linha guia vetorial.
+- `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript no cliente e no servidor).
+- `npm test` -> Exit Code 0 (207 testes unitários aprovados em 30 suítes Vitest).
+- `npm run build` -> Exit Code 0 (Build de produção Vite + Express concluído sem erros).

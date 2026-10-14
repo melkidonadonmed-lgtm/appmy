@@ -195,7 +195,7 @@ function IntegumentaryItem({
       )}
 
       {isSelected && (
-        <Html position={[0, 0.45, 0]} center distanceFactor={7}>
+        <Html position={[0, 0.45, 0]} center>
           <div className="annotation-tag" style={{ backgroundColor: '#ea580c' }}>
             <span>{node.namePtBr}</span>
           </div>

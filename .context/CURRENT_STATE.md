@@ -1,49 +1,46 @@
 # ESTADO ATUAL DO PROJETO (NÍVEL 2)
 
 **Projeto**: appmy  
-**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git` (Commit: `8dd91a6`)  
+**Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Concluído e em Produção: Blindagem de Posição Anatômica Imutável, Multi-Seleção Concorrente de Sistemas e Estratigrafia de Fora para Dentro
+**Fase Atual**: Higienização da Raiz, Atualização do `README.md` e `designer.md`, Correção do Callout 3D 1:1, Deduplicação Cross-GLB e Estabilização da Exploded View Homolateral
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Blindagem Imutável da Posição Anatômica (`explodedEngine.ts` e `RealBodyAtlas.tsx`)**:
-  - `initialPosition` gravado como referência imutável no momento da clonagem do GLTF.
-  - Eliminação definitiva da corrupção cumulativa de posições em re-renderizações (`useMemo`).
-  - Restauração atômica e exata para a posição anatômica original quando `progress === 0.0`.
-- **Sincronização Bidirecional Árvore <-> Three.js (`TreeGroup.tsx`, `AnatomyTreePanel.tsx`)**:
-  - Checkboxes de nível de sistema na árvore taxonômica agora disparam `addSystem` / `removeSystem` sincronizados com `activeSystems`.
-  - O filtro da árvore (`visibleTree`) agora suporta múltiplos sistemas selecionados simultaneamente em vez de monosseleção restritiva.
-- **Multi-Seleção Concorrente nos Filtros Rápidos (`AnatomyFiltersSection.tsx`)**:
-  - Botões de sistemas agora operam como seletores aditivos/subtrativos (`toggleSystem`), permitindo combinar esqueleto + vascular + linfático à vontade.
-  - Seletor "Todos" restaurado via `setAllSystems`.
-  - Seção de regiões corporais universalizada para orientar a câmera independentemente do sistema ativo.
-- **Ordem Estratigráfica Canônica: De Fora para Dentro**:
-  - `taxonomicMetadata.ts` reordenado: 1. Tegumento (Pele) -> 2. Músculos -> 3. Articulações -> 4. Esqueleto -> 5. Cardio -> 6. Linfático -> 7. Nervoso -> 8. Respiratório -> 9. Digestório -> 10. Urinário -> 11. Endócrino -> 12. Reprodutor.
-  - `AnatomyFiltersSection.tsx` reflete rigorosamente a progressão da periferia para o centro anatômico.
+- **Callout 3D Compacto em Escala 1:1 (`AnatomicalCallout3D.tsx`, `index.css`)**:
+  - Remoção de `distanceFactor` nos componentes `<Html>` (`AnatomicalCallout3D.tsx`, `MuscleMeshItem.tsx`, `SensoryScene.tsx`, `IntegumentaryScene.tsx`), eliminando o agigantamento dos quadros ao dar zoom ou inspecionar regiões com escala ampliada (`3.1x`).
+  - Adição das 57 classes CSS ausentes em `src/client/index.css` (`.callout-*` com `max-width: 220px`, `.outliner-tabs-nav`, `.global-search-*`, `.dissection-quick-grid`, `.range-slider` e utilitários cromáticos).
+  - Ancoragem espacial precisa do Callout calculada a partir do centro geométrico real (`getMeshAnatomicalCenter` aplicando `scale`, `quaternion`, `initialPosition` e `modelOffset` + `evaluateExplodedPosition` determinístico).
+- **Eliminação de Modelos Sobrepostos (`RealBodyAtlas.tsx`, `AnatomicalAtlasScene.tsx`)**:
+  - Deduplicação automática via `isDuplicateCrossSystemMesh`: filtragem das 278 malhas musculares exportadas duplicadamente dentro de `nervous_male.glb` e das 31 malhas esqueléticas/esfincterianas duplicadas dentro de `digestive_male.glb` (mesmo sem item catalogado), eliminando *Z-fighting* e interceptação dupla de cliques.
+  - Alinhamento topográfico de `integumentary_female.glb` com `modelOffset={[0, 0.84, 0.03]}` para posicionamento anatômico na parede torácica anterior.
+  - Filtro regional `isNodeInRegion` estendido a todos os sistemas ativos combinando metadados taxonômicos, palavras-chave e coordenadas 3D da caixa delimitadora.
+  - Na Vista Didática (`viewType === 'exploded'`), as cenas procedurais viscerais só são renderizadas quando seu respectivo sistema é selecionado individualmente.
+- **Exploded View Homolateral e Preservação de Função (`explodedEngine.ts`, `RealBodyAtlas.tsx`, `visibilityManager.ts`)**:
+  - Precedência determinística dos sufixos `.l` (`+X`) e `.r` (`-X`) sobre o centroide geométrico (impedindo inversão em nervos/vasos que cruzam o plano mediano como `Vagus nerve (X).r`) e alinhamento homolateral (`Math.sign(effectiveCenter.x) * Math.abs(rawX)`).
+  - Descompactação axial vertical (eixo `Y`) das vértebras quando `activeRegion === 'spine'`, mantendo o sacro como âncora basal.
+  - Preservação estrita de `mesh.userData.initialPosition` e restauração da posição original em `applyExplodedStep` mesmo para malhas temporariamente ocultas (`!mesh.visible`), além de eliminação da dupla multiplicação de `magnitude` no loop `useFrame`.
+  - Correção de seleção, highlight, callout e isolamento para malhas não catalogadas (`fallbackId = za:...`), isolamento de grupos na árvore (`TreeGroup`) e blindagem de raycast para malhas com opacidade `0%` ("Oculto (0%)").
+- **Navegabilidade, Sincronização de Estado, Limpeza da Raiz e Documentação (`useAnatomyStore.ts`, `AnatomyTreePanel.tsx`, `README.md`, `designer.md`)**:
+  - Sincronização bidirecional entre `solidOpacity` e `systemOpacities.skeletal`, entre `xRayMode`/`mprEnabled` e `dissection.visualMode`, e entre todos os aliases do catálogo (`item.id`, `item.node`, `sanitizeNodeName(item.node)`) em `toggleVisibility` e `isolateNode`.
+  - Correção dos botões `Expandir`/`Recolher` recursivos e contagens canônicas na árvore TA2 (`335/335` no esqueleto, `1584` no total).
+  - Remoção de artefatos órfãos/irrelevantes na raiz (`live_screenshot*.png`, `generate_workspace_index.py`, `workspace_index.json`, `skills-lock.json` e `DESIGN.md` duplicado) e atualização integral de `README.md` e `designer.md`.
+- **CI/CD Contínuo no GitHub Actions + Google Cloud Run (`.github/workflows/deploy.yml`, `deploy-cloudrun.ps1`)**:
+  - Provisionamento do pool OIDC `github-actions-pool` e provedor `github-oidc` no GCP (`agent-md-506215`) restrito ao proprietário `melkidonadonmed-lgtm`, com vinculação IAM (`roles/iam.workloadIdentityUser`, `roles/run.admin`, `roles/cloudbuild.builds.editor`, `roles/storage.admin`, `roles/iam.serviceAccountUser`) na conta de serviço `mkd-613@agent-md-506215.iam.gserviceaccount.com`.
+  - Registro dos secrets `GCP_WORKLOAD_IDENTITY_PROVIDER` e `GCP_SERVICE_ACCOUNT` no repositório GitHub `melkidonadonmed-lgtm/appmy`.
+  - Correção de parsing de variáveis de ambiente (`--set-env-vars="NODE_ENV=production,GCP_PROJECT_ID=$ProjectId"`) em `deploy-cloudrun.ps1`, flag `--quiet` não-interativa e compatibilidade multiplataforma (Windows CRLF / Linux LF) em `tests/deploy-workflow.test.ts`.
 - **Quality Gates Convalidados**:
-  - 174 testes unitários aprovados em 27 suítes Vitest (`ExitCode 0`).
+  - 207 testes unitários aprovados em 30 suítes Vitest (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` aprovado gerando bundles minificados do Vite e Express (`ExitCode 0`).
-  - `workspace_index.json` atualizado com 158 arquivos mapeados.
+  - `npm run build` aprovado gerando bundles de produção do Vite e Express (`ExitCode 0`).
 
 ---
 
-## 2. Servidores em Execução Ativa
+## 2. Servidores Configurados
 
-- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (Ativo e validado, status 200, revisão `appmy-00008-wf6`)
-- **Healthcheck Produção**: `https://appmy-1044179901556.us-central1.run.app/api/health` (Status 200 OK, `firebaseAdminReady: true`, `status: ok`)
+- **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (`https://appmy-syqnqsm4iq-uc.a.run.app/`)
 - **Frontend Local (Vite)**: `http://localhost:3000/`
 - **Backend Local (Express)**: `http://localhost:8080/`
-
----
-
-## 3. Próximo Ponto de Entrada
-
-- **CI/CD Cloud Run**: autenticação corrigida para selecionar `GCP_SA_KEY` ou o par `GCP_WORKLOAD_IDENTITY_PROVIDER` / `GCP_SERVICE_ACCOUNT`; arquivos temporários de credenciais excluídos do build. A implantação depende da configuração desses secrets no GitHub.
-
-- **Camada de Tegumento Real (.GLB)**:
-  - Carregar o modelo 3D do tegumento superficial (`integumentary_female.glb` ou malha anatômica superficial) como a primeira casca física do corpo.

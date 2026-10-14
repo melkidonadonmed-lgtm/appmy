@@ -128,9 +128,20 @@ export const GlobalSearchBox: React.FC<GlobalSearchBoxProps> = ({
   }, [searchTerm]);
 
   const handleSelectItem = (item: ZAnatomyItem) => {
+    const store = useAnatomyStore.getState();
+    if (item.system && !store.isSystemActive(item.system as any)) {
+      store.addSystem(item.system as any);
+    }
+    if (store.hiddenNodeIds.has(item.id) || (item.node && store.hiddenNodeIds.has(item.node))) {
+      store.toggleVisibility(item.id);
+    }
     setSelectedNode(item.id);
 
-    if (item.explosionVector) {
+    const worldCenter =
+      typeof window !== 'undefined'
+        ? (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] }).__selectedMeshWorldCenter
+        : undefined;
+    if (!worldCenter && item.explosionVector) {
       setCameraFocusTarget([
         item.explosionVector.x * 0.1,
         item.explosionVector.y * 0.1,

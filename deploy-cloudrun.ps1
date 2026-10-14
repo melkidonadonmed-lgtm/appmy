@@ -50,7 +50,8 @@ gcloud run deploy $ServiceName `
     --platform managed `
     --allow-unauthenticated `
     --port 8080 `
-    --set-env-vars NODE_ENV=production,GCP_PROJECT_ID=$ProjectId
+    --quiet `
+    --set-env-vars="NODE_ENV=production,GCP_PROJECT_ID=$ProjectId"
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "`n✅ DEPLOY CONCLUÍDO COM SUCESSO!" -ForegroundColor Green

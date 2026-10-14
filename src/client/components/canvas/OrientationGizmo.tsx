@@ -51,7 +51,7 @@ export const OrientationGizmo: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => orientTo([4.5, 0, 0])}
+              onClick={() => orientTo([-4.5, 0, 0])}
               className="orientation-btn"
               title="Vista Lateral Direita"
               aria-label="Vista Lateral Direita"
@@ -60,7 +60,7 @@ export const OrientationGizmo: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => orientTo([-4.5, 0, 0])}
+              onClick={() => orientTo([4.5, 0, 0])}
               className="orientation-btn"
               title="Vista Lateral Esquerda"
               aria-label="Vista Lateral Esquerda"

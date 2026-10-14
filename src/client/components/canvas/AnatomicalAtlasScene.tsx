@@ -271,6 +271,7 @@ function BoneMeshItem({
           <AnatomicalCallout3D
             node={node}
             position={[0, 0.35, 0]}
+            worldPosition={[basePosition.x, basePosition.y, basePosition.z]}
             onClose={() => onSelect()}
             onOpenDetailsTab={() => useAnatomyStore.getState().setSidebarTab('details')}
           />
@@ -305,19 +306,18 @@ export function AnatomicalAtlasScene({
 
   const showSkeletal = showProcedural && (activeSystem === 'skeletal' || activeSystem === 'all');
   const showMuscular = showProcedural && (activeSystem === 'muscular' || activeSystem === 'all') && layerPeelingLevel > 0;
-  const showCardiovascular = showProcedural && (activeSystem === 'cardiovascular' || activeSystem === 'all');
-  const showNervous = showProcedural && (activeSystem === 'nervous' || activeSystem === 'all');
-  const showRespiratory = showProcedural && (activeSystem === 'respiratory' || activeSystem === 'all');
-  const showDigestive = showProcedural && (activeSystem === 'digestive' || activeSystem === 'all');
-  const showLymphatic = showProcedural && (activeSystem === 'lymphatic' || activeSystem === 'all');
-  const showUrinary = showProcedural && (activeSystem === 'urinary' || activeSystem === 'all');
-  const showEndocrine = showProcedural && (activeSystem === 'endocrine' || activeSystem === 'all');
-  const showReproductive = showProcedural && (activeSystem === 'reproductive' || activeSystem === 'all');
-  const showSensory = showProcedural && (activeSystem === 'sensory' || activeSystem === 'all');
+  const showCardiovascular = showProcedural && activeSystem === 'cardiovascular';
+  const showNervous = showProcedural && activeSystem === 'nervous';
+  const showRespiratory = showProcedural && activeSystem === 'respiratory';
+  const showDigestive = showProcedural && activeSystem === 'digestive';
+  const showLymphatic = showProcedural && activeSystem === 'lymphatic';
+  const showUrinary = showProcedural && activeSystem === 'urinary';
+  const showEndocrine = showProcedural && activeSystem === 'endocrine';
+  const showReproductive = showProcedural && activeSystem === 'reproductive';
+  const showSensory = showProcedural && activeSystem === 'sensory';
   const showIntegumentary =
     showProcedural &&
-    (activeSystem === 'integumentary' || activeSystem === 'all') &&
-    (layerPeelingLevel >= 3 || activeSystem === 'integumentary');
+    (activeSystem === 'integumentary' || (activeSystem === 'all' && layerPeelingLevel >= 3));
 
   // Coleta de Lixo WebGL Determinística ao desmontar a cena
   useEffect(() => {

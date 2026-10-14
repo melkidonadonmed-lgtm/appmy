@@ -1,13 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { readFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { existsSync, readFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const workflow = readFileSync(new URL('../.github/workflows/deploy.yml', import.meta.url), 'utf8');
+const workflow = readFileSync(new URL('../.github/workflows/deploy.yml', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const validation = workflow.split('      - name: Validar configuracao de autenticacao\n')[1]
   .split('      # Autenticação')[0];
 const script = validation.split('        run: |\n')[1].replace(/^          /gm, '');
+const bashExecutable =
+  process.platform === 'win32' && existsSync('C:\\Program Files\\Git\\bin\\bash.exe')
+    ? 'C:\\Program Files\\Git\\bin\\bash.exe'
+    : 'bash';
 
 describe('Autenticação do deploy Cloud Run', () => {
   it.each([
@@ -21,19 +25,19 @@ describe('Autenticação do deploy Cloud Run', () => {
     const directory = mkdtempSync(join(tmpdir(), 'appmy-deploy-test-'));
     const output = join(directory, 'output');
     try {
-      const result = spawnSync('bash', ['-e', '-c', script], {
+      const result = spawnSync(bashExecutable, ['-e', '-c', script], {
         encoding: 'utf8',
         env: {
           ...process.env,
           GCP_SA_KEY: key!,
           GCP_WORKLOAD_IDENTITY_PROVIDER: provider!,
           GCP_SERVICE_ACCOUNT: account!,
-          GITHUB_OUTPUT: output,
+          GITHUB_OUTPUT: output.replace(/\\/g, '/'),
         },
       });
       expect(result.status).toBe(mode ? 0 : 1);
       if (mode) {
-        expect(readFileSync(output, 'utf8')).toBe(`mode=${mode}\n`);
+        expect(readFileSync(output, 'utf8').replace(/\r\n/g, '\n')).toBe(`mode=${mode}\n`);
       } else {
         expect(result.stdout).toContain('::error::Configure GCP_SA_KEY');
       }

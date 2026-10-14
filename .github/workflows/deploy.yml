@@ -78,4 +78,5 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --port 8080 \
+            --quiet \
             --set-env-vars NODE_ENV=production,GCP_PROJECT_ID=${{ env.PROJECT_ID }}

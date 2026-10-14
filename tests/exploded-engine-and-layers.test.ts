@@ -230,4 +230,199 @@ describe('Core 3D Engine: Surgical Layers & Visibility Manager', () => {
     useAnatomyStore.getState().setLayerPeelingLevel(2);
     expect(useAnatomyStore.getState().activeDepth).toBe(2);
   });
+
+  it('deve impedir inversão bilateral (cruzamento da linha média) na Exploded View para peças .l (+X) e .r (-X)', () => {
+    // No Z-Anatomy .glb, Esquerda (.l) está em +X e Direita (.r) está em -X,
+    // mas o catálogo armazena eixoExplosao.x negativo para .l e positivo para .r.
+    const clavicleLeft = new THREE.Mesh();
+    clavicleLeft.name = 'Clavicle.l';
+    clavicleLeft.position.set(0.08, 1.41, 0.05);
+    clavicleLeft.userData = {
+      eixoExplosao: [-0.52, 0.25, 0.45],
+      distanciaMaxima: 1.0,
+    } as Partial<AnatomicalMeshUserData>;
+
+    const clavicleRight = new THREE.Mesh();
+    clavicleRight.name = 'Clavicle.r';
+    clavicleRight.position.set(-0.08, 1.41, 0.05);
+    clavicleRight.userData = {
+      eixoExplosao: [0.52, 0.25, 0.45],
+      distanciaMaxima: 1.0,
+    } as Partial<AnatomicalMeshUserData>;
+
+    const leftBinding = bindExplodedNode(clavicleLeft, 'all');
+    const rightBinding = bindExplodedNode(clavicleRight, 'all');
+
+    // A peça esquerda (+X) DEVE expandir para +X (> 0) e a direita (-X) para -X (< 0)
+    expect(leftBinding.targetOffset.x).toBeGreaterThan(0);
+    expect(rightBinding.targetOffset.x).toBeLessThan(0);
+
+    const leftExploded = evaluateExplodedPosition(leftBinding, 1.0);
+    const rightExploded = evaluateExplodedPosition(rightBinding, 1.0);
+    expect(leftExploded.x).toBeGreaterThan(0.08);
+    expect(rightExploded.x).toBeLessThan(-0.08);
+  });
+
+  it('deve realizar descompactação axial vertical (eixo Y) das vértebras quando activeRegion === "spine"', () => {
+    const sacrumMesh = new THREE.Mesh();
+    sacrumMesh.name = 'Sacrum';
+    sacrumMesh.position.set(0, 0.92, -0.05);
+
+    const vertebraC4 = new THREE.Mesh();
+    vertebraC4.name = 'Cervical vertebra (C4)';
+    vertebraC4.position.set(0, 1.48, -0.02);
+
+    const sacrumBinding = bindExplodedNode(sacrumMesh, 'spine');
+    const c4Binding = bindExplodedNode(vertebraC4, 'spine');
+
+    expect(sacrumBinding.isAnchor).toBe(true);
+    expect(c4Binding.isAnchor).toBe(false);
+    expect(c4Binding.targetOffset.x).toBe(0);
+    expect(c4Binding.targetOffset.z).toBe(0);
+    expect(c4Binding.targetOffset.y).toBeGreaterThan(0);
+  });
+
+  it('deve filtrar malhas duplicadas entre arquivos .glb (isDuplicateCrossSystemMesh)', async () => {
+    const { isDuplicateCrossSystemMesh } = await import('../src/client/components/canvas/RealBodyAtlas.tsx');
+    const { Z_ANATOMY_BY_NODE } = await import('../src/shared/constants/zAnatomyCatalog.ts');
+
+    // 1. Músculo catalogado presente por engano dentro de nervous_male.glb
+    const muscleItem = Z_ANATOMY_BY_NODE['Adductor brevis.l'] || null;
+    expect(isDuplicateCrossSystemMesh('nervous', 'Adductor brevis.l', muscleItem)).toBe(true);
+    expect(isDuplicateCrossSystemMesh('muscular', 'Adductor brevis.l', muscleItem)).toBe(false);
+
+    // 2. Músculo não catalogado presente dentro de nervous_male.glb
+    expect(
+      isDuplicateCrossSystemMesh('nervous', '(Abdominal part of pectoralis major muscle).l', null)
+    ).toBe(true);
+
+    // 3. Nervo autêntico que inerva um músculo NÃO deve ser descartado em nervous_male.glb
+    expect(
+      isDuplicateCrossSystemMesh('nervous', '(Nerve to stapedius muscle).l', null)
+    ).toBe(false);
+
+    // 4. Dente catalogado como skeletal presente dentro de digestive_male.glb
+    const toothItem = Z_ANATOMY_BY_NODE['Upper right central incisor'] || {
+      id: 'za:tooth',
+      node: 'Upper right central incisor',
+      nameEn: 'Upper right central incisor',
+      namePtBr: 'Incisivo central superior direito',
+      nameLatin: 'Dens incisivus centralis',
+      system: 'skeletal',
+      chapter: 2,
+      fmaId: 'FMA_123',
+      path: [],
+      explosionVector: { x: 0, y: 0, z: 1 },
+    };
+    expect(isDuplicateCrossSystemMesh('digestive', 'Upper right central incisor', toothItem)).toBe(true);
+    expect(isDuplicateCrossSystemMesh('digestive', 'Upper right central incisor', null)).toBe(true);
+    expect(isDuplicateCrossSystemMesh('skeletal', 'Upper right central incisor', toothItem)).toBe(false);
+  });
+
+  it('getMeshAnatomicalCenter deve aplicar quaternion, scale, initialPosition e modelOffset ao boundingBox', async () => {
+    const { getMeshAnatomicalCenter } = await import('../src/core/explodedEngine.ts');
+
+    // 1. Simula lobo pulmonar / câmara cardíaca com pivô em (0,0,0) e rotação +90° em X (como em respiratory_male.glb)
+    const lungGeom = new THREE.BufferGeometry();
+    lungGeom.setAttribute(
+      'position',
+      new THREE.BufferAttribute(new Float32Array([0.07, 0.01, -1.28, 0.09, 0.03, -1.26]), 3)
+    );
+    const lungMesh = new THREE.Mesh(lungGeom);
+    lungMesh.name = 'Superior lobe of left lung';
+    lungMesh.quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+
+    const lungCenter = getMeshAnatomicalCenter(lungMesh);
+    expect(lungCenter.x).toBeCloseTo(0.08, 2);
+    expect(lungCenter.y).toBeCloseTo(1.27, 2);
+    expect(lungCenter.z).toBeCloseTo(0.02, 2);
+
+    // 2. Simula Descending colon (pivô em X=-0.09 no lado direito, mas vértices reais no lado esquerdo X=+0.05)
+    const colonGeom = new THREE.BufferGeometry();
+    colonGeom.setAttribute(
+      'position',
+      new THREE.BufferAttribute(new Float32Array([0.13, 0.0, 0.0, 0.15, 0.0, 0.0]), 3)
+    );
+    const colonMesh = new THREE.Mesh(colonGeom);
+    colonMesh.name = 'Descending colon';
+    colonMesh.position.set(-0.09, 1.01, 0.07);
+    colonMesh.userData = { initialPosition: colonMesh.position.clone() };
+
+    const colonCenter = getMeshAnatomicalCenter(colonMesh);
+    expect(colonCenter.x).toBeGreaterThan(0); // Deve estar no lado esquerdo (+X), não em -0.09!
+    const colonBinding = bindExplodedNode(colonMesh, 'all');
+    expect(colonBinding.targetOffset.x).toBeGreaterThan(0);
+
+    // 3. Simula tecido mamário de integumentary_female.glb com modelOffset = [0, 0.84, 0.03]
+    const breastGeom = new THREE.BufferGeometry();
+    breastGeom.setAttribute(
+      'position',
+      new THREE.BufferAttribute(new Float32Array([0.08, 0.44, 0.09, 0.10, 0.46, 0.11]), 3)
+    );
+    const breastMesh = new THREE.Mesh(breastGeom);
+    breastMesh.name = 'VH_F_main_lactiferous_ducts_L';
+    breastMesh.userData = { modelOffset: [0, 0.84, 0.03] };
+
+    const breastCenter = getMeshAnatomicalCenter(breastMesh);
+    expect(breastCenter.y).toBeCloseTo(1.29, 2); // 0.45 + 0.84 = 1.29m (tórax)
+  });
+
+  it('deve priorizar sufixo .r (-X) e .l (+X) mesmo quando ramos cruzam a linha média (ex: Vagus nerve (X).r)', () => {
+    const vagusRight = new THREE.Mesh();
+    vagusRight.name = 'Vagus nerve (X).r';
+    // Centro geométrico ligeiramente positivo (+0.02) devido aos ramos gástricos anteriores
+    vagusRight.position.set(0.02, 1.33, 0.04);
+    vagusRight.userData = {
+      eixoExplosao: [0.35, 0.48, 0.8],
+      distanciaMaxima: 0.85,
+    };
+
+    const binding = bindExplodedNode(vagusRight, 'all');
+    expect(binding.targetOffset.x).toBeLessThan(0); // Nervo vago DIREITO (.r) deve explodir para -X!
+  });
+
+  it('applyExplodedStep deve restaurar a posição original mesmo para malhas temporariamente ocultas (!mesh.visible)', () => {
+    const mesh = new THREE.Mesh();
+    mesh.name = 'Clavicle.l';
+    mesh.position.set(0.08, 1.41, 0.05);
+    mesh.userData = {
+      eixoExplosao: [0.5, 0.2, 0.4],
+      distanciaMaxima: 1.0,
+    };
+
+    const binding = bindExplodedNode(mesh, 'all');
+    applyExplodedStep([binding], 1.0, 1.0);
+    expect(mesh.position.x).toBeGreaterThan(0.08);
+
+    // Oculta a malha enquanto explodida e reseta explosionProgress para 0
+    mesh.visible = false;
+    applyExplodedStep([binding], 0.0, 1.0);
+
+    // Quando voltar a ficar visível, já deve estar em sua posição anatômica original!
+    expect(mesh.position.x).toBeCloseTo(0.08, 4);
+    expect(mesh.position.y).toBeCloseTo(1.41, 4);
+    expect(mesh.position.z).toBeCloseTo(0.05, 4);
+  });
+
+  it('updateMeshVisibility deve ocultar malhas e desativar raycast quando baseOpacity for 0 (Oculto 0%)', () => {
+    const boneMesh = new THREE.Mesh();
+    boneMesh.name = 'Rib_1';
+    boneMesh.userData = { id: 'za:rib_1', camadaProfundidade: 4 };
+    const mat = new THREE.MeshStandardMaterial();
+
+    const state: VisibilityState = {
+      hiddenIds: new Set(),
+      selectedId: null,
+      activeDepth: 1,
+      ghostMode: false,
+      isolatedOnly: false,
+    };
+
+    updateMeshVisibility(boneMesh, state, mat, '#f4ede2', 0.0);
+    expect(boneMesh.visible).toBe(false);
+
+    const intersects: THREE.Intersection[] = [];
+    boneMesh.raycast(new THREE.Raycaster(), intersects);
+    expect(intersects.length).toBe(0);
+  });
 });

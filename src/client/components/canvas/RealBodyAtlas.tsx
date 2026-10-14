@@ -17,6 +17,8 @@ import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 import {
   bindExplodedNode,
   applyExplodedStep,
+  evaluateExplodedPosition,
+  getMeshAnatomicalCenter,
   ExplodedNodeBinding,
 } from '../../../core/explodedEngine.ts';
 import {
@@ -49,12 +51,60 @@ interface MeshAnimData {
   baseMaterial: THREE.MeshStandardMaterial;
 }
 
+const NERVOUS_AND_SENSORY_REGEX =
+  /nerve|branch|ramus|rami|ganglion|ganglia|plexus|cord|root|tract|fascicul|funicul|lemnisc|peduncl|cortex|gyrus|gyri|sulcus|sulci|lobe|lobul|nucleus|nuclei|ventric|matter|commissur|fornix|thalam|hypothalam|epithalam|subthalam|pons|medulla|cerebell|cerebr|hippocamp|amygdal|striat|putamen|pallid|caudate|capsul|collicul|chiasm|olfactor|dura|arachnoid|pia|tentor|falx|filum|cauda|conus|mening|cistern|sinus|choroid|ependym|septum|corpus callosum|ansae|ansa|truncus|trunk|fibers|fibres|decussat|olive|olivary|pyramid|tegment|tectum|aqueduct|infundibul|mamillar|habenul|pineal|pituitar|neurohypoph|opercul|insul|cuneus|precuneus|cingul|parahippocamp|uncus|fimbria|indusium|tapetum|alveus|stria|taenia|velum|fastig|floccul|nodul|uvula|tonsil|vermis|hemispher|arbor|dentat|emboliform|globos|claustr|subicul|presubicul|parasubicul|entorhinal|perirhinal|geniculat|pulvinar|lamina|tuber|optic|oculomotor|trochlear|trigemin|abducens|vestibulocochlear|glossopharyng|vagus|accessory|hypogloss|eyeball|cornea|sclera|retina|iris|lens|vitreous|lacrimal|nasolacrimal|cochlea|vestibul|tympan|auditory|midbrain|fossa|pole|plane|culmen|declive|canal|substance|reticular|lat_fis/i;
+
 /**
- * Filtra se um nó pertence à região anatômica selecionada pelo usuário
+ * Detecta malhas duplicadas exportadas acidentalmente em múltiplos arquivos .glb do Z-Anatomy
+ * (ex.: 278 músculos dentro de nervous_male.glb e 29 dentes/cartilagens dentro de digestive_male.glb),
+ * evitando sobreposição (Z-fighting) e interceptação duplicada de cliques.
  */
-function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: AnatomicalRegion): boolean {
+export function isDuplicateCrossSystemMesh(
+  systemName: string,
+  meshName: string,
+  item: ZAnatomyItem | null
+): boolean {
+  const normalizedCurrent = systemName === 'renal' ? 'urinary' : systemName;
+
+  if (item && item.system) {
+    const normalizedItem = item.system === 'renal' ? 'urinary' : item.system;
+    if (normalizedItem !== normalizedCurrent) {
+      return true;
+    }
+  }
+
+  if (normalizedCurrent === 'digestive') {
+    if (/\btooth\b|\bincisor\b|\bcanine\b|\bpremolar\b|\bmolar\b|\bthyroid cartilage\b/i.test(meshName)) {
+      return true;
+    }
+  }
+
+  if (normalizedCurrent === 'nervous') {
+    if (!NERVOUS_AND_SENSORY_REGEX.test(meshName)) {
+      return true;
+    }
+  } else if (normalizedCurrent !== 'muscular') {
+    const isNerveStructure = /\bnerve\b|\bramus\b|\bbranch\b|\bplexus\b|\bganglion\b/i.test(meshName);
+    if (!isNerveStructure && /\bmuscle\b|\bsphincter\b/i.test(meshName)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Filtra se um nó pertence à região anatômica selecionada pelo usuário,
+ * combinando metadados taxonômicos, palavras-chave e coordenadas 3D da malha.
+ */
+export function isNodeInRegion(
+  item: ZAnatomyItem | null,
+  meshName: string,
+  region: AnatomicalRegion,
+  mesh?: THREE.Mesh
+): boolean {
   if (region === 'all' || !region) return true;
-  
+
   if (item) {
     const detected = detectRegion(item);
     if (region === 'spine' && detected === 'vertebral_column') return true;
@@ -63,10 +113,14 @@ function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: Ana
 
   const pathStr = (item?.path || []).join(' ').toLowerCase();
   const nameLower = (item?.nameEn || item?.namePtBr || meshName).toLowerCase();
+  const center = mesh
+    ? (mesh.userData?.anatomicalCenter as THREE.Vector3 | undefined) || getMeshAnatomicalCenter(mesh)
+    : null;
+  const hasCoords = Boolean(center && center.lengthSq() > 0.0001);
 
   switch (region) {
     case 'cranium':
-      return (
+      if (
         pathStr.includes('cranium') ||
         pathStr.includes('head') ||
         pathStr.includes('skull') ||
@@ -74,55 +128,105 @@ function isNodeInRegion(item: ZAnatomyItem | null, meshName: string, region: Ana
         [
           'frontal', 'parietal', 'occipital', 'temporal', 'sphenoid', 'ethmoid',
           'maxilla', 'mandible', 'zygomatic', 'nasal', 'lacrimal', 'vomer',
-          'palatine', 'concha', 'tooth', 'incisor', 'canine', 'molar', 'premolar', 'hyoid'
+          'palatine', 'concha', 'tooth', 'incisor', 'canine', 'molar', 'premolar', 'hyoid',
+          'brain', 'cerebr', 'cerebell', 'pons', 'medulla', 'cranial', 'optic', 'ocul',
+          'facial', 'trigemin', 'parotid', 'submandibular', 'sublingual', 'tongue',
+          'masseter', 'pterygoid', 'orbicularis', 'buccinator', 'platysma', 'eye', 'ear'
         ].some((k) => nameLower.includes(k))
-      );
+      ) {
+        return true;
+      }
+      return hasCoords ? center!.y >= 1.46 && Math.abs(center!.x) <= 0.16 : false;
 
     case 'spine':
-      return (
+      if (
         pathStr.includes('vertebral') ||
         pathStr.includes('vertebra') ||
         pathStr.includes('spine') ||
         [
-          'atlas', 'axis', 'cervical', 'thoracic vertebra', 'lumbar', 'sacrum', 'coccyx'
+          'atlas', 'axis', 'cervical', 'thoracic vertebra', 'lumbar', 'sacrum', 'coccyx',
+          'spinal', 'intervertebral', 'erector', 'multifidus', 'rotatores', 'semispinalis',
+          'longissimus', 'iliocostalis', 'splenius', 'suboccipital'
         ].some((k) => nameLower.includes(k))
-      );
+      ) {
+        return true;
+      }
+      return hasCoords
+        ? Math.abs(center!.x) <= 0.09 && center!.y >= 0.82 && center!.y <= 1.50 && center!.z <= 0.01
+        : false;
 
     case 'thorax':
-      return (
+      if (
         pathStr.includes('thorax') ||
         pathStr.includes('rib') ||
         pathStr.includes('sternum') ||
-        ['rib', 'sternum', 'xiphoid', 'costal cartilage', 'cartilage of'].some((k) => nameLower.includes(k))
-      );
+        [
+          'rib', 'sternum', 'xiphoid', 'costal cartilage', 'cartilage of',
+          'heart', 'ventricle', 'atrium', 'aorta', 'pulmon', 'lung', 'bronch', 'trachea',
+          'pleura', 'pericard', 'mediastin', 'pectoral', 'intercostal', 'diaphragm',
+          'serratus', 'subclav', 'mammary', 'breast', 'nipple', 'areola', 'esophag', 'thymus',
+          'vh_f_', 'lactiferous', 'suspensory'
+        ].some((k) => nameLower.includes(k))
+      ) {
+        return true;
+      }
+      return hasCoords
+        ? Math.abs(center!.x) <= 0.20 && center!.y >= 1.04 && center!.y <= 1.44
+        : false;
 
     case 'upper_limb':
-      return (
+      if (
         pathStr.includes('upper limb') ||
         pathStr.includes('pectoral') ||
         pathStr.includes('arm') ||
         [
           'clavicle', 'scapula', 'humerus', 'radius', 'ulna',
           'carpal', 'metacarpal', 'phalanx', 'scaphoid', 'lunate',
-          'triquetrum', 'pisiform', 'trapezium', 'trapezoid', 'capitate', 'hamate'
+          'triquetrum', 'pisiform', 'trapezium', 'trapezoid', 'capitate', 'hamate',
+          'deltoid', 'biceps brachii', 'triceps', 'brachi', 'forearm', 'hand', 'wrist',
+          'thumb', 'palmar', 'thenar', 'hypothenar', 'axillar', 'cephalic', 'basilic',
+          'median nerve', 'ulnar', 'radial', 'supraspinatus', 'infraspinatus', 'subscapularis',
+          'pronator', 'supinator', 'flexor carpi', 'extensor carpi'
         ].some((k) => nameLower.includes(k))
-      );
+      ) {
+        return true;
+      }
+      return hasCoords
+        ? Math.abs(center!.x) > 0.16 && center!.y >= 0.70 && center!.y <= 1.46
+        : false;
 
     case 'pelvis':
-      return (
+      if (
         pathStr.includes('pelvi') ||
-        ['hip bone', 'ilium', 'ischium', 'pubis', 'sacrum'].some((k) => nameLower.includes(k))
-      );
+        [
+          'hip bone', 'ilium', 'ischium', 'pubis', 'sacrum',
+          'iliac', 'psoas', 'piriformis', 'obturator', 'levator ani', 'coccygeus',
+          'perine', 'bladder', 'ureter', 'urethra', 'prostate', 'uter', 'ovar',
+          'testis', 'penis', 'rectum', 'sigmoid', 'glute', 'pudendal'
+        ].some((k) => nameLower.includes(k))
+      ) {
+        return true;
+      }
+      return hasCoords
+        ? Math.abs(center!.x) <= 0.20 && center!.y >= 0.74 && center!.y <= 1.04
+        : false;
 
     case 'lower_limb':
-      return (
+      if (
         pathStr.includes('lower limb') ||
         pathStr.includes('leg') ||
         [
           'femur', 'patella', 'tibia', 'fibula', 'calcaneus', 'talus',
-          'navicular', 'cuneiform', 'cuboid', 'metatarsal', 'sesamoid'
+          'navicular', 'cuneiform', 'cuboid', 'metatarsal', 'sesamoid',
+          'femoral', 'quadriceps', 'rectus femoris', 'vastus', 'sartorius', 'gracilis',
+          'adductor', 'pectineus', 'biceps femoris', 'semitendinosus', 'semimembranosus',
+          'poplite', 'tibial', 'fibular', 'perone', 'gastrocnemius', 'soleus', 'plantaris',
+          'plantar', 'foot', 'toe', 'hallux', 'saphenous', 'sciatic'
         ].some((k) => nameLower.includes(k))
-      );
+      ) {
+        return true;
+      }
+      return hasCoords ? center!.y > 0.001 && center!.y < 0.82 : false;
 
     default:
       return true;
@@ -169,6 +273,7 @@ function RealSystemModel({
   opacity = 1.0,
   isXRay = false,
   magnitude = 0.35,
+  modelOffset = [0, 0, 0],
 }: {
   glbPath: string;
   systemName: string;
@@ -182,6 +287,7 @@ function RealSystemModel({
   opacity?: number;
   isXRay?: boolean;
   magnitude?: number;
+  modelOffset?: [number, number, number];
 }) {
   const { scene } = useGLTF(glbPath, DRACO_DECODER_PATH);
   const clonedScene = useMemo(() => {
@@ -210,21 +316,38 @@ function RealSystemModel({
 
   const storeActiveDepth = useAnatomyStore((s) => s.activeDepth);
 
-  // Mapeia todas as malhas, hidrata userData e vincula as âncoras da Exploded View
+  // Mapeia todas as malhas, elimina duplicatas entre GLBs, hidrata userData preservando initialPosition e vincula âncoras
   const animNodes = useMemo(() => {
     const list: MeshAnimData[] = [];
 
     clonedScene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
+        const item = Z_ANATOMY_BY_NODE[mesh.name] || Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] || null;
+
+        // Descarta malhas duplicadas que pertencem a outro sistema anatômico (evita Z-fighting e sobreposição)
+        if (isDuplicateCrossSystemMesh(systemName, mesh.name, item)) {
+          mesh.visible = false;
+          mesh.raycast = () => {};
+          return;
+        }
+
         mesh.castShadow = true;
         mesh.receiveShadow = true;
 
-        const item = Z_ANATOMY_BY_NODE[mesh.name] || Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] || null;
+        // Restaura a posição original imutável antes de re-vincular para evitar drift cumulativo na Exploded View
+        if (mesh.userData?.initialPosition) {
+          mesh.position.copy(mesh.userData.initialPosition as THREE.Vector3);
+        } else {
+          mesh.userData = { ...mesh.userData, initialPosition: mesh.position.clone() };
+        }
+
         const layer = determineSurgicalLayer(systemName, mesh.name, item?.namePtBr);
+        const fallbackId = item?.id || `za:${mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
 
         mesh.userData = {
-          id: item?.id || mesh.name,
+          ...mesh.userData,
+          id: fallbackId,
           nomePt: item?.namePtBr || mesh.name,
           nomeLatin: item?.nameLatin,
           sistema: systemName,
@@ -235,16 +358,21 @@ function RealSystemModel({
             : undefined,
           distanciaMaxima: magnitude,
           isAnchor: false,
-        } as AnatomicalMeshUserData;
+          modelOffset,
+          __isCatalogItem: Boolean(item),
+        } as AnatomicalMeshUserData & { modelOffset?: [number, number, number]; __isCatalogItem?: boolean };
 
-        const mat = new THREE.MeshStandardMaterial({
-          color: new THREE.Color(defaultColor),
-          roughness: systemName === 'skeletal' ? 0.54 : 0.42,
-          metalness: 0.05,
-          side: THREE.DoubleSide,
-          transparent: opacity < 0.99 || isXRay,
-          opacity: isXRay ? 0.22 : opacity,
-        });
+        const existingMat = mesh.material as THREE.MeshStandardMaterial | undefined;
+        const mat =
+          existingMat && existingMat.isMeshStandardMaterial && mesh.userData.__customMat
+            ? existingMat
+            : new THREE.MeshStandardMaterial({
+                color: new THREE.Color(defaultColor),
+                roughness: systemName === 'skeletal' ? 0.54 : 0.42,
+                metalness: 0.05,
+                side: THREE.DoubleSide,
+              });
+        mesh.userData.__customMat = true;
         mesh.material = mat;
 
         const binding = bindExplodedNode(mesh, activeRegion);
@@ -259,7 +387,7 @@ function RealSystemModel({
     });
 
     return list;
-  }, [clonedScene, defaultColor, systemName, opacity, isXRay, activeRegion, magnitude]);
+  }, [clonedScene, defaultColor, systemName, activeRegion, magnitude, modelOffset]);
 
   // Atualização em tempo real das cores, visibilidade por região, 6 camadas e blindagem de raycast
   useEffect(() => {
@@ -272,11 +400,17 @@ function RealSystemModel({
     };
 
     animNodes.forEach(({ mesh, item, baseMaterial }) => {
-      const isSelected = effectiveSelectedId === item?.id || effectiveSelectedId === mesh.name;
-      const isHovered = effectiveHovered === mesh.name || (item?.id && effectiveHovered === item.id);
+      const isSelected =
+        effectiveSelectedId === item?.id ||
+        effectiveSelectedId === mesh.userData?.id ||
+        effectiveSelectedId === mesh.name;
+      const isHovered =
+        effectiveHovered === mesh.name ||
+        effectiveHovered === mesh.userData?.id ||
+        Boolean(item?.id && effectiveHovered === item.id);
 
-      // Filtragem por região (ex: só ver o crânio, só a coluna, etc.)
-      const isRegionVisible = systemName === 'skeletal' ? isNodeInRegion(item, mesh.name, activeRegion) : true;
+      // Filtragem por região aplicada a todos os sistemas ativos (usando metadados + coordenadas 3D)
+      const isRegionVisible = isNodeInRegion(item, mesh.name, activeRegion, mesh);
 
       if (!isRegionVisible) {
         mesh.visible = false;
@@ -300,27 +434,66 @@ function RealSystemModel({
   const bindings = useMemo(() => animNodes.map((d) => d.binding), [animNodes]);
 
   // Animação da Exploded View no loop Three.js useFrame com LERP amortecido e âncoras fixas
+  // (A magnitude já está incorporada em binding.maxDistance via bindExplodedNode)
   useFrame(() => {
-    applyExplodedStep(bindings, explosionProgress * magnitude, 0.16);
+    applyExplodedStep(bindings, explosionProgress, 0.16);
   });
 
   // Localiza o item atualmente selecionado para renderizar o Pin 3D e guiar a câmera
   const selectedMeshItem = useMemo(() => {
     if (!effectiveSelectedId) return null;
-    return animNodes.find((d) => d.item?.id === effectiveSelectedId || d.mesh.name === effectiveSelectedId) || null;
+    return (
+      animNodes.find(
+        (d) =>
+          d.item?.id === effectiveSelectedId ||
+          d.mesh.userData?.id === effectiveSelectedId ||
+          d.mesh.name === effectiveSelectedId
+      ) || null
+    );
   }, [effectiveSelectedId, animNodes]);
 
   // Centralização suave de câmera ao selecionar a peça
   useEffect(() => {
     if (selectedMeshItem && selectedMeshItem.mesh.visible) {
+      selectedMeshItem.mesh.updateWorldMatrix(true, false);
       const box = new THREE.Box3().setFromObject(selectedMeshItem.mesh);
-      const center = box.getCenter(new THREE.Vector3());
-      setCameraFocusTarget([center.x, center.y, center.z]);
+      if (!box.isEmpty()) {
+        const center = box.getCenter(new THREE.Vector3());
+        setCameraFocusTarget([center.x, center.y, center.z]);
+        if (typeof window !== 'undefined') {
+          (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] }).__selectedMeshWorldCenter = [
+            center.x,
+            center.y,
+            center.z,
+          ];
+        }
+      }
     }
   }, [selectedMeshItem, setCameraFocusTarget]);
 
+  const calloutAnchorPosition = useMemo<[number, number, number]>(() => {
+    if (!selectedMeshItem) return [0, 0, 0];
+    const mesh = selectedMeshItem.mesh;
+    const binding = selectedMeshItem.binding;
+    const anatomicalCenter =
+      (mesh.userData?.anatomicalCenter as THREE.Vector3 | undefined) ||
+      getMeshAnatomicalCenter(mesh);
+    const targetMeshPos = binding
+      ? evaluateExplodedPosition(binding, explosionProgress)
+      : mesh.position;
+    const initPos =
+      (mesh.userData?.initialPosition as THREE.Vector3 | undefined) ||
+      new THREE.Vector3();
+    // Subtrai modelOffset pois o <AnatomicalCallout3D> já é renderizado dentro de <group position={modelOffset}>
+    return [
+      anatomicalCenter.x - modelOffset[0] + (targetMeshPos.x - initPos.x),
+      anatomicalCenter.y - modelOffset[1] + (targetMeshPos.y - initPos.y),
+      anatomicalCenter.z - modelOffset[2] + (targetMeshPos.z - initPos.z),
+    ];
+  }, [selectedMeshItem, explosionProgress, modelOffset]);
+
   return (
-    <group>
+    <group position={modelOffset}>
       <primitive
         object={clonedScene}
         onPointerOver={(e: { stopPropagation: () => void; object: THREE.Object3D }) => {
@@ -351,7 +524,7 @@ function RealSystemModel({
               .replace(/[()]/g, '')
               .replace(/\.[lr]$/i, (m) => (m.toLowerCase() === '.l' ? ' (Esquerdo)' : ' (Direito)'));
             const fallbackNode: GeneralAnatomicalNode = {
-              id: `za:${e.object.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+              id: (e.object.userData?.id as string) || `za:${e.object.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
               namePtBr: cleanName,
               nameLatin: e.object.name,
               chapter: systemName === 'muscular' ? 3 : 2,
@@ -377,18 +550,23 @@ function RealSystemModel({
             selectedMeshItem.item
               ? toAnatomicalNode(selectedMeshItem.item)
               : ({
-                  id: `za:${selectedMeshItem.mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-                  namePtBr: selectedMeshItem.mesh.name,
+                  id:
+                    (selectedMeshItem.mesh.userData?.id as string) ||
+                    `za:${selectedMeshItem.mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+                  namePtBr: selectedMeshItem.mesh.name
+                    .replace(/[()]/g, '')
+                    .replace(/\.[lr]$/i, (m) => (m.toLowerCase() === '.l' ? ' (Esquerdo)' : ' (Direito)')),
                   nameLatin: selectedMeshItem.mesh.name,
-                  chapter: 2,
-                  systemName: systemName,
+                  chapter: systemName === 'muscular' ? 3 : 2,
+                  systemName: systemName === 'muscular' ? 'Sistema Muscular (Miologia)' : systemName,
                   meshName: selectedMeshItem.mesh.name,
                 } as AnyAnatomicalNode)
           }
-          position={[
-            selectedMeshItem.mesh.position.x,
-            selectedMeshItem.mesh.position.y,
-            selectedMeshItem.mesh.position.z,
+          position={calloutAnchorPosition}
+          worldPosition={[
+            calloutAnchorPosition[0] + modelOffset[0],
+            calloutAnchorPosition[1] + modelOffset[1],
+            calloutAnchorPosition[2] + modelOffset[2],
           ]}
           onClose={() => {
             setStoreSelectedNode(null);
@@ -524,7 +702,13 @@ export function RealBodyAtlas({
         scale: [2.2, 2.2, 2.2],
       };
     }
-    if (activeRegion === 'pelvis' || activeRegion === 'lower_limb') {
+    if (activeRegion === 'pelvis') {
+      return {
+        position: [0, -1.8, 0],
+        scale: [2.3, 2.3, 2.3],
+      };
+    }
+    if (activeRegion === 'lower_limb') {
       return {
         position: [0, -0.6, 0],
         scale: [2.0, 2.0, 2.0],
@@ -554,6 +738,7 @@ export function RealBodyAtlas({
           opacity={integumentaryOpacity}
           isXRay={effectiveXRay}
           magnitude={0.9}
+          modelOffset={[0, 0.84, 0.03]}
         />
       )}
 
@@ -740,8 +925,10 @@ export function RealBodyAtlas({
   );
 }
 
-// Preload dos modelos principais para carregamento instantâneo
-useGLTF.preload('/models/anatomy/skeletal_male.glb', DRACO_DECODER_PATH);
-useGLTF.preload('/models/anatomy/integumentary_female.glb', DRACO_DECODER_PATH);
+// Preload dos modelos principais para carregamento instantâneo em ambiente de navegador
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  useGLTF.preload('/models/anatomy/skeletal_male.glb', DRACO_DECODER_PATH);
+  useGLTF.preload('/models/anatomy/integumentary_female.glb', DRACO_DECODER_PATH);
+}
 
 

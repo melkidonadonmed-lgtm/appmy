@@ -126,7 +126,9 @@ export function updateMeshVisibility(
   defaultColor = '#cbd5e1',
   baseOpacity = 1.0
 ): boolean {
-  const data = (mesh.userData || {}) as Partial<AnatomicalMeshUserData>;
+  const data = (mesh.userData || {}) as Partial<AnatomicalMeshUserData> & {
+    __isCatalogItem?: boolean;
+  };
   const id = data.id || mesh.name;
   const depth = data.camadaProfundidade ?? determineSurgicalLayer(data.sistema || '', mesh.name, data.nomePt || '');
 
@@ -139,11 +141,23 @@ export function updateMeshVisibility(
     state.hiddenIds.has(mesh.name) ||
     (data.id ? state.hiddenIds.has(data.id) : false);
 
-  // 3. Regra de Isolamento (Modo Solo)
-  const isSelected = state.selectedId === id || state.selectedId === mesh.name;
-  const isIsolatedHidden = state.isolatedOnly && state.selectedId !== null && !isSelected;
+  // 3. Regra de Isolamento (Modo Solo Individual ou de Grupo)
+  const isSelected =
+    state.selectedId === id ||
+    state.selectedId === mesh.name ||
+    (data.id ? state.selectedId === data.id : false);
+  const isIsolatedHidden =
+    state.isolatedOnly &&
+    !isSelected &&
+    (state.hiddenIds.size === 0
+      ? state.selectedId !== null
+      : data.__isCatalogItem === false);
 
-  const visible = isDepthVisible && !isManuallyHidden && !isIsolatedHidden;
+  const visible =
+    isDepthVisible &&
+    !isManuallyHidden &&
+    !isIsolatedHidden &&
+    (isSelected || baseOpacity > 0.001);
   mesh.visible = visible;
 
   // 4. Blindagem Ativa do Raycaster na GPU:

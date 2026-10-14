@@ -127,38 +127,37 @@ O shell da aplicação adota um grid estrito sem barra de rolagem global na jane
 - **Atalho de Foco Cirúrgico**: Botão para alternância rápida do `Zen Mode` (atalho `Z`), colapsando todas as barras para entregar 100% do monitor ao modelo 3D.
 - **Alternador de Modos**: Navegação entre `Atlas 3D` e o painel `Cloud & Telemetria`.
 
-### 3.2. Painel Lateral Esquerdo Unificado (`AnatomyTreePanel`, Largura: 360px)
+### 3.2. Painel Lateral Esquerdo Unificado (`AnatomyTreePanel`, Largura: 320px)
 
-Consolidado para evitar a fragmentação em duas barras opostas. Reúne três camadas complementares:
+Consolidado para evitar a fragmentação em duas barras opostas, estruturado em **3 abas WAI-ARIA (`role="tablist"`)** precedidas pela caixa de busca global (`GlobalSearchBox`, atalho `Ctrl+K`):
 
-1. **Dossiê Anatômico & Ficha Clínica (`AnatomyClinicalCard`)**:
-   - Fixado no topo do painel quando uma estrutura é selecionada pelo usuário (via clique no 3D ou na árvore).
-   - Apresenta: Ícone `Stethoscope`, título bilingue, etiqueta FMA, pílulas de ação rápida (`Foco`, `Isolar`, `Ocultar`, `Fechar`) e sanfona de detalhes clínicos (origem, inserção, inervação e relevância semiológica).
-2. **Seção de Filtros Selecionáveis (`AnatomyFiltersSection`)**:
-   - Acordeão recolhível contendo grid compacto de 11 Sistemas Médicos (Ossos, Músculos, Cardio, Nervoso, Respiratório, Digestório, Linfático, Urinário, Endócrino, Reprodutor e Articular).
-   - Seletor horizontal com 7 Regiões do Esqueleto (Todo o Esqueleto, Crânio & Face, Coluna, Tórax, Membros Superiores, Pelve e Membros Inferiores).
-3. **Árvore Taxonômica Integrada (`TreeGroup`)**:
-   - Estrutura hierárquica respeitando a classificação anatômica internacional.
-   - Caixas de seleção com três estados determinísticos (*tri-state*):
-     - `Marcado`: Todas as sub-peças do grupo estão visíveis.
-     - `Indeterminado` (barra horizontal): Grupo parcialmente visível.
-     - `Desmarcado`: Todo o grupo ou peça individual ocultado da cena.
-   - Campo de busca instantânea com contadores de peças correspondentes e destaque tipográfico.
+1. **Aba 1 — Árvore TA2 (`TreeGroup` / `TreeItem`)**:
+   - Estrutura hierárquica respeitando a classificação anatômica internacional, com botões de expansão/recolhimento global (`Expandir` / `Recolher`).
+   - Caixas de seleção com três estados determinísticos (*tri-state*): `Marcado`, `Indeterminado` e `Desmarcado`, além de contadores canônicos de peças visíveis e isolamento com 1 clique.
+2. **Aba 2 — Filtros & Módulos (`AnatomyFiltersSection` + `ModuleLayersSection`)**:
+   - Grid compacto de Sistemas Médicos com seleção concorrente ordenada de fora para dentro.
+   - Seletor horizontal com 7 Regiões Anatômicas (`Corpo Inteiro`, `Crânio & Face`, `Coluna`, `Caixa Torácica`, `Membros Sup.`, `Pelve`, `Membros Inf.`).
+   - Controles de camadas cirúrgicas (`1/6` a `6/6`), Exploded View, MPR e opacidade esquelética sincronizada (`100%`, `35%`, `0%`).
+3. **Aba 3 — Ficha Clínica (`AnatomyClinicalCard`)**:
+   - Ativada automaticamente ao selecionar uma peça no 3D ou na busca.
+   - Apresenta: Ícone `Stethoscope`, título bilíngue (PT-BR + Latim TA2), etiqueta FMA, ações rápidas (`Focar (F)`, `Isolar (I)`, `Ocultar (H)`), sobreposição rápida de camadas com sliders individuais de transparência e literatura médica expansível.
 
 ### 3.3. Viewport 3D Central Expandido (`.viewport-center-area`)
 
 Ocupa 100% da largura restante da janela (mínimo de 1024px até resoluções 4K UHD), garantindo campo de visão irrestrito:
 
+- **Callout 3D Deslocado (`AnatomicalCallout3D`)**:
+  - Renderizado em escala constante 1:1 de tela via `<Html center>` (sem `distanceFactor`), evitando que o card infle ou distorça ao dar zoom in.
+  - Ponto de ancoragem luminoso (`8px x 8px` em `#38bdf8`) no centro anatômico real da peça conectado por linha guia SVG tracejada (`64px x 46px`) ao cartão compacto (`210px`, `max-width: 220px`) posicionado fora da silhueta do modelo.
 - **HUD de Telemetria (`TelemetryOverlay`)**:
   - Posicionado no canto superior esquerdo do canvas.
   - Indicadores em tempo real: FPS (com threshold visual: verde para $\ge 55$, amarelo para $30\text{--}54$, vermelho para $< 30$), triângulos renderizados e draw calls de GPU.
 - **Barra Clínica de Dissecção Tomográfica Multiplanar (`DissectionToolbar`)**:
-  - Dock flutuante com controles para corte tomográfico nos três eixos canônicos: Sagital, Coronal e Axial.
-  - Controles de inversão de plano, sliders de deslocamento milimétrico e alternador de modo (Sólido, Raio-X translúcido e Corte Tomográfico).
+  - Dock flutuante no topo central com controles diretos no modo **Sólido** (Exploded View `0%–100%`, Plano Cirúrgico `1/6–6/6`, Ghosting e Reset `R`) e controles de corte tomográfico no modo **Corte MPR** (Sagital, Coronal, Axial, deslocamento em cm, inversão e lâmina 3D).
 - **Cubo de Orientação Tridimensional (`OrientationGizmo`)**:
-  - ViewCube no canto superior direito do viewport, permitindo reposicionamento instantâneo da câmera ortográfica ou de perspectiva para as faces Anterior, Posterior, Superior, Inferior e Laterais Direita/Esquerda.
+  - ViewCube no canto superior direito do viewport, permitindo reposicionamento instantâneo da câmera para as faces Anterior (`+Z`), Posterior (`-Z`), Lateral Direita (`-X`), Lateral Esquerda (`+X`), Superior (`+Y`) e Inferior (`-Y`).
 - **Barra Inferior de Presets Anatômicos (`QuickPresetsBar`)**:
-  - Posicionada na base do viewport para acionamento com um clique: foca a câmera automaticamente e filtra as estruturas da região selecionada com transição fluida (*lerp* esférico).
+  - Posicionada na base do viewport para acionamento com um clique (`Geral`, `Esqueleto`, `Crânio`, `Tórax & Cardio`, `Viscerologia` e `Marcadores Clínicos` persistidos em `localStorage`).
 
 ---
 
@@ -206,10 +205,10 @@ Para garantir autenticidade anatômica sem perder fluidez em GPUs integradas:
 1. **Material Ósseo Canônico**:
    - `MeshStandardMaterial` com textura de cor baseada no matiz ósseo marfim `#f4ede2`.
    - `Roughness`: Entre `0.45` e `0.60` (dispersão biológica sem aspecto plástico ou cerâmico).
-   - `Metalness`: `0.00` (materiais biológicos possuem condutividade metálica nula).
+   - `Metalness`: `0.00` a `0.05` (materiais biológicos possuem condutividade metálica nula).
 2. **Materiais Viscerais e Vasculares**:
-   - `Roughness`: Entre `0.25` e `0.35` (levemente reflexivos, simulando serosa e umidade fisiológica).
-   - Efeito de translucidez subsuperficial (*subsurface scattering* aproximado via shader Fresnel customizado nos modos de corte).
+   - `Roughness`: Entre `0.25` e `0.42` (levemente reflexivos, simulando serosa e umidade fisiológica).
+   - Deduplicação Cross-GLB (`isDuplicateCrossSystemMesh`) ativa para eliminar malhas exportadas em duplicidade entre arquivos `.glb` (evitando *Z-fighting*).
 3. **Iluminação de Três Pontos**:
    - Luz Principal (*Key Light*): Direcional neutra (temperatura 5500K) posicionada antero-superior a 45 graus.
    - Luz de Preenchimento (*Fill Light*): Luz difusa hemisférica suave (tom ciano/frio para preenchimento de cavidades).
@@ -217,13 +216,13 @@ Para garantir autenticidade anatômica sem perder fluidez em GPUs integradas:
 
 ### 5.2. Motor de Visão Explodida (*Exploded View*)
 
-A desarticulação tridimensional não deve utilizar dispersão esférica aleatória. Cada osso e sistema possui um **vetor vetorial de explosão biomecânica** gravado no catálogo:
+A desarticulação tridimensional não utiliza dispersão esférica aleatória. Cada osso e sistema segue a **Bússola Axial e Descompactação Homolateral (`explodedEngine.ts`)**:
 
-- **Calvária Craniana**: Deslocamento puramente superior com leve afastamento radial anterior/posterior.
-- **Mandíbula**: Deslocamento póstero-inferior, preservando a fossa mandibular.
-- **Coluna Vertebral**: Descompactação axial ao longo do eixo vertical (Y), multiplicando a distância intervertebral para revelar discos, processos espinhosos e forames neurais.
-- **Caixa Torácica**: Abertura lateral em leque bilateral, preservando a orientação anatômica das curvaturas costais.
-- **Membros**: Afastamento lateral (eixo X) proporcional à distância em relação ao esqueleto axial.
+- **Centro Anatômico Real (`getMeshAnatomicalCenter`)**: Computado a partir do `boundingBox` dos vértices aplicando `mesh.scale`, `mesh.quaternion`, `initialPosition` e `modelOffset`.
+- **Preservação Homolateral Estrita**: Estruturas com sufixo `.l` expandem exclusivamente para `+X` (Esquerda) e estruturas `.r` para `-X` (Direita), sem jamais cruzar o plano sagital mediano.
+- **Calvária Craniana e Face**: Esfenoide e occipital atuam como âncoras no foco craniano; frontal, parietais, temporais e viscerocrânio expandem radialmente.
+- **Coluna Vertebral**: Âncora axial no modo de corpo inteiro; descompactação vertical ao longo do eixo `Y` (com sacro fixo) quando a região `Coluna` está selecionada.
+- **Caixa Torácica e Membros**: Abertura lateral bilateral proporcional à distância em relação ao esqueleto axial, preservando `initialPosition` imutável em `mesh.userData`.
 
 ### 5.3. Dissecção Tomográfica Multiplanar (MPR)
 

@@ -2,6 +2,20 @@ import { create } from 'zustand';
 import { CheckboxState } from '../../shared/types/taxonomicTree.ts';
 import { ActiveAnatomicalSystem, AnatomicalRegion } from '../components/canvas/AnatomicalAtlasScene.tsx';
 import { DissectionState } from '../../shared/types/dissection.ts';
+import {
+  Z_ANATOMY_BY_ID,
+  Z_ANATOMY_BY_NODE,
+  sanitizeNodeName,
+} from '../../shared/constants/zAnatomyCatalog.ts';
+
+function getNodeAliases(id: string): string[] {
+  const item =
+    Z_ANATOMY_BY_ID[id] ||
+    Z_ANATOMY_BY_NODE[id] ||
+    Z_ANATOMY_BY_NODE[sanitizeNodeName(id)];
+  if (!item) return [id];
+  return Array.from(new Set([item.id, item.node, sanitizeNodeName(item.node)]));
+}
 
 export interface ActiveModulesState {
   mprEnabled: boolean;
@@ -218,6 +232,12 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
         ...state.systemOpacities,
         [sys]: clamped,
       },
+      ...(sys === 'skeletal'
+        ? {
+            solidOpacity: clamped,
+            modules: { ...state.modules, solidOpacity: clamped },
+          }
+        : {}),
     }));
   },
 
@@ -230,19 +250,23 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   },
 
   resetSystemOpacities: () => {
-    set({
+    set((state) => ({
+      solidOpacity: 1.0,
+      modules: { ...state.modules, solidOpacity: 1.0 },
       systemOpacities: { ...DEFAULT_SYSTEM_OPACITIES },
-    });
+    }));
   },
 
   // --- Ações de Visibilidade ---
   toggleVisibility: (id: string) => {
     set((state) => {
       const next = new Set(state.hiddenNodeIds);
-      if (next.has(id)) {
-        next.delete(id);
+      const aliases = getNodeAliases(id);
+      const isHidden = aliases.some((a) => next.has(a));
+      if (isHidden) {
+        aliases.forEach((a) => next.delete(a));
       } else {
-        next.add(id);
+        aliases.forEach((a) => next.add(a));
       }
       return { hiddenNodeIds: next };
     });
@@ -279,9 +303,11 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
 
   isolateNode: (idOrDescendantIds: string | string[], allIds: string[]) => {
     set(() => {
-      const targetIds = new Set(
-        Array.isArray(idOrDescendantIds) ? idOrDescendantIds : [idOrDescendantIds]
-      );
+      const rawTargets = Array.isArray(idOrDescendantIds) ? idOrDescendantIds : [idOrDescendantIds];
+      const targetIds = new Set<string>();
+      rawTargets.forEach((rawId) => {
+        getNodeAliases(rawId).forEach((alias) => targetIds.add(alias));
+      });
       const nextHidden = new Set(allIds.filter((id) => !targetIds.has(id)));
       return {
         hiddenNodeIds: nextHidden,
@@ -331,6 +357,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
     set((state) => ({
       solidOpacity: clamped,
       modules: { ...state.modules, solidOpacity: clamped },
+      systemOpacities: { ...state.systemOpacities, skeletal: clamped },
     }));
   },
 
@@ -338,6 +365,10 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
     set((state) => ({
       xRayMode: val,
       modules: { ...state.modules, xRayMode: val },
+      dissection: {
+        ...state.dissection,
+        visualMode: val ? 'xray' : state.dissection.visualMode === 'xray' ? 'solid' : state.dissection.visualMode,
+      },
     }));
   },
 
@@ -347,7 +378,11 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
       activeSystems: sys === 'all' ? new Set(['all']) : new Set([sys]),
     }),
 
-  setActiveRegion: (reg: AnatomicalRegion) => set({ activeRegion: reg }),
+  setActiveRegion: (reg: AnatomicalRegion) =>
+    set({
+      activeRegion: reg,
+      cameraFocusTarget: [0, 0, 0],
+    }),
 
   setLayerPeelingLevel: (level: number) =>
     set({
@@ -368,29 +403,62 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   toggleIsolatedOnly: () => set((state) => ({ isolatedOnly: !state.isolatedOnly })),
 
   setDissection: (updater) =>
-    set((state) => ({
-      dissection:
-        typeof updater === 'function' ? updater(state.dissection) : updater,
-    })),
+    set((state) => {
+      const nextDissection =
+        typeof updater === 'function' ? updater(state.dissection) : updater;
+      const nextXRay = nextDissection.visualMode === 'xray';
+      const nextMpr = nextDissection.visualMode === 'mpr';
+      return {
+        dissection: nextDissection,
+        xRayMode: nextXRay,
+        modules: {
+          ...state.modules,
+          xRayMode: nextXRay,
+          mprEnabled: nextMpr,
+        },
+      };
+    }),
 
   // --- Ações de Módulos e Layout ---
   setModuleState: (partial: Partial<ActiveModulesState>) => {
     set((state) => {
       const nextModules = { ...state.modules, ...partial };
+      const nextSolidOpacity =
+        partial.solidOpacity !== undefined
+          ? Math.max(0.0, Math.min(1.0, partial.solidOpacity))
+          : state.solidOpacity;
+      const nextXRay =
+        partial.xRayMode !== undefined ? partial.xRayMode : state.xRayMode;
+      let nextVisualMode = state.dissection.visualMode;
+      if (partial.mprEnabled !== undefined) {
+        nextVisualMode = partial.mprEnabled
+          ? 'mpr'
+          : nextVisualMode === 'mpr'
+            ? (nextXRay ? 'xray' : 'solid')
+            : nextVisualMode;
+      } else if (partial.xRayMode !== undefined) {
+        nextVisualMode = partial.xRayMode
+          ? 'xray'
+          : nextVisualMode === 'xray'
+            ? 'solid'
+            : nextVisualMode;
+      }
       return {
         modules: nextModules,
         explosionProgress:
           partial.explodedProgress !== undefined
             ? Math.max(0.0, Math.min(1.0, partial.explodedProgress))
             : state.explosionProgress,
-        solidOpacity:
+        solidOpacity: nextSolidOpacity,
+        systemOpacities:
           partial.solidOpacity !== undefined
-            ? Math.max(0.0, Math.min(1.0, partial.solidOpacity))
-            : state.solidOpacity,
-        xRayMode:
-          partial.xRayMode !== undefined
-            ? partial.xRayMode
-            : state.xRayMode,
+            ? { ...state.systemOpacities, skeletal: nextSolidOpacity }
+            : state.systemOpacities,
+        xRayMode: nextXRay,
+        dissection: {
+          ...state.dissection,
+          visualMode: nextVisualMode,
+        },
       };
     });
   },
@@ -473,8 +541,10 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
             activeRegion: 'all',
             solidOpacity: 1.0,
             xRayMode: false,
+            isolatedOnly: false,
             hiddenNodeIds: new Set(),
             explosionProgress: 0.0,
+            modules: { ...state.modules, solidOpacity: 1.0, explodedProgress: 0.0, xRayMode: false },
             systemOpacities: { ...state.systemOpacities, skeletal: 1.0 },
           };
         case 'cranium':
@@ -484,8 +554,10 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
             activeRegion: 'cranium',
             solidOpacity: 1.0,
             xRayMode: false,
+            isolatedOnly: false,
             cameraFocusTarget: [0, 1.45, 0],
             explosionProgress: 0.0,
+            modules: { ...state.modules, solidOpacity: 1.0, explodedProgress: 0.0, xRayMode: false },
             systemOpacities: { ...state.systemOpacities, skeletal: 1.0 },
           };
         case 'cardiorespiratory':
@@ -495,8 +567,10 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
             activeRegion: 'thorax',
             solidOpacity: 0.35,
             xRayMode: false,
+            isolatedOnly: false,
             cameraFocusTarget: [0, 0.4, 0],
             explosionProgress: 0.0,
+            modules: { ...state.modules, solidOpacity: 0.35, explodedProgress: 0.0, xRayMode: false },
             systemOpacities: {
               ...state.systemOpacities,
               skeletal: 0.35,
@@ -511,8 +585,11 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
             activeRegion: 'all',
             solidOpacity: 0.0,
             xRayMode: false,
+            isolatedOnly: false,
             cameraFocusTarget: [0, -0.2, 0],
             explosionProgress: 0.0,
+            modules: { ...state.modules, solidOpacity: 0.0, explodedProgress: 0.0, xRayMode: false },
+            systemOpacities: { ...state.systemOpacities, skeletal: 0.0 },
           };
         case 'all':
         default:
@@ -522,9 +599,11 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
             activeRegion: 'all',
             solidOpacity: 1.0,
             xRayMode: false,
+            isolatedOnly: false,
             hiddenNodeIds: new Set(),
             explosionProgress: 0.0,
             cameraFocusTarget: [0, 0, 0],
+            modules: { ...state.modules, solidOpacity: 1.0, explodedProgress: 0.0, xRayMode: false },
             systemOpacities: { ...DEFAULT_SYSTEM_OPACITIES },
           };
       }

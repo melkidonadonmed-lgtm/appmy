@@ -173,7 +173,7 @@ export const AnatomyFiltersSection: React.FC = () => {
                 }}
               >
                 <MapPin size={11} aria-hidden="true" />
-                <span>Região do Esqueleto</span>
+                <span>Região Corporal (Topografia)</span>
               </div>
               <div
                 className="outliner-filter-grid"
