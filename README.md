@@ -348,6 +348,13 @@ npm start
 
 O projeto possui container Docker multi-stage otimizado para a porta dinâmica `$PORT` do Cloud Run.
 
+O workflow `.github/workflows/deploy.yml` requer uma destas configurações em **Settings → Secrets and variables → Actions → Secrets**:
+
+- `GCP_SA_KEY`: chave JSON de uma conta de serviço com permissões para o deploy.
+- Ou `GCP_WORKLOAD_IDENTITY_PROVIDER` e `GCP_SERVICE_ACCOUNT`: nome completo do provedor Workload Identity Federation e e-mail da conta de serviço. O provedor deve confiar neste repositório e permitir a representação dessa conta.
+
+Se ambas estiverem configuradas, `GCP_SA_KEY` tem prioridade. Sem uma configuração completa, o workflow falha antes de executar o gcloud. Os arquivos temporários `gha-creds-*.json` não são versionados nem enviados ao Cloud Build ou à imagem Docker.
+
 ```powershell
 gcloud run deploy appmy `
     --source . `

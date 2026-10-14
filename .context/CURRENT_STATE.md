@@ -43,5 +43,7 @@
 
 ## 3. Próximo Ponto de Entrada
 
+- **CI/CD Cloud Run**: autenticação corrigida para selecionar `GCP_SA_KEY` ou o par `GCP_WORKLOAD_IDENTITY_PROVIDER` / `GCP_SERVICE_ACCOUNT`; arquivos temporários de credenciais excluídos do build. A implantação depende da configuração desses secrets no GitHub.
+
 - **Camada de Tegumento Real (.GLB)**:
   - Carregar o modelo 3D do tegumento superficial (`integumentary_female.glb` ou malha anatômica superficial) como a primeira casca física do corpo.

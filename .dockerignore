@@ -4,6 +4,7 @@ dist
 .github
 .env
 .env.local
+gha-creds-*.json
 .context
 *.log
 npm-debug.log*

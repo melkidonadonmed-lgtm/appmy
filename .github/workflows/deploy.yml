@@ -35,12 +35,35 @@ jobs:
           npm run typecheck
           npm test
 
+      - name: Validar configuracao de autenticacao
+        id: auth-config
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+        run: |
+          if [ -n "$GCP_SA_KEY" ]; then
+            echo "mode=key" >> "$GITHUB_OUTPUT"
+          elif [ -n "$GCP_WORKLOAD_IDENTITY_PROVIDER" ] && [ -n "$GCP_SERVICE_ACCOUNT" ]; then
+            echo "mode=wif" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Configure GCP_SA_KEY ou ambos GCP_WORKLOAD_IDENTITY_PROVIDER e GCP_SERVICE_ACCOUNT nos secrets do repositorio."
+            exit 1
+          fi
+
       # Autenticação no GCP (aceita Secret GCP_SA_KEY ou Workload Identity)
-      - name: Autenticar no Google Cloud
-        if: env.GCP_SA_KEY != ''
+      - name: Autenticar no Google Cloud via chave JSON
+        if: steps.auth-config.outputs.mode == 'key'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Autenticar no Google Cloud via Workload Identity
+        if: steps.auth-config.outputs.mode == 'wif'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       - name: Configurar gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
