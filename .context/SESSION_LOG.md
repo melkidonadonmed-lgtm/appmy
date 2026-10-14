@@ -1,5 +1,11 @@
 # CHECKPOINT DA SESSÃO (NÍVEL 3)
 
+## Correção de CI/CD — 2026-10-14
+
+- Job `113591783249`: testes passaram; deploy falhou sem conta ativa porque a condição da autenticação consultava uma variável de ambiente não definida.
+- Workflow corrigido com seleção explícita de chave JSON ou Workload Identity Federation e erro antecipado para configuração ausente/incompleta.
+- Credenciais temporárias `gha-creds-*.json` excluídas do Git, Cloud Build e contexto Docker; configuração documentada no README.
+
 **Data/Hora**: 2026-10-03 13:42 (UTC-4)  
 **Operador**: Antigravity  
 
