@@ -13,6 +13,8 @@ import {
   EyeOff,
   Maximize2,
   Minimize2,
+  Palette,
+  MoveVertical,
 } from 'lucide-react';
 import { SceneCanvas } from './components/canvas/SceneCanvas.tsx';
 import { DissectionToolbar } from './components/ui/DissectionToolbar.tsx';
@@ -28,6 +30,21 @@ import { AnyAnatomicalNode } from './components/canvas/AnatomicalAtlasScene.tsx'
 import { Z_ANATOMY_BY_ID, Z_ANATOMY_BY_NODE } from '../shared/constants/zAnatomyCatalog.ts';
 import { isFirebaseConfigured } from './lib/firebase.ts';
 
+export type TactileThemeId =
+  | 'phantom-obsidian'
+  | 'tactile-matte'
+  | 'quiet-luxury-titanium'
+  | 'steadfast-stainless'
+  | 'warm-editorial-paper';
+
+const TACTILE_THEMES: Array<{ id: TactileThemeId; label: string }> = [
+  { id: 'phantom-obsidian', label: 'Phantom Obsidian' },
+  { id: 'tactile-matte', label: 'Tactile Matte' },
+  { id: 'quiet-luxury-titanium', label: 'Quiet Titanium' },
+  { id: 'steadfast-stainless', label: 'Steadfast Stainless' },
+  { id: 'warm-editorial-paper', label: 'Editorial Paper' },
+];
+
 interface HealthStatus {
   status: string;
   timestamp: string;
@@ -39,6 +56,22 @@ interface HealthStatus {
 
 export default function App() {
   const [activeMode, setActiveMode] = useState<'3d-atlas' | 'infra-dashboard'>('3d-atlas');
+  const [tactileTheme, setTactileTheme] = useState<TactileThemeId>(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const saved = window.localStorage.getItem('melki-tactile-theme') as TactileThemeId | null;
+      if (saved && TACTILE_THEMES.some((t) => t.id === saved)) return saved;
+    }
+    return 'phantom-obsidian';
+  });
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', tactileTheme);
+    }
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem('melki-tactile-theme', tactileTheme);
+    }
+  }, [tactileTheme]);
 
   // Ativa os atalhos de teclado clínicos (H, I, F, Esc, R)
   useAnatomicalHotkeys();
@@ -61,6 +94,8 @@ export default function App() {
 
   const zenMode = useAnatomyStore((s) => s.zenMode);
   const toggleZenMode = useAnatomyStore((s) => s.toggleZenMode);
+  const twoFingerMode = useAnatomyStore((s) => s.twoFingerMode);
+  const setTwoFingerMode = useAnatomyStore((s) => s.setTwoFingerMode);
 
   const dissection = useAnatomyStore((s) => s.dissection);
   const setDissection = useAnatomyStore((s) => s.setDissection);
@@ -153,7 +188,7 @@ export default function App() {
       {/* Barra de Navegação Superior */}
       <header className="top-nav">
         <div className="brand-wrapper">
-          <Layers size={22} color="#38bdf8" />
+          <Layers size={20} strokeWidth={1.5} color="var(--accent)" />
           <h1>Atlas 3D de Anatomia</h1>
           <span className="status-badge" style={{ padding: '0.15rem 0.5rem', fontSize: '0.6875rem' }}>
             <span className="status-dot"></span>
@@ -163,7 +198,7 @@ export default function App() {
 
         <div className="nav-actions">
           {activeMode === '3d-atlas' && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.35rem' }}>
               <div className="mode-toggle-group">
                 <button
                   className={`mode-btn ${viewType === 'realistic' ? 'active' : ''}`}
@@ -182,13 +217,13 @@ export default function App() {
               </div>
 
               {viewType === 'realistic' && (
-                <div className="mode-toggle-group" style={{ borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '0.5rem' }}>
+                <div className="mode-toggle-group">
                   <button
                     className={`mode-btn ${solidOpacity === 1.0 ? 'active' : ''}`}
                     onClick={() => setSolidOpacity(1.0)}
                     title="Densidade 100% - Totalmente Sólido e Vívido"
                   >
-                    <CheckCircle2 size={13} aria-hidden="true" />
+                    <CheckCircle2 size={13} strokeWidth={1.5} aria-hidden="true" />
                     <span>Sólido (100%)</span>
                   </button>
                   <button
@@ -196,7 +231,7 @@ export default function App() {
                     onClick={() => setSolidOpacity(0.35)}
                     title="Densidade 35% - Translúcido (Permite visualizar estruturas internas)"
                   >
-                    <Eye size={13} aria-hidden="true" />
+                    <Eye size={13} strokeWidth={1.5} aria-hidden="true" />
                     <span>Translúcido (35%)</span>
                   </button>
                   <button
@@ -204,22 +239,48 @@ export default function App() {
                     onClick={() => setSolidOpacity(0.0)}
                     title="Ocultar Esqueleto para foco nas estruturas internas"
                   >
-                    <EyeOff size={13} aria-hidden="true" />
+                    <EyeOff size={13} strokeWidth={1.5} aria-hidden="true" />
                     <span>Oculto (0%)</span>
                   </button>
                 </div>
               )}
+
+              <button
+                type="button"
+                className={`mode-btn ${twoFingerMode === 'pan-rotate' ? 'active' : ''}`}
+                onClick={() => setTwoFingerMode(twoFingerMode === 'pan-rotate' ? 'zoom' : 'pan-rotate')}
+                title="Alternar Gesto de 2 Dedos: Subir/Descer e Girar (Pinça para Zoom) vs Scroll Zoom"
+              >
+                <MoveVertical size={13} strokeWidth={1.5} aria-hidden="true" />
+                <span>{twoFingerMode === 'pan-rotate' ? '2 Dedos: Subir/Girar' : '2 Dedos: Zoom'}</span>
+              </button>
             </div>
           )}
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.5rem' }}>
+          {/* Seletor de Tema Tátil (5 Temas Canônicos em localStorage) */}
+          <div className="tactile-theme-well" title="Tema Tátil de Superfície (Persistido em localStorage)">
+            <Palette size={12} strokeWidth={1.5} aria-hidden="true" />
+            <select
+              aria-label="Selecionar Tema Tátil"
+              value={tactileTheme}
+              onChange={(e) => setTactileTheme(e.target.value as TactileThemeId)}
+              className="tactile-theme-select"
+            >
+              {TACTILE_THEMES.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.35rem' }}>
             <button
               className={`mode-btn ${zenMode ? 'active' : ''}`}
               onClick={toggleZenMode}
               title="Modo Foco Cirúrgico (Atalho: Z) - Expande o Viewport 3D para 100% da tela"
-              style={{ borderColor: zenMode ? 'var(--primary)' : undefined }}
             >
-              {zenMode ? <Minimize2 size={13} aria-hidden="true" /> : <Maximize2 size={13} aria-hidden="true" />}
+              {zenMode ? <Minimize2 size={13} strokeWidth={1.5} aria-hidden="true" /> : <Maximize2 size={13} strokeWidth={1.5} aria-hidden="true" />}
               <span>{zenMode ? 'Sair do Foco' : 'Foco Cirúrgico (Z)'}</span>
             </button>
           </div>
@@ -229,13 +290,13 @@ export default function App() {
               className={`mode-btn ${activeMode === '3d-atlas' ? 'active' : ''}`}
               onClick={() => setActiveMode('3d-atlas')}
             >
-              <Layers size={14} /> Atlas 3D
+              <Layers size={14} strokeWidth={1.5} /> Atlas 3D
             </button>
             <button
               className={`mode-btn ${activeMode === 'infra-dashboard' ? 'active' : ''}`}
               onClick={() => setActiveMode('infra-dashboard')}
             >
-              <Server size={14} /> Cloud & Telemetria
+              <Server size={14} strokeWidth={1.5} /> Cloud & Telemetria
             </button>
           </div>
         </div>

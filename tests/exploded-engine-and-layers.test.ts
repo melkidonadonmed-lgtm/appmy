@@ -5,7 +5,14 @@ import {
   bindExplodedNode,
   applyExplodedStep,
   evaluateExplodedPosition,
+  stepExplosionProgressLinear,
 } from '../src/core/explodedEngine.ts';
+import {
+  computeTwoFingerMetrics,
+  computeTwoFingerTouchDelta,
+  computeTrackpadTwoFingerDelta,
+  applyNavigationDeltaToRig,
+} from '../src/core/navigationGestures.ts';
 import {
   determineSurgicalLayer,
   isSuperficialMuscle,
@@ -479,5 +486,99 @@ describe('Core 3D Engine: Surgical Layers & Visibility Manager', () => {
     // A peça vizinha não selecionada recebe leve atenuação translúcida (~0.72)
     expect(neighborMat.transparent).toBe(true);
     expect(neighborMat.opacity).toBeCloseTo(0.72, 2);
+  });
+
+  it('deve garantir progressão de porcentagem estritamente linear na Exploded View (0%, 25%, 50%, 75%, 100%) e escalonamento estratigráfico em itens do catálogo', () => {
+    // 1. Teste de stepExplosionProgressLinear sem resíduo IEEE-754
+    let pct = 0;
+    for (let i = 0; i < 10; i++) {
+      pct = stepExplosionProgressLinear(pct, 0.1);
+    }
+    expect(pct).toBe(1);
+    expect(stepExplosionProgressLinear(0.25, -0.1)).toBe(0.15);
+    expect(stepExplosionProgressLinear(0.95, 0.2)).toBe(1);
+    expect(stepExplosionProgressLinear(0.05, -0.2)).toBe(0);
+
+    // 2. Malhas do catálogo (__isCatalogItem: true) preservam proporção radial e estratigráfica (Camada 2 > Camada 6)
+    const superficialMesh = new THREE.Mesh();
+    superficialMesh.name = 'Deltoid.l';
+    superficialMesh.position.set(0.28, 1.35, 0.08);
+    superficialMesh.userData = {
+      __isCatalogItem: true,
+      camadaProfundidade: 2,
+      eixoExplosao: [-0.38, 0.0, 0.12],
+      distanciaMaxima: 0.85,
+    };
+
+    const deepVisceralMesh = new THREE.Mesh();
+    deepVisceralMesh.name = 'Lung.l';
+    deepVisceralMesh.position.set(0.10, 1.25, 0.04);
+    deepVisceralMesh.userData = {
+      __isCatalogItem: true,
+      camadaProfundidade: 6,
+      eixoExplosao: [-0.38, 0.0, 0.12],
+      distanciaMaxima: 0.85,
+    };
+
+    const supBinding = bindExplodedNode(superficialMesh, 'all');
+    const deepBinding = bindExplodedNode(deepVisceralMesh, 'all');
+
+    // A camada superficial (2) e mais lateral deve ter módulo de explosão maior que a camada visceral profunda (6)
+    expect(supBinding.targetOffset.length()).toBeGreaterThan(deepBinding.targetOffset.length());
+
+    // 3. O avanço de 0% -> 25% -> 50% -> 75% -> 100% deve produzir incrementos espaciais idênticos (estritamente lineares)
+    const p0 = evaluateExplodedPosition(supBinding, 0.0);
+    const p25 = evaluateExplodedPosition(supBinding, 0.25);
+    const p50 = evaluateExplodedPosition(supBinding, 0.50);
+    const p75 = evaluateExplodedPosition(supBinding, 0.75);
+    const p100 = evaluateExplodedPosition(supBinding, 1.0);
+
+    const step1 = p25.distanceTo(p0);
+    const step2 = p50.distanceTo(p25);
+    const step3 = p75.distanceTo(p50);
+    const step4 = p100.distanceTo(p75);
+
+    expect(step1).toBeGreaterThan(0.05);
+    expect(step2).toBeCloseTo(step1, 5);
+    expect(step3).toBeCloseTo(step1, 5);
+    expect(step4).toBeCloseTo(step1, 5);
+  });
+
+  it('deve processar gestos de 2 dedos (subir/descer no eixo Y craniocaudal, rotacionar em 360° e pinça de zoom)', () => {
+    // 1. Gesto de 2 dedos deslizando verticalmente na tela -> elevação craniocaudal (verticalPanDelta)
+    const prevVert = computeTwoFingerMetrics({ x: 300, y: 400 }, { x: 400, y: 400 });
+    const currVert = computeTwoFingerMetrics({ x: 300, y: 320 }, { x: 400, y: 320 });
+    const touchVertDelta = computeTwoFingerTouchDelta(prevVert, currVert, 800, 600);
+
+    expect(Math.abs(touchVertDelta.verticalPanDelta)).toBeGreaterThan(0.15);
+    expect(touchVertDelta.dollyScale).toBeCloseTo(1, 3);
+
+    // 2. Gesto de 2 dedos deslizando na horizontal -> rotação orbital azimutal (azimuthRotateDelta)
+    const prevHoriz = computeTwoFingerMetrics({ x: 300, y: 400 }, { x: 400, y: 400 });
+    const currHoriz = computeTwoFingerMetrics({ x: 380, y: 400 }, { x: 480, y: 400 });
+    const touchHorizDelta = computeTwoFingerTouchDelta(prevHoriz, currHoriz, 800, 600);
+
+    expect(Math.abs(touchHorizDelta.azimuthRotateDelta)).toBeGreaterThan(0.15);
+    expect(touchHorizDelta.verticalPanDelta).toBeCloseTo(0, 5);
+
+    // 3. Gesto de 2 dedos no trackpad em modo pan-rotate e aplicação direta no rig da câmera
+    const trackpadDelta = computeTrackpadTwoFingerDelta(30, -50, false, false, 'pan-rotate');
+    expect(trackpadDelta.verticalPanDelta).toBeGreaterThan(0);
+    expect(trackpadDelta.azimuthRotateDelta).not.toBe(0);
+
+    const camera = new THREE.PerspectiveCamera(42, 1.5, 0.1, 100);
+    camera.position.set(0, 0.5, 4.0);
+    const target = new THREE.Vector3(0, 0.5, 0);
+
+    applyNavigationDeltaToRig(camera, target, {
+      verticalPanDelta: 0.4,
+      azimuthRotateDelta: Math.PI / 4,
+      dollyScale: 1,
+    });
+
+    // Target e câmera devem ter subido juntos no eixo Y craniocaudal e rotacionado 45 graus em torno de Y
+    expect(target.y).toBeCloseTo(0.9, 4);
+    expect(camera.position.y).toBeCloseTo(0.9, 4);
+    expect(camera.position.x).toBeGreaterThan(2.5);
   });
 });

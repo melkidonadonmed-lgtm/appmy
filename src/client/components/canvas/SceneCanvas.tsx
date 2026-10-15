@@ -1,4 +1,4 @@
-import { Suspense, useRef } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Center, Environment } from '@react-three/drei';
@@ -9,6 +9,13 @@ import { TelemetryCollector } from '../telemetry/TelemetryOverlay.tsx';
 import { SkullDivision } from '../../../shared/constants/cranium.ts';
 import { DissectionState } from '../../../shared/types/dissection.ts';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
+import {
+  TwoFingerMetrics,
+  computeTwoFingerMetrics,
+  computeTwoFingerTouchDelta,
+  computeTrackpadTwoFingerDelta,
+  applyNavigationDeltaToRig,
+} from '../../../core/navigationGestures.ts';
 
 interface SceneCanvasProps {
   viewType: 'exploded' | 'realistic';
@@ -27,25 +34,131 @@ interface SceneCanvasProps {
 }
 
 /**
- * Anima suavemente o ponto focal (target) do OrbitControls quando uma nova
- * estrutura for selecionada na árvore ou no viewport 3D.
- * Conclui a interpolação ao atingir o limiar de tolerância, evitando queima contínua de ciclos de CPU.
+ * Controlador de Câmera Suave + Gestos de 2 Dedos (Touchscreen e Trackpad):
+ * - Segurar/deslizar com 2 dedos para cima e para baixo: elevação vertical (pan craniocaudal no eixo Y)
+ * - Deslizar 2 dedos na horizontal ou girar os 2 dedos: rotação orbital azimutal (turntable 360°)
+ * - Pinça com 2 dedos (ou Ctrl+Scroll): zoom in/out progressivo
  */
 function SmoothCameraController({
   controlsRef,
 }: {
   controlsRef: React.RefObject<OrbitControlsImpl | null>;
 }) {
-  const { scene } = useThree();
+  const { scene, camera, gl } = useThree();
   if (typeof window !== 'undefined') {
     (window as any).__threeScene = scene;
   }
   const cameraFocusTarget = useAnatomyStore((s) => s.cameraFocusTarget);
   const cameraPositionTarget = useAnatomyStore((s) => s.cameraPositionTarget);
+  const cameraGestureNudge = useAnatomyStore((s) => s.cameraGestureNudge);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
   const setCameraPositionTarget = useAnatomyStore((s) => s.setCameraPositionTarget);
+  const lastNudgeSeqRef = useRef<number>(0);
 
-  useFrame(({ camera }) => {
+  useEffect(() => {
+    if (!cameraGestureNudge || cameraGestureNudge.seq === lastNudgeSeqRef.current) return;
+    lastNudgeSeqRef.current = cameraGestureNudge.seq;
+    if (controlsRef.current) {
+      applyNavigationDeltaToRig(camera, controlsRef.current.target, cameraGestureNudge);
+      controlsRef.current.update();
+    }
+  }, [cameraGestureNudge, camera, controlsRef]);
+
+  useEffect(() => {
+    const dom = gl.domElement;
+    if (!dom) return;
+
+    let prevTouchMetrics: TwoFingerMetrics | null = null;
+
+    const clearAutoCameraTargets = () => {
+      const st = useAnatomyStore.getState();
+      if (st.cameraFocusTarget) st.setCameraFocusTarget(null);
+      if (st.cameraPositionTarget) st.setCameraPositionTarget(null);
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      clearAutoCameraTargets();
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        if (controlsRef.current) {
+          controlsRef.current.enabled = false;
+        }
+        const t0 = e.touches[0];
+        const t1 = e.touches[1];
+        prevTouchMetrics = computeTwoFingerMetrics(
+          { x: t0.clientX, y: t0.clientY },
+          { x: t1.clientX, y: t1.clientY }
+        );
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2 && controlsRef.current) {
+        e.preventDefault();
+        const t0 = e.touches[0];
+        const t1 = e.touches[1];
+        const currMetrics = computeTwoFingerMetrics(
+          { x: t0.clientX, y: t0.clientY },
+          { x: t1.clientX, y: t1.clientY }
+        );
+        if (prevTouchMetrics) {
+          const delta = computeTwoFingerTouchDelta(
+            prevTouchMetrics,
+            currMetrics,
+            dom.clientWidth || 800,
+            dom.clientHeight || 600
+          );
+          applyNavigationDeltaToRig(camera, controlsRef.current.target, delta);
+          controlsRef.current.update();
+        }
+        prevTouchMetrics = currMetrics;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length < 2) {
+        prevTouchMetrics = null;
+        if (controlsRef.current) {
+          controlsRef.current.enabled = true;
+        }
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!controlsRef.current) return;
+      clearAutoCameraTargets();
+      e.preventDefault();
+      e.stopPropagation();
+
+      const mode = useAnatomyStore.getState().twoFingerMode;
+      const isPinchOrAltZoom = e.ctrlKey || e.metaKey || e.altKey;
+      const delta = computeTrackpadTwoFingerDelta(
+        e.deltaX,
+        e.deltaY,
+        isPinchOrAltZoom,
+        e.shiftKey,
+        mode
+      );
+      applyNavigationDeltaToRig(camera, controlsRef.current.target, delta);
+      controlsRef.current.update();
+    };
+
+    dom.addEventListener('touchstart', handleTouchStart, { passive: false });
+    dom.addEventListener('touchmove', handleTouchMove, { passive: false });
+    dom.addEventListener('touchend', handleTouchEnd);
+    dom.addEventListener('touchcancel', handleTouchEnd);
+    dom.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+
+    return () => {
+      dom.removeEventListener('touchstart', handleTouchStart);
+      dom.removeEventListener('touchmove', handleTouchMove);
+      dom.removeEventListener('touchend', handleTouchEnd);
+      dom.removeEventListener('touchcancel', handleTouchEnd);
+      dom.removeEventListener('wheel', handleWheel, { capture: true } as EventListenerOptions);
+    };
+  }, [gl, camera, controlsRef]);
+
+  useFrame(({ camera: frameCamera }) => {
     if (controlsRef.current && cameraFocusTarget) {
       const [tx, ty, tz] = cameraFocusTarget;
       const targetVec = controlsRef.current.target;
@@ -65,13 +178,13 @@ function SmoothCameraController({
 
     if (cameraPositionTarget) {
       const [px, py, pz] = cameraPositionTarget;
-      camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.08);
-      camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.08);
-      camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.08);
+      frameCamera.position.x = THREE.MathUtils.lerp(frameCamera.position.x, px, 0.08);
+      frameCamera.position.y = THREE.MathUtils.lerp(frameCamera.position.y, py, 0.08);
+      frameCamera.position.z = THREE.MathUtils.lerp(frameCamera.position.z, pz, 0.08);
 
-      const pDistSq = (camera.position.x - px) ** 2 + (camera.position.y - py) ** 2 + (camera.position.z - pz) ** 2;
+      const pDistSq = (frameCamera.position.x - px) ** 2 + (frameCamera.position.y - py) ** 2 + (frameCamera.position.z - pz) ** 2;
       if (pDistSq < 0.0001) {
-        camera.position.set(px, py, pz);
+        frameCamera.position.set(px, py, pz);
         setCameraPositionTarget(null);
       }
     }
@@ -147,7 +260,7 @@ export function SceneCanvas({
         <Environment preset="city" environmentIntensity={0.35} />
 
         <Suspense fallback={null}>
-          <Center>
+          <Center cacheKey={viewType}>
             <AnatomicalAtlasScene
               viewType={viewType}
               realSkullOpacity={realSkullOpacity}
@@ -177,9 +290,18 @@ export function SceneCanvas({
           makeDefault
           enableDamping
           dampingFactor={0.06}
-          minDistance={1.2}
+          enablePan
+          screenSpacePanning
+          rotateSpeed={0.85}
+          panSpeed={0.95}
+          minDistance={0.35}
           maxDistance={12}
           maxPolarAngle={Math.PI}
+          onStart={() => {
+            const st = useAnatomyStore.getState();
+            if (st.cameraFocusTarget) st.setCameraFocusTarget(null);
+            if (st.cameraPositionTarget) st.setCameraPositionTarget(null);
+          }}
         />
         <SmoothCameraController controlsRef={controlsRef} />
       </Canvas>

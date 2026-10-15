@@ -22,7 +22,10 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
   mprActive = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const { modules, setModuleState, activeDepth, setActiveDepth } = useAnatomyStore();
+  const { modules, setModuleState, activeDepth, setActiveDepth, stepExplosionProgress } = useAnatomyStore();
+
+  const explodedPct = Math.round(modules.explodedProgress * 100);
+  const depthPct = Math.round(((activeDepth - 1) / 5) * 100);
 
   return (
     <div className="outliner-modules-card">
@@ -35,13 +38,13 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
         aria-controls="outliner-modules-content"
       >
         <div className="outliner-modules-toggle-left">
-          <Sliders size={13} className="text-cyan-400" aria-hidden="true" />
+          <Sliders size={13} strokeWidth={1.5} className="text-cyan-400" aria-hidden="true" />
           <span>Módulos & Camadas</span>
         </div>
         {isExpanded ? (
-          <ChevronDown size={14} aria-hidden="true" />
+          <ChevronDown size={14} strokeWidth={1.5} aria-hidden="true" />
         ) : (
-          <ChevronRight size={14} aria-hidden="true" />
+          <ChevronRight size={14} strokeWidth={1.5} aria-hidden="true" />
         )}
       </button>
 
@@ -56,7 +59,7 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
           {/* Módulo 1: Dissecção Tomográfica MPR */}
           <div className="outliner-module-row">
             <span className="outliner-module-label">
-              <Scissors size={13} style={{ color: '#34d399' }} aria-hidden="true" />
+              <Scissors size={13} strokeWidth={1.5} style={{ color: 'var(--text-secondary)' }} aria-hidden="true" />
               <span>Dissecção MPR</span>
             </span>
             <button
@@ -74,16 +77,34 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
             </button>
           </div>
 
-          {/* Módulo 2: Exploded View 3D */}
+          {/* Módulo 2: Exploded View 3D Linear */}
           <div className="outliner-slider-container">
             <div className="outliner-slider-header">
               <span className="outliner-module-label">
-                <Layers size={13} style={{ color: '#38bdf8' }} aria-hidden="true" />
+                <Layers size={13} strokeWidth={1.5} style={{ color: 'var(--accent)' }} aria-hidden="true" />
                 <span>Exploded View (GPU)</span>
               </span>
-              <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
-                {Math.round(modules.explodedProgress * 100)}%
-              </span>
+              <div className="slider-step-controls">
+                <button
+                  type="button"
+                  className="slider-step-btn"
+                  onClick={() => stepExplosionProgress(-0.1)}
+                  title="Reduzir 10% (Avanço Linear)"
+                >
+                  -10%
+                </button>
+                <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', fontWeight: 600 }}>
+                  {explodedPct}%
+                </span>
+                <button
+                  type="button"
+                  className="slider-step-btn"
+                  onClick={() => stepExplosionProgress(0.1)}
+                  title="Avançar 10% (Avanço Linear)"
+                >
+                  +10%
+                </button>
+              </div>
             </div>
             <input
               type="range"
@@ -95,22 +116,38 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
                 setModuleState({ explodedProgress: parseFloat(e.target.value) })
               }
               aria-label="Progresso da vista explodida do esqueleto"
-              aria-valuenow={Math.round(modules.explodedProgress * 100)}
+              aria-valuenow={explodedPct}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-valuetext={`${Math.round(modules.explodedProgress * 100)}%`}
+              aria-valuetext={`${explodedPct}%`}
               className="outliner-range-input"
+              style={{ '--slider-pct': `${explodedPct}%` } as React.CSSProperties}
             />
+            <div className="linear-pct-steps" role="group" aria-label="Saltos lineares de Exploded View na sidebar">
+              {[0, 0.25, 0.5, 0.75, 1].map((mark) => {
+                const pct = Math.round(mark * 100);
+                return (
+                  <button
+                    key={pct}
+                    type="button"
+                    onClick={() => setModuleState({ explodedProgress: mark })}
+                    className={`linear-pct-pill ${explodedPct === pct ? 'active' : ''}`}
+                  >
+                    {pct}%
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Módulo 3: Planos Cirúrgicos de Dissecação (1 a 6) */}
           <div className="outliner-slider-container">
             <div className="outliner-slider-header">
               <span className="outliner-module-label">
-                <Sliders size={13} style={{ color: '#a78bfa' }} aria-hidden="true" />
+                <Sliders size={13} strokeWidth={1.5} style={{ color: 'var(--text-secondary)' }} aria-hidden="true" />
                 <span>Dissecação (Camadas 1 a 6)</span>
               </span>
-              <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: '#a78bfa', fontWeight: 600 }}>
+              <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', fontWeight: 600 }}>
                 {activeDepth}/6: {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
               </span>
             </div>
@@ -127,9 +164,10 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
               aria-valuemax={6}
               aria-valuetext={SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
               className="outliner-range-input"
+              style={{ '--slider-pct': `${depthPct}%` } as React.CSSProperties}
             />
-            <div style={{ fontSize: '0.6875rem', color: '#94a3b8', marginTop: '0.2rem', lineHeight: '1.25' }}>
-              <span style={{ color: '#cbd5e1', fontWeight: 500, fontStyle: 'italic' }}>
+            <div style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', marginTop: '0.2rem', lineHeight: '1.25' }}>
+              <span style={{ color: 'var(--text-secondary)', fontWeight: 500, fontStyle: 'italic' }}>
                 {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelLatin}
               </span>
               {' — '}
@@ -142,7 +180,7 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
           {/* Módulo 3: Densidade Óssea */}
           <div className="outliner-module-row">
             <span className="outliner-module-label">
-              <Sparkles size={13} style={{ color: '#fbbf24' }} aria-hidden="true" />
+              <Sparkles size={13} strokeWidth={1.5} style={{ color: 'var(--text-secondary)' }} aria-hidden="true" />
               <span>Densidade Óssea</span>
             </span>
             <div
@@ -186,7 +224,7 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
           {/* Módulo 4: Telemetria de Renderização */}
           <div className="outliner-module-row">
             <span className="outliner-module-label">
-              <Activity size={13} style={{ color: '#c084fc' }} aria-hidden="true" />
+              <Activity size={13} strokeWidth={1.5} style={{ color: 'var(--text-secondary)' }} aria-hidden="true" />
               <span>Telemetria HUD</span>
             </span>
             <button

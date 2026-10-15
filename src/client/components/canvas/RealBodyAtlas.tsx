@@ -577,10 +577,12 @@ function RealSystemModel({
   // Array otimizado de nós vinculados para o loop da GPU
   const bindings = useMemo(() => animNodes.map((d) => d.binding), [animNodes]);
 
-  // Animação da Exploded View no loop Three.js useFrame com LERP amortecido e âncoras fixas
+  // Animação da Exploded View no loop Three.js useFrame com LERP linear responsivo e âncoras fixas
   // (A magnitude já está incorporada em binding.maxDistance via bindExplodedNode)
   useFrame(() => {
-    applyExplodedStep(bindings, explosionProgress, 0.16);
+    const storeProgress = useAnatomyStore.getState().explosionProgress;
+    const liveProgress = Number.isFinite(storeProgress) ? storeProgress : explosionProgress;
+    applyExplodedStep(bindings, liveProgress, 0.32);
   });
 
   // Localiza o item atualmente selecionado para renderizar o Pin 3D e guiar a câmera

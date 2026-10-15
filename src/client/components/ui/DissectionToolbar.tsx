@@ -29,6 +29,7 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
 
   const explosionProgress = useAnatomyStore((s) => s.explosionProgress);
   const setExplosionProgress = useAnatomyStore((s) => s.setExplosionProgress);
+  const stepExplosionProgress = useAnatomyStore((s) => s.stepExplosionProgress);
   const activeDepth = useAnatomyStore((s) => s.activeDepth);
   const setActiveDepth = useAnatomyStore((s) => s.setActiveDepth);
   const ghostMode = useAnatomyStore((s) => s.ghostMode);
@@ -37,6 +38,8 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
   const applyPreset = useAnatomyStore((s) => s.applyPreset);
   const setSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
 
+  const explosionPct = Math.round(explosionProgress * 100);
+  const depthPct = Math.round(((activeDepth - 1) / 5) * 100);
   const landmark = getAnatomicalLandmark(dissection.activePlane, dissection.offset);
 
   const handleModeChange = (mode: DissectionVisualMode) => {
@@ -96,7 +99,7 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
       {/* Barra Principal de Ferramentas */}
       <div className="dissection-header">
         <div className="dissection-title-wrap">
-          <Scissors size={15} strokeWidth={1.5} color="#38bdf8" />
+          <Scissors size={15} strokeWidth={1.5} color="var(--accent)" />
           <span className="dissection-title">Dissecção & Tomografia MPR</span>
         </div>
 
@@ -145,14 +148,34 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
       {isExpanded && dissection.visualMode === 'solid' && (
         <div className="dissection-body">
           <div className="dissection-quick-grid">
-            {/* Controle Rápido 1: Exploded View */}
+            {/* Controle Rápido 1: Exploded View Linear */}
             <div className="dissection-control-row">
               <div className="slider-header">
                 <span className="control-label">
                   <Maximize2 size={11} strokeWidth={1.5} />
                   <span>Exploded View:</span>
                 </span>
-                <span className="slider-value">{Math.round(explosionProgress * 100)}%</span>
+                <div className="slider-step-controls">
+                  <button
+                    type="button"
+                    className="slider-step-btn"
+                    onClick={() => stepExplosionProgress(-0.1)}
+                    title="Reduzir 10% (Avanço Linear)"
+                    aria-label="Reduzir Exploded View em 10%"
+                  >
+                    -10%
+                  </button>
+                  <span className="slider-value">{explosionPct}%</span>
+                  <button
+                    type="button"
+                    className="slider-step-btn"
+                    onClick={() => stepExplosionProgress(0.1)}
+                    title="Avançar 10% (Avanço Linear)"
+                    aria-label="Avançar Exploded View em 10%"
+                  >
+                    +10%
+                  </button>
+                </div>
               </div>
               <div className="slider-track-wrap">
                 <input
@@ -164,7 +187,24 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                   onChange={(e) => setExplosionProgress(parseFloat(e.target.value))}
                   aria-label="Controle rápido de Exploded View"
                   className="range-slider"
+                  style={{ '--slider-pct': `${explosionPct}%` } as React.CSSProperties}
                 />
+              </div>
+              <div className="linear-pct-steps" role="group" aria-label="Saltos lineares de Exploded View">
+                {[0, 0.25, 0.5, 0.75, 1].map((mark) => {
+                  const pct = Math.round(mark * 100);
+                  return (
+                    <button
+                      key={pct}
+                      type="button"
+                      onClick={() => setExplosionProgress(mark)}
+                      className={`linear-pct-pill ${explosionPct === pct ? 'active' : ''}`}
+                      title={`Definir Exploded View em ${pct}%`}
+                    >
+                      {pct}%
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -189,6 +229,7 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                   onChange={(e) => setActiveDepth(parseInt(e.target.value, 10))}
                   aria-label="Controle rápido de camada cirúrgica de 1 a 6"
                   className="range-slider"
+                  style={{ '--slider-pct': `${depthPct}%` } as React.CSSProperties}
                 />
               </div>
             </div>
