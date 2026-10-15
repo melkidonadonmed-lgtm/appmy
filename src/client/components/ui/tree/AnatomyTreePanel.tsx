@@ -14,14 +14,14 @@ import {
 } from 'lucide-react';
 import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../../../shared/constants/zAnatomyCatalog.ts';
 import { buildTaxonomicTree } from '../../../../shared/utils/buildTaxonomicTree.ts';
-import { filterTaxonomicTree } from '../../../../shared/utils/filterTaxonomicTree.ts';
+import { filterTaxonomicTree, filterTreeByRegion } from '../../../../shared/utils/filterTaxonomicTree.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 import { ModuleLayersSection } from './ModuleLayersSection.tsx';
 import { AnatomyFiltersSection } from './AnatomyFiltersSection.tsx';
 import { AnatomyClinicalCard } from './AnatomyClinicalCard.tsx';
 import { TreeGroup } from './TreeGroup.tsx';
 import { GlobalSearchBox } from './GlobalSearchBox.tsx';
-import { AnyAnatomicalNode } from '../../canvas/AnatomicalAtlasScene.tsx';
+import { AnyAnatomicalNode, AnatomicalRegion } from '../../canvas/AnatomicalAtlasScene.tsx';
 
 interface AnatomyTreePanelProps {
   onToggleMpr?: () => void;
@@ -29,6 +29,25 @@ interface AnatomyTreePanelProps {
   selectedNode?: AnyAnatomicalNode | null;
   onSelectNode?: (node: AnyAnatomicalNode | null) => void;
 }
+
+const STRATIGRAPHIC_STEPS: Array<{ depth: number; shortLabel: string; title: string }> = [
+  { depth: 1, shortLabel: '1. Pele', title: 'Camada 1: Tegumento Comum completo (de fora para dentro)' },
+  { depth: 2, shortLabel: '2. Fáscia/Sup', title: 'Camada 2: Remove a pele; exibe Fáscia translúcida e Músculos Superficiais Estriados' },
+  { depth: 3, shortLabel: '3. Músc. Prof', title: 'Camada 3: Remove fáscia e músculos superficiais; exibe Músculos Profundos Estriados' },
+  { depth: 4, shortLabel: '4. Ossos', title: 'Camada 4: Remove musculatura; exibe Esqueleto Axial e Apendicular' },
+  { depth: 5, shortLabel: '5. Neurovasc', title: 'Camada 5: Exibe feixes Cardiovasculares, Nervosos e Linfáticos' },
+  { depth: 6, shortLabel: '6. Vísceras', title: 'Camada 6: Órgãos internos cavitários' },
+];
+
+const QUICK_REGIONS: Array<{ id: AnatomicalRegion; label: string }> = [
+  { id: 'all', label: 'Corpo Inteiro' },
+  { id: 'cranium', label: 'Crânio' },
+  { id: 'spine', label: 'Coluna' },
+  { id: 'thorax', label: 'Tórax' },
+  { id: 'upper_limb', label: 'M. Sup.' },
+  { id: 'pelvis', label: 'Pelve' },
+  { id: 'lower_limb', label: 'M. Inf.' },
+];
 
 export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   onToggleMpr,
@@ -45,14 +64,20 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   const hideAll = useAnatomyStore((s) => s.hideAll);
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
   const activeSystems = useAnatomyStore((s) => s.activeSystems);
+  const activeDepth = useAnatomyStore((s) => s.activeDepth);
+  const setActiveDepth = useAnatomyStore((s) => s.setActiveDepth);
+  const activeRegion = useAnatomyStore((s) => s.activeRegion);
+  const setActiveRegion = useAnatomyStore((s) => s.setActiveRegion);
+  const toggleGroupVisibility = useAnatomyStore((s) => s.toggleGroupVisibility);
+  const isolateNode = useAnatomyStore((s) => s.isolateNode);
 
   const sidebarTab = useAnatomyStore((s) => s.sidebarTab);
   const setSidebarTab = useAnatomyStore((s) => s.setSidebarTab);
 
-  // 1. Constrói a árvore canônica uma única vez
+  // 1. Constrói a árvore canônica uma única vez (ordenada de fora para dentro)
   const fullTree = useMemo(() => buildTaxonomicTree(Z_ANATOMY_CATALOG), []);
 
-  // 2. Lista consolidada de todos os IDs e aliases para operações em massa
+  // 2. Lista consolidada de todos os IDs e aliases para operações em massa (100% dos 11 sistemas)
   const allCatalogIds = useMemo(() => {
     const set = new Set<string>();
     for (const item of Z_ANATOMY_CATALOG) {
@@ -65,20 +90,19 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
     return Array.from(set);
   }, []);
 
-  // 3. Filtra a árvore dinamicamente conforme multi-seleção de sistemas e busca textual
+  // 3. A Árvore É o próprio Filtro de Camadas/Sistemas:
+  // Mantém todos os sistemas visíveis na árvore para que o usuário possa marcar/desmarcar qualquer grupo
+  // sem que o grupo suma da lista, aplicando filtro topográfico (Região) e busca textual.
   const visibleTree = useMemo(() => {
-    let base = fullTree;
-    if (activeSystems && !activeSystems.has('all')) {
-      const filteredBySys = fullTree.filter((node) => {
-        const sysId = node.systemId || node.id.replace('sys_', '');
-        return activeSystems.has(sysId as any);
-      });
-      if (filteredBySys.length > 0) {
-        base = filteredBySys;
-      }
-    }
-    return filterTaxonomicTree(base, search);
-  }, [fullTree, search, activeSystems]);
+    const regionFiltered = filterTreeByRegion(fullTree, activeRegion);
+    return filterTaxonomicTree(regionFiltered, search);
+  }, [fullTree, activeRegion, search]);
+
+  // Subgrupos miofasciais para acesso rápido (Fáscia, Estriado Sup, Estriado Prof, Bolsas)
+  const muscularSubgroups = useMemo(() => {
+    const muscSys = fullTree.find((n) => n.id === 'sys_muscular');
+    return muscSys?.children || [];
+  }, [fullTree]);
 
   const totalStructures = Z_ANATOMY_CATALOG.length;
   const hiddenCount = useMemo(() => {
@@ -233,7 +257,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
 
       {/* 4. Conteúdo Dinâmico Conforme a Aba Ativa */}
 
-      {/* ABA 1: Árvore Taxonômica TA2 */}
+      {/* ABA 1: Árvore Taxonômica TA2 + Barra Estratigráfica Unificada */}
       {sidebarTab === 'tree' && (
         <div
           id="outliner-tab-tree-panel"
@@ -241,10 +265,101 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
           aria-labelledby="tab-btn-tree"
           className="outliner-tab-content"
         >
+          {/* Barra Estratigráfica Unificada (De Fora para Dentro: Camadas 1 a 6 + Subcamadas Miofasciais) */}
+          <div className="outliner-stratigraphic-bar">
+            <div className="outliner-strat-row">
+              <span className="outliner-strat-label">Dissecação (Camadas):</span>
+              <div className="outliner-strat-pills" role="group" aria-label="Camadas cirúrgicas de fora para dentro">
+                {STRATIGRAPHIC_STEPS.map((step) => {
+                  const isActive = activeDepth === step.depth;
+                  const isPeeled = activeDepth > step.depth;
+                  return (
+                    <button
+                      key={step.depth}
+                      type="button"
+                      onClick={() => setActiveDepth(step.depth)}
+                      aria-pressed={isActive}
+                      title={step.title}
+                      className={`outliner-strat-pill ${isActive ? 'active' : ''} ${isPeeled ? 'peeled' : ''}`}
+                    >
+                      {step.shortLabel}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Subcamadas Miofasciais (Fáscia Translúcida vs. Músculos Estriados) */}
+            {muscularSubgroups.length > 0 && (
+              <div className="outliner-strat-row">
+                <span className="outliner-strat-label">Miofascial:</span>
+                <div className="outliner-strat-pills" role="group" aria-label="Subcamadas de fáscia e músculos estriados">
+                  {muscularSubgroups.map((sub) => {
+                    const canonical = sub.descendantIds.filter((id) => id.startsWith('za:'));
+                    const visibleInSub = canonical.filter((id) => !hiddenNodeIds.has(id)).length;
+                    const isSubVisible = visibleInSub > 0;
+                    const shortName =
+                      sub.id === 'sub_muscular_fascia'
+                        ? 'Fáscias'
+                        : sub.id === 'sub_muscular_superficial'
+                        ? 'Estriado Sup.'
+                        : sub.id === 'sub_muscular_deep'
+                        ? 'Estriado Prof.'
+                        : 'Bolsas/Bainhas';
+                    const dotColor =
+                      sub.id === 'sub_muscular_fascia'
+                        ? '#e2e8f0'
+                        : sub.id === 'sub_muscular_superficial'
+                        ? '#e05245'
+                        : sub.id === 'sub_muscular_deep'
+                        ? '#9e261f'
+                        : '#7dd3fc';
+                    return (
+                      <button
+                        key={sub.id}
+                        type="button"
+                        onClick={() => toggleGroupVisibility(sub.descendantIds)}
+                        onDoubleClick={() => isolateNode(sub.descendantIds, allCatalogIds)}
+                        aria-pressed={isSubVisible}
+                        title={`${sub.namePt} (${visibleInSub}/${canonical.length} visíveis) — Clique para alternar, duplo-clique para isolar`}
+                        className={`outliner-strat-pill tissue ${isSubVisible ? 'active' : ''}`}
+                      >
+                        <span
+                          className="outliner-tissue-dot"
+                          style={{ backgroundColor: dotColor, opacity: isSubVisible ? 1 : 0.35 }}
+                          aria-hidden="true"
+                        />
+                        <span>{shortName}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Filtro Topográfico Rápido de Região */}
+            <div className="outliner-strat-row">
+              <span className="outliner-strat-label">Região:</span>
+              <div className="outliner-strat-pills" role="group" aria-label="Filtro rápido de região corporal">
+                {QUICK_REGIONS.map((reg) => (
+                  <button
+                    key={reg.id}
+                    type="button"
+                    onClick={() => setActiveRegion(reg.id)}
+                    aria-pressed={activeRegion === reg.id}
+                    className={`outliner-strat-pill ${activeRegion === reg.id ? 'active' : ''}`}
+                  >
+                    {reg.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Barra de Ações Rápidas da Árvore */}
           <div className="outliner-tree-actions-bar">
             <span className="outliner-tree-count-text">
-              {visibleTree.length} sistemas exibidos
+              {visibleTree.length} camadas • {visibleStructuresCount}/{totalStructures} visíveis
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <button

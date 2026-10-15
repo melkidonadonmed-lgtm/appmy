@@ -1,23 +1,26 @@
 # CHECKPOINT DA SESSÃO (NÍVEL 3)
 
-**Data/Hora**: 2026-10-14 19:54 (UTC-4)  
+**Data/Hora**: 2026-10-14 21:02 (UTC-4)  
 **Operador**: Antigravity  
 
 ---
 
 ## 1. Resumo das Entregas Realizadas
 
-- **Refinamento da Exploded View, Ancoragem Exata do Callout 3D e Destaque Translúcido Fosco (`explodedEngine.ts`, `visibilityManager.ts`, `AnatomicalCallout3D.tsx`, `RealBodyAtlas.tsx`, `SceneCanvas.tsx`, `index.css`)**:
-  - **Callout 3D fora da silhueta e ponto de ancoragem exato**: Removida a prop `center` do `<Html>` em `AnatomicalCallout3D.tsx` (que deslocava a bolinha ciano `-141px` para o vazio e jogava o card em cima do modelo). O `.callout-anchor-dot` agora fica cravado em `(0,0)` da projeção 3D (usando o ponto exato do clique `e.point` na superfície da malha), e o card desloca `132px` para fora da silhueta recalculando o lado (`.side-left`/`.side-right`) em NDC de câmera a cada frame.
-  - **Destaque de seleção translúcido com atenuação fosca de contexto (`visibilityManager.ts`, `SceneCanvas.tsx`)**: Substituído o brilho branco/ciano chapado (`emissiveIntensity: 0.85`) por preservação da cor anatômica original mesclada suavemente (`24%` `#38bdf8`, `emissiveIntensity: 0.16`, `roughness: 0.34`) e atenuação fosca/translúcida (`opacity: 0.72`, `roughness: 0.68`, dessaturação de `18%`) nas peças vizinhas não selecionadas. Iluminação calibrada em `SceneCanvas.tsx` para preservar o relevo 3D dos ossos e cartilagens.
-  - **Exploded View contínua e filtro de decalques `.ol`/`.or`/`.el`/`.er` (`explodedEngine.ts`, `RealBodyAtlas.tsx`)**: Filtrados os 705 decalques de origem/inserção óssea em `muscular_male.glb`, corrigido o falso positivo de `isAxialAnchor` para estruturas não-axiais (`Iliotibial tract`, `Vertebral artery`), adicionada detecção de lateralidade pós-sanitização do `GLTFLoader` (`getMeshLaterality` e `formatAnatomicalMeshName`), e substituídos os degraus descontínuos (`posY < 0.45` e `posZ = ±0.01`) por dispersão radial estratificada contínua (`layerFactor` por camada cirúrgica `1..6`) com magnitudes métricas (`0.22m` a `0.42m`).
-- **Correção Definitiva do Deploy Automático GitHub Actions -> Google Cloud Run (`.github/workflows/deploy.yml`, `deploy-cloudrun.ps1`, `tests/deploy-workflow.test.ts`)**:
-  - Configuração de Workload Identity Federation OIDC (`github-actions-pool` / `github-oidc`) no projeto GCP `agent-md-506215` e secrets no GitHub.
+- **Unificação Completa entre Árvore TA2 e Filtros por Camada Estratigráfica (`scripts/build_z_anatomy_catalog.py`, `zAnatomyCatalog.ts`, `buildTaxonomicTree.ts`, `filterTaxonomicTree.ts`, `useAnatomyStore.ts`, `AnatomyTreePanel.tsx`, `TreeGroup.tsx`)**:
+  - **Catálogo expandido para 100% dos 11 sistemas (`2.562` peças)**: Incluídas todas as malhas válidas de `integumentary_female.glb` (16), `muscular_male.glb` (683, já filtrando os 705 decalques `.ol/.or/.el/.er`), `lymphatic_male.glb` (163), `reproductive_male.glb` (14) e `endocrine_male.glb` (6), além dos sistemas já existentes (`skeletal`: 335, `cardiovascular`: 676, `nervous`: 582, `digestive`: 44, `respiratory`: 35, `renal`: 8).
+  - **Fim do conflito Árvore vs. Filtro**: Desmarcar todas as camadas na árvore agora oculta **100% das malhas** (incluindo musculatura, fáscia e pele). Os grupos da árvore permanecem visíveis quando desmarcados (com indicador visual e contador `0/N`) para que o próprio grupo da árvore funcione como o filtro de sistema/camada, em sincronia bidirecional com `activeSystems`, `activeDepth` (camadas cirúrgicas 1 a 6) e `activeRegion`.
+  - **Barra Estratigráfica Integrada**: Adicionada no topo da aba `Árvore TA2` para dissecação imediata de fora para dentro (`1. Pele` → `2. Fáscia/Sup` → `3. Músc. Prof` → `4. Ossos` → `5. Neurovasc` → `6. Vísceras`), atalhos de subcamadas miofasciais e filtro topográfico por região.
+- **Visibilidade Independente de Fáscia e Estrias Musculares em GPU (`visibilityManager.ts`, `RealBodyAtlas.tsx`, `buildTaxonomicTree.ts`)**:
+  - **4 Subcamadas Miofasciais na Árvore**: `Fáscias, Aponeuroses & Retináculos` (88), `Músculos Superficiais (Estriados)` (152), `Músculos Profundos (Estriados)` (319) e `Bolsas Sinoviais & Bainhas Tendíneas` (124).
+  - **Fáscia Translúcida Perolada**: Fáscias (`Fascia lata`, `Deltoid fascia`, `Brachial fascia`, `Crural fascia`, `Pectoral fascia`, `Investing abdominal fascia`, etc.) deixaram de ser opacas/vermelhas e passaram a ser renderizadas como membranas colágenas branco-peroladas translúcidas (`#e2e8f0`, `opacityFactor: 0.42`, `depthWrite: false`), permitindo visualizar a fáscia e os músculos estriados subjacentes ao mesmo tempo.
+  - **Estrias Musculares Procedurais (`applyAnatomicalTissueShader`)**: Shader `onBeforeCompile` em GLSL que projeta estrias longitudinais de miofibrilas e septos de perimísio ao longo do eixo principal de cada ventre muscular, com diferenciação cromática entre fascículos vizinhos (`getMuscleFascicleColor`).
 
 ---
 
 ## 2. Comandos Validados no Terminal (Quality Gate)
 
 - `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript no cliente e no servidor).
-- `npm test` -> Exit Code 0 (210 testes unitários aprovados em 30 suítes Vitest).
+- `npm test` -> Exit Code 0 (213 testes unitários aprovados em 30 suítes Vitest).
 - `npm run build` -> Exit Code 0 (Build de produção Vite + Express concluído sem erros).
+

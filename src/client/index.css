@@ -2929,6 +2929,95 @@ code, pre {
   overflow: hidden;
 }
 
+/* Barra Estratigráfica Unificada no topo da Árvore TA2 */
+.outliner-stratigraphic-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.55);
+  background: rgba(10, 15, 29, 0.65);
+  flex-shrink: 0;
+}
+
+.outliner-strat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.outliner-strat-label {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  flex-shrink: 0;
+  min-width: 56px;
+}
+
+.outliner-strat-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.22rem;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.outliner-strat-pill {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(51, 65, 85, 0.75);
+  border-radius: 4px;
+  color: #94a3b8;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  padding: 0.14rem 0.32rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.12s ease;
+}
+
+.outliner-strat-pill:hover {
+  background: rgba(51, 65, 85, 0.75);
+  border-color: #64748b;
+  color: #f8fafc;
+}
+
+.outliner-strat-pill.active {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.outliner-strat-pill.peeled {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+
+.outliner-strat-pill.tissue.active {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(148, 163, 184, 0.55);
+  color: #f1f5f9;
+}
+
+.outliner-tissue-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.outliner-group-title.is-hidden-group {
+  color: #64748b;
+  text-decoration: line-through;
+}
+
 .outliner-tree-actions-bar {
   display: flex;
   align-items: center;

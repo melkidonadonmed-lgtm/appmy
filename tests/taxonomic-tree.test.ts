@@ -7,14 +7,26 @@ import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
 describe('Taxonomic Tree & State Management Suite', () => {
   const tree = buildTaxonomicTree(Z_ANATOMY_CATALOG);
 
-  it('deve gerar a árvore taxonômica com todos os sistemas canônicos ordenados', () => {
-    expect(tree.length).toBeGreaterThan(0);
+  it('deve gerar a árvore taxonômica com todos os 11 sistemas ordenados estratigraficamente (de fora para dentro)', () => {
+    expect(tree.length).toBe(11);
 
-    // O primeiro sistema deve ser o Esquelético (ordem médica canônica craniocaudal)
-    expect(tree[0].id).toBe('sys_skeletal');
+    // Ordem estratigráfica de dissecação (de fora para dentro):
+    // 1. Tegumento -> 2. Muscular (Fáscia + Estriados) -> 3. Esquelético -> 4. Cardiovascular -> 5. Linfático -> 6. Nervoso -> Vísceras
+    expect(tree[0].id).toBe('sys_integumentary');
+    expect(tree[1].id).toBe('sys_muscular');
+    expect(tree[2].id).toBe('sys_skeletal');
     expect(tree[0].type).toBe('system');
     expect(tree[0].children).toBeDefined();
     expect(tree[0].children!.length).toBeGreaterThan(0);
+
+    // O Sistema Muscular deve expor as 4 subcamadas funcionais miofasciais
+    const muscSubIds = tree[1].children!.map((c) => c.id);
+    expect(muscSubIds).toEqual([
+      'sub_muscular_fascia',
+      'sub_muscular_superficial',
+      'sub_muscular_deep',
+      'sub_muscular_bursae',
+    ]);
   });
 
   it('deve contabilizar e agregar os descendantIds em cada nível da hierarquia', () => {
@@ -132,5 +144,50 @@ describe('Taxonomic Tree & State Management Suite', () => {
       useAnatomyStore.getState().showAll();
       expect(useAnatomyStore.getState().hiddenNodeIds.size).toBe(0);
     });
+
+    it('deve ocultar 100% das estruturas (incluindo musculatura, fáscia e pele) ao desmarcar todos os grupos da árvore', () => {
+      const store = useAnatomyStore.getState();
+      // Desmarca cada sistema na árvore
+      for (const sysNode of tree) {
+        store.toggleGroupVisibility(sysNode.descendantIds);
+      }
+
+      const hiddenSet = useAnatomyStore.getState().hiddenNodeIds;
+      const muscularItems = Z_ANATOMY_CATALOG.filter((i) => i.system === 'muscular');
+      const integumentaryItems = Z_ANATOMY_CATALOG.filter((i) => i.system === 'integumentary');
+
+      expect(muscularItems.length).toBeGreaterThan(600);
+      expect(integumentaryItems.length).toBeGreaterThan(10);
+
+      // Nenhuma malha muscular ou tegumentar pode permanecer visível
+      for (const item of muscularItems) {
+        expect(hiddenSet.has(item.id)).toBe(true);
+        expect(hiddenSet.has(item.node)).toBe(true);
+      }
+      for (const item of integumentaryItems) {
+        expect(hiddenSet.has(item.id)).toBe(true);
+      }
+    });
+
+    it('deve permitir ocultar apenas a subcamada de Fáscias mantendo os Músculos Estriados visíveis', () => {
+      const store = useAnatomyStore.getState();
+      const muscNode = tree.find((n) => n.id === 'sys_muscular')!;
+      const fasciaGroup = muscNode.children!.find((c) => c.id === 'sub_muscular_fascia')!;
+      const supMuscleGroup = muscNode.children!.find((c) => c.id === 'sub_muscular_superficial')!;
+
+      expect(fasciaGroup.descendantIds.length).toBeGreaterThan(80);
+      expect(supMuscleGroup.descendantIds.length).toBeGreaterThan(100);
+
+      // Desmarca apenas Fáscias
+      store.toggleGroupVisibility(fasciaGroup.descendantIds);
+
+      const state = useAnatomyStore.getState();
+      expect(state.getGroupCheckboxState(fasciaGroup.descendantIds)).toBe('unchecked');
+      expect(state.getGroupCheckboxState(supMuscleGroup.descendantIds)).toBe('checked');
+      // O sistema muscular raiz fica 'indeterminate' (parcialmente visível) e continua ativo
+      expect(state.getGroupCheckboxState(muscNode.descendantIds)).toBe('indeterminate');
+      expect(state.isSystemActive('muscular')).toBe(true);
+    });
   });
 });
+

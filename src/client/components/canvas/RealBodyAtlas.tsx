@@ -24,6 +24,8 @@ import {
 import {
   updateMeshVisibility,
   determineSurgicalLayer,
+  getMuscularTissueProfile,
+  applyAnatomicalTissueShader,
   VisibilityState,
 } from '../../../core/visibilityManager.ts';
 import { AnatomicalMeshUserData } from '../../../shared/types/anatomy.ts';
@@ -430,13 +432,19 @@ function RealSystemModel({
         }
 
         const formatted = formatAnatomicalMeshName(rawName);
-        const layer = determineSurgicalLayer(systemName, rawName, item?.namePtBr || formatted.namePtBr);
+        const nomePtResolved = item?.namePtBr || formatted.namePtBr;
+        const layer = determineSurgicalLayer(systemName, rawName, nomePtResolved);
         const fallbackId = item?.id || `za:${mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+
+        const muscularProfile =
+          systemName === 'muscular'
+            ? getMuscularTissueProfile(rawName, nomePtResolved, defaultColor)
+            : null;
 
         mesh.userData = {
           ...mesh.userData,
           id: fallbackId,
-          nomePt: item?.namePtBr || formatted.namePtBr,
+          nomePt: nomePtResolved,
           nomeLatin: item?.nameLatin || formatted.nameLatin,
           sistema: systemName,
           regiao: activeRegion,
@@ -448,18 +456,64 @@ function RealSystemModel({
           isAnchor: false,
           modelOffset,
           __isCatalogItem: Boolean(item),
-        } as AnatomicalMeshUserData & { modelOffset?: [number, number, number]; __isCatalogItem?: boolean };
+          ...(muscularProfile
+            ? {
+                __tissueType: muscularProfile.tissueType,
+                __tissueColor: muscularProfile.colorHex,
+                __tissueOpacityFactor: muscularProfile.opacityFactor,
+                __tissueRoughness: muscularProfile.roughness,
+              }
+            : {}),
+        } as AnatomicalMeshUserData & {
+          modelOffset?: [number, number, number];
+          __isCatalogItem?: boolean;
+          __tissueType?: string;
+          __tissueColor?: string;
+          __tissueOpacityFactor?: number;
+          __tissueRoughness?: number;
+        };
 
         const existingMat = mesh.material as THREE.MeshStandardMaterial | undefined;
-        const mat =
-          existingMat && existingMat.isMeshStandardMaterial && mesh.userData.__customMat
-            ? existingMat
-            : new THREE.MeshStandardMaterial({
-                color: new THREE.Color(defaultColor),
-                roughness: systemName === 'skeletal' ? 0.54 : 0.42,
-                metalness: 0.04,
-                side: THREE.DoubleSide,
-              });
+        let mat: THREE.MeshStandardMaterial;
+        if (existingMat && existingMat.isMeshStandardMaterial && mesh.userData.__customMat) {
+          mat = existingMat;
+        } else {
+          mat = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(muscularProfile ? muscularProfile.colorHex : defaultColor),
+            roughness: muscularProfile
+              ? muscularProfile.roughness
+              : systemName === 'skeletal'
+              ? 0.54
+              : 0.42,
+            metalness: muscularProfile ? muscularProfile.metalness : 0.04,
+            side: THREE.DoubleSide,
+          });
+
+          if (muscularProfile && mesh.geometry) {
+            if (!mesh.geometry.boundingBox) {
+              mesh.geometry.computeBoundingBox();
+            }
+            const bbox = mesh.geometry.boundingBox;
+            let fiberAxis: [number, number, number] = [0, 1, 0];
+            let fiberSpan: [number, number] = [-0.1, 0.1];
+            if (bbox && !bbox.isEmpty()) {
+              const dx = bbox.max.x - bbox.min.x;
+              const dy = bbox.max.y - bbox.min.y;
+              const dz = bbox.max.z - bbox.min.z;
+              if (dx >= dy && dx >= dz) {
+                fiberAxis = [1, 0, 0];
+                fiberSpan = [bbox.min.x, bbox.max.x];
+              } else if (dz >= dx && dz >= dy) {
+                fiberAxis = [0, 0, 1];
+                fiberSpan = [bbox.min.z, bbox.max.z];
+              } else {
+                fiberAxis = [0, 1, 0];
+                fiberSpan = [bbox.min.y, bbox.max.y];
+              }
+            }
+            applyAnatomicalTissueShader(mat, muscularProfile.tissueType, fiberAxis, fiberSpan);
+          }
+        }
         mesh.userData.__customMat = true;
         mesh.material = mat;
 
@@ -511,7 +565,8 @@ function RealSystemModel({
 
       // Destaque de Hover suave (sem branqueamento estourado)
       if (mesh.visible && !isSelected && isHovered) {
-        const hoverColor = new THREE.Color(defaultColor).lerp(new THREE.Color('#38bdf8'), 0.2);
+        const baseHex = (mesh.userData?.__tissueColor as string) || defaultColor;
+        const hoverColor = new THREE.Color(baseHex).lerp(new THREE.Color('#38bdf8'), 0.2);
         baseMaterial.color.copy(hoverColor);
         baseMaterial.emissive.set('#0284c7');
         baseMaterial.emissiveIntensity = 0.14;
@@ -761,10 +816,15 @@ export function RealBodyAtlas({
   const storeSystemOpacities = useAnatomyStore((s) => s.systemOpacities);
 
   const isSysActive = (sys: ActiveAnatomicalSystem) => {
+    const altSys = (sys === 'urinary' ? 'renal' : sys) as ActiveAnatomicalSystem;
     if (storeActiveSystems && storeActiveSystems.size > 0) {
-      return storeActiveSystems.has('all') || storeActiveSystems.has(sys);
+      return (
+        storeActiveSystems.has('all') ||
+        storeActiveSystems.has(sys) ||
+        storeActiveSystems.has(altSys)
+      );
     }
-    return activeSystem === sys || activeSystem === 'all';
+    return activeSystem === sys || activeSystem === altSys || activeSystem === 'all';
   };
 
   const getSysOpacity = (sys: ActiveAnatomicalSystem, fallback = effectiveOpacity) => {
