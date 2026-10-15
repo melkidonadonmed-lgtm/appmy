@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 export type TwoFingerNavigationMode = 'pan-rotate' | 'zoom';
 export type TwoFingerMode = TwoFingerNavigationMode;
+export type TwoFingerGestureIntent = 'unlocked' | 'pan' | 'rotate' | 'pinch';
 
 export interface TouchPoint2D {
   x: number;
@@ -13,6 +14,7 @@ export interface TwoFingerGestureState {
   midY: number;
   distance: number;
   angle: number;
+  lockedIntent?: TwoFingerGestureIntent;
 }
 export type TwoFingerMetrics = TwoFingerGestureState;
 
@@ -20,6 +22,7 @@ export interface TwoFingerGestureDelta {
   verticalPanDelta: number;
   azimuthRotateDelta: number;
   dollyScale: number;
+  lockedIntent?: TwoFingerGestureIntent;
 }
 
 export interface NavigationRigBounds {
@@ -41,7 +44,8 @@ const DEFAULT_BOUNDS: Required<NavigationRigBounds> = {
  */
 export function computeTwoFingerMetrics(
   p1: TouchPoint2D,
-  p2: TouchPoint2D
+  p2: TouchPoint2D,
+  lockedIntent: TwoFingerGestureIntent = 'unlocked'
 ): TwoFingerGestureState {
   const midX = (p1.x + p2.x) * 0.5;
   const midY = (p1.y + p2.y) * 0.5;
@@ -49,14 +53,13 @@ export function computeTwoFingerMetrics(
   const dy = p2.y - p1.y;
   const distance = Math.hypot(dx, dy);
   const angle = Math.atan2(dy, dx);
-  return { midX, midY, distance, angle };
+  return { midX, midY, distance, angle, lockedIntent };
 }
 
 /**
- * Calcula o delta simultâneo de:
- * 1. Elevação vertical (segurar com 2 dedos para cima e para baixo -> sobe/desce pelo eixo anatômico Y)
- * 2. Rotação 360° (arraste horizontal com 2 dedos ou giro/torção entre os 2 dedos -> gira o modelo)
- * 3. Pinça (aproximar/afastar os 2 dedos -> zoom)
+ * Calcula o delta de gesto de 2 dedos com Gesture Locking determinístico:
+ * Evita que a pinça (zoom), a elevação vertical (pan Y) e a rotação azimutal (360°)
+ * disparem simultaneamente e causem instabilidade visual.
  */
 export function computeTwoFingerTouchDelta(
   prev: TwoFingerGestureState,
@@ -69,69 +72,109 @@ export function computeTwoFingerTouchDelta(
 
   const dMidX = curr.midX - prev.midX;
   const dMidY = curr.midY - prev.midY;
+  const absMidX = Math.abs(dMidX);
+  const absMidY = Math.abs(dMidY);
+  const distDelta = Math.abs(curr.distance - prev.distance);
 
-  // Elevação vertical: arrastar 2 dedos para cima/baixo move a câmera ao longo da altura corporal
-  const verticalPanDelta = THREE.MathUtils.clamp((dMidY / safeH) * 2.4, -0.25, 0.25);
-
-  // Diferença angular curta (-PI a +PI) para rotação por giro de 2 dedos
   const rawAngleDiff = curr.angle - prev.angle;
   const normalizedTwist = Math.atan2(Math.sin(rawAngleDiff), Math.cos(rawAngleDiff));
 
-  // Rotação horizontal combinada (deslocamento lateral dos 2 dedos + torção angular)
-  const horizRotate = -(dMidX / safeW) * Math.PI * 1.75;
-  const twistRotate = -normalizedTwist * 0.85;
-  const azimuthRotateDelta = THREE.MathUtils.clamp(horizRotate + twistRotate, -0.35, 0.35);
+  // Classificação de intenção dominante com Gesture Lock para impedir mistura de eixos
+  let intent: TwoFingerGestureIntent = prev.lockedIntent || curr.lockedIntent || 'unlocked';
+  if (intent === 'unlocked') {
+    if (distDelta > 6 && distDelta > absMidX * 0.85 && distDelta > absMidY * 0.85) {
+      intent = 'pinch';
+    } else if (absMidY > absMidX * 1.25 && absMidY > 1.5) {
+      intent = 'pan';
+    } else if ((absMidX > absMidY * 1.25 && absMidX > 1.5) || Math.abs(normalizedTwist) > 0.035) {
+      intent = 'rotate';
+    }
+  }
 
-  // Escala de pinça (zoom)
+  let verticalPanDelta = 0;
+  let azimuthRotateDelta = 0;
   let dollyScale = 1.0;
-  if (prev.distance > 12 && curr.distance > 12) {
-    dollyScale = THREE.MathUtils.clamp(prev.distance / curr.distance, 0.85, 1.18);
+
+  if (intent === 'pinch') {
+    if (prev.distance > 12 && curr.distance > 12) {
+      dollyScale = THREE.MathUtils.clamp(prev.distance / curr.distance, 0.85, 1.18);
+    }
+  } else if (intent === 'pan') {
+    verticalPanDelta = THREE.MathUtils.clamp((dMidY / safeH) * 2.4, -0.25, 0.25);
+  } else if (intent === 'rotate') {
+    const horizRotate = -(dMidX / safeW) * Math.PI * 1.75;
+    const twistRotate = -normalizedTwist * 0.55;
+    azimuthRotateDelta = THREE.MathUtils.clamp(horizRotate + twistRotate, -0.35, 0.35);
+  } else {
+    // Micro-movimento abaixo do limiar de bloqueio
+    verticalPanDelta = THREE.MathUtils.clamp((dMidY / safeH) * 2.4, -0.25, 0.25);
+    const horizRotate = -(dMidX / safeW) * Math.PI * 1.75;
+    azimuthRotateDelta = THREE.MathUtils.clamp(horizRotate, -0.35, 0.35);
+    if (prev.distance > 12 && curr.distance > 12) {
+      dollyScale = THREE.MathUtils.clamp(prev.distance / curr.distance, 0.85, 1.18);
+    }
   }
 
   return {
     verticalPanDelta,
     azimuthRotateDelta,
     dollyScale,
+    lockedIntent: intent,
   };
 }
 
 /**
- * Calcula o delta para gestos de 2 dedos em Trackpad / Touchpad (eventos wheel)
- * suportando subida/descida vertical (deltaY), rotação 360° (deltaX ou Shift+deltaY)
- * e zoom por pinça (ctrlKey).
+ * Calcula o delta para gestos de 2 dedos em Trackpad / Touchpad / Roda de Mouse (eventos wheel)
+ * normalizando deltaMode (0 = pixels, 1 = linhas, 2 = páginas).
  */
 export function computeTrackpadTwoFingerDelta(
   deltaX: number,
   deltaY: number,
   ctrlKey = false,
   shiftKey = false,
-  mode: TwoFingerNavigationMode = 'pan-rotate'
+  mode: TwoFingerNavigationMode = 'pan-rotate',
+  deltaMode = 0
 ): TwoFingerGestureDelta {
+  const modeMultiplier = deltaMode === 1 ? 16 : deltaMode === 2 ? 100 : 1;
+  const normX = deltaX * modeMultiplier;
+  const normY = deltaY * modeMultiplier;
+
   if (ctrlKey || mode === 'zoom') {
-    const clampedY = THREE.MathUtils.clamp(deltaY, -120, 120);
+    const clampedY = THREE.MathUtils.clamp(normY, -120, 120);
     const dollyScale = Math.pow(1.0022, clampedY);
     const azimuthRotateDelta =
-      !ctrlKey && Math.abs(deltaX) > 0.2
-        ? THREE.MathUtils.clamp(-deltaX * 0.0045, -0.2, 0.2)
+      !ctrlKey && Math.abs(normX) > 0.2
+        ? THREE.MathUtils.clamp(-normX * 0.0045, -0.2, 0.2)
         : 0;
     return {
       verticalPanDelta: 0,
       azimuthRotateDelta,
       dollyScale,
+      lockedIntent: 'pinch',
     };
   }
 
-  // Modo 'pan-rotate' (2 dedos no trackpad: cima/baixo = elevação vertical; lados ou Shift = rotação)
-  const effectiveHoriz = shiftKey && Math.abs(deltaX) < 0.5 ? deltaY : deltaX;
-  const effectiveVert = shiftKey && Math.abs(deltaX) < 0.5 ? 0 : deltaY;
+  // Modo 'pan-rotate' com isolamento do eixo dominante quando um eixo supera o outro em >2.2x
+  const effectiveHoriz = shiftKey && Math.abs(normX) < 0.5 ? normY : normX;
+  const effectiveVert = shiftKey && Math.abs(normX) < 0.5 ? 0 : normY;
 
-  const verticalPanDelta = THREE.MathUtils.clamp(-effectiveVert * 0.0026, -0.16, 0.16);
-  const azimuthRotateDelta = THREE.MathUtils.clamp(-effectiveHoriz * 0.0052, -0.22, 0.22);
+  const absH = Math.abs(effectiveHoriz);
+  const absV = Math.abs(effectiveVert);
+
+  const verticalPanDelta =
+    absH > absV * 2.4
+      ? 0
+      : THREE.MathUtils.clamp(-effectiveVert * 0.0026, -0.16, 0.16);
+  const azimuthRotateDelta =
+    absV > absH * 2.4
+      ? 0
+      : THREE.MathUtils.clamp(-effectiveHoriz * 0.0052, -0.22, 0.22);
 
   return {
     verticalPanDelta,
     azimuthRotateDelta,
     dollyScale: 1.0,
+    lockedIntent: absV >= absH ? 'pan' : 'rotate',
   };
 }
 

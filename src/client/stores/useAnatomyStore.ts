@@ -8,9 +8,12 @@ import {
   Z_ANATOMY_BY_NODE,
   sanitizeNodeName,
 } from '../../shared/constants/zAnatomyCatalog.ts';
+import { FEMALE_REPRODUCTIVE_CATALOG } from '../../shared/constants/femaleReproductiveCatalog.ts';
 import { determineSurgicalLayer } from '../../core/visibilityManager.ts';
 import { stepExplosionProgressLinear } from '../../core/explodedEngine.ts';
 import { TwoFingerMode } from '../../core/navigationGestures.ts';
+
+export type BiologicalSex = 'male' | 'female';
 
 function normalizeSystemId(sys: string): ActiveAnatomicalSystem {
   if (sys === 'renal') return 'urinary';
@@ -38,7 +41,7 @@ export const LAYER_DESCENDANT_ALIASES: Record<number, string[]> = {
 };
 export const ALL_CATALOG_ALIASES: string[] = [];
 
-for (const item of Z_ANATOMY_CATALOG) {
+for (const item of [...Z_ANATOMY_CATALOG, ...FEMALE_REPRODUCTIVE_CATALOG]) {
   const normSys = normalizeSystemId(item.system);
   const rawSys = item.system;
   const aliases = [item.id, item.node, sanitizeNodeName(item.node)].filter(Boolean);
@@ -107,7 +110,10 @@ interface AnatomyStore {
   cameraFocusTarget: [number, number, number] | null;
   cameraPositionTarget: [number, number, number] | null;
 
-  // 2. Parâmetros Globais do Motor 3D
+  // 2. Parâmetros Globais do Motor 3D e Sexo Biológico
+  biologicalSex: BiologicalSex;
+  setBiologicalSex: (sex: BiologicalSex) => void;
+  toggleBiologicalSex: () => void;
   viewType: 'realistic' | 'exploded';
   explosionProgress: number;
   solidOpacity: number;
@@ -123,6 +129,7 @@ interface AnatomyStore {
   activeSystems: Set<ActiveAnatomicalSystem>;
   systemOpacities: Record<string, number>;
   toggleSystem: (sys: ActiveAnatomicalSystem) => void;
+  toggleSystemPeel: (sys: ActiveAnatomicalSystem) => void;
   setAllSystems: () => void;
   addSystem: (sys: ActiveAnatomicalSystem) => void;
   removeSystem: (sys: ActiveAnatomicalSystem) => void;
@@ -137,10 +144,12 @@ interface AnatomyStore {
   // 5. Estado dos Módulos Funcionais (Sincronizado)
   modules: ActiveModulesState;
 
-  // 6. Layout da Interface e Navegação 3D
+  // 6. Layout da Interface, Navegação 3D e Estúdio Neuroclínico
   outlinerCollapsed: boolean;
   sidebarCollapsed: boolean;
   sidebarTab: 'tree' | 'filters' | 'details';
+  clinicalStudioOpen: boolean;
+  clinicalStudioTab: 'foramina' | 'brain' | 'nerves' | 'neuroimaging' | 'cases';
   zenMode: boolean;
   preZenOutlinerCollapsed: boolean;
   preZenSidebarCollapsed: boolean;
@@ -152,6 +161,9 @@ interface AnatomyStore {
     seq: number;
   } | null;
   setSidebarTab: (tab: 'tree' | 'filters' | 'details') => void;
+  setClinicalStudioOpen: (open: boolean) => void;
+  setClinicalStudioTab: (tab: 'foramina' | 'brain' | 'nerves' | 'neuroimaging' | 'cases') => void;
+  focusClinicalTargetIds: (targetNodeIds: string[]) => void;
   setTwoFingerMode: (mode: TwoFingerMode) => void;
   nudgeCameraRig: (delta: {
     verticalPanDelta?: number;
@@ -221,6 +233,29 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   cameraFocusTarget: null,
   cameraPositionTarget: null,
 
+  biologicalSex: 'male',
+  setBiologicalSex: (sex: BiologicalSex) =>
+    set((state) => {
+      const nextHidden = new Set(state.hiddenNodeIds);
+      if (sex === 'female') {
+        // Ao ativar sexo Feminino, garante que a glândula mamária e o aparelho reprodutor feminino fiquem visíveis
+        for (const alias of SYSTEM_DESCENDANT_ALIASES['integumentary'] || []) {
+          nextHidden.delete(alias);
+        }
+        for (const alias of SYSTEM_DESCENDANT_ALIASES['reproductive'] || []) {
+          nextHidden.delete(alias);
+        }
+      }
+      return {
+        biologicalSex: sex,
+        hiddenNodeIds: nextHidden,
+      };
+    }),
+  toggleBiologicalSex: () => {
+    const nextSex: BiologicalSex = get().biologicalSex === 'male' ? 'female' : 'male';
+    get().setBiologicalSex(nextSex);
+  },
+
   viewType: 'realistic',
   explosionProgress: 0.0,
   solidOpacity: 1.0,
@@ -254,12 +289,56 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   outlinerCollapsed: false,
   sidebarCollapsed: false,
   sidebarTab: 'tree',
+  clinicalStudioOpen: false,
+  clinicalStudioTab: 'foramina',
   zenMode: false,
   preZenOutlinerCollapsed: false,
   preZenSidebarCollapsed: false,
   twoFingerMode: 'pan-rotate',
   cameraGestureNudge: null,
   setSidebarTab: (tab: 'tree' | 'filters' | 'details') => set({ sidebarTab: tab }),
+  setClinicalStudioOpen: (open: boolean) => set({ clinicalStudioOpen: open }),
+  setClinicalStudioTab: (tab: 'foramina' | 'brain' | 'nerves' | 'neuroimaging' | 'cases') =>
+    set({ clinicalStudioTab: tab, clinicalStudioOpen: true }),
+  focusClinicalTargetIds: (targetNodeIds: string[]) => {
+    if (!targetNodeIds || targetNodeIds.length === 0) return;
+    const primaryId = targetNodeIds[0];
+    const isNeuro =
+      primaryId.includes('lobus') ||
+      primaryId.includes('corpus_callosum') ||
+      primaryId.includes('fornix') ||
+      primaryId.includes('capsula') ||
+      primaryId.includes('nuclei') ||
+      primaryId.includes('thalamus') ||
+      primaryId.includes('hypothalamus') ||
+      primaryId.includes('pineal') ||
+      primaryId.includes('hippocampus') ||
+      primaryId.includes('meninges') ||
+      primaryId.includes('circulus') ||
+      primaryId.includes('nervi') ||
+      primaryId.includes('cerebellum') ||
+      primaryId.includes('mesencephalon') ||
+      primaryId.includes('pons') ||
+      primaryId.includes('medulla') ||
+      primaryId.includes('ventricul');
+
+    set((state) => {
+      const nextSystems = new Set<ActiveAnatomicalSystem>(['skeletal', 'nervous']);
+      return {
+        viewType: isNeuro ? 'exploded' : state.viewType,
+        activeSystem: isNeuro ? 'nervous' : 'skeletal',
+        activeSystems: nextSystems,
+        activeRegion: 'cranium',
+        selectedNodeId: primaryId,
+        sidebarTab: 'details',
+        explosionProgress: state.explosionProgress < 0.25 ? 0.35 : state.explosionProgress,
+        modules: {
+          ...state.modules,
+          explodedProgress: state.explosionProgress < 0.25 ? 0.35 : state.explosionProgress,
+        },
+      };
+    });
+  },
   setTwoFingerMode: (mode: TwoFingerMode) => set({ twoFingerMode: mode }),
   nudgeCameraRig: (delta) =>
     set((state) => ({
@@ -298,6 +377,52 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
         hiddenNodeIds: buildHiddenSetForActiveSystems(next),
         activeDepth: 1,
         layerPeelingLevel: 0,
+        isolatedOnly: false,
+      };
+    });
+  },
+
+  toggleSystemPeel: (sys: ActiveAnatomicalSystem) => {
+    if (sys === 'all') {
+      get().setAllSystems();
+      return;
+    }
+    const normSys = normalizeSystemId(sys);
+    set((state) => {
+      const aliases = SYSTEM_DESCENDANT_ALIASES[normSys] || [];
+      const nextHidden = new Set(state.hiddenNodeIds);
+      const nextActive = new Set(state.activeSystems);
+
+      const canonicalIds = aliases.filter((id) => id.startsWith('za:'));
+      const checkIds = canonicalIds.length > 0 ? canonicalIds : aliases;
+      const isCurrentlyHidden =
+        (!nextActive.has('all') && !nextActive.has(normSys)) ||
+        (checkIds.length > 0 && checkIds.every((id) => nextHidden.has(id)));
+
+      let nextSex = state.biologicalSex;
+
+      if (isCurrentlyHidden) {
+        // Reexibe esta camada sem apagar as demais
+        for (const alias of aliases) {
+          nextHidden.delete(alias);
+        }
+        if (!nextActive.has('all')) {
+          nextActive.add(normSys);
+        }
+        if (normSys === 'integumentary' && state.biologicalSex === 'male') {
+          nextSex = 'female';
+        }
+      } else {
+        // Descasca (oculta) apenas esta camada mantendo todas as camadas internas visíveis
+        for (const alias of aliases) {
+          nextHidden.add(alias);
+        }
+      }
+
+      return {
+        biologicalSex: nextSex,
+        activeSystems: nextActive,
+        hiddenNodeIds: nextHidden,
         isolatedOnly: false,
       };
     });

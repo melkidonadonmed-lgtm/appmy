@@ -408,12 +408,20 @@ export const AnatomyClinicalCard: React.FC<AnatomyClinicalCardProps> = ({
           </button>
         )}
 
-        {/* Detalhes Médicos e Correlações (Expandidos apenas sob demanda) */}
+        {/* Detalhes Médicos e Correlações (Expandidos sob demanda) */}
         {detailsExpanded && selectedNode.clinicalData && (
           <div className="outliner-clinical-details scrollbar-thin">
+            {selectedNode.clinicalData.origin && (
+              <div className="outliner-clinical-field">
+                <span className="outliner-field-label">Topografia / Origem:</span>
+                <p className="outliner-field-text">
+                  {selectedNode.clinicalData.origin}
+                </p>
+              </div>
+            )}
             {selectedNode.clinicalData.clinicalSignificance && (
               <div className="outliner-clinical-field">
-                <span className="outliner-field-label">Importância Médica:</span>
+                <span className="outliner-field-label">Importância Médica & Semiotécnica:</span>
                 <p className="outliner-field-text">
                   {selectedNode.clinicalData.clinicalSignificance}
                 </p>
@@ -421,7 +429,7 @@ export const AnatomyClinicalCard: React.FC<AnatomyClinicalCardProps> = ({
             )}
             {selectedNode.clinicalData.insertion && (
               <div className="outliner-clinical-field">
-                <span className="outliner-field-label">Relações & Inserção:</span>
+                <span className="outliner-field-label">Relações, Forames & Inserção:</span>
                 <p className="outliner-field-text">
                   {selectedNode.clinicalData.insertion}
                 </p>
@@ -437,14 +445,36 @@ export const AnatomyClinicalCard: React.FC<AnatomyClinicalCardProps> = ({
             )}
             {selectedNode.clinicalData.innervation && (
               <div className="outliner-clinical-field">
-                <span className="outliner-field-label">Inervação:</span>
+                <span className="outliner-field-label">Inervação / Nervos Cranianos:</span>
                 <p className="outliner-field-text">
                   {selectedNode.clinicalData.innervation}
                 </p>
               </div>
             )}
+            {selectedNode.clinicalData.vascularization && (
+              <div className="outliner-clinical-field">
+                <span className="outliner-field-label">Irrigação & Drenagem Venosa:</span>
+                <p className="outliner-field-text">
+                  {selectedNode.clinicalData.vascularization}
+                </p>
+              </div>
+            )}
           </div>
         )}
+
+        {/* Acesso rápido ao Estúdio Neuroclínico Completo */}
+        <button
+          type="button"
+          onClick={() => useAnatomyStore.getState().setClinicalStudioOpen(true)}
+          className="outliner-clinical-details-toggle"
+          style={{ marginTop: '0.35rem', color: 'var(--text-primary)' }}
+          title="Abrir Estúdio Neuroclínico: 14 Forames, Brodmann, 12 Pares Cranianos, Calculadora ASPECTS e Casos Clínicos"
+        >
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+            <Brain size={13} strokeWidth={1.5} aria-hidden="true" />
+            <span>Abrir Estúdio Neuroclínico (TC / NC / Casos)</span>
+          </span>
+        </button>
       </div>
     </div>
   );

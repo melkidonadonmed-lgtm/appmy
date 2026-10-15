@@ -12,8 +12,10 @@ import {
   ChevronsDown,
   ChevronsUp,
   MoreHorizontal,
+  Users,
 } from 'lucide-react';
 import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../../../shared/constants/zAnatomyCatalog.ts';
+import { FEMALE_REPRODUCTIVE_CATALOG } from '../../../../shared/constants/femaleReproductiveCatalog.ts';
 import { buildTaxonomicTree } from '../../../../shared/utils/buildTaxonomicTree.ts';
 import { filterTaxonomicTree, filterTreeByRegion } from '../../../../shared/utils/filterTaxonomicTree.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
@@ -32,12 +34,12 @@ interface AnatomyTreePanelProps {
 }
 
 const STRATIGRAPHIC_STEPS: Array<{ depth: number; shortLabel: string; title: string }> = [
-  { depth: 1, shortLabel: '1. Pele', title: 'Camada 1: Tegumento Comum completo (de fora para dentro)' },
-  { depth: 2, shortLabel: '2. Fáscia/Sup', title: 'Camada 2: Remove a pele; exibe Fáscia translúcida e Músculos Superficiais Estriados' },
+  { depth: 1, shortLabel: '1. Ext/Mama', title: 'Camada 1 (Externa): Tegumento Comum e Glândula Mamária (de fora para dentro)' },
+  { depth: 2, shortLabel: '2. Fáscia/Sup', title: 'Camada 2: Remove camada 1; exibe Fáscia translúcida e Músculos Superficiais Estriados' },
   { depth: 3, shortLabel: '3. Músc. Prof', title: 'Camada 3: Remove fáscia e músculos superficiais; exibe Músculos Profundos Estriados' },
-  { depth: 4, shortLabel: '4. Ossos', title: 'Camada 4: Remove musculatura; exibe Esqueleto Axial e Apendicular' },
+  { depth: 4, shortLabel: '4. Ossos/Lig', title: 'Camada 4: Remove musculatura; exibe Esqueleto e Ligamentos Articulares Profundos' },
   { depth: 5, shortLabel: '5. Neurovasc', title: 'Camada 5: Exibe feixes Cardiovasculares, Nervosos e Linfáticos' },
-  { depth: 6, shortLabel: '6. Vísceras', title: 'Camada 6: Órgãos internos cavitários' },
+  { depth: 6, shortLabel: '6. Vísceras', title: 'Camada 6 (Interna): Órgãos internos cavitários e aparelho reprodutor' },
 ];
 
 const QUICK_REGIONS: Array<{ id: AnatomicalRegion; label: string }> = [
@@ -58,7 +60,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
 }) => {
   const [search, setSearch] = useState('');
   const [expandAllSignal, setExpandAllSignal] = useState<boolean | null>(null);
-  const [showSecondaryStrat, setShowSecondaryStrat] = useState(true);
+  const [showSecondaryStrat, setShowSecondaryStrat] = useState(false);
 
   const outlinerCollapsed = useAnatomyStore((s) => s.outlinerCollapsed);
   const toggleOutlinerCollapsed = useAnatomyStore((s) => s.toggleOutlinerCollapsed);
@@ -72,17 +74,22 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   const setActiveRegion = useAnatomyStore((s) => s.setActiveRegion);
   const toggleGroupVisibility = useAnatomyStore((s) => s.toggleGroupVisibility);
   const isolateNode = useAnatomyStore((s) => s.isolateNode);
+  const biologicalSex = useAnatomyStore((s) => s.biologicalSex);
+  const setBiologicalSex = useAnatomyStore((s) => s.setBiologicalSex);
 
   const sidebarTab = useAnatomyStore((s) => s.sidebarTab);
   const setSidebarTab = useAnatomyStore((s) => s.setSidebarTab);
 
-  // 1. Constrói a árvore canônica uma única vez (ordenada de fora para dentro)
-  const fullTree = useMemo(() => buildTaxonomicTree(Z_ANATOMY_CATALOG), []);
+  // 1. Constrói a árvore canônica sincronizada com o sexo biológico (ordenada de fora para dentro)
+  const fullTree = useMemo(
+    () => buildTaxonomicTree(Z_ANATOMY_CATALOG, biologicalSex),
+    [biologicalSex]
+  );
 
-  // 2. Lista consolidada de todos os IDs e aliases para operações em massa (100% dos 11 sistemas)
+  // 2. Lista consolidada de todos os IDs e aliases para operações em massa (100% dos 11 sistemas + catálogo feminino)
   const allCatalogIds = useMemo(() => {
     const set = new Set<string>();
-    for (const item of Z_ANATOMY_CATALOG) {
+    for (const item of [...Z_ANATOMY_CATALOG, ...FEMALE_REPRODUCTIVE_CATALOG]) {
       set.add(item.id);
       if (item.node) {
         set.add(item.node);
@@ -92,9 +99,9 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
     return Array.from(set);
   }, []);
 
-  // 3. A Árvore É o próprio Filtro de Camadas/Sistemas:
-  // Mantém todos os sistemas visíveis na árvore para que o usuário possa marcar/desmarcar qualquer grupo
-  // sem que o grupo suma da lista, aplicando filtro topográfico (Região) e busca textual.
+  // 3. A Árvore É o próprio Filtro de Camadas/Sistemas (De Fora Para Dentro):
+  // Mantém todos os sistemas visíveis na árvore para que o usuário possa marcar/desmarcar qualquer pasta
+  // sem que ela suma da lista, aplicando filtro topográfico (Região) e busca textual.
   const visibleTree = useMemo(() => {
     const regionFiltered = filterTreeByRegion(fullTree, activeRegion);
     return filterTaxonomicTree(regionFiltered, search);
@@ -106,11 +113,22 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
     return muscSys?.children || [];
   }, [fullTree]);
 
-  const totalStructures = Z_ANATOMY_CATALOG.length;
+  const activeCatalogForCount = useMemo(
+    () =>
+      biologicalSex === 'female'
+        ? [
+            ...Z_ANATOMY_CATALOG.filter((i) => i.system !== 'reproductive'),
+            ...FEMALE_REPRODUCTIVE_CATALOG,
+          ]
+        : Z_ANATOMY_CATALOG,
+    [biologicalSex]
+  );
+
+  const totalStructures = activeCatalogForCount.length;
   const hiddenCount = useMemo(() => {
     if (hiddenNodeIds.size === 0) return 0;
     let count = 0;
-    for (const item of Z_ANATOMY_CATALOG) {
+    for (const item of activeCatalogForCount) {
       if (
         hiddenNodeIds.has(item.id) ||
         (item.node && hiddenNodeIds.has(item.node)) ||
@@ -120,7 +138,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
       }
     }
     return count;
-  }, [hiddenNodeIds]);
+  }, [hiddenNodeIds, activeCatalogForCount]);
   const visibleStructuresCount = Math.max(0, totalStructures - hiddenCount);
 
   // Quando o usuário seleciona um nó no 3D ou na busca, mudamos para a aba de Ficha Anatômica
@@ -205,6 +223,34 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         />
       </div>
 
+      {/* 2B. Seletor de Sexo Biológico (Sincroniza Glândula Mamária + Aparelho Reprodutor Masculino/Feminino) */}
+      <div className="outliner-sex-switcher-bar" role="group" aria-label="Sexo biológico do atlas anatômico">
+        <div className="outliner-sex-switcher-label">
+          <Users size={12} aria-hidden="true" />
+          <span>Anatomia:</span>
+        </div>
+        <div className="outliner-sex-switcher-pills">
+          <button
+            type="button"
+            onClick={() => setBiologicalSex('male')}
+            aria-pressed={biologicalSex === 'male'}
+            className={`outliner-sex-pill ${biologicalSex === 'male' ? 'active male' : ''}`}
+            title="Modelo Masculino: Aparelho Reprodutor Masculino (Próstata, Testículos, Pênis) sem Glândula Mamária Feminina"
+          >
+            Masculino
+          </button>
+          <button
+            type="button"
+            onClick={() => setBiologicalSex('female')}
+            aria-pressed={biologicalSex === 'female'}
+            className={`outliner-sex-pill ${biologicalSex === 'female' ? 'active female' : ''}`}
+            title="Modelo Feminino: Glândula Mamária Feminina + Aparelho Reprodutor Feminino (Útero, Ovários, Tubas Uterinas, Vagina)"
+          >
+            Feminino (Mama + Útero)
+          </button>
+        </div>
+      </div>
+
       {/* 3. Navegação Ergonômica por Abas Superiores */}
       <nav className="outliner-tabs-nav" role="tablist" aria-label="Abas do navegador anatômico">
         <button
@@ -215,10 +261,10 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
           id="tab-btn-tree"
           onClick={() => setSidebarTab('tree')}
           className={`outliner-tab-btn ${sidebarTab === 'tree' ? 'active' : ''}`}
-          title="Árvore Hierárquica Z-Anatomy TA2"
+          title="Árvore Hierárquica Z-Anatomy TA2 (Ordenada de Fora para Dentro)"
         >
           <FolderTree size={13} aria-hidden="true" />
-          <span>Árvore TA2</span>
+          <span>Pastas TA2</span>
           <span className="outliner-tab-badge">{visibleStructuresCount}</span>
         </button>
 
@@ -271,7 +317,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
           <div className="outliner-stratigraphic-bar">
             <div className="outliner-strat-row">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                <span className="outliner-strat-label">Dissecação (Camadas):</span>
+                <span className="outliner-strat-label">Dissecação (De Fora p/ Dentro):</span>
                 <button
                   type="button"
                   onClick={() => setShowSecondaryStrat((prev) => !prev)}
@@ -280,7 +326,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
                   title="Revelação Progressiva: Alternar subcamadas miofasciais e filtro regional"
                 >
                   <MoreHorizontal size={11} strokeWidth={1.5} aria-hidden="true" />
-                  <span>{showSecondaryStrat ? 'Menos Filtros' : 'Subcamadas & Região'}</span>
+                  <span>{showSecondaryStrat ? 'Ocultar Atalhos' : 'Miofascial & Região'}</span>
                 </button>
               </div>
               <div className="outliner-strat-pills" role="group" aria-label="Camadas cirúrgicas de fora para dentro">
@@ -291,7 +337,12 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
                     <button
                       key={step.depth}
                       type="button"
-                      onClick={() => setActiveDepth(step.depth)}
+                      onClick={() => {
+                        if (step.depth === 1 && biologicalSex === 'male') {
+                          setBiologicalSex('female');
+                        }
+                        setActiveDepth(step.depth);
+                      }}
                       aria-pressed={isActive}
                       title={step.title}
                       className={`outliner-strat-pill ${isActive ? 'active' : ''} ${isPeeled ? 'peeled' : ''}`}
@@ -374,27 +425,27 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
 
           {/* Barra de Ações Rápidas da Árvore */}
           <div className="outliner-tree-actions-bar">
-            <span className="outliner-tree-count-text">
-              {visibleTree.length} camadas • {visibleStructuresCount}/{totalStructures} visíveis
+            <span className="outliner-tree-count-text" title="Pastas ordenadas da camada mais externa (1ª EXT) para a mais profunda (11ª INT)">
+              Ordem: 1ª Ext → 11ª Int • {visibleStructuresCount}/{totalStructures}
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <button
                 type="button"
                 onClick={() => setExpandAllSignal(true)}
-                title="Expandir todos os grupos da árvore"
+                title="Abrir todas as pastas da árvore"
                 className="outliner-mini-btn"
               >
                 <ChevronsDown size={11} aria-hidden="true" />
-                <span>Expandir</span>
+                <span>Abrir</span>
               </button>
               <button
                 type="button"
                 onClick={() => setExpandAllSignal(false)}
-                title="Recolher todos os grupos da árvore"
+                title="Fechar todas as pastas da árvore"
                 className="outliner-mini-btn"
               >
                 <ChevronsUp size={11} aria-hidden="true" />
-                <span>Recolher</span>
+                <span>Fechar</span>
               </button>
             </div>
           </div>
@@ -406,13 +457,14 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
             aria-label="Árvore Taxonômica Z-Anatomy TA2"
           >
             {visibleTree.length > 0 ? (
-              visibleTree.map((sysNode) => (
+              visibleTree.map((sysNode, idx) => (
                 <TreeGroup
                   key={sysNode.id}
                   node={sysNode}
                   allCatalogIds={allCatalogIds}
                   initialExpanded={expandAllSignal ?? undefined}
                   isSearchActive={Boolean(search.trim())}
+                  layerOrderIndex={idx + 1}
                 />
               ))
             ) : (

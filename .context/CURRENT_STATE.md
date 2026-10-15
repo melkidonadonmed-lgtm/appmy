@@ -4,22 +4,31 @@
 **Repositório GitHub**: `git@github.com:melkidonadonmed-lgtm/appmy.git`  
 **GCP Project**: `agent-md-506215`  
 **Região GCP**: `us-central1`  
-**Fase Atual**: Exploded View Estritamente Linear (0%–100%), Navegação 3D de 2 Dedos (Subir/Descer & Girar) e Menus Táteis (Física de Luz Zenital & 5 Temas em `localStorage`)
+**Fase Atual**: Sincronização de Sexo Biológico (Masculino vs. Feminino sem Cruzamento), Exploded View Linear e Proporcional, Gesture Intent Locking 3D, Navegação por Pastas (De Fora para Dentro: 1ª EXT → 11ª INT) e Estúdio Neuroclínico Integrado
 
 ---
 
 ## 1. Decisões Arquiteturais Consolidadas
 
-- **Exploded View Estritamente Linear e Proporcional (`explodedEngine.ts`, `RealBodyAtlas.tsx`, `SceneCanvas.tsx`, `useAnatomyStore.ts`)**:
-  - Correção em `bindExplodedNode` para malhas reais do catálogo (`__isCatalogItem: true`): em vez de normalizar `eixoExplosao` para comprimento unitário (o que achatava a distância radial e a profundidade cirúrgica das 2.562 peças), agora combina o vetor de catálogo com o vetor radial anatômico ponderado por `layerFactor` (Camada 1 `1.32` até Camada 6 `0.78`).
-  - `applyExplodedStep` interpola de forma uniforme em todo o intervalo `[0, 1]` sem salto abrupto ao retornar a `0%`, lendo `explosionProgress` em tempo real no loop `useFrame` (`lerpFactor = 0.32`) e fixando `<Center cacheKey={viewType}>` para evitar recentralização da bounding box durante a explosão.
-  - Adicionados controles lineares `stepExplosionProgressLinear` (`-10%`, `+10%`, `0%`, `25%`, `50%`, `75%`, `100%`) e preenchimento visual `--slider-pct` em `DissectionToolbar.tsx` e `ModuleLayersSection.tsx`.
-- **Navegação 3D com 2 Dedos (`navigationGestures.ts`, `SceneCanvas.tsx`, `OrientationGizmo.tsx`)**:
-  - Suporte nativo em Touchscreen e Trackpad/Touchpad para segurar/deslizar com 2 dedos para cima e para baixo (elevação vertical craniocaudal no eixo Y), deslizar na horizontal ou girar os 2 dedos (rotação orbital azimutal 360°) e pinça para zoom (`dollyScale`), além de botões táteis de elevação/rotação e seletor de modo (`2 Dedos: Subir & Girar` vs `2 Dedos: Zoom`) no HUD.
-- **Alinhamento Tátil de Menus com a Memória (`App.tsx`, `AnatomyTreePanel.tsx`, `index.css`)**:
-  - Aplicação de física de luz zenital (`--surface-active`, chanfro superior `inset 0 1px 0`), poços rebaixados (`--shadow-well`), remoção de gradiente arco-íris e cores neon, revelação progressiva na barra estratigráfica (`MoreHorizontal`) e 5 Temas Táteis persistidos em `localStorage` (`phantom-obsidian`, `tactile-matte`, `quiet-luxury-titanium`, `steadfast-stainless`, `warm-editorial-paper`).
+- **Sincronização de Sexo Biológico (Masculino vs. Feminino — Zero Cruzamento)**:
+  - `src/shared/constants/femaleReproductiveCatalog.ts`: Catálogo completo das **36 estruturas do Aparelho Reprodutor Feminino** (`reproductive_female.glb`: Corpo, Fundo, Istmo e Colo do Útero, Ovários Esquerdo/Direito, Tubas Uterinas [Infundíbulo, Ampola, Istmo, Fímbrias], Vagina, Fórnices e Ligamentos Pélvicos) em Português e Latim TA2, integrado a `zAnatomyCatalog.ts`.
+  - `RealBodyAtlas.tsx` e `useAnatomyStore.ts`: Estado reativo `biologicalSex: 'male' | 'female'`. No modo **Masculino**, renderiza `reproductive_male.glb` (14 estruturas) e mantém `integumentary_female.glb` desativado; no modo **Feminino**, renderiza simultaneamente `integumentary_female.glb` (Glândula Mamária) e `reproductive_female.glb` (Útero, Ovários, Tubas e Vagina) alinhados na cavidade pélvica (`modelOffset={[0, 0.84, 0.03]}`).
+- **Matemática Contínua e Avanço Linear na Exploded View (`src/core/explodedEngine.ts` & `RealBodyAtlas.tsx`)**:
+  - Remoção da distorção por `.normalize()` em vetores sub-unitários (preservando a proporcionalidade radial entre estruturas profundas e superficiais) e substituição dos degraus descontínuos (`if/else`) por curvas suaves $C^1$-contínuas (`Math.tanh`).
+  - Avanço puramente linear $P(t) = P_0 + \vec{V}_{\text{offset}} \cdot t$ (`lerpFactor = 1.0`) e trava de inatividade (`lastAppliedProgressRef`) no `useFrame` de `RealBodyAtlas.tsx`, eliminando travamentos em repouso sobre as 2.600+ malhas.
+- **Gesture Intent Locking e Sincronização de `OrbitControls` (`src/core/navigationGestures.ts` & `SceneCanvas.tsx`)**:
+  - Bloqueio determinístico de intenção em gestos de 2 dedos (`'unlocked' | 'pinch' | 'pan' | 'rotate'`), impedindo que pinça (zoom) dispare rotação e elevação simultaneamente.
+  - Normalização de `WheelEvent.deltaMode` (`0` = pixels, `1` = linhas, `2` = páginas) e sincronização de `controlsRef.current.update()` após cada mutação de câmera.
+- **Navegação por Pastas e Filtros Estritamente de Fora para Dentro (`1ª EXT → 11ª INT`)**:
+  - `toggleSystemPeel` em `useAnatomyStore.ts` e modo padrão **Descascar Camada** em `AnatomyFiltersSection.tsx`: desmarcar uma camada externa oculta apenas ela e mantém todos os órgãos internos visíveis.
+  - `TreeGroup.tsx` e `buildTaxonomicTree.ts`: Pastas iniciam recolhidas por padrão com ícones `Folder`/`FolderOpen`, selos estratigráficos (`1ª EXT` a `11ª INT`, e `2.1 EXT` a `2.4 INT` nas subcamadas miofasciais), ordenação de fora para dentro nas subpastas e folhas, e ocultação automática de malhas residuais não catalogadas nos `.glb`.
+- **Desacoplamento Modular e Higienização de Temas (`surgicalLayers.ts`, `tissueShader.ts`, `visibilityManager.ts`, `index.css`)**:
+  - Separação de `visibilityManager.ts` em 3 módulos especializados; correção da classificação de ligamentos articulares profundos para a **Camada 4 (Esquelética)** e correção do modo *Isolar* quando `hiddenIds.size > 0`.
+  - Preenchimento completo de variáveis de superfície e sombra nos 5 temas táteis em `index.css` e remoção de sobrescritas destrutivas no final do arquivo.
+- **Base Parametrizada Neuroanatômica e Estúdio Neuroclínico (`src/shared/constants/*`, `src/client/components/ui/clinical/*.tsx`)**:
+  - 14 Forames da Base do Crânio, Áreas de Brodmann, 12 Pares de Nervos Cranianos (`NC I–XII`), Calculadora Interativa ASPECTS (10 pontos) e Simulador de Casos Clínicos Topográficos integrados ao viewport 3D.
 - **Quality Gates Convalidados**:
-  - 215 testes unitários aprovados em 30 suítes Vitest (`ExitCode 0`).
+  - **230 testes unitários aprovados em 32 suítes Vitest** (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`).
   - `npm run build` aprovado gerando bundles de produção do Vite e Express (`ExitCode 0`).
 
@@ -30,4 +39,3 @@
 - **Produção (Google Cloud Run)**: `https://appmy-1044179901556.us-central1.run.app/` (`https://appmy-syqnqsm4iq-uc.a.run.app/`)
 - **Frontend Local (Vite)**: `http://localhost:3000/`
 - **Backend Local (Express)**: `http://localhost:8080/`
-

@@ -15,6 +15,7 @@ import {
   Minimize2,
   Palette,
   MoveVertical,
+  Brain,
 } from 'lucide-react';
 import { SceneCanvas } from './components/canvas/SceneCanvas.tsx';
 import { DissectionToolbar } from './components/ui/DissectionToolbar.tsx';
@@ -22,12 +23,15 @@ import { TelemetryOverlay } from './components/telemetry/TelemetryOverlay.tsx';
 import { AnatomyTreePanel } from './components/ui/tree/AnatomyTreePanel.tsx';
 import { OrientationGizmo } from './components/canvas/OrientationGizmo.tsx';
 import { QuickPresetsBar } from './components/ui/QuickPresetsBar.tsx';
+import { NeuroClinicalDrawer } from './components/ui/clinical/NeuroClinicalDrawer.tsx';
 import { useAnatomicalHotkeys } from './hooks/useAnatomicalHotkeys.ts';
 import { useAnatomyStore } from './stores/useAnatomyStore.ts';
 import { SkullDivision, CRANIUM_22_NODES } from '../shared/constants/cranium.ts';
 import { CRANIOFACIAL_MUSCLES } from '../shared/constants/myology.ts';
+import { ALL_NEUROLOGY_NODES } from '../shared/constants/neurology.ts';
 import { AnyAnatomicalNode } from './components/canvas/AnatomicalAtlasScene.tsx';
 import { Z_ANATOMY_BY_ID, Z_ANATOMY_BY_NODE } from '../shared/constants/zAnatomyCatalog.ts';
+import { resolveRichClinicalData } from '../shared/utils/clinicalEnrichment.ts';
 import { isFirebaseConfigured } from './lib/firebase.ts';
 
 export type TactileThemeId =
@@ -97,6 +101,9 @@ export default function App() {
   const twoFingerMode = useAnatomyStore((s) => s.twoFingerMode);
   const setTwoFingerMode = useAnatomyStore((s) => s.setTwoFingerMode);
 
+  const clinicalStudioOpen = useAnatomyStore((s) => s.clinicalStudioOpen);
+  const setClinicalStudioOpen = useAnatomyStore((s) => s.setClinicalStudioOpen);
+
   const dissection = useAnatomyStore((s) => s.dissection);
   const setDissection = useAnatomyStore((s) => s.setDissection);
 
@@ -157,21 +164,25 @@ export default function App() {
         parentId: item.path.length > 0 ? item.path[item.path.length - 1] : undefined,
         colorHex: item.system === 'skeletal' ? '#f4ede2' : '#38bdf8',
         explosionVector: item.explosionVector,
-        clinicalData: {
-          origin: item.path.join(' > '),
-          insertion: `Estrutura integrante do ${item.system}`,
-          clinicalSignificance: `Peça anatômica real escaneada do catálogo médico Z-Anatomy (Terminologia Anatomica TA2: ${item.nameLatin}).`,
-        },
+        clinicalData: resolveRichClinicalData(item),
       } as AnyAnatomicalNode);
       return;
     }
 
-    // Suporte aos nós de crânio e miologia da vista explodida
+    // Suporte aos nós de crânio, miologia e neuroanatomia profunda da vista explodida
     const craniumNode = CRANIUM_22_NODES.find(
       (c) => c.id === storeSelectedNodeId || c.meshName === storeSelectedNodeId
     );
     if (craniumNode) {
       setSelectedNode(craniumNode);
+      return;
+    }
+
+    const neuroNode = ALL_NEUROLOGY_NODES.find(
+      (n) => n.id === storeSelectedNodeId || n.meshName === storeSelectedNodeId
+    );
+    if (neuroNode) {
+      setSelectedNode(neuroNode);
       return;
     }
 
@@ -275,6 +286,18 @@ export default function App() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.35rem' }}>
+            {activeMode === '3d-atlas' && (
+              <button
+                type="button"
+                className={`mode-btn ${clinicalStudioOpen ? 'active' : ''}`}
+                onClick={() => setClinicalStudioOpen(!clinicalStudioOpen)}
+                title="Estúdio Neuroclínico: 14 Forames, Brodmann, 12 Pares Cranianos, Calculadora ASPECTS e Simulador de Casos"
+              >
+                <Brain size={13} strokeWidth={1.5} aria-hidden="true" />
+                <span>Estúdio Neuroclínico</span>
+              </button>
+            )}
+
             <button
               className={`mode-btn ${zenMode ? 'active' : ''}`}
               onClick={toggleZenMode}
@@ -363,6 +386,9 @@ export default function App() {
 
               {/* Barra Inferior de Presets Anatômicos Canônicos Rápidos */}
               <QuickPresetsBar />
+
+              {/* Estúdio Neuroclínico Flutuante / Ancorado (14 Forames, Brodmann, NC I-XII, ASPECTS, Casos) */}
+              <NeuroClinicalDrawer />
 
               {/* Canvas 3D WebGL */}
               <SceneCanvas

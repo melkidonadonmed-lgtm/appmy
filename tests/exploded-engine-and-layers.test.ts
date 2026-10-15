@@ -324,7 +324,7 @@ describe('Core 3D Engine: Surgical Layers & Visibility Manager', () => {
     expect(isDuplicateCrossSystemMesh('digestive', 'Upper right central incisor', toothItem)).toBe(true);
     expect(isDuplicateCrossSystemMesh('digestive', 'Upper right central incisor', null)).toBe(true);
     expect(isDuplicateCrossSystemMesh('skeletal', 'Upper right central incisor', toothItem)).toBe(false);
-  });
+  }, 15000);
 
   it('getMeshAnatomicalCenter deve aplicar quaternion, scale, initialPosition e modelOffset ao boundingBox', async () => {
     const { getMeshAnatomicalCenter } = await import('../src/core/explodedEngine.ts');

@@ -16,6 +16,7 @@
   --surface-active: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
   --shadow-key: 0 2px 5px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 0 var(--specular-top);
   --shadow-well: inset 0 2px 4px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-card: 0 14px 32px rgba(0, 0, 0, 0.55), inset 0 1px 0 var(--specular-top);
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
@@ -35,6 +36,13 @@
   --accent: #d6d3d1;
   --accent-hover: #f5f5f4;
   --border: #292524;
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --specular-top: rgba(255, 255, 255, 0.14);
+  --surface-raised: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 100%);
+  --surface-active: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+  --shadow-key: 0 2px 5px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 0 var(--specular-top);
+  --shadow-well: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-card: 0 14px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 var(--specular-top);
   --card-bg: rgba(28, 28, 26, 0.92);
 }
 
@@ -49,6 +57,13 @@
   --accent: #cbd5e1;
   --accent-hover: #f8fafc;
   --border: #262b38;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --specular-top: rgba(255, 255, 255, 0.18);
+  --surface-raised: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --surface-active: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%);
+  --shadow-key: 0 2px 5px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 0 var(--specular-top);
+  --shadow-well: inset 0 2px 4px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-card: 0 14px 32px rgba(0, 0, 0, 0.58), inset 0 1px 0 var(--specular-top);
   --card-bg: rgba(25, 28, 36, 0.92);
 }
 
@@ -63,6 +78,13 @@
   --accent: #93c5fd;
   --accent-hover: #bfdbfe;
   --border: #222d38;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --specular-top: rgba(255, 255, 255, 0.17);
+  --surface-raised: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --surface-active: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+  --shadow-key: 0 2px 5px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 0 var(--specular-top);
+  --shadow-well: inset 0 2px 4px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-card: 0 14px 32px rgba(0, 0, 0, 0.55), inset 0 1px 0 var(--specular-top);
   --card-bg: rgba(22, 29, 36, 0.92);
 }
 
@@ -77,6 +99,13 @@
   --accent: #e7e5e4;
   --accent-hover: #fafaf9;
   --border: #302b27;
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --specular-top: rgba(255, 255, 255, 0.14);
+  --surface-raised: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 100%);
+  --surface-active: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+  --shadow-key: 0 2px 5px rgba(0, 0, 0, 0.58), 0 1px 2px rgba(0, 0, 0, 0.38), inset 0 1px 0 var(--specular-top);
+  --shadow-well: inset 0 2px 4px rgba(0, 0, 0, 0.68), 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-card: 0 14px 32px rgba(0, 0, 0, 0.58), inset 0 1px 0 var(--specular-top);
   --card-bg: rgba(33, 30, 27, 0.92);
 }
 
@@ -3408,32 +3437,174 @@ code, pre {
   box-shadow: var(--shadow-well);
 }
 
-/* Harmonia Tátil Zenital em Abas, Pills e Botões Ativos (Zero Neon Ciano/Roxo) */
-.outliner-tabs-nav {
+/* Seletor de Sexo Biológico (Sincroniza Mama + Aparelho Reprodutor) */
+.outliner-sex-switcher-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding: 0.35rem 0.65rem;
   background: var(--bg-well);
-  box-shadow: var(--shadow-well);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
-.outliner-tab-btn.active,
-.outliner-strat-pill.active,
-.outliner-filter-btn.active,
-.outliner-density-btn.active,
-.outliner-action-pill.active,
-.outliner-module-badge-btn.active-emerald,
-.outliner-module-badge-btn.active-purple,
-.preset-pill-btn.active,
-.action-btn.active {
+.outliner-sex-switcher-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.outliner-sex-switcher-pills {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem;
+  flex: 1;
+  background: var(--bg-primary);
+  padding: 0.15rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.outliner-sex-pill {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.24rem 0.45rem;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  transition: all 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.outliner-sex-pill:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.outliner-sex-pill.active.male {
   background: var(--surface-active);
   background-color: var(--bg-tertiary);
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: var(--accent);
   color: var(--text-primary);
   box-shadow: var(--shadow-key);
 }
 
-.outliner-search-input,
-.global-search-input {
+.outliner-sex-pill.active.female {
+  background: linear-gradient(180deg, rgba(244, 63, 94, 0.28) 0%, rgba(244, 63, 94, 0.12) 100%);
+  border-color: rgba(244, 63, 94, 0.55);
+  color: #fecdd3;
+  box-shadow: var(--shadow-key);
+}
+
+/* Navegação por Pastas (De Fora Para Dentro: 1ª EXT -> 11ª INT) */
+.outliner-folder-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.outliner-layer-order-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.08rem 0.32rem;
+  border-radius: 4px;
   background: var(--bg-well);
+  border: 1px solid var(--border-subtle);
+  color: var(--accent);
+  flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+
+.outliner-layer-order-badge.muted {
+  opacity: 0.45;
+  color: var(--text-muted);
+}
+
+.outliner-group-row.depth-row-1 {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  margin-bottom: 1px;
+}
+
+.outliner-group-row.depth-row-1.expanded {
+  background: var(--bg-tertiary);
+  border-color: var(--border-subtle);
+}
+
+.outliner-group-children {
+  border-left: 1px dashed rgba(148, 163, 184, 0.22);
+  margin-left: 0.85rem;
+  padding-left: 0.15rem;
+}
+
+/* Barra de Modo de Clique na Aba Filtros (Descascar Camada vs Isolar) */
+.outliner-filter-mode-bar {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  margin-bottom: 0.55rem;
+  background: var(--bg-well);
+  border: 1px solid var(--border);
+  border-radius: 7px;
   box-shadow: var(--shadow-well);
+}
+
+.outliner-filter-mode-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  padding: 0.28rem 0.4rem;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.14s ease;
+}
+
+.outliner-filter-mode-pill:hover {
+  color: var(--text-primary);
+}
+
+.outliner-filter-mode-pill.active {
+  background: var(--surface-active);
+  background-color: var(--bg-tertiary);
+  border-color: var(--accent);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-key);
+}
+
+.outliner-filter-section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.outliner-filter-section-label.accent {
+  color: var(--accent);
 }
 
 .text-cyan-400 {
@@ -3480,3 +3651,649 @@ code, pre {
 .animate-spin {
   animation: spin 1s linear infinite;
 }
+
+/* ==========================================================================
+   ESTÚDIO NEUROCLÍNICO (14 FORAMES, BRODMANN, NC I-XII, ASPECTS & CASOS)
+   ========================================================================== */
+
+.neuro-clinical-drawer {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  bottom: 4.25rem;
+  width: min(640px, calc(100vw - 2rem));
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-secondary);
+  background-image: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.neuro-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-well);
+  flex-shrink: 0;
+}
+
+.neuro-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.neuro-drawer-icon-well {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  background-image: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-key);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.neuro-drawer-titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.neuro-drawer-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.neuro-drawer-subtitle {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.neuro-drawer-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.neuro-quick-scene-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  background-image: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-key);
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.neuro-quick-scene-btn:hover {
+  color: var(--text-primary);
+}
+
+.neuro-drawer-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.neuro-drawer-close-btn:hover {
+  color: var(--text-primary);
+}
+
+.neuro-drawer-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.25rem;
+  padding: 0.35rem 0.6rem;
+  background: var(--bg-well);
+  box-shadow: var(--shadow-well);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.neuro-drawer-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.35rem 0.25rem;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.625rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.neuro-drawer-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.neuro-drawer-tab-btn.active {
+  background: var(--surface-active);
+  background-color: var(--bg-tertiary);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-key);
+}
+
+.neuro-tab-full-label {
+  display: none;
+}
+
+.neuro-tab-short-badge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.neuro-drawer-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.7rem 0.85rem;
+}
+
+.neuro-tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.neuro-doctrine-well {
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  background: var(--bg-well);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-well);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.neuro-doctrine-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.neuro-doctrine-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.neuro-doctrine-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.neuro-Equation-chip {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+}
+
+.neuro-compartments-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+}
+
+.neuro-compartment-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.22rem 0.45rem;
+  border-radius: 5px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  font-size: 0.625rem;
+}
+
+.neuro-compartment-name {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.neuro-compartment-val {
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.neuro-subnav-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem;
+  border-radius: 8px;
+  background: var(--bg-well);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-well);
+  flex-wrap: wrap;
+}
+
+.neuro-subnav-btn {
+  flex: 1;
+  min-width: 120px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.32rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.neuro-subnav-btn.active {
+  background: var(--surface-active);
+  background-color: var(--bg-tertiary);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-key);
+}
+
+.neuro-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.neuro-subsection-header {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.neuro-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.neuro-filter-pill {
+  padding: 0.22rem 0.5rem;
+  border-radius: 6px;
+  background: var(--bg-well);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.neuro-filter-pill.active {
+  background: var(--surface-active);
+  background-color: var(--bg-tertiary);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-key);
+}
+
+.neuro-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.neuro-clinical-item {
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  background-image: var(--surface-raised);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.14s ease;
+}
+
+.neuro-item-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.neuro-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.neuro-item-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.neuro-item-subtitle {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+.neuro-item-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.neuro-badge-fossa,
+.neuro-badge-code {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 0.12rem 0.38rem;
+  border-radius: 4px;
+  background: var(--bg-well);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.neuro-focus-3d-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  padding: 0.2rem 0.42rem;
+  border-radius: 5px;
+  background: var(--bg-secondary);
+  background-image: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-key);
+  color: var(--text-primary);
+  font-size: 0.625rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.neuro-focus-3d-btn:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.neuro-item-details {
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.neuro-detail-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.45rem;
+}
+
+.neuro-detail-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.neuro-detail-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+}
+
+.neuro-detail-text {
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  line-height: 1.42;
+  margin: 0;
+}
+
+.neuro-bullet-list {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.6875rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* Calculadora ASPECTS (10 Pontos) */
+.neuro-aspects-scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  background: var(--bg-well);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-well);
+}
+
+.neuro-aspects-score-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.neuro-aspects-number-box {
+  display: flex;
+  align-items: baseline;
+  padding: 0.25rem 0.55rem;
+  border-radius: 7px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.neuro-aspects-score-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.neuro-aspects-score-max {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.neuro-aspects-verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.neuro-aspects-verdict-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.neuro-aspects-verdict-desc {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.neuro-aspects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.38rem;
+}
+
+.neuro-aspects-tile {
+  padding: 0.45rem 0.55rem;
+  border-radius: 7px;
+  background: var(--bg-tertiary);
+  background-image: var(--surface-raised);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.neuro-aspects-tile.affected {
+  background: var(--surface-active);
+  background-color: var(--bg-well);
+  border-color: var(--warning);
+  box-shadow: var(--shadow-well);
+}
+
+.neuro-aspects-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.neuro-deduct-pill {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--warning);
+}
+
+.neuro-aspects-tile-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.neuro-aspects-tile-desc {
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* Simulador de Casos Clínicos (Quiz & Revelação) */
+.neuro-quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+
+.neuro-quiz-option-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: var(--bg-well);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.neuro-quiz-option-btn.correct {
+  border-color: var(--success);
+  background: var(--bg-tertiary);
+}
+
+.neuro-quiz-option-btn.wrong {
+  border-color: var(--danger);
+}
+
+.neuro-quiz-feedback {
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  background: var(--bg-well);
+  font-size: 0.675rem;
+  line-height: 1.38;
+  color: var(--text-primary);
+}
+
+.neuro-reveal-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.48rem 0.75rem;
+  border-radius: 7px;
+  background: var(--surface-active);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-key);
+  color: var(--text-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+

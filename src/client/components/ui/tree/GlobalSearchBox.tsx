@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, X, Sparkles, Command, ArrowRight } from 'lucide-react';
+import { Search, X, Sparkles, Command, ArrowRight, Stethoscope } from 'lucide-react';
 import { Z_ANATOMY_CATALOG, ZAnatomyItem } from '../../../../shared/constants/zAnatomyCatalog.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 import { AnyAnatomicalNode } from '../../canvas/AnatomicalAtlasScene.tsx';
+import {
+  resolveRichClinicalData,
+  searchNeuroClinicalEntities,
+  ClinicalQuickSearchItem,
+} from '../../../../shared/utils/clinicalEnrichment.ts';
 
 export interface GlobalSearchBoxProps {
   onSelectStructure?: (node: AnyAnatomicalNode) => void;
@@ -21,7 +26,7 @@ function normalizeText(text: string): string {
 }
 
 /**
- * Converte ZAnatomyItem em AnyAnatomicalNode para compatibilidade total
+ * Converte ZAnatomyItem em AnyAnatomicalNode enriquecido com dados clínicos reais
  */
 function toNode(item: ZAnatomyItem): AnyAnatomicalNode {
   return {
@@ -35,18 +40,14 @@ function toNode(item: ZAnatomyItem): AnyAnatomicalNode {
     parentId: item.path.length > 0 ? item.path[item.path.length - 1] : undefined,
     colorHex: item.system === 'skeletal' ? '#f4ede2' : '#38bdf8',
     explosionVector: item.explosionVector,
-    clinicalData: {
-      origin: item.path.join(' > '),
-      insertion: `Estrutura integrante do ${item.system}`,
-      clinicalSignificance: `Peça anatômica real escaneada do catálogo médico Z-Anatomy (Terminologia Anatomica TA2: ${item.nameLatin}).`,
-    },
+    clinicalData: resolveRichClinicalData(item),
   } as AnyAnatomicalNode;
 }
 
 export const GlobalSearchBox: React.FC<GlobalSearchBoxProps> = ({
   onSelectStructure,
   onSearchChange,
-  placeholder = 'Buscar estrutura, latim TA2... (Ctrl+K)',
+  placeholder = 'Buscar peça, forame, NC I-XII, Brodmann... (Ctrl+K)',
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -57,6 +58,9 @@ export const GlobalSearchBox: React.FC<GlobalSearchBoxProps> = ({
 
   const setSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
+  const focusClinicalTargetIds = useAnatomyStore((s) => s.focusClinicalTargetIds);
+  const setClinicalStudioOpen = useAnatomyStore((s) => s.setClinicalStudioOpen);
+  const setClinicalStudioTab = useAnatomyStore((s) => s.setClinicalStudioTab);
   const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
 
   // Atalho global Ctrl+K / Cmd+K para focar a barra de pesquisa
@@ -121,11 +125,22 @@ export const GlobalSearchBox: React.FC<GlobalSearchBoxProps> = ({
         fma.includes(query)
       ) {
         matches.push(item);
-        if (matches.length >= 8) break; // Limite de 8 sugestões rápidas
+        if (matches.length >= 6) break;
       }
     }
     return matches;
   }, [searchTerm]);
+
+  const clinicalMatches = useMemo(() => {
+    return searchNeuroClinicalEntities(searchTerm, 4);
+  }, [searchTerm]);
+
+  const handleSelectClinicalMatch = (match: ClinicalQuickSearchItem) => {
+    focusClinicalTargetIds(match.targetNodeIds);
+    setClinicalStudioTab(match.studioTab);
+    setClinicalStudioOpen(true);
+    setIsOpen(false);
+  };
 
   const handleSelectItem = (item: ZAnatomyItem) => {
     const store = useAnatomyStore.getState();
@@ -235,45 +250,79 @@ export const GlobalSearchBox: React.FC<GlobalSearchBoxProps> = ({
       </div>
 
       {/* Dropdown Flutuante de Autocomplete Instantâneo */}
-      {isOpen && searchResults.length > 0 && (
+      {isOpen && (searchResults.length > 0 || clinicalMatches.length > 0) && (
         <div
           className="global-search-dropdown scrollbar-thin"
           role="listbox"
           aria-label="Resultados da pesquisa rápida"
         >
-          <div className="global-search-dropdown-header">
-            <span>{searchResults.length} estruturas encontradas</span>
-            <span style={{ fontSize: '0.625rem', color: '#64748b' }}>Navegue com ↑ ↓ e pressione Enter</span>
-          </div>
-
-          {searchResults.map((item, idx) => {
-            const isHighlighted = idx === highlightedIndex;
-            return (
-              <div
-                key={item.id}
-                role="option"
-                aria-selected={isHighlighted}
-                onMouseEnter={() => setHighlightedIndex(idx)}
-                onClick={() => handleSelectItem(item)}
-                className={`global-search-item ${isHighlighted ? 'highlighted' : ''}`}
-              >
-                <div className="global-search-item-info">
-                  <div className="global-search-item-primary">
-                    <span className="global-search-item-name">{item.namePtBr}</span>
-                    <span className="global-search-item-system-badge">{item.system}</span>
-                  </div>
-                  {item.nameLatin && (
-                    <div className="global-search-item-latin">{item.nameLatin}</div>
-                  )}
-                </div>
-                <ArrowRight size={13} className="global-search-item-arrow" aria-hidden="true" />
+          {clinicalMatches.length > 0 && (
+            <>
+              <div className="global-search-dropdown-header">
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <Stethoscope size={11} aria-hidden="true" />
+                  <span>Referência Neuroclínica ({clinicalMatches.length})</span>
+                </span>
+                <span style={{ fontSize: '0.625rem', color: '#64748b' }}>Abre Estúdio + Foco 3D</span>
               </div>
-            );
-          })}
+              {clinicalMatches.map((match) => (
+                <div
+                  key={match.id}
+                  role="option"
+                  aria-selected={false}
+                  onClick={() => handleSelectClinicalMatch(match)}
+                  className="global-search-item"
+                >
+                  <div className="global-search-item-info">
+                    <div className="global-search-item-primary">
+                      <span className="global-search-item-name">{match.title}</span>
+                      <span className="global-search-item-system-badge">{match.badge}</span>
+                    </div>
+                    <div className="global-search-item-latin">{match.subtitle}</div>
+                  </div>
+                  <ArrowRight size={13} className="global-search-item-arrow" aria-hidden="true" />
+                </div>
+              ))}
+            </>
+          )}
+
+          {searchResults.length > 0 && (
+            <>
+              <div className="global-search-dropdown-header">
+                <span>{searchResults.length} peças 3D TA2 encontradas</span>
+                <span style={{ fontSize: '0.625rem', color: '#64748b' }}>↑ ↓ Enter</span>
+              </div>
+
+              {searchResults.map((item, idx) => {
+                const isHighlighted = idx === highlightedIndex;
+                return (
+                  <div
+                    key={item.id}
+                    role="option"
+                    aria-selected={isHighlighted}
+                    onMouseEnter={() => setHighlightedIndex(idx)}
+                    onClick={() => handleSelectItem(item)}
+                    className={`global-search-item ${isHighlighted ? 'highlighted' : ''}`}
+                  >
+                    <div className="global-search-item-info">
+                      <div className="global-search-item-primary">
+                        <span className="global-search-item-name">{item.namePtBr}</span>
+                        <span className="global-search-item-system-badge">{item.system}</span>
+                      </div>
+                      {item.nameLatin && (
+                        <div className="global-search-item-latin">{item.nameLatin}</div>
+                      )}
+                    </div>
+                    <ArrowRight size={13} className="global-search-item-arrow" aria-hidden="true" />
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
       )}
 
-      {isOpen && searchTerm.trim().length >= 2 && searchResults.length === 0 && (
+      {isOpen && searchTerm.trim().length >= 2 && searchResults.length === 0 && clinicalMatches.length === 0 && (
         <div className="global-search-dropdown empty">
           <Sparkles size={16} className="text-slate-500 mb-1" aria-hidden="true" />
           <span>Nenhuma estrutura anatômica encontrada para "{searchTerm}"</span>

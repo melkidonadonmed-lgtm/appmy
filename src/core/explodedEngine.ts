@@ -140,7 +140,8 @@ export function getMeshAnatomicalCenter(mesh: THREE.Mesh): THREE.Vector3 {
 }
 
 /**
- * Vincula matematicamente uma malha Three.js às regras de deslocamento da Exploded View.
+ * Vincula matematicamente uma malha Three.js às regras de deslocamento da Exploded View
+ * usando funções radiais contínuas C1 sem saltos descontínuos nem perda de proporcionalidade.
  */
 export function bindExplodedNode(
   mesh: THREE.Mesh,
@@ -211,42 +212,46 @@ export function bindExplodedNode(
           ? (effectiveCenter.z + 0.02) * 1.2
           : rawZ;
 
-      targetOffset.set(alignedX, adjustedY, adjustedZ).normalize().multiplyScalar(maxDist);
+      targetOffset.set(alignedX, adjustedY, adjustedZ);
+      // Preserva proporcionalidade de vetores sub-unitários, limitando apenas excessos > 1.0
+      if (targetOffset.length() > 1.0) {
+        targetOffset.normalize();
+      }
+      targetOffset.multiplyScalar(maxDist);
     } else {
-      // Dispersão radial contínua, proporcional e estratificada a partir do eixo axial vertebral (X=0, Z=-0.02),
-      // combinada ao vetor anatômico do catálogo sem achatamento por normalização unitária.
+      // Dispersão radial contínua C1, proporcional e estratificada a partir do eixo axial vertebral (X=0, Z=-0.02),
+      // sem saltos descontínuos de if/else nem achatamento por normalização unitária.
       const posX = effectiveCenter.x;
       const posY = effectiveCenter.y;
       const posZ = effectiveCenter.z;
 
       const radialX = Math.abs(posX);
+      const smoothXMag = radialX * 1.95 + Math.tanh(radialX * 12.0) * 0.18;
       let dirX = 0;
       if (laterality !== 0) {
-        dirX = laterality * (radialX * 1.95 + 0.20);
-      } else if (radialX > 0.008) {
-        dirX = Math.sign(posX) * (radialX * 1.95 + 0.20);
+        dirX = laterality * Math.max(smoothXMag, 0.12);
+      } else if (radialX > 0.001) {
+        dirX = Math.sign(posX) * smoothXMag;
       }
 
-      // Gradiente vertical suave: evita separar a perna da coxa ou projetar a cabeça excessivamente
+      // Gradiente vertical contínuo C1 (sem degrau abrupto em Y = 1.48m)
       let dirY = 0;
       if (activeRegion === 'spine') {
         dirY = (posY - 0.95) * 1.4;
       } else if (activeRegion === 'cranium') {
         dirY = (posY - 1.54) * 1.35;
-      } else if (posY > 1.48) {
-        dirY = (posY - 1.48) * 0.75 + 0.06;
-      } else if (posY > 0.001) {
-        dirY = (posY - 0.98) * 0.14;
+      } else {
+        const baseVertical = (posY - 0.98) * 0.14;
+        const cranialSmoothLift = posY > 1.38 ? (posY - 1.38) * 0.62 : 0;
+        dirY = baseVertical + cranialSmoothLift;
       }
 
-      // Gradiente anteroposterior contínuo relativo à coluna (Z = -0.02), sem salto brusco em Z = 0
+      // Gradiente anteroposterior contínuo via tanh relativo à coluna (Z = -0.02), zero salto em Z = -0.02
       const relZ = posZ + 0.02;
-      let dirZ =
-        Math.abs(posZ) > 0.005
-          ? relZ * 1.45 + Math.sign(relZ) * 0.08
-          : laterality === 0
-          ? 0.18
-          : 0.06;
+      let dirZ = relZ * 1.45 + Math.tanh(relZ * 10.0) * 0.08;
+      if (Math.abs(dirZ) < 0.04 && laterality === 0) {
+        dirZ = 0.12;
+      }
 
       // Se a peça do catálogo possui vetor direcional específico, combina proporcionalmente sem normalizar para 1.0
       if (
@@ -306,15 +311,13 @@ export function stepExplosionProgressLinear(currentProgress: number, deltaProgre
 }
 
 /**
- * Aplica o passo de interpolação linear (LERP) a todas as malhas vinculadas.
- * Garante que peças com isAnchor: true permaneçam absolutamente imóveis e que
- * cada 1% de avanço no progresso produza deslocamento espacial estritamente linear,
- * sem salto abrupto ao retornar a 0%.
+ * Aplica o deslocamento espacial estritamente linear P(t) = P0 + V_offset * t a todas as malhas vinculadas.
+ * Por padrão (lerpFactor = 1.0), o deslocamento é 100% direto e linear sem atraso exponencial.
  */
 export function applyExplodedStep(
   bindings: ExplodedNodeBinding[],
   progress: number, // 0.0 (montado) a 1.0 (explodido)
-  lerpFactor = 0.28
+  lerpFactor = 1.0
 ): void {
   const clampedProgress = Math.max(0, Math.min(1, progress));
   const effectiveLerp = Math.max(0.01, Math.min(1, lerpFactor));
@@ -332,7 +335,7 @@ export function applyExplodedStep(
     const targetY = b.originalPosition.y + b.targetOffset.y * clampedProgress;
     const targetZ = b.originalPosition.z + b.targetOffset.z * clampedProgress;
 
-    if (!b.mesh.visible || effectiveLerp >= 1) {
+    if (!b.mesh.visible || effectiveLerp >= 0.999) {
       b.mesh.position.set(targetX, targetY, targetZ);
       continue;
     }
@@ -352,7 +355,7 @@ export function applyExplodedStep(
 }
 
 /**
- * Calcula a posição final exata no espaço 3D para um nó (sem LERP, avaliação linear pontual)
+ * Calcula a posição final exata no espaço 3D para um nó (avaliação linear pontual P0 + V_offset * t)
  */
 export function evaluateExplodedPosition(
   binding: ExplodedNodeBinding,
