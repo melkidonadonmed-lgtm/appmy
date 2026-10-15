@@ -50,15 +50,6 @@ export interface CranialForamenEntry {
   targetNodeIds: string[];
 }
 
-export interface EmbryologicalDivisionEntry {
-  id: string;
-  primaryVesicle: string;
-  secondaryVesicle: string;
-  adultStructures: string[];
-  ventricularCavity: string;
-  targetNodeIds: string[];
-}
-
 export interface WhiteMatterFiberEntry {
   id: string;
   category: 'Associacao' | 'Comissural' | 'Projecao';

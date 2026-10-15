@@ -53,7 +53,7 @@ export const CraniumForaminaTab: React.FC = () => {
             <ShieldAlert size={14} strokeWidth={1.5} className="text-amber-300" aria-hidden="true" />
             <span className="neuro-doctrine-title">Doutrina de Monro-Kellie & Pressão Intracraniana</span>
           </div>
-          <span className="neuro-Equation-chip">V_encéfalo (80%) + V_sangue (10%) + V_LCR (10%) = K</span>
+          <span className="neuro-equation-chip">V_encéfalo (80%) + V_sangue (10%) + V_LCR (10%) = K</span>
         </div>
         <p className="neuro-detail-text">{MONRO_KELLIE_PRINCIPLE}</p>
       </div>

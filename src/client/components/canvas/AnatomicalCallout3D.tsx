@@ -15,6 +15,9 @@ export interface AnatomicalCallout3DProps {
   onOpenDetailsTab?: () => void;
 }
 
+const _calloutPointNdc = new THREE.Vector3();
+const _calloutMidlineNdc = new THREE.Vector3();
+
 export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
   node,
   position,
@@ -41,8 +44,8 @@ export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
   useFrame(() => {
     if (!camera) return;
     const [wx, wy, wz] = worldPosition || position;
-    const pointNdc = new THREE.Vector3(wx, wy, wz).project(camera);
-    const midlineNdc = new THREE.Vector3(0, wy, 0).project(camera);
+    const pointNdc = _calloutPointNdc.set(wx, wy, wz).project(camera);
+    const midlineNdc = _calloutMidlineNdc.set(0, wy, 0).project(camera);
     const nextSide: 'left' | 'right' = pointNdc.x < midlineNdc.x - 0.005 ? 'left' : 'right';
     if (nextSide !== calloutSide) {
       setCalloutSide(nextSide);

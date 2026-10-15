@@ -9,8 +9,6 @@ export interface Vector3D {
   z: number;
 }
 
-export type AnatomicalPlane = 'sagittal' | 'coronal' | 'axial';
-
 export type AnatomicalChapter =
   | 1 // Generalidades e Termos de Orientação
   | 2 // Sistema Esquelético e Articular (Osteologia)
@@ -66,22 +64,6 @@ export interface AnatomicalMeshUserData {
   ignoreRaycast?: boolean;
 }
 
-export interface ExplodedViewState {
-  progress: number; // 0.0 (montado) a 1.0 (explosão máxima)
-  isolatedNodeId: string | null; // Nó isolado em foco
-  ghostMode: boolean; // Transparência a 10% nas malhas não selecionadas
-  activeChapter: AnatomicalChapter;
-}
-
-export interface TelemetryMetrics {
-  fps: number;
-  triangles: number;
-  drawCalls: number;
-  geometriesCount: number;
-  texturesCount: number;
-  memoryMB: number;
-}
-
 export type ActiveAnatomicalSystem =
   | 'skeletal'
   | 'muscular'
@@ -96,4 +78,5 @@ export type ActiveAnatomicalSystem =
   | 'sensory'
   | 'integumentary'
   | 'all';
+
 

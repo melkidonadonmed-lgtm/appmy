@@ -422,27 +422,27 @@ export default function App() {
                     Conexão entre o Google Cloud Run (Southamerica-East1 / US-Central1) e Firebase Hosting
                   </p>
                 </div>
-                <button className="btn btn-secondary" onClick={fetchHealth} disabled={loadingHealth}>
-                  <RefreshCw size={14} className={loadingHealth ? 'animate-spin' : ''} />
+                <button className="btn btn-secondary btn-tactile" onClick={fetchHealth} disabled={loadingHealth}>
+                  <RefreshCw size={14} strokeWidth={1.5} className={loadingHealth ? 'animate-spin' : ''} />
                   <span>Atualizar Sondas</span>
                 </button>
               </div>
 
               <div className="grid">
                 {/* Card Cloud Run */}
-                <div className="card">
+                <div className="card card-tactile">
                   <div className="card-title">
-                    <Server size={18} color="#38bdf8" />
+                    <Server size={18} strokeWidth={1.5} color="var(--accent)" />
                     <span>Backend API (Cloud Run)</span>
                   </div>
                   <p className="card-description">
                     Serviço Express em Node.js com contratos de saúde e rewrites via Firebase Hosting.
                   </p>
-                  <div className="code-box">
+                  <div className="code-box" role="status" aria-live="polite" aria-busy={loadingHealth}>
                     {loadingHealth ? (
                       <span>Carregando status...</span>
                     ) : healthError ? (
-                      <span style={{ color: 'var(--danger)' }}>Erro: {healthError}</span>
+                      <span style={{ color: 'var(--danger)' }} role="alert">Erro: {healthError}</span>
                     ) : health ? (
                       <div>
                         <div><strong>Status:</strong> {health.status.toUpperCase()}</div>
@@ -457,9 +457,9 @@ export default function App() {
                 </div>
 
                 {/* Card Firebase */}
-                <div className="card">
+                <div className="card card-tactile">
                   <div className="card-title">
-                    <Flame size={18} color="#f59e0b" />
+                    <Flame size={18} strokeWidth={1.5} color="#f59e0b" />
                     <span>Firebase Suite & Storage</span>
                   </div>
                   <p className="card-description">
@@ -469,12 +469,12 @@ export default function App() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
                       {isFirebaseConfigured ? (
                         <>
-                          <CheckCircle2 size={14} color="var(--success)" />
+                          <CheckCircle2 size={14} strokeWidth={1.5} color="var(--success)" />
                           <span style={{ color: 'var(--success)' }}>Credenciais Ativas (.env)</span>
                         </>
                       ) : (
                         <>
-                          <AlertCircle size={14} color="var(--warning)" />
+                          <AlertCircle size={14} strokeWidth={1.5} color="var(--warning)" />
                           <span style={{ color: 'var(--warning)' }}>Modo Offline / Emulador Local</span>
                         </>
                       )}
@@ -485,9 +485,9 @@ export default function App() {
                 </div>
 
                 {/* Card CI/CD */}
-                <div className="card">
+                <div className="card card-tactile">
                   <div className="card-title">
-                    <GitBranch size={18} color="#818cf8" />
+                    <GitBranch size={18} strokeWidth={1.5} color="#818cf8" />
                     <span>GitHub Actions CI/CD</span>
                   </div>
                   <p className="card-description">
@@ -498,7 +498,7 @@ export default function App() {
                     <div><strong>Container:</strong> Docker multi-stage Alpine</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-                    <ShieldCheck size={14} color="var(--success)" />
+                    <ShieldCheck size={14} strokeWidth={1.5} color="var(--success)" />
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                       Contrato de porta dinâmica <code>$PORT</code> ativo
                     </span>
@@ -508,8 +508,8 @@ export default function App() {
 
               {/* Botão de retorno rápido ao 3D */}
               <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-                <button className="btn" onClick={() => setActiveMode('3d-atlas')}>
-                  <RotateCcw size={14} />
+                <button className="btn btn-tactile" onClick={() => setActiveMode('3d-atlas')}>
+                  <RotateCcw size={14} strokeWidth={1.5} />
                   <span>Voltar para o Visualizador 3D</span>
                 </button>
               </div>

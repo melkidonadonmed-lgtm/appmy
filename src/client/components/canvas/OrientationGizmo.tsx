@@ -11,6 +11,9 @@ import {
 } from 'lucide-react';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 
+const GIZMO_CAMERA_DIST = 4.5;
+const GIZMO_CAMERA_DIST_NEG = -4.5;
+
 export const OrientationGizmo: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const setCameraPositionTarget = useAnatomyStore((s) => s.setCameraPositionTarget);
@@ -102,7 +105,7 @@ export const OrientationGizmo: React.FC = () => {
           <div className="orientation-btn-grid">
             <button
               type="button"
-              onClick={() => orientTo([0, 0, 4.5])}
+              onClick={() => orientTo([0, 0, GIZMO_CAMERA_DIST])}
               className="orientation-btn"
               title="Vista Anterior (Frontal)"
               aria-label="Vista Anterior"
@@ -111,7 +114,7 @@ export const OrientationGizmo: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => orientTo([0, 0, -4.5])}
+              onClick={() => orientTo([0, 0, GIZMO_CAMERA_DIST_NEG])}
               className="orientation-btn"
               title="Vista Posterior (Dorsal)"
               aria-label="Vista Posterior"
@@ -120,7 +123,7 @@ export const OrientationGizmo: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => orientTo([-4.5, 0, 0])}
+              onClick={() => orientTo([GIZMO_CAMERA_DIST_NEG, 0, 0])}
               className="orientation-btn"
               title="Vista Lateral Direita"
               aria-label="Vista Lateral Direita"
@@ -129,7 +132,7 @@ export const OrientationGizmo: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => orientTo([4.5, 0, 0])}
+              onClick={() => orientTo([GIZMO_CAMERA_DIST, 0, 0])}
               className="orientation-btn"
               title="Vista Lateral Esquerda"
               aria-label="Vista Lateral Esquerda"
@@ -138,7 +141,7 @@ export const OrientationGizmo: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => orientTo([0, 4.5, 0.01])}
+              onClick={() => orientTo([0, GIZMO_CAMERA_DIST, 0.01])}
               className="orientation-btn"
               title="Vista Superior (Cranial)"
               aria-label="Vista Superior"
@@ -147,7 +150,7 @@ export const OrientationGizmo: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => orientTo([0, -4.5, 0.01])}
+              onClick={() => orientTo([0, GIZMO_CAMERA_DIST_NEG, 0.01])}
               className="orientation-btn"
               title="Vista Inferior (Podálica/Caudal)"
               aria-label="Vista Inferior"
@@ -158,7 +161,7 @@ export const OrientationGizmo: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => orientTo([2.5, 2.2, 4.5], [0, 0, 0])}
+            onClick={() => orientTo([2.5, 2.2, GIZMO_CAMERA_DIST], [0, 0, 0])}
             className="orientation-reset-btn"
             title="Restaurar Visão Isométrica Anatômica Padrão"
             aria-label="Restaurar Visão Isométrica 3D"

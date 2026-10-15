@@ -1,5 +1,4 @@
 import {
-  EmbryologicalDivisionEntry,
   WhiteMatterFiberEntry,
   GlialCellEntry,
   BrodmannRegionEntry,
@@ -12,49 +11,6 @@ import {
  * Documento 2 — Anatomia do Encéfalo, Composição Histofuncional, 12 Regiões Corticais / Brodmann,
  * Núcleos da Base, Diencéfalo, Tronco, Cerebelo, Dinâmica do LCR e Vascularização / AVC.
  */
-
-export const EMBRYOLOGICAL_BRAIN_DIVISIONS: EmbryologicalDivisionEntry[] = [
-  {
-    id: 'div_telencephalon',
-    primaryVesicle: 'Prosencéfalo (Cérebro Anterior)',
-    secondaryVesicle: 'Telencéfalo',
-    adultStructures: ['Córtex Cerebral (Hemisférios Direito e Esquerdo)', 'Substância Branca Subcortical', 'Núcleos da Base (Corpo Estriado)', 'Hipocampo e Amígdala'],
-    ventricularCavity: 'Ventrículos Laterais (1º e 2º Ventrículos)',
-    targetNodeIds: ['fma:lobus_frontalis', 'fma:lobus_parietalis', 'fma:corpus_callosum', 'fma:nuclei_basales'],
-  },
-  {
-    id: 'div_diencephalon',
-    primaryVesicle: 'Prosencéfalo (Cérebro Anterior)',
-    secondaryVesicle: 'Diencéfalo',
-    adultStructures: ['Tálamo', 'Hipotálamo e Neuro-hipófise', 'Epitálamo (Glândula Pineal e Habênulas)', 'Subtálamo', 'Retina e Nervo Óptico (NC II)'],
-    ventricularCavity: 'Terceiro Ventrículo (linha média intertalâmica)',
-    targetNodeIds: ['fma:thalamus', 'fma:hypothalamus', 'fma:ventriculus_tertius_et_quartus'],
-  },
-  {
-    id: 'div_mesencephalon',
-    primaryVesicle: 'Mesencéfalo (Cérebro Médio)',
-    secondaryVesicle: 'Mesencéfalo',
-    adultStructures: ['Pedúnculos Cerebrais (Base e Tegmento)', 'Substância Negra e Núcleo Rubro', 'Teto Mesencefálico (Colículos Superiores e Inferiores)'],
-    ventricularCavity: 'Aqueduto Cerebral (de Sylvius)',
-    targetNodeIds: ['fma:mesencephalon', 'fma:ventriculus_tertius_et_quartus'],
-  },
-  {
-    id: 'div_metencephalon',
-    primaryVesicle: 'Rombencéfalo (Cérebro Posterior)',
-    secondaryVesicle: 'Metencéfalo',
-    adultStructures: ['Ponte (de Varólio)', 'Cerebelo (Vérmis e Hemisférios Cerebelares)'],
-    ventricularCavity: 'Porção superior do Quarto Ventrículo',
-    targetNodeIds: ['fma:pons', 'fma:cerebellum'],
-  },
-  {
-    id: 'div_myelencephalon',
-    primaryVesicle: 'Rombencéfalo (Cérebro Posterior)',
-    secondaryVesicle: 'Mielencéfalo',
-    adultStructures: ['Bulbo (Medula Oblonga — Pirâmides e Olivas Bulbares)'],
-    ventricularCavity: 'Porção inferior do Quarto Ventrículo e Canal Central',
-    targetNodeIds: ['fma:medulla_oblongata'],
-  },
-];
 
 export const WHITE_MATTER_FIBERS: WhiteMatterFiberEntry[] = [
   {

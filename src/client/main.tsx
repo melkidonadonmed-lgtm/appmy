@@ -5,7 +5,7 @@ import './index.css';
 
 import { useAnatomyStore } from './stores/useAnatomyStore.ts';
 if (typeof window !== 'undefined') {
-  (window as any).__anatomyStore = useAnatomyStore;
+  (window as unknown as { __anatomyStore?: typeof useAnatomyStore }).__anatomyStore = useAnatomyStore;
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

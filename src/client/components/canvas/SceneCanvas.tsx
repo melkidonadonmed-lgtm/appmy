@@ -46,7 +46,7 @@ function SmoothCameraController({
 }) {
   const { scene, camera, gl } = useThree();
   if (typeof window !== 'undefined') {
-    (window as any).__threeScene = scene;
+    (window as unknown as { __threeScene?: THREE.Scene }).__threeScene = scene;
   }
   const cameraFocusTarget = useAnatomyStore((s) => s.cameraFocusTarget);
   const cameraPositionTarget = useAnatomyStore((s) => s.cameraPositionTarget);
@@ -228,7 +228,7 @@ export function SceneCanvas({
           localClippingEnabled: true,
         }}
         onCreated={({ gl, scene }) => {
-          (window as any).__threeScene = scene;
+          (window as unknown as { __threeScene?: THREE.Scene }).__threeScene = scene;
           const dom = gl.domElement;
           const handleContextLost = (event: Event) => {
             event.preventDefault();

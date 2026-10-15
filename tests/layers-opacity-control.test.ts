@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as THREE from 'three';
 import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
 import { updateMeshVisibility } from '../src/core/visibilityManager.ts';
-import { applyBookmarkToStore } from '../src/client/lib/bookmarks-storage.ts';
+import { applyBookmarkToStore, ClinicalBookmark } from '../src/client/lib/bookmarks-storage.ts';
 
 describe('Suíte de Controle de Opacidade Individual por Camada Sobreposta', () => {
   beforeEach(() => {
@@ -176,7 +176,7 @@ describe('Suíte de Controle de Opacidade Individual por Camada Sobreposta', () 
 
   describe('4. Sincronização e Restauração com Bookmarks (LocalStorage)', () => {
     it('deve restaurar opacidades customizadas via applyBookmarkToStore', () => {
-      const dummyBookmark: any = {
+      const dummyBookmark: ClinicalBookmark = {
         id: 'bm_test_opacity',
         name: 'Caso Clínico com Transparência',
         createdAt: new Date().toISOString(),

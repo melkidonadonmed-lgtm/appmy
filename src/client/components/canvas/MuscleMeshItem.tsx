@@ -95,6 +95,7 @@ export function MuscleMeshItem({
   }, [node.meshName]);
 
   // Animação com Lerp
+  const targetVecRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
 
@@ -105,7 +106,7 @@ export function MuscleMeshItem({
     const targetY = basePosition.y + ev.y * explosionProgress * 1.8 * mult;
     const targetZ = basePosition.z + ev.z * explosionProgress * 1.8 * mult;
 
-    meshRef.current.position.lerp(new THREE.Vector3(targetX, targetY, targetZ), 0.16);
+    meshRef.current.position.lerp(targetVecRef.current.set(targetX, targetY, targetZ), 0.16);
 
     if (hovered && !isSelected) {
       meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, baseRotation.y + 0.15, 0.1);

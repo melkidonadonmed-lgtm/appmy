@@ -44,10 +44,11 @@ function LymphaticDuctMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
-      new THREE.Vector3(
+      targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
@@ -114,22 +115,25 @@ function LymphNodeClusterMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
+  const SENTINEL_PULSE_FREQ = 3.0;
   useFrame((state) => {
     if (!meshRef.current) return;
 
     // Se for o linfonodo sentinela (Virchow), pulsa sutilmente com brilho de vigilância imune
     let pulseScale = 1.0;
     if (isSentinel) {
-      pulseScale = 1.0 + Math.sin(state.clock.elapsedTime * 3.0) * 0.12;
+      pulseScale = 1.0 + Math.sin(state.clock.elapsedTime * SENTINEL_PULSE_FREQ) * 0.12;
     }
 
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-
-    meshRef.current.position.lerp(targetPos, 0.15);
     meshRef.current.scale.set(
       scaleVec[0] * pulseScale,
       scaleVec[1] * pulseScale,
@@ -190,14 +194,17 @@ function CisternaChyliMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
   });
 
   if (isIsolatedHidden) return null;

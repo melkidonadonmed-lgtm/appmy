@@ -1,6 +1,15 @@
 import * as THREE from 'three';
 import { classifyMuscularTissue, MuscularTissueType } from './surgicalLayers.ts';
 
+const GLSL_PRIMARY_BUNDLE_FREQ = '240.0';
+const GLSL_SECONDARY_BUNDLE_FREQ = '580.0';
+const GLSL_SECONDARY_ALONG_FREQ = '18.0';
+const GLSL_MICRO_STRIATION_FREQ = '1250.0';
+const GLSL_MICRO_ALONG_FREQ = '28.0';
+const GLSL_FASCIA_WEAVE_ACROSS_FREQ = '420.0';
+const GLSL_FASCIA_WEAVE_ALONG_FREQ = '140.0';
+const GLSL_TENDON_FIBER_FREQ = '680.0';
+
 /**
  * Gera uma variação cromática sutil e determinística por ventre/fascículo muscular
  * para que cabeças adjacentes (ex: clavicular, acromial e espinhal do deltoide)
@@ -98,8 +107,10 @@ export function applyAnatomicalTissueShader(
   axisVec.normalize();
 
   const refUp = Math.abs(axisVec.y) < 0.9 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0);
-  const crossU = new THREE.Vector3().crossVectors(axisVec, refUp).normalize();
-  const crossV = new THREE.Vector3().crossVectors(axisVec, crossU).normalize();
+  const crossU = new THREE.Vector3().crossVectors(axisVec, refUp);
+  if (crossU.lengthSq() > 1e-12) crossU.normalize();
+  const crossV = new THREE.Vector3().crossVectors(axisVec, crossU);
+  if (crossV.lengthSq() > 1e-12) crossV.normalize();
 
   material.customProgramCacheKey = () => `anat_tissue_${tissueType}`;
   material.onBeforeCompile = (shader) => {
@@ -142,9 +153,9 @@ export function applyAnatomicalTissueShader(
         float across2 = dot(vAnatLocalPos, uCrossV);
         float fiberCoord = across1 * 1.15 + across2 * 0.85 + along * 0.08;
 
-        float bundlePrimary = sin(fiberCoord * 240.0);
-        float bundleSecondary = sin(fiberCoord * 580.0 + along * 18.0);
-        float microStriation = sin(fiberCoord * 1250.0 - along * 28.0);
+        float bundlePrimary = sin(fiberCoord * ${GLSL_PRIMARY_BUNDLE_FREQ});
+        float bundleSecondary = sin(fiberCoord * ${GLSL_SECONDARY_BUNDLE_FREQ} + along * ${GLSL_SECONDARY_ALONG_FREQ});
+        float microStriation = sin(fiberCoord * ${GLSL_MICRO_STRIATION_FREQ} - along * ${GLSL_MICRO_ALONG_FREQ});
         float striationWave = bundlePrimary * 0.48 + bundleSecondary * 0.34 + microStriation * 0.18;
 
         float grooveMask = smoothstep(-0.65, 0.65, striationWave);
@@ -159,13 +170,13 @@ export function applyAnatomicalTissueShader(
       } else if (uTissueMode == 2) {
         float along = dot(vAnatLocalPos, uFiberAxis);
         float across = dot(vAnatLocalPos, uCrossU) + dot(vAnatLocalPos, uCrossV);
-        float weave1 = sin((across * 420.0) + (along * 140.0));
-        float weave2 = sin((across * 420.0) - (along * 140.0));
+        float weave1 = sin((across * ${GLSL_FASCIA_WEAVE_ACROSS_FREQ}) + (along * ${GLSL_FASCIA_WEAVE_ALONG_FREQ}));
+        float weave2 = sin((across * ${GLSL_FASCIA_WEAVE_ACROSS_FREQ}) - (along * ${GLSL_FASCIA_WEAVE_ALONG_FREQ}));
         float collagen = smoothstep(-0.3, 0.8, weave1 * 0.6 + weave2 * 0.4);
         diffuseColor.rgb = mix(diffuseColor.rgb * 0.88, vec3(0.98, 0.99, 1.0), collagen * 0.35);
       } else if (uTissueMode == 3) {
         float across = dot(vAnatLocalPos, uCrossU) + dot(vAnatLocalPos, uCrossV);
-        float tendonFiber = sin(across * 680.0) * 0.5 + 0.5;
+        float tendonFiber = sin(across * ${GLSL_TENDON_FIBER_FREQ}) * 0.5 + 0.5;
         diffuseColor.rgb = mix(diffuseColor.rgb * 0.86, vec3(0.97, 0.95, 0.90), tendonFiber * 0.28);
       }`
     );
@@ -176,7 +187,7 @@ export function applyAnatomicalTissueShader(
       if (uTissueMode == 1) {
         float across = dot(vAnatLocalPos, uCrossU) * 1.15 + dot(vAnatLocalPos, uCrossV) * 0.85;
         float along = dot(vAnatLocalPos, uFiberAxis);
-        float ridgeDeriv = cos(across * 240.0) * 0.55 + cos(across * 580.0 + along * 18.0) * 0.45;
+        float ridgeDeriv = cos(across * ${GLSL_PRIMARY_BUNDLE_FREQ}) * 0.55 + cos(across * ${GLSL_SECONDARY_BUNDLE_FREQ} + along * ${GLSL_SECONDARY_ALONG_FREQ}) * 0.45;
         vec3 tangentPerturb = normalize(uCrossU + uCrossV) * (ridgeDeriv * 0.16);
         normal = normalize(normal + tangentPerturb);
       }`

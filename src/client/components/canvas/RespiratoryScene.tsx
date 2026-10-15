@@ -49,10 +49,11 @@ function TracheaTubeMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
-      new THREE.Vector3(
+      targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
@@ -131,10 +132,11 @@ function BronchusTubeMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
-      new THREE.Vector3(
+      targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
@@ -199,6 +201,7 @@ function LungLobeMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame((state) => {
     if (!meshRef.current) return;
 
@@ -207,13 +210,14 @@ function LungLobeMesh({
     const breathFactor = 1.0 + Math.sin(t) * 0.025;
 
     // Interpolação para a posição na vista explodida
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.12
     );
-
-    meshRef.current.position.lerp(targetPos, 0.12);
     meshRef.current.scale.set(
       scaleVec[0] * breathFactor,
       scaleVec[1] * breathFactor,
@@ -272,10 +276,11 @@ function LarynxComplexMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!groupRef.current) return;
     groupRef.current.position.lerp(
-      new THREE.Vector3(
+      targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         0.58 + explosionOffset.y * explosionProgress,
         0.12 + explosionOffset.z * explosionProgress

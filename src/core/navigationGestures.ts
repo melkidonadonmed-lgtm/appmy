@@ -64,10 +64,13 @@ export function computeTwoFingerMetrics(
 export function computeTwoFingerTouchDelta(
   prev: TwoFingerGestureState,
   curr: TwoFingerGestureState,
-  viewportWidth = 1024,
+  viewportWidthOrMode: number | TwoFingerNavigationMode = 1024,
   viewportHeight = 768
 ): TwoFingerGestureDelta {
-  const safeW = Math.max(240, viewportWidth);
+  const mode: TwoFingerNavigationMode =
+    typeof viewportWidthOrMode === 'string' ? viewportWidthOrMode : 'pan-rotate';
+  const numericWidth = typeof viewportWidthOrMode === 'number' ? viewportWidthOrMode : 1024;
+  const safeW = Math.max(240, numericWidth);
   const safeH = Math.max(240, viewportHeight);
 
   const dMidX = curr.midX - prev.midX;
@@ -82,7 +85,9 @@ export function computeTwoFingerTouchDelta(
   // Classificação de intenção dominante com Gesture Lock para impedir mistura de eixos
   let intent: TwoFingerGestureIntent = prev.lockedIntent || curr.lockedIntent || 'unlocked';
   if (intent === 'unlocked') {
-    if (distDelta > 6 && distDelta > absMidX * 0.85 && distDelta > absMidY * 0.85) {
+    if (mode === 'zoom') {
+      intent = 'pinch';
+    } else if (distDelta > 6 && distDelta > absMidX * 0.85 && distDelta > absMidY * 0.85) {
       intent = 'pinch';
     } else if (absMidY > absMidX * 1.25 && absMidY > 1.5) {
       intent = 'pan';
@@ -178,6 +183,9 @@ export function computeTrackpadTwoFingerDelta(
   };
 }
 
+const _rigOffsetVec = new THREE.Vector3();
+const _rigSpherical = new THREE.Spherical();
+
 /**
  * Aplica de forma determinística o delta de navegação 3D (elevação Y + rotação azimutal + zoom)
  * sobre a câmera e o ponto focal (target) do OrbitControls, respeitando limites anatômicos seguros.
@@ -204,19 +212,19 @@ export function applyNavigationDeltaToRig(
 
   // 2. Rotação azimutal (Turntable 360°) e Zoom (Dolly) em coordenadas esféricas relativas ao target
   if (Math.abs(delta.azimuthRotateDelta) > 1e-6 || Math.abs(delta.dollyScale - 1.0) > 1e-5) {
-    const offset = new THREE.Vector3().subVectors(camera.position, target);
-    const spherical = new THREE.Spherical().setFromVector3(offset);
+    _rigOffsetVec.subVectors(camera.position, target);
+    _rigSpherical.setFromVector3(_rigOffsetVec);
 
-    spherical.theta += delta.azimuthRotateDelta;
-    spherical.radius = THREE.MathUtils.clamp(
-      spherical.radius * delta.dollyScale,
+    _rigSpherical.theta += delta.azimuthRotateDelta;
+    _rigSpherical.radius = THREE.MathUtils.clamp(
+      _rigSpherical.radius * delta.dollyScale,
       cfg.minDistance,
       cfg.maxDistance
     );
-    spherical.makeSafe();
+    _rigSpherical.makeSafe();
 
-    offset.setFromSpherical(spherical);
-    camera.position.copy(target).add(offset);
+    _rigOffsetVec.setFromSpherical(_rigSpherical);
+    camera.position.copy(target).add(_rigOffsetVec);
   }
 
   camera.lookAt(target);

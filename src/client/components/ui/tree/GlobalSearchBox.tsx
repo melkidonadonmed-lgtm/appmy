@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, X, Sparkles, Command, ArrowRight, Stethoscope } from 'lucide-react';
 import { Z_ANATOMY_CATALOG, ZAnatomyItem } from '../../../../shared/constants/zAnatomyCatalog.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
-import { AnyAnatomicalNode } from '../../canvas/AnatomicalAtlasScene.tsx';
+import { AnyAnatomicalNode, ActiveAnatomicalSystem } from '../../canvas/AnatomicalAtlasScene.tsx';
 import {
   resolveRichClinicalData,
   searchNeuroClinicalEntities,
@@ -144,8 +144,9 @@ export const GlobalSearchBox: React.FC<GlobalSearchBoxProps> = ({
 
   const handleSelectItem = (item: ZAnatomyItem) => {
     const store = useAnatomyStore.getState();
-    if (item.system && !store.isSystemActive(item.system as any)) {
-      store.addSystem(item.system as any);
+    const sys = item.system as ActiveAnatomicalSystem | undefined;
+    if (sys && !store.isSystemActive(sys)) {
+      store.addSystem(sys);
     }
     if (store.hiddenNodeIds.has(item.id) || (item.node && store.hiddenNodeIds.has(item.node))) {
       store.toggleVisibility(item.id);

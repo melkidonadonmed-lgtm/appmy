@@ -47,3 +47,8 @@ coverage/
 live_screenshot*.png
 workspace_index.json
 
+# Python / Scripts Auxiliares
+__pycache__/
+*.py[cod]
+.venv/
+

@@ -140,6 +140,7 @@ function SensoryItem({
   }, [node.meshName]);
 
   // Translação vetorial suave de explosão
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
     const mult = node.explosionMagnitudeMultiplier || 1.0;
@@ -149,7 +150,7 @@ function SensoryItem({
     const targetY = basePosition.y + ev.y * explosionProgress * 1.5 * mult;
     const targetZ = basePosition.z + ev.z * explosionProgress * 1.5 * mult;
 
-    meshRef.current.position.lerp(new THREE.Vector3(targetX, targetY, targetZ), 0.16);
+    meshRef.current.position.lerp(targetPosRef.current.set(targetX, targetY, targetZ), 0.16);
   });
 
   if (isIsolatedHidden) return null;

@@ -45,14 +45,17 @@ function BrainMeshItem({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
   });
 
   if (isIsolatedHidden) return null;

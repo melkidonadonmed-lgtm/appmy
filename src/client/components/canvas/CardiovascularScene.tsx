@@ -48,10 +48,11 @@ function VesselTube({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
-      new THREE.Vector3(
+      targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
@@ -128,19 +129,23 @@ function HeartChamber({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
+  const HEARTBEAT_RAD_PER_SEC = 4.2;
   // Simulação fisiológica do batimento cardíaco (Sístole/Diástole)
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
-    const t = clock.getElapsedTime() * 4.2; // ~72 BPM
+    const t = clock.getElapsedTime() * HEARTBEAT_RAD_PER_SEC; // ~72 BPM
     // Onda de pulso bifásica (contração rápida + relaxamento)
     const beat = Math.pow(Math.sin(t), 12) * 0.06;
 
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
 
     // Pulso miocárdico sutil se o nó não estiver isolado de forma estática
     const currentScale = 1 + beat;

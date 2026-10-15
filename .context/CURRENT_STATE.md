@@ -27,10 +27,14 @@
   - Preenchimento completo de variáveis de superfície e sombra nos 5 temas táteis em `index.css` e remoção de sobrescritas destrutivas no final do arquivo.
 - **Base Parametrizada Neuroanatômica e Estúdio Neuroclínico (`src/shared/constants/*`, `src/client/components/ui/clinical/*.tsx`)**:
   - 14 Forames da Base do Crânio, Áreas de Brodmann, 12 Pares de Nervos Cranianos (`NC I–XII`), Calculadora Interativa ASPECTS (10 pontos) e Simulador de Casos Clínicos Topográficos integrados ao viewport 3D.
+- **Sanitização Numérica/3D (`code-quality-audit-3d-physics`), Topologia 3+1 de UI/UX e Higienização Estrutural (`auditoria-projetos-sistema`)**:
+  - **AST & Física 3D (`0` issues nos 79 arquivos `.ts`/`.tsx` de `src/` e $S_{\text{norm}} = 100.0/100$ em `build_z_anatomy_catalog.py`)**: Zero alocações em loop (`ALLOC_IN_LOOP = 0`), normalização protegida (`UNCHECKED_NORMALIZE = 0`), comparações de ponto flutuante com $\epsilon = 10^{-4}$ (`STRICT_FLOAT_COMPARE = 0`), zero `any` em `src/` e `tests/` e extração de todas as constantes físicas/geométricas (`HEARTBEAT_RAD_PER_SEC`, `SENTINEL_PULSE_FREQ`, `GIZMO_CAMERA_DIST`, `CRANIUM_FOCUS_OFFSET_Y`, `MIN_CLIP_OFFSET`, `MAX_CLIP_OFFSET`, `RADIAL_TANH_GAIN`, `ANTEROPOSTERIOR_TANH_GAIN`, `GLSL_PRIMARY_BUNDLE_FREQ`, `GLSL_SECONDARY_BUNDLE_FREQ`, `GLSL_SECONDARY_ALONG_FREQ`, `GLSL_MICRO_STRIATION_FREQ`, `GLSL_MICRO_ALONG_FREQ`, `GLB_HEADER_BYTES`, `EXPLOSION_VECTOR_PROFILES`).
+  - **Refatoração Tátil (`Topologia 3+1` sob `FrontCraftMaster`)**: Conformidade HTML5 (`index.html` sem `/>` em elementos void e com `Plus Jakarta Sans` + `Space Grotesk`), `--font-display`, classes `.btn-tactile` e `.card-tactile`, física `:active`, `touch-action: manipulation`, `@media (prefers-reduced-motion: reduce)`, substituição de 133 hexadecimais Slate estáticos por tokens dinâmicos dos 5 temas (`phantom-obsidian`, `tactile-matte`, `quiet-luxury-titanium`, `steadfast-stainless`, `warm-editorial-paper`), eliminação de `transition: all` e `rotate(0deg)`, `.neuro-equation-chip` / `@keyframes bookmark-fade-in` em kebab-case e `role="status"` + `aria-live="polite"` + `aria-busy={loadingHealth}` no card de sonda Cloud Run.
+  - **Higienização da Raiz, Chunking e Remoção de Código/CSS Morto**: Removidos `designer.md` duplicado, `dataconnect/`, `docs/` obsoleto, `scripts/__pycache__/`, ~330 linhas de CSS órfão em `src/client/index.css` e 7 exports não utilizados; scripts de deploy movidos para `scripts/deploy-cloudrun.ps1` e `scripts/deploy-cloudrun.sh`; code-splitting determinístico via `manualChunks(id)` em `vite.config.ts` eliminando o chunk vazio `react-vendor` e isolando `anatomy-catalog`.
 - **Quality Gates Convalidados**:
-  - **230 testes unitários aprovados em 32 suítes Vitest** (`ExitCode 0`).
-  - `npm run typecheck` com zero erros (`ExitCode 0`).
-  - `npm run build` aprovado gerando bundles de produção do Vite e Express (`ExitCode 0`).
+  - **234 testes unitários aprovados em 32 suítes Vitest** (`ExitCode 0`, `100.0/100` Nível 4 no `test-quality-auditor`).
+  - `npm run typecheck` com zero erros (`ExitCode 0`, incluindo `src/core` no `tsconfig.json`).
+  - `npm run build` aprovado gerando bundles de produção do Vite e Express sem chunks vazios (`ExitCode 0`).
 
 ---
 

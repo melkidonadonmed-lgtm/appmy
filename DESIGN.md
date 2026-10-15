@@ -19,8 +19,8 @@ O design do Atlas de Anatomia foi concebido sob o paradigma do **Minimalismo Exe
 3. **Cromática Funcional e Anti-Fadiga (Dark Mode Cirúrgico)**:
    A paleta primária baseia-se em tons profundos de azul-ardósia e grafite (`Slate` e `Zinc`), reduzindo o cansaço visual em sessões prolongadas de dissecação virtual e conferindo contraste ótimo para materiais ósseos e viscerais. Cores saturadas puras (`#0000FF`, `#00FF00`) são banidas; acentos e alertas utilizam tonalidades atenuadas e funcionais.
 
-4. **Bordas Sutis e Sombras Disciplinadas**:
-   É proibido o uso de sombras difusas pesadas (`shadow-lg`, `shadow-xl`, `shadow-2xl`). O isolamento espacial de cards e painéis é estabelecido por bordas finas sub-pixel (`border: 1px solid #1f2937`) e elevações discretas de 1px com preenchimento via `backdrop-filter: blur(12px)`.
+4. **Sombras Táteis em 3 Camadas e Rim Light Especular**:
+   É proibido o uso de sombras utilitárias genéricas (`shadow-lg`, `shadow-xl`, `shadow-2xl`). O isolamento espacial de cards, trilhos e teclas segue a física óptica do **Design System Tátil Melki** em 3 camadas (`--shadow-key`, `--shadow-well`, `--shadow-card`) combinada com luz de borda especular no topo (`inset 0 1px 0 var(--specular-top)`), luminância crescente ($L_{\text{well}} < L_{\text{primary}} < L_{\text{secondary}} < L_{\text{tertiary}}$) e `backdrop-filter: blur(12px)`.
 
 5. **Rigidez de Nomenclatura e Fidelidade Anatômica**:
    Todo componente que expõe dados anatômicos respeita o padrão bilingue: Português do Brasil (PT-BR) em destaque para assimilação rápida e Latim oficial canônico segundo a **Terminologia Anatomica internacional (TA2)** com código FMA (*Foundational Model of Anatomy*).
@@ -29,16 +29,31 @@ O design do Atlas de Anatomia foi concebido sob o paradigma do **Minimalismo Exe
 
 ## 2. Design Tokens & Fundamentos Visuais
 
-### 2.1. Paleta de Cores do Sistema
+### 2.1. Os 5 Temas Táteis Minerais (`data-theme` em `src/client/index.css`)
 
-A paleta é estruturada em variáveis CSS globais declaradas em [`src/client/index.css`](file:///src/client/index.css#L1-L16).
+A aplicação implementa **5 temas táteis minerais** persistidos em `localStorage` (`appmy_ui_theme`) e declarados em [`src/client/index.css`](file:///src/client/index.css#L1-L110), com zero ocorrência de cobalto neon (`#0066FF`, `#2563EB`, `#3B82F6`):
 
-| Token CSS | Valor Hexadecimal | Função Semântica na Interface |
+| Tema (`data-theme`) | `--bg-well` | `--bg-primary` | `--bg-secondary` | `--bg-tertiary` | `--accent` | Caráter Mineral |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`phantom-obsidian`** *(Padrão)* | `#060912` | `#0a0f1d` | `#111827` | `#1f2937` | `#38bdf8` | Obsidiana cirúrgica e ciano clínico |
+| **`tactile-matte`** | `#0d0d0c` | `#141413` | `#1c1c1a` | `#262624` | `#d6d3d1` | Basalto fosco e pedra aquecida |
+| **`quiet-luxury-titanium`** | `#0b0d11` | `#111318` | `#191c24` | `#232733` | `#cbd5e1` | Titânio escovado aeroespacial |
+| **`steadfast-stainless`** | `#090c10` | `#0f1419` | `#161d24` | `#202a34` | `#93c5fd` | Aço cirúrgico inoxidável |
+| **`warm-editorial-paper`** | `#110f0e` | `#181614` | `#211e1b` | `#2c2824` | `#e7e5e4` | Grafite editorial quente |
+
+#### Tokens Globais de Superfície, Luz e Sombra (`phantom-obsidian`)
+
+| Token CSS | Valor | Função Semântica na Interface |
 | :--- | :--- | :--- |
 | `--bg-primary` | `#0a0f1d` | Fundo principal da aplicação e tela base do canvas WebGL |
 | `--bg-secondary` | `#111827` | Superfície de painéis laterais, toolbars e caixas modais |
-| `--bg-tertiary` | `#1f2937` | Fundo de botões inativos, agrupadores de lista e divisórias |
-| `--card-bg` | `rgba(17, 24, 39, 0.85)` | Vidro fosco (*glassmorphism*) para HUDs e cards flutuantes |
+| `--bg-tertiary` | `#1f2937` | Fundo de botões ativos, agrupadores de lista e divisórias |
+| `--bg-well` | `#060912` | Cavidade rebaixada (trilhos de abas e grupos de botões) |
+| `--specular-top` | `rgba(255, 255, 255, 0.16)` | Rim light especular superior de 1px |
+| `--shadow-key` | `0 2px 5px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.35), inset 0 1px 0 var(--specular-top)` | Elevação tátil de teclas e pílulas ativas |
+| `--shadow-well` | `inset 0 2px 4px rgba(0,0,0,0.65), 0 1px 0 rgba(255,255,255,0.05)` | Sombra interna de cavidades rebaixadas |
+| `--shadow-card` | `0 14px 32px rgba(0,0,0,0.55), inset 0 1px 0 var(--specular-top)` | Elevação de HUDs e cards flutuantes |
+| `--card-bg` | `rgba(17, 24, 39, 0.88)` | Vidro fosco (*glassmorphism*) para HUDs e cards flutuantes |
 | `--text-primary` | `#f9fafb` | Títulos, nomes anatômicos principais e valores de telemetria |
 | `--text-secondary`| `#9ca3af` | Rótulos descritivos, nomes em Latim TA2 e textos de apoio |
 | `--accent` | `#38bdf8` | Cor primária interativa (Ciano Cirúrgico), focos e bordas ativas |

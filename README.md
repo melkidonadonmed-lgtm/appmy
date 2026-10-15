@@ -4,13 +4,13 @@
 [![React 19](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev/)
 [![Three.js](https://img.shields.io/badge/Three.js-r186-black.svg)](https://threejs.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2-646cff.svg)](https://vitejs.dev/)
-[![Tests](https://img.shields.io/badge/Vitest-197%20passed%20(29%20suites)-brightgreen.svg)](https://vitest.dev/)
+[![Tests](https://img.shields.io/badge/Vitest-230%20passed%20(32%20suites)-brightgreen.svg)](https://vitest.dev/)
 [![Google Cloud Run](https://img.shields.io/badge/Google%20Cloud-Run-4285f4.svg)](https://cloud.google.com/run)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-Plataforma médica e educacional em 3D de alta fidelidade para estudo e dissecação virtual do **corpo humano completo**, baseada nas malhas escaneadas em alta resolução do projeto aberto **Z-Anatomy** e **BodyParts3D / DBCLS**, com **Exploded View Homolateral** (visão explodida centrífuga desarticulando peças reais no espaço 3D sem inversão bilateral), **Dissecção Tomográfica Multiplanar (MPR)**, **Callout 3D Compacto em Escala 1:1** com linha guia vetorial, seleção interativa via raycasting GPU e navegação taxonômica pela **Terminologia Anatomica internacional (TA2)** com códigos FMA.
+Plataforma médica e educacional em 3D de alta fidelidade para estudo e dissecação virtual do **corpo humano completo**, baseada nas malhas escaneadas em alta resolução do projeto aberto **Z-Anatomy** e **BodyParts3D / DBCLS**, com **Sincronização de Sexo Biológico (Masculino vs. Feminino — Zero Cruzamento)**, **Exploded View Homolateral Contínua** ($C^1$-contínua via `Math.tanh` sem inversão bilateral), **Dissecção Tomográfica Multiplanar (MPR)**, **Estúdio Neuroclínico Integrado** (14 Forames da Base do Crânio, Áreas de Brodmann, 12 Pares Cranianos `NC I–XII`, Calculadora ASPECTS e Simulador de Casos), **Callout 3D Compacto em Escala 1:1** com linha guia vetorial, seleção interativa via raycasting GPU e navegação taxonômica pela **Terminologia Anatomica internacional (TA2)** com códigos FMA.
 
-> **Nota**: Uso estritamente educacional. Consulte o documento canônico de design system, tokens visuais e governança 3D em [`designer.md`](designer.md).
+> **Nota**: Uso estritamente educacional. Consulte o documento canônico de design system, 5 temas táteis minerais e governança 3D em [`DESIGN.md`](DESIGN.md) (espelhado em [`designer.md`](designer.md)) e a especificação funcional em [`SPEC.md`](SPEC.md).
 
 ---
 
@@ -23,8 +23,8 @@ Plataforma médica e educacional em 3D de alta fidelidade para estudo e disseca�
 - **Cíngulo e Membros Superiores**: Clavículas, Escápulas, Úmeros, Rádios, Ulnas, Ossos do Carpo, Metacarpos e Falanges.
 - **Cíngulo Pélvico e Membros Inferiores**: Ílios, Ísquios, Púbis, Fêmures, Patelas, Tíbias, Fíbulas, Tarsos, Metatarsos e Falanges.
 
-### 2. Filtragem Topográfica, Estratigrafia Cirúrgica e Multi-Sistema
-- **Seleção Concorrente Multi-Sistema**: Ativação simultânea de múltiplos sistemas anatômicos ordenada estratigraficamente de fora para dentro, com controle de **Camadas Cirúrgicas (`1/6` a `6/6`)** e sliders individuais de opacidade por sistema.
+### 2. Filtragem Topográfica, Estratigrafia Cirúrgica (`1ª EXT → 11ª INT`) e Multi-Sistema
+- **Navegação de Fora para Dentro (`toggleSystemPeel`)**: Descasca camadas superficiais mantendo órgãos profundos visíveis, com selos estratigráficos (`1ª EXT` a `11ª INT` e subcamadas miofasciais `2.1 EXT` a `2.4 INT`), pastas iniciando recolhidas e controle de **Camadas Cirúrgicas (`1/6` a `6/6`)**.
 - **Recorte Topográfico por Região (`isNodeInRegion`)**:
   - **Crânio & Face**: Isola as estruturas cranianas e centraliza no meio do viewport com zoom cirúrgico (`3.1x`).
   - **Coluna Vertebral**: Foco nas vértebras cervicais, torácicas, lombares e sacro com descompactação axial vertical.
@@ -34,36 +34,29 @@ Plataforma médica e educacional em 3D de alta fidelidade para estudo e disseca�
   - **Membros Inferiores**: Fêmur, joelho, perna e pé.
   - **Corpo Inteiro**: Arcabouço corporal completo articulado.
 
-### 3. Exploded View Homolateral em GPU (60 FPS)
-- Motor determinístico em [`src/core/explodedEngine.ts`](src/core/explodedEngine.ts) acoplado ao loop `useFrame` do Three.js.
-- **Bússola Axial e Preservação Homolateral**: Precedência determinística dos sufixos anatômicos `.l` (`+X` Esquerda) e `.r` (`-X` Direita) sobre o centro geométrico real (`getMeshAnatomicalCenter`), garantindo expansão centrífuga homolateral e impedindo inversão bilateral em nervos ou vasos que cruzam o plano mediano (ex.: `Vagus nerve (X).r`).
+### 3. Exploded View Homolateral Contínua em GPU (60 FPS, Zero-Allocation)
+- Motor determinístico em [`src/core/explodedEngine.ts`](src/core/explodedEngine.ts) acoplado ao loop `useFrame` do Three.js com zero alocação por frame e trava de inatividade (`lastAppliedProgressRef`).
+- **Bússola Axial e Preservação Homolateral**: Precedência determinística dos sufixos anatômicos `.l` (`+X` Esquerda) e `.r` (`-X` Direita) sobre o centro geométrico real (`getMeshAnatomicalCenter`), curvas suaves $C^1$-contínuas (`Math.tanh`) e avanço linear $P(t) = P_0 + \vec{V}_{\text{offset}} \cdot t$.
 - **Descompactação Axial da Coluna**: Quando a região `Coluna` está isolada (`activeRegion === 'spine'`), o sacro atua como âncora basal enquanto as vértebras expandem verticalmente ao longo do eixo `Y`.
 - **Imutabilidade de Posição (`initialPosition`)**: Preservação estrita da posição anatômica original de cada malha em `mesh.userData.initialPosition`, inclusive quando temporariamente oculta, eliminando *drift* cumulativo ao alternar filtros ou regiões.
 
-### 4. Sistemas Viscerais, Musculares e Tegumentares Co-localizados (Deduplicados)
-- **Sistema Muscular** (`muscular_male.glb`): 1.388 músculos reais sobrepostos ao esqueleto.
-- **Sistema Respiratório** (`respiratory_male.glb`): Traqueia, brônquios e pulmões com lobos no tórax.
-- **Sistema Cardiovascular** (`cardiovascular_male.glb` / `cardiovascular_female.glb`): Coração e árvore arterial/venosa no mediastino.
-- **Sistema Digestório** (`digestive_male.glb` / `digestive_female.glb`): Esôfago, estômago, fígado, pâncreas e intestinos.
-- **Sistema Nervoso** (`nervous_male.glb`): Encéfalo com hemisférios, cerebelo, medula espinhal e nervos periféricos.
-- **Sistema Urinário** (`renal_male.glb` / `renal_female.glb`): Rins bilaterais e vias urinárias no retroperitônio.
-- **Sistema Tegumentar** (`integumentary_female.glb`): Estruturas mamárias e tegumentares alinhadas topograficamente na parede torácica anterior (`modelOffset={[0, 0.84, 0.03]}`).
-- **Sistemas Linfático, Articular, Endócrino, Sensorial e Reprodutor**: Vasos, linfonodos, cápsulas articulares, glândulas e órgãos sensoriais.
-- **Deduplicação Automática Cross-GLB (`isDuplicateCrossSystemMesh`)**: Filtra no carregamento as 278 malhas musculares exportadas duplicadamente dentro de `nervous_male.glb` e as 31 malhas esqueléticas/esfincterianas duplicadas dentro de `digestive_male.glb`, eliminando *Z-fighting* e interceptação duplicada de cliques.
+### 4. Sincronização de Sexo Biológico (`Masculino` vs. `Feminino`) e Sistemas Co-localizados
+- **Sincronização Estrita de Sexo Biológico (`biologicalSex: 'male' | 'female'`)**:
+  - **Masculino**: Renderiza `reproductive_male.glb` (14 estruturas) sem glândulas mamárias femininas.
+  - **Feminino**: Renderiza simultaneamente `reproductive_female.glb` (**36 estruturas catalogadas** em [`femaleReproductiveCatalog.ts`](src/shared/constants/femaleReproductiveCatalog.ts): Útero [Corpo, Fundo, Istmo, Colo], Ovários, Tubas Uterinas [Infundíbulo, Ampola, Istmo, Fímbrias], Vagina, Fórnices e Ligamentos Pélvicos) e `integumentary_female.glb` (`modelOffset={[0, 0.84, 0.03]}`).
+- **Sistema Muscular** (`muscular_male.glb`): 1.388 músculos reais sobrepostos ao esqueleto com shader procedural GPU (`tissueShader.ts`).
+- **Sistemas Respiratório, Cardiovascular, Digestório, Nervoso, Urinário, Linfático, Articular, Endócrino e Sensorial**: Co-localizados e com **Deduplicação Automática Cross-GLB (`isDuplicateCrossSystemMesh`)** eliminando *Z-fighting*.
 
 ### 5. Barra Flutuante de Dissecção & MPR (`DissectionToolbar.tsx`)
 - **Modo Sólido PBR**: Controles diretos de 1 clique no topo do viewport para **Exploded View (`0%` a `100%`)**, **Plano Cirúrgico (Camadas `1/6` a `6/6`)**, **Ghosting Contextual** e **Restaurar Cena (`R`)**.
 - **Modo Corte Tomográfico (MPR)**: Fatiamento cirúrgico em tempo real nos três planos ortogonais fundamentais (**Sagital `X`**, **Coronal `Z`** e **Axial `Y`**) com slider milimétrico (`-2.20 cm` a `+2.20 cm`), inversão de plano, lâmina 3D e correlação clínica.
 - **Modo Raio-X (X-Ray Translúcido)**: Renderização translúcida sincronizada com a densidade esquelética.
 
-### 6. Catálogo Taxonômico Canônico, Busca Global (`Ctrl+K`) e Callout 3D em Escala 1:1
-- **1.584 itens mapeados** em [`zAnatomyCatalog.ts`](src/shared/constants/zAnatomyCatalog.ts) com lookups $O(1)$ (`Z_ANATOMY_BY_ID` e `Z_ANATOMY_BY_NODE`).
-- **Callout 3D Compacto (`AnatomicalCallout3D.tsx`)**: Renderizado via `<Html center>` em escala constante 1:1 de tela (sem `distanceFactor`, evitando quadros gigantes ao dar zoom), ancorado no centro anatômico real da peça com linha guia SVG tracejada (`.callout-svg-line`) e cartão deslocado (`max-width: 220px`) com PT-BR, Latim TA2 e 4 ações rápidas (`Focar (F)`, `Isolar/Restaurar`, `Ocultar (H)`, `Ficha`).
-- **Painel Lateral Unificado em 3 Abas WAI-ARIA (`AnatomyTreePanel.tsx`)**:
-  1. **Árvore TA2**: Hierarquia taxonômica com botões recursivos `Expandir`/`Recolher`, checkboxes tri-state, contadores canônicos (`335/335` no esqueleto, `1.584` no total) e isolamento em 1 clique.
-  2. **Filtros**: Seleção concorrente de sistemas, 7 regiões anatômicas, camadas cirúrgicas e densidade óssea (`100%`, `35%`, `0%`).
-  3. **Ficha Clínica (`AnatomyClinicalCard.tsx`)**: Código FMA, ações rápidas, sliders individuais de transparência de camadas sobrepostas e literatura clínica expansível.
-- **Busca Médica Global (`GlobalSearchBox.tsx`, `Ctrl+K`)**: Autocomplete insensível a acentos buscando simultaneamente em PT-BR, Latim TA2, Inglês, Sistema e código FMA.
+### 6. Catálogo Taxonômico Canônico, Estúdio Neuroclínico, Busca Global (`Ctrl+K`) e Callout 3D 1:1
+- **1.584+ itens mapeados** em [`zAnatomyCatalog.ts`](src/shared/constants/zAnatomyCatalog.ts) + [`femaleReproductiveCatalog.ts`](src/shared/constants/femaleReproductiveCatalog.ts) com lookups $O(1)$ (`Z_ANATOMY_BY_ID` e `Z_ANATOMY_BY_NODE`).
+- **Estúdio Neuroclínico Integrado (`src/client/components/ui/clinical/*.tsx`)**: 14 Forames da Base do Crânio, Áreas Citoarquitetônicas de Brodmann, 12 Pares de Nervos Cranianos (`NC I–XII`), Calculadora Interativa ASPECTS (10 pontos) e Simulador de Casos Clínicos Topográficos sincronizados com foco 3D.
+- **Callout 3D Compacto (`AnatomicalCallout3D.tsx`)**: Renderizado via `<Html center>` em escala constante 1:1 de tela (sem `distanceFactor`), ancorado no centro anatômico real da peça com linha guia SVG tracejada (`.callout-svg-line`) e cartão deslocado (`max-width: 220px`) com PT-BR, Latim TA2 e 4 ações rápidas (`Focar (F)`, `Isolar/Restaurar`, `Ocultar (H)`, `Ficha`).
+- **Painel Lateral Unificado em 3 Abas WAI-ARIA (`AnatomyTreePanel.tsx`)** e **Busca Médica Global (`GlobalSearchBox.tsx`, `Ctrl+K`)**.
 
 ---
 
@@ -216,10 +209,10 @@ graph TD
 ```text
 appmy/
 ├── AGENTS.md                            # Diretrizes operacionais e convenções do repositório
-├── designer.md                          # Guia canônico de Design System, UI/UX médica e motor 3D
+├── CONTEXT.md                           # Ponto de entrada de contexto e Hierarquia de 4 Níveis
+├── DESIGN.md                            # Guia canônico de Design System Tátil, UI/UX médica e motor 3D
+├── SPEC.md                              # Especificação funcional e invariantes matemáticos 3D
 ├── Dockerfile                           # Container multi-stage para Google Cloud Run
-├── deploy-cloudrun.ps1                  # Script PowerShell de deploy automatizado no Cloud Run
-├── deploy-cloudrun.sh                   # Script Bash de deploy automatizado no Cloud Run
 ├── public/
 │   ├── draco/gltf/                      # Decodificador Draco WASM offline de alto desempenho
 │   └── models/
@@ -235,10 +228,14 @@ appmy/
 │           ├── articular_male.glb       # Ligamentos e cápsulas articulares
 │           ├── lymphatic_male.glb       # Linfonodos e vasos linfáticos
 │           ├── endocrine_male.glb       # Glândulas endócrinas
-│           └── reproductive_male.glb    # Órgãos reprodutores
+│           ├── reproductive_male.glb    # Órgãos reprodutores masculinos (14 estruturas)
+│           └── reproductive_female.glb  # Órgãos reprodutores femininos (36 estruturas)
 ├── src/
 │   ├── core/
 │   │   ├── explodedEngine.ts            # Motor puro de Exploded View homolateral e centro anatômico
+│   │   ├── navigationGestures.ts        # Gesture Intent Locking 3D e normalização de trackpad/touch
+│   │   ├── surgicalLayers.ts            # Classificação estratigráfica de fora para dentro (Camadas 1 a 6)
+│   │   ├── tissueShader.ts              # Shader procedural GPU de fibras musculares, fáscias e tendões
 │   │   └── visibilityManager.ts         # Gerenciador puro de visibilidade, isolamento e ghosting
 │   ├── client/
 │   │   ├── components/
@@ -258,6 +255,7 @@ appmy/
 │   │   │   └── ui/
 │   │   │       ├── DissectionToolbar.tsx      # HUD flutuante: Exploded View, Camadas 1-6 e Corte MPR
 │   │   │       ├── QuickPresetsBar.tsx        # Presets rápidos e marcadores clínicos (bookmarks)
+│   │   │       ├── clinical/                  # Estúdio Neuroclínico (14 Forames, Brodmann, NC I-XII, ASPECTS, Casos)
 │   │   │       └── tree/
 │   │   │           ├── AnatomyTreePanel.tsx       # Painel esquerdo em 3 abas WAI-ARIA (Árvore, Filtros, Ficha)
 │   │   │           ├── GlobalSearchBox.tsx        # Busca médica global (Ctrl+K) com autocomplete
@@ -271,16 +269,18 @@ appmy/
 │   │   ├── stores/
 │   │   │   └── useAnatomyStore.ts       # Store reativo central Zustand 5
 │   │   ├── App.tsx                      # Shell principal da aplicação
-│   │   └── index.css                    # Design system Dark-First Hospitalar e tokens CSS
+│   │   └── index.css                    # Design System Tátil Melki (5 Temas Minerais) e tokens CSS
 │   ├── server/                          # Backend Express 4, Helmet, CORS e sondas (/api/health, /healthz)
 │   └── shared/
 │       ├── constants/
 │       │   └── zAnatomyCatalog.ts       # 1.584 itens com nomes em PT-BR, Latim TA2, FMA e lookups O(1)
-│       ├── types/                       # Contratos estritos TypeScript (anatomy, taxonomicTree, dissection)
+│       ├── types/                       # Contratos estritos TypeScript (anatomy, taxonomicTree, dissection, neuroClinical)
 │       └── utils/                       # Construtores e filtros da árvore taxonômica TA2
 ├── scripts/
-│   └── build_z_anatomy_catalog.py       # Pipeline gerador do catálogo tipado TypeScript
-└── tests/                               # 197 testes unitários aprovados em 29 suítes Vitest
+│   ├── build_z_anatomy_catalog.py       # Pipeline gerador do catálogo tipado TypeScript
+│   ├── deploy-cloudrun.ps1              # Script PowerShell de deploy automatizado no Cloud Run
+│   └── deploy-cloudrun.sh               # Script Bash de deploy automatizado no Cloud Run
+└── tests/                               # 234 testes unitários aprovados em 32 suítes Vitest
 ```
 
 ---
@@ -322,10 +322,10 @@ Acesse no navegador:
 
 ### 4. Trio de Qualidade (Typecheck, Testes e Build)
 ```powershell
-# 1. Checagem estrita de tipos TypeScript (Cliente + Servidor)
+# 1. Checagem estrita de tipos TypeScript (Cliente + Servidor + Core)
 npm run typecheck
 
-# 2. Execução da suíte completa de testes unitários (197 testes em 29 suítes Vitest)
+# 2. Execução da suíte completa de testes unitários (234 testes em 32 suítes Vitest)
 npm test
 
 # 3. Compilação de produção (dist/client + dist/server)
@@ -341,7 +341,7 @@ npm start
 
 ## ☁️ Deploy no Google Cloud Run
 
-O projeto possui `Dockerfile` multi-stage otimizado para a porta dinâmica `$PORT` do Cloud Run (`8080` por padrão) e scripts dedicados (`deploy-cloudrun.ps1` e `deploy-cloudrun.sh`).
+O projeto possui `Dockerfile` multi-stage otimizado para a porta dinâmica `$PORT` do Cloud Run (`8080` por padrão) e scripts dedicados em `scripts/` (`scripts/deploy-cloudrun.ps1` e `scripts/deploy-cloudrun.sh`).
 
 O workflow `.github/workflows/deploy.yml` requer uma destas configurações em **Settings → Secrets and variables → Actions → Secrets**:
 

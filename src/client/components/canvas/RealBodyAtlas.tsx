@@ -32,6 +32,7 @@ import { AnatomicalMeshUserData } from '../../../shared/types/anatomy.ts';
 
 // Configuração do decodificador Draco local offline em public/draco/gltf/
 const DRACO_DECODER_PATH = '/draco/gltf/';
+const CRANIUM_FOCUS_OFFSET_Y = -4.6;
 
 export interface RealBodyAtlasProps {
   explosionProgress: number; // 0.0 a 1.0
@@ -847,7 +848,7 @@ export function RealBodyAtlas({
   }, [storeSelectedNodeId, selectedNodeId, onSelectNode]);
 
   const effectiveExplosion = explosionProgress > 0 ? explosionProgress : storeModules.explodedProgress;
-  const effectiveOpacity = realSkullOpacity !== 1.0 ? realSkullOpacity : storeModules.solidOpacity;
+  const effectiveOpacity = Math.abs(realSkullOpacity - 1.0) > 1e-4 ? realSkullOpacity : storeModules.solidOpacity;
   const effectiveXRay = visualMode === 'xray' || storeModules.xRayMode;
 
   // Coleta de Lixo WebGL Determinística ao desmontar
@@ -925,7 +926,7 @@ export function RealBodyAtlas({
   const { position, scale } = useMemo<{ position: [number, number, number]; scale: [number, number, number] }>(() => {
     if (activeRegion === 'cranium') {
       return {
-        position: [0, -4.6, 0],
+        position: [0, CRANIUM_FOCUS_OFFSET_Y, 0],
         scale: [3.1, 3.1, 3.1],
       };
     }

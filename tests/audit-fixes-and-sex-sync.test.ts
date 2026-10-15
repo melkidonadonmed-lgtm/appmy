@@ -1,4 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import * as THREE from 'three';
 import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
 import { Z_ANATOMY_CATALOG, Z_ANATOMY_BY_ID } from '../src/shared/constants/zAnatomyCatalog.ts';
@@ -12,7 +14,9 @@ import {
   computeTwoFingerMetrics,
   computeTwoFingerTouchDelta,
   computeTrackpadTwoFingerDelta,
+  applyNavigationDeltaToRig,
 } from '../src/core/navigationGestures.ts';
+import { getAnatomicalLandmark } from '../src/client/lib/dissection-planes.ts';
 import {
   determineSurgicalLayer,
   isFasciaOrAponeurosis,
@@ -199,6 +203,79 @@ describe('Auditoria Matemática, Sincronização de Sexo Biológico e Navegaçã
 
       expect(selectedMesh.visible).toBe(true);
       expect(otherCatalogMesh.visible).toBe(false);
+    });
+  });
+
+  describe('6. Edge Cases de Navegação 3D, Limites de Corte e Higiene Tátil / Raiz', () => {
+    it('deve proteger computeTwoFingerTouchDelta contra distância zero, viewport nulo e modo "zoom"', () => {
+      const zeroPrev = computeTwoFingerMetrics({ x: 50, y: 50 }, { x: 50, y: 50 }, 'unlocked');
+      const zeroCurr = computeTwoFingerMetrics({ x: 50, y: 50 }, { x: 50, y: 50 }, 'unlocked');
+      const zeroDelta = computeTwoFingerTouchDelta(zeroPrev, zeroCurr, 0, -100);
+      expect(Number.isFinite(zeroDelta.verticalPanDelta)).toBe(true);
+      expect(Number.isFinite(zeroDelta.azimuthRotateDelta)).toBe(true);
+      expect(zeroDelta.dollyScale).toBe(1.0);
+
+      const zoomPrev = computeTwoFingerMetrics({ x: 100, y: 100 }, { x: 200, y: 100 }, 'unlocked');
+      const zoomCurr = computeTwoFingerMetrics({ x: 90, y: 120 }, { x: 210, y: 120 }, 'unlocked');
+      const zoomDelta = computeTwoFingerTouchDelta(zoomPrev, zoomCurr, 'zoom');
+      expect(zoomDelta.lockedIntent).toBe('pinch');
+      expect(zoomDelta.verticalPanDelta).toBe(0);
+      expect(zoomDelta.azimuthRotateDelta).toBe(0);
+      expect(zoomDelta.dollyScale).toBeLessThan(1.0);
+    });
+
+    it('deve aplicar applyNavigationDeltaToRig com limites estritos e reprodutibilidade Pass@10 sem vazamento de estado', () => {
+      const results: string[] = [];
+      for (let i = 0; i < 10; i++) {
+        const cam = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+        cam.position.set(0, 0.5, 3.0);
+        const target = new THREE.Vector3(0, 0.5, 0);
+        applyNavigationDeltaToRig(
+          cam,
+          target,
+          { verticalPanDelta: 50, azimuthRotateDelta: 0.25, dollyScale: 100 },
+          { minY: -1.5, maxY: 1.8, minDistance: 0.5, maxDistance: 8.0 }
+        );
+        expect(target.y).toBeCloseTo(1.8, 5);
+        const dist = cam.position.distanceTo(target);
+        expect(dist).toBeCloseTo(8.0, 4);
+        results.push(`${cam.position.x.toFixed(6)},${cam.position.y.toFixed(6)},${cam.position.z.toFixed(6)}`);
+      }
+      expect(new Set(results).size).toBe(1);
+    });
+
+    it('deve resolver marcos anatômicos nos limites exatos [-3.0, 3.0] e retornar fallback seguro fora do intervalo', () => {
+      expect(getAnatomicalLandmark('sagittal', -3.0).namePtBr).toContain('Lateral Esquerdo');
+      expect(getAnatomicalLandmark('sagittal', 3.0).namePtBr).toContain('Lateral Direito');
+      expect(getAnatomicalLandmark('axial', -999).namePtBr).toBeDefined();
+      expect(getAnatomicalLandmark('coronal', 999).namePtBr).toBeDefined();
+    });
+
+    it('deve manter a raiz higienizada e o CSS tátil em conformidade com kebab-case e prefers-reduced-motion', () => {
+      const rootDir = path.resolve(__dirname, '..');
+      expect(fs.existsSync(path.join(rootDir, 'designer.md'))).toBe(false);
+      expect(fs.existsSync(path.join(rootDir, 'dataconnect'))).toBe(false);
+      expect(fs.existsSync(path.join(rootDir, 'DESIGN.md'))).toBe(true);
+      expect(fs.existsSync(path.join(rootDir, 'scripts', 'deploy-cloudrun.ps1'))).toBe(true);
+
+      const cssContent = fs.readFileSync(path.join(rootDir, 'src', 'client', 'index.css'), 'utf-8');
+      expect(cssContent).toContain('--font-display:');
+      expect(cssContent).toContain('.btn-tactile');
+      expect(cssContent).toContain('.card-tactile');
+      expect(cssContent).toContain('.neuro-equation-chip');
+      expect(cssContent).not.toContain('.neuro-Equation-chip');
+      expect(cssContent).toContain('prefers-reduced-motion: reduce');
+      expect(cssContent).not.toMatch(/transition:\s*all\b/);
+      expect(cssContent).not.toContain('rotate(0deg)');
+      expect(cssContent).not.toContain('bookmarkFadeIn');
+
+      const bodyCssAfterThemes = cssContent.slice(cssContent.indexOf('* {'));
+      expect(bodyCssAfterThemes).not.toMatch(/#(0f172a|1e293b|334155|475569|64748b|94a3b8|cbd5e1|e2e8f0|f1f5f9|f8fafc)\b/);
+
+      const appContent = fs.readFileSync(path.join(rootDir, 'src', 'client', 'App.tsx'), 'utf-8');
+      expect(appContent).toContain('role="status"');
+      expect(appContent).toContain('aria-live="polite"');
+      expect(appContent).toContain('aria-busy={loadingHealth}');
     });
   });
 });

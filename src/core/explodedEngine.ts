@@ -11,6 +11,9 @@ export interface ExplodedNodeBinding {
 const NON_AXIAL_STRUCTURE_REGEX =
   /\b(muscle|musculi|músculo|musculo|tract|tractus|trato|fascia|fáscia|bursa|tendon|tendão|aponeurosis|aponeurose|sheath|bainha|artery|arteria|artéria|vein|veia|nerve|nervo|plexus|plexo|ganglion|gânglio|duct|ducto|node|linfonodo|trunk|tronco|branch|ramo|ramus|sinus|seio|gland|glândula|ligament|ligamento)\b/i;
 
+const RADIAL_TANH_GAIN = 12.0;
+const ANTEROPOSTERIOR_TANH_GAIN = 10.0;
+
 /**
  * Identifica se uma estrutura deve permanecer como âncora fixa central estática
  * dependendo da região anatômica sob observação clínica.
@@ -226,7 +229,7 @@ export function bindExplodedNode(
       const posZ = effectiveCenter.z;
 
       const radialX = Math.abs(posX);
-      const smoothXMag = radialX * 1.95 + Math.tanh(radialX * 12.0) * 0.18;
+      const smoothXMag = radialX * 1.95 + Math.tanh(radialX * RADIAL_TANH_GAIN) * 0.18;
       let dirX = 0;
       if (laterality !== 0) {
         dirX = laterality * Math.max(smoothXMag, 0.12);
@@ -248,7 +251,7 @@ export function bindExplodedNode(
 
       // Gradiente anteroposterior contínuo via tanh relativo à coluna (Z = -0.02), zero salto em Z = -0.02
       const relZ = posZ + 0.02;
-      let dirZ = relZ * 1.45 + Math.tanh(relZ * 10.0) * 0.08;
+      let dirZ = relZ * 1.45 + Math.tanh(relZ * ANTEROPOSTERIOR_TANH_GAIN) * 0.08;
       if (Math.abs(dirZ) < 0.04 && laterality === 0) {
         dirZ = 0.12;
       }
