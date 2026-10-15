@@ -206,6 +206,12 @@ export function installOfflineCacheFetchInterceptor(): void {
         if (cachedResp) {
           return cachedResp.clone();
         }
+
+        const networkResp = await originalFetch(input, init);
+        if (networkResp.ok) {
+          cache.put(urlStr, networkResp.clone()).catch(() => {});
+        }
+        return networkResp;
       }
     } catch {
       // Fallback transparente para rede caso CacheStorage esteja indisponível

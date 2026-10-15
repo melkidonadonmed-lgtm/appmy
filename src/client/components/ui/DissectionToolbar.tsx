@@ -26,24 +26,16 @@ interface DissectionToolbarProps {
 }
 
 export function DissectionToolbar({ dissection, onChange }: DissectionToolbarProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const explosionProgress = useAnatomyStore((s) => s.explosionProgress);
   const setExplosionProgress = useAnatomyStore((s) => s.setExplosionProgress);
-  const stepExplosionProgress = useAnatomyStore((s) => s.stepExplosionProgress);
   const activeDepth = useAnatomyStore((s) => s.activeDepth);
   const setActiveDepth = useAnatomyStore((s) => s.setActiveDepth);
-  const ghostMode = useAnatomyStore((s) => s.ghostMode);
-  const toggleGhostMode = useAnatomyStore((s) => s.toggleGhostMode);
-  const showAll = useAnatomyStore((s) => s.showAll);
-  const applyPreset = useAnatomyStore((s) => s.applyPreset);
-  const setSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
   const peelOnClickMode = useAnatomyStore((s) => s.peelOnClickMode);
   const togglePeelOnClickMode = useAnatomyStore((s) => s.togglePeelOnClickMode);
   const peeledHistory = useAnatomyStore((s) => s.peeledHistory);
   const undoLastPeel = useAnatomyStore((s) => s.undoLastPeel);
-  const peelNextLayerInOrder = useAnatomyStore((s) => s.peelNextLayerInOrder);
-  const restorePreviousLayerInOrder = useAnatomyStore((s) => s.restorePreviousLayerInOrder);
 
   const explosionPct = Math.round(explosionProgress * 100);
   const depthPct = Math.round(((activeDepth - 1) / 5) * 100);
@@ -54,6 +46,9 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
       ...dissection,
       visualMode: mode,
     });
+    if (mode === 'mpr') {
+      setIsExpanded(true);
+    }
   };
 
   const handlePlaneChange = (plane: MprPlaneType) => {
@@ -84,7 +79,7 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
     });
   };
 
-  const handleReset = () => {
+  const handleResetMpr = () => {
     onChange({
       ...dissection,
       offset: 0,
@@ -92,96 +87,104 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
     });
   };
 
-  const handleFullSceneReset = () => {
-    setExplosionProgress(0);
-    setActiveDepth(1);
-    showAll();
-    setSelectedNode(null);
-    applyPreset('all');
-    handleReset();
-  };
-
   return (
     <div className="dissection-toolbar">
-      {/* Barra Principal de Ferramentas */}
+      {/* Barra Compacta de Ferramentas 3D */}
       <div className="dissection-header">
-        <div className="dissection-title-wrap">
-          <Scissors size={15} strokeWidth={1.5} color="var(--accent)" />
-          <span className="dissection-title">Dissecção & Tomografia MPR</span>
-        </div>
-
-        {/* Alternador de Modos de Visualização Cirúrgica */}
         <div className="mode-toggle-group">
           <button
             type="button"
             className={`mode-btn ${dissection.visualMode === 'solid' ? 'active' : ''}`}
             onClick={() => handleModeChange('solid')}
-            title="Modo Anatômico Canônico Sólido e Exploded View"
+            title="Visualização Sólida Padrão"
           >
-            <Layers size={13} strokeWidth={1.5} />
+            <Layers size={13} strokeWidth={1.5} aria-hidden="true" />
             <span>Sólido</span>
           </button>
           <button
             type="button"
             className={`mode-btn ${dissection.visualMode === 'xray' ? 'active' : ''}`}
             onClick={() => handleModeChange('xray')}
-            title="Modo Translúcido / Raio-X Cirúrgico"
+            title="Modo Translúcido (Raio-X)"
           >
-            <Sparkles size={13} strokeWidth={1.5} />
+            <Sparkles size={13} strokeWidth={1.5} aria-hidden="true" />
             <span>Raio-X</span>
           </button>
           <button
             type="button"
             className={`mode-btn ${dissection.visualMode === 'mpr' ? 'active' : ''}`}
             onClick={() => handleModeChange('mpr')}
-            title="Corte Tomográfico Multiplanar (MPR)"
+            title="Corte Tomográfico Multiplanar (Sagital, Coronal, Axial)"
           >
-            <Scissors size={13} strokeWidth={1.5} />
+            <Scissors size={13} strokeWidth={1.5} aria-hidden="true" />
             <span>Corte MPR</span>
           </button>
+        </div>
+
+        {/* Bisturi 3D Direto (Click-to-Peel) + Desfazer */}
+        <div className="mode-toggle-group">
+          <button
+            type="button"
+            className={`mode-btn ${peelOnClickMode ? 'active' : ''}`}
+            onClick={togglePeelOnClickMode}
+            aria-pressed={peelOnClickMode}
+            title="Modo Bisturi 3D: Clique em qualquer peça no modelo 3D para retirá-la (ou use Alt+Clique)"
+          >
+            <Scissors size={13} strokeWidth={1.5} aria-hidden="true" />
+            <span>{peelOnClickMode ? 'Bisturi: ON' : 'Bisturi 3D'}</span>
+          </button>
+
+          {peeledHistory.length > 0 && (
+            <button
+              type="button"
+              className="mode-btn"
+              onClick={undoLastPeel}
+              title={`Desfazer última peça retirada (${peeledHistory.length} no histórico)`}
+            >
+              <Undo2 size={13} strokeWidth={1.5} aria-hidden="true" />
+              <span>Desfazer ({peeledHistory.length})</span>
+            </button>
+          )}
         </div>
 
         <button
           type="button"
           className="dissection-collapse-btn"
           onClick={() => setIsExpanded(!isExpanded)}
-          title={isExpanded ? 'Recolher Painel de Dissecção' : 'Expandir Painel de Dissecção'}
+          title={isExpanded ? 'Ocultar controles de Explosão e Camadas' : 'Abrir controles de Explosão 3D e Camadas'}
+          aria-label={isExpanded ? 'Ocultar controles de Explosão e Camadas' : 'Abrir controles de Explosão 3D e Camadas'}
+          aria-expanded={isExpanded}
         >
-          {isExpanded ? <ChevronUp size={14} strokeWidth={1.5} /> : <ChevronDown size={14} strokeWidth={1.5} />}
+          {isExpanded ? (
+            <ChevronUp size={14} strokeWidth={1.5} aria-hidden="true" />
+          ) : (
+            <ChevronDown size={14} strokeWidth={1.5} aria-hidden="true" />
+          )}
         </button>
       </div>
 
-      {/* Controles Diretos de Exploded View e Camadas Cirúrgicas no Modo Sólido */}
+      {/* Sliders Limpos de Exploded View e Camadas no Modo Sólido */}
       {isExpanded && dissection.visualMode === 'solid' && (
         <div className="dissection-body">
           <div className="dissection-quick-grid">
-            {/* Controle Rápido 1: Exploded View Linear */}
             <div className="dissection-control-row">
               <div className="slider-header">
                 <span className="control-label">
-                  <Maximize2 size={11} strokeWidth={1.5} />
+                  <Maximize2 size={11} strokeWidth={1.5} aria-hidden="true" />
                   <span>Exploded View:</span>
                 </span>
                 <div className="slider-step-controls">
-                  <button
-                    type="button"
-                    className="slider-step-btn"
-                    onClick={() => stepExplosionProgress(-0.1)}
-                    title="Reduzir 10% (Avanço Linear)"
-                    aria-label="Reduzir Exploded View em 10%"
-                  >
-                    -10%
-                  </button>
                   <span className="slider-value">{explosionPct}%</span>
-                  <button
-                    type="button"
-                    className="slider-step-btn"
-                    onClick={() => stepExplosionProgress(0.1)}
-                    title="Avançar 10% (Avanço Linear)"
-                    aria-label="Avançar Exploded View em 10%"
-                  >
-                    +10%
-                  </button>
+                  {explosionPct > 0 && (
+                    <button
+                      type="button"
+                      className="slider-step-btn"
+                      onClick={() => setExplosionProgress(0)}
+                      title="Zerar Exploded View"
+                    >
+                      0%
+                    </button>
+                  )}
                 </div>
               </div>
               <div className="slider-track-wrap">
@@ -192,35 +195,18 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                   step="0.01"
                   value={explosionProgress}
                   onChange={(e) => setExplosionProgress(parseFloat(e.target.value))}
-                  aria-label="Controle rápido de Exploded View"
+                  aria-label="Controle de Exploded View"
                   className="range-slider"
                   style={{ '--slider-pct': `${explosionPct}%` } as React.CSSProperties}
                 />
               </div>
-              <div className="linear-pct-steps" role="group" aria-label="Saltos lineares de Exploded View">
-                {[0, 0.25, 0.5, 0.75, 1].map((mark) => {
-                  const pct = Math.round(mark * 100);
-                  return (
-                    <button
-                      key={pct}
-                      type="button"
-                      onClick={() => setExplosionProgress(mark)}
-                      className={`linear-pct-pill ${explosionPct === pct ? 'active' : ''}`}
-                      title={`Definir Exploded View em ${pct}%`}
-                    >
-                      {pct}%
-                    </button>
-                  );
-                })}
-              </div>
             </div>
 
-            {/* Controle Rápido 2: Dissecação Estratigráfica (Camadas 1 a 6) */}
             <div className="dissection-control-row">
               <div className="slider-header">
                 <span className="control-label">
-                  <Sliders size={11} strokeWidth={1.5} />
-                  <span>Plano ({activeDepth}/6):</span>
+                  <Sliders size={11} strokeWidth={1.5} aria-hidden="true" />
+                  <span>Profundidade ({activeDepth}/6):</span>
                 </span>
                 <span className="slider-value">
                   {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
@@ -234,84 +220,19 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                   step="1"
                   value={activeDepth}
                   onChange={(e) => setActiveDepth(parseInt(e.target.value, 10))}
-                  aria-label="Controle rápido de camada cirúrgica de 1 a 6"
+                  aria-label="Camada cirúrgica de 1 a 6"
                   className="range-slider"
                   style={{ '--slider-pct': `${depthPct}%` } as React.CSSProperties}
                 />
               </div>
             </div>
           </div>
-
-          <div className="dissection-actions-row">
-            <button
-              type="button"
-              className={`action-btn ${peelOnClickMode ? 'active' : ''}`}
-              onClick={togglePeelOnClickMode}
-              title="Modo Bisturi 3D: Quando ativo, clicar em qualquer estrutura no modelo 3D retira (oculta) essa camada para expor o interior (ou segure Alt+Clique)"
-            >
-              <Scissors size={13} strokeWidth={1.5} />
-              <span>Bisturi (Clique p/ Retirar): {peelOnClickMode ? 'ON' : 'OFF'}</span>
-            </button>
-
-            {peeledHistory.length > 0 && (
-              <button
-                type="button"
-                className="action-btn"
-                onClick={undoLastPeel}
-                title={`Desfazer a última peça retirada (${peeledHistory.length} no histórico)`}
-              >
-                <Undo2 size={13} strokeWidth={1.5} />
-                <span>Desfazer Peça ({peeledHistory.length})</span>
-              </button>
-            )}
-
-            <button
-              type="button"
-              className="action-btn"
-              onClick={peelNextLayerInOrder}
-              title="Retirar a próxima camada externa segundo a ordem configurada"
-            >
-              <Layers size={13} strokeWidth={1.5} />
-              <span>-1 Camada</span>
-            </button>
-
-            <button
-              type="button"
-              className="action-btn"
-              onClick={restorePreviousLayerInOrder}
-              title="Devolver a última camada de sistema ocultada"
-            >
-              <Layers size={13} strokeWidth={1.5} />
-              <span>+1 Camada</span>
-            </button>
-
-            <button
-              type="button"
-              className={`action-btn ${ghostMode ? 'active' : ''}`}
-              onClick={toggleGhostMode}
-              title="Alternar Modo Ghosting Contextual (Atenua estruturas vizinhas ao selecionar uma peça)"
-            >
-              <Eye size={13} strokeWidth={1.5} />
-              <span>Ghosting: {ghostMode ? 'Ativo' : 'Inativo'}</span>
-            </button>
-
-            <button
-              type="button"
-              className="action-btn"
-              onClick={handleFullSceneReset}
-              title="Restaurar posição anatômica, camadas e seleção (Atalho: R)"
-            >
-              <RotateCcw size={13} strokeWidth={1.5} />
-              <span>Restaurar Cena (R)</span>
-            </button>
-          </div>
         </div>
       )}
 
-      {/* Controles Avançados do Corte MPR */}
+      {/* Controles de Corte Tomográfico MPR */}
       {isExpanded && dissection.visualMode === 'mpr' && (
         <div className="dissection-body">
-          {/* Seletor de Planos Anatômicos */}
           <div className="dissection-control-row">
             <span className="control-label">Plano de Secção:</span>
             <div className="mpr-plane-buttons">
@@ -319,7 +240,6 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                 type="button"
                 className={`plane-btn ${dissection.activePlane === 'sagittal' ? 'active-sagittal' : ''}`}
                 onClick={() => handlePlaneChange('sagittal')}
-                title="Plano Sagital: Separação Direita/Esquerda (Eixo X)"
               >
                 Sagital (X)
               </button>
@@ -327,7 +247,6 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                 type="button"
                 className={`plane-btn ${dissection.activePlane === 'coronal' ? 'active-coronal' : ''}`}
                 onClick={() => handlePlaneChange('coronal')}
-                title="Plano Coronal: Separação Anterior/Posterior (Eixo Z)"
               >
                 Coronal (Z)
               </button>
@@ -335,17 +254,15 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                 type="button"
                 className={`plane-btn ${dissection.activePlane === 'axial' ? 'active-axial' : ''}`}
                 onClick={() => handlePlaneChange('axial')}
-                title="Plano Axial: Separação Cranial/Caudal (Eixo Y)"
               >
                 Axial (Y)
               </button>
             </div>
           </div>
 
-          {/* Slider de Profundidade Milimétrica */}
           <div className="dissection-control-row">
             <div className="slider-header">
-              <span className="control-label">Profundidade do Corte:</span>
+              <span className="control-label">Posição do Corte:</span>
               <span className="slider-value">
                 {dissection.offset >= 0 ? `+${dissection.offset.toFixed(2)}` : dissection.offset.toFixed(2)} cm
               </span>
@@ -359,68 +276,49 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                 value={dissection.offset}
                 onChange={(e) => handleOffsetChange(parseFloat(e.target.value))}
                 className="range-slider"
+                aria-label="Profundidade do corte MPR"
               />
             </div>
           </div>
 
-          {/* Ações Auxiliares: Inverter, Gizmo e Reset */}
           <div className="dissection-actions-row">
             <button
               type="button"
               className={`action-btn ${dissection.inverted ? 'active' : ''}`}
               onClick={handleToggleInvert}
-              title="Inverter Sentido da Secção (Cortar metade oposta)"
             >
-              <ArrowLeftRight size={13} strokeWidth={1.5} />
-              <span>Inverter ({dissection.inverted ? 'Invertido' : 'Padrão'})</span>
+              <ArrowLeftRight size={13} strokeWidth={1.5} aria-hidden="true" />
+              <span>Inverter</span>
             </button>
 
             <button
               type="button"
               className={`action-btn ${dissection.showHelper ? 'active' : ''}`}
               onClick={handleToggleHelper}
-              title="Exibir/Ocultar Lâmina Visual do Plano no Espaço 3D"
             >
-              {dissection.showHelper ? <Eye size={13} strokeWidth={1.5} /> : <EyeOff size={13} strokeWidth={1.5} />}
-              <span>Lâmina 3D</span>
+              {dissection.showHelper ? (
+                <Eye size={13} strokeWidth={1.5} aria-hidden="true" />
+              ) : (
+                <EyeOff size={13} strokeWidth={1.5} aria-hidden="true" />
+              )}
+              <span>Guia 3D</span>
             </button>
 
-            <button
-              type="button"
-              className="action-btn"
-              onClick={handleReset}
-              title="Restaurar Secção na Linha Média / Centro (0.00 cm)"
-            >
-              <RotateCcw size={13} strokeWidth={1.5} />
-              <span>Resetar</span>
+            <button type="button" className="action-btn" onClick={handleResetMpr}>
+              <RotateCcw size={13} strokeWidth={1.5} aria-hidden="true" />
+              <span>Centro</span>
             </button>
           </div>
 
-          {/* Card de Correlação Anatômica Clínica em Tempo Real */}
           <div className="landmark-card">
             <div className="landmark-header">
-              <Activity size={13} strokeWidth={1.5} color="#38bdf8" />
+              <Activity size={13} strokeWidth={1.5} color="var(--accent)" aria-hidden="true" />
               <div className="landmark-titles">
                 <span className="landmark-pt">{landmark.namePtBr}</span>
                 <span className="landmark-latin">{landmark.nameLatin}</span>
               </div>
             </div>
             <p className="landmark-desc">{landmark.clinicalSignificance}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Informação do modo Raio-X */}
-      {isExpanded && dissection.visualMode === 'xray' && (
-        <div className="dissection-body">
-          <div className="landmark-card" style={{ marginTop: '0.25rem' }}>
-            <div className="landmark-header">
-              <Sparkles size={13} strokeWidth={1.5} color="#38bdf8" />
-              <span className="landmark-pt">Visualização de Translucência Cirúrgica (Raio-X)</span>
-            </div>
-            <p className="landmark-desc">
-              A atenuação da opacidade do arcabouço osteomuscular e visceromegalias permite a avaliação de relações anatômicas profundas, canais vasculonervosos e estruturas retroperitoneais sem oclusão de visão.
-            </p>
           </div>
         </div>
       )}

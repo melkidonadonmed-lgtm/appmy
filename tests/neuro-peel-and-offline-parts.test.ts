@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as THREE from 'three';
@@ -29,6 +29,9 @@ import {
   DRACO_STATIC_FILES,
   getTotalDownloadSizeMb,
   getPartManifestById,
+  downloadPartToOfflineCache,
+  getCachedPartIds,
+  removePartFromOfflineCache,
 } from '../src/client/lib/modelCacheManager.ts';
 
 function resetStoreForTest() {
@@ -350,7 +353,7 @@ describe('Offline Parts Manager & Selective GPU Part Loading for High FPS', () =
       '.layer-opacity-pill',
       '.filter-region-pills',
       '.filter-region-pill',
-      '.layer-Peel-list',
+      '.layer-peel-list',
       '.layer-peel-item',
       '.filter-action-btn',
       '.outliner-search-icon',
@@ -358,5 +361,65 @@ describe('Offline Parts Manager & Selective GPU Part Loading for High FPS', () =
     for (const cls of requiredClasses) {
       expect(css, `Missing CSS rule for ${cls}`).toContain(cls);
     }
+  });
+
+  it('executes downloadPartToOfflineCache, getCachedPartIds and removePartFromOfflineCache with isolated CacheStorage', async () => {
+    const storeMap = new Map<string, Response>();
+    const mockCache = {
+      match: vi.fn(async (req: RequestInfo | URL) => {
+        const key = typeof req === 'string' ? req : req.toString();
+        return storeMap.get(key)?.clone();
+      }),
+      put: vi.fn(async (req: RequestInfo | URL, resp: Response) => {
+        const key = typeof req === 'string' ? req : req.toString();
+        storeMap.set(key, resp.clone());
+      }),
+      delete: vi.fn(async (req: RequestInfo | URL) => {
+        const key = typeof req === 'string' ? req : req.toString();
+        return storeMap.delete(key);
+      }),
+    };
+    const mockCaches = {
+      open: vi.fn(async () => mockCache),
+    };
+    const mockFetch = vi.fn(async () => new Response(new Uint8Array([103, 108, 84, 70]), { status: 200 }));
+
+    vi.stubGlobal('caches', mockCaches);
+    vi.stubGlobal('fetch', mockFetch);
+    vi.stubGlobal('window', { caches: mockCaches, fetch: mockFetch });
+
+    try {
+      const progressSteps: number[] = [];
+      const downloaded = await downloadPartToOfflineCache('endocrine', (pct) => progressSteps.push(pct));
+      expect(downloaded).toBe(true);
+      expect(progressSteps).toContain(100);
+
+      const cachedIds = await getCachedPartIds();
+      expect(cachedIds).toContain('endocrine');
+
+      const removed = await removePartFromOfflineCache('endocrine');
+      expect(removed).toBe(true);
+
+      const afterRemove = await getCachedPartIds();
+      expect(afterRemove).not.toContain('endocrine');
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it('enforces the 3-zone header, single Enquadrar 3D camera button and default hidden TelemetryOverlay', () => {
+    const appSource = fs.readFileSync(path.resolve(process.cwd(), 'src/client/App.tsx'), 'utf-8');
+    expect(appSource).toContain('HEADER_PRESETS');
+    expect(appSource).toContain('Estúdio Neuroclínico');
+    expect(appSource).not.toContain('Cloud & Telemetria');
+
+    const gizmoSource = fs.readFileSync(
+      path.resolve(process.cwd(), 'src/client/components/canvas/OrientationGizmo.tsx'),
+      'utf-8'
+    );
+    expect(gizmoSource).toContain('Enquadrar 3D');
+    expect(gizmoSource).not.toContain('Post');
+
+    expect(useAnatomyStore.getState().modules.telemetryVisible).toBe(false);
   });
 });

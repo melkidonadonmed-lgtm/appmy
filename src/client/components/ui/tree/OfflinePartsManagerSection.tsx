@@ -164,7 +164,7 @@ export const OfflinePartsManagerSection: React.FC = () => {
       </div>
 
       {/* Lista de Partes .GLB Individuais */}
-      <div className="layer-Peel-list">
+      <div className="layer-peel-list">
         {ANATOMY_PARTS_MANIFEST.map((part) => {
           const isMountedInGpu = !selectivePartLoading || loadedParts.has(part.id);
           const isCached = cachedParts.has(part.id);

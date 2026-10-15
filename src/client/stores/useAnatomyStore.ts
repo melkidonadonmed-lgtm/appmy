@@ -590,7 +590,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
     mprEnabled: false,
     explodedProgress: 0.0,
     xRayMode: false,
-    telemetryVisible: true,
+    telemetryVisible: false,
     solidOpacity: 1.0,
   },
 

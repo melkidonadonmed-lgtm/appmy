@@ -46,30 +46,24 @@ export const TelemetryOverlay: React.FC<{
   const setModuleState = useAnatomyStore((s) => s.setModuleState);
 
   if (!storeVisible) {
-    return (
-      <button
-        onClick={() => setModuleState({ telemetryVisible: true })}
-        className="telemetry-toggle-btn"
-        title="Exibir Telemetria 3D"
-      >
-        <Activity size={14} /> {fps} FPS
-      </button>
-    );
+    return null;
   }
 
   const fpsColor = fps >= 55 ? '#22c55e' : fps >= 30 ? '#f59e0b' : '#ef4444';
 
   return (
-    <div className="telemetry-badge">
+    <div className="telemetry-badge" role="status" aria-live="polite">
       <div className="telemetry-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-          <Activity size={14} color={fpsColor} />
+          <Activity size={14} strokeWidth={1.5} color={fpsColor} aria-hidden="true" />
           <span style={{ fontWeight: 600, color: fpsColor }}>{fps} FPS</span>
         </div>
         <button
+          type="button"
           onClick={() => setModuleState({ telemetryVisible: false })}
           className="telemetry-close"
           title="Minimizar"
+          aria-label="Minimizar telemetria"
         >
           ×
         </button>
@@ -77,14 +71,14 @@ export const TelemetryOverlay: React.FC<{
 
       <div className="telemetry-row">
         <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--text-secondary)' }}>
-          <Layers size={12} /> Polígonos
+          <Layers size={12} strokeWidth={1.5} aria-hidden="true" /> Polígonos
         </span>
         <span style={{ fontWeight: 500 }}>{triangles.toLocaleString()}</span>
       </div>
 
       <div className="telemetry-row">
         <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--text-secondary)' }}>
-          <Cpu size={12} /> Draw Calls
+          <Cpu size={12} strokeWidth={1.5} aria-hidden="true" /> Draw Calls
         </span>
         <span style={{ fontWeight: 500 }}>{drawCalls}</span>
       </div>

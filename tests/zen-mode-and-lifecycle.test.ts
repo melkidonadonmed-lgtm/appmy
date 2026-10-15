@@ -144,9 +144,15 @@ describe('Zen Mode & Clinical Lifecycle Suite (Fase 1 a 4)', () => {
     });
 
     it('deve lidar de forma resiliente com JSON corrompido no LocalStorage', () => {
-      window.localStorage.setItem(BOOKMARKS_STORAGE_KEY, '{ corrompido : inválido }');
-      const loaded = loadBookmarks();
-      expect(loaded).toEqual([]);
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      try {
+        window.localStorage.setItem(BOOKMARKS_STORAGE_KEY, '{ corrompido : inválido }');
+        const loaded = loadBookmarks();
+        expect(loaded).toEqual([]);
+        expect(warnSpy).toHaveBeenCalledOnce();
+      } finally {
+        warnSpy.mockRestore();
+      }
     });
   });
 

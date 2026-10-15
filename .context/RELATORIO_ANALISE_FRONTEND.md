@@ -28,7 +28,7 @@ Este documento consolida os entregáveis determinísticos das esteiras:
 | **Onda 1** | **Módulo 1: `static-sanitization-auditor`** | 20% | `100.0 / 100` | `[PASS]` | `0 ALLOC_IN_LOOP`, `0 DUPLICATE_FUNCTION`, `0 DEAD_CODE_FUNCTION`, `0 UNUSED_VARIABLE` nos 79 módulos de `src/`. |
 | **Onda 1** | **Módulo 2: `architecture-hardcoded-auditor`** | 15% | `100.0 / 100` | `[PASS]` | `0 PHYSICS_RENDER_COUPLING`, `0 HARDCODED_MAGIC_NUMBER` (extraídos `GLSL_PRIMARY_BUNDLE_FREQ`, `GLSL_SECONDARY_BUNDLE_FREQ`, `GLSL_SECONDARY_ALONG_FREQ`, `GLSL_MICRO_STRIATION_FREQ`, `GLSL_MICRO_ALONG_FREQ`, `HEARTBEAT_RAD_PER_SEC`, `SENTINEL_PULSE_FREQ`, `GIZMO_CAMERA_DIST`, `CRANIUM_FOCUS_OFFSET_Y`, `MIN_CLIP_OFFSET`, `MAX_CLIP_OFFSET`, `RADIAL_TANH_GAIN`, `ANTEROPOSTERIOR_TANH_GAIN`, `GLB_HEADER_BYTES`, `EXPLOSION_VECTOR_PROFILES`). |
 | **Onda 1** | **Módulo 3: `physics-3d-math-auditor`** | 25% | `100.0 / 100` | `[PASS]` | `0 MISSING_DELTA_TIME`, `0 UNCHECKED_NORMALIZE` (guarda `lengthSq() > 1e-12`), `0 EULER_GIMBAL_LOCK`, `0 STRICT_FLOAT_COMPARE` ($\epsilon = 10^{-4}$). |
-| **Onda 2** | **Módulo 4: `deterministic-tests-auditor`** | 20% | `100.0 / 100` | `[PASS]` | 5/5 baterias determinísticas aprovadas (`Pass@10 = 1`, `234/234` testes Vitest em 32 suítes). |
+| **Onda 2** | **Módulo 4: `deterministic-tests-auditor`** | 20% | `100.0 / 100` | `[PASS]` | 5/5 baterias determinísticas aprovadas (`Pass@10 = 1`, `253/253` testes Vitest em 33 suítes, `100.0/100` Nível 4 no `test-quality-auditor`). |
 | **Onda 3** | **Módulo 5: `state-checker-observer`** | 20% | `100.0 / 100` | `[PASS]` | Validação cruzada AST + Runtime sem falsos positivos ($S_{\text{norm}} = 100.0 / 100$). |
 
 ### 1.2. Decomposição das 5 Sub-dimensões Internas de Física 3D ($S_1..S_5$)
@@ -47,19 +47,19 @@ Este documento consolida os entregáveis determinísticos das esteiras:
 
 ### Onda 1 — `ui-shell-navigator` (`layout_contract` + `navigation_contract`)
 - **`layout_contract` (`[PASS]`)**:
-  - Arquitetura em **UI Islands** sobre o viewport 3D central (`.app-shell`, `.top-nav`, `.atlas-workspace`, `.outliner-panel`, `.viewport-center-area`), com dimensões reservadas (`height: 56px` no `.top-nav`, `width: 320px` no `.outliner-panel`) e $\text{CLS} = 0.00 < 0.1$.
-  - Todos os painéis e widgets flutuantes (`.outliner-panel`, `.dissection-toolbar`, `.orientation-gizmo-container`, `.quick-presets-bar`, `.bookmarks-popover`, `.neuro-clinical-drawer`, `.telemetry-badge`, `.callout-card-displaced`) estão 100% conectados aos tokens dinâmicos dos **5 temas táteis minerais** (`phantom-obsidian`, `tactile-matte`, `quiet-luxury-titanium`, `steadfast-stainless`, `warm-editorial-paper`), com **zero** hexadecimais Slate estáticos (`#0f172a`, `#1e293b`, `#334155`, `#475569`, `#64748b`, `#94a3b8`, `#cbd5e1`, `#e2e8f0`, `#f1f5f9`, `#f8fafc`) fora do cabeçalho de temas em [`src/client/index.css`](file:///C:/Users/melki/dev/repos/appmy/src/client/index.css).
+  - Arquitetura em **UI Islands** sobre o viewport 3D central (`.app-shell`, `.top-nav` em 3 zonas, `.atlas-workspace`, `.outliner-panel`, `.viewport-center-area`), com dimensões reservadas (`height: 56px` no `.top-nav`, `width: 320px` no `.outliner-panel`) e $\text{CLS} = 0.00 < 0.1$.
+  - Todos os painéis e widgets flutuantes (`.outliner-panel`, `.dissection-toolbar`, `.orientation-gizmo-container`, `.quick-presets-bar`, `.bookmarks-popover`, `.neuro-clinical-drawer`, `.telemetry-badge`, `.callout-card-displaced`) estão 100% conectados aos tokens dinâmicos dos **5 temas táteis minerais** (`phantom-obsidian`, `tactile-matte`, `quiet-luxury-titanium`, `steadfast-stainless`, `warm-editorial-paper`), com **zero** hexadecimais Slate ou ciano hardcoded fora do cabeçalho de temas em [`src/client/index.css`](file:///C:/Users/melki/dev/repos/appmy/src/client/index.css).
 - **`navigation_contract` (`[PASS]`)**:
   - Busca global com autocompletar e atalho **`Ctrl+K`** em [`GlobalSearchBox.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/GlobalSearchBox.tsx).
-  - Navegação em 3 abas WAI-ARIA (`role="tablist"`, `role="tab"`, `role="tabpanel"`) em [`AnatomyTreePanel.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyTreePanel.tsx) (`Pastas TA2`, `Filtros`, `Ficha`), árvore estratigráfica com foco por teclado (`ArrowRight`, `ArrowLeft`, `Enter`, `Space`) em [`TreeGroup.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/TreeGroup.tsx) e seletor de sexo biológico (`Masculino` / `Feminino` sem cruzamento).
+  - Navegação em 4 abas WAI-ARIA (`role="tablist"`, `role="tab"`, `role="tabpanel"`, grid `repeat(4, 1fr)`) em [`AnatomyTreePanel.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyTreePanel.tsx) (`Sistemas`, `Camadas`, `Neuro`, `Ficha`), árvore estratigráfica com foco por teclado (`ArrowRight`, `ArrowLeft`, `Enter`, `Space`) em [`TreeGroup.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/TreeGroup.tsx) e seletor de sexo biológico (`Masculino` / `Feminino` sem cruzamento).
 
 ### Onda 2A — `ui-controls-data` (`controls_contract` + `data_feedback_contract`)
 - **`controls_contract` (`[PASS]`)**:
   - Classes `.btn-tactile` (`min-height: 44px; flex-shrink: 0; white-space: nowrap; touch-action: manipulation`) e `.card-tactile` aplicadas em [`src/client/App.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/App.tsx) e [`src/client/index.css`](file:///C:/Users/melki/dev/repos/appmy/src/client/index.css).
-  - Blindagem anti-squish (`flex-shrink: 0; white-space: nowrap; touch-action: manipulation`) aplicada a todos os botões de ação (`.mode-btn`, `.outliner-tab-btn`, `.outliner-icon-btn`, `.outliner-action-pill`, `.outliner-filter-btn`, `.outliner-strat-pill`, `.plane-btn`, `.action-btn`, `.orientation-btn`, `.quick-preset-btn`, `.neuro-drawer-tab-btn`, `.neuro-subnav-btn`, `.neuro-filter-pill`, `.neuro-focus-3d-btn`).
+  - Blindagem anti-squish (`flex-shrink: 0; white-space: nowrap; touch-action: manipulation`) aplicada a todos os botões de ação (`.mode-btn`, `.outliner-tab-btn`, `.outliner-icon-btn`, `.layer-opacity-pill`, `.filter-region-pill`, `.filter-action-btn`, `.plane-btn`, `.action-btn`, `.orientation-btn`, `.quick-preset-btn`, `.neuro-drawer-tab-btn`, `.neuro-subnav-btn`, `.neuro-filter-pill`, `.neuro-focus-3d-btn`) e eliminação de controles interativos aninhados em [`QuickPresetsBar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/QuickPresetsBar.tsx).
 - **`data_feedback_contract` (`[PASS]`)**:
-  - Região de status da sonda Cloud Run configurada com `role="status"`, `aria-live="polite"` e `aria-busy={loadingHealth}` (e `role="alert"` para falhas) em [`src/client/App.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/App.tsx#L441).
-  - Nomenclatura CSS 100% em `kebab-case` (`.neuro-equation-chip` e `@keyframes bookmark-fade-in`) e ícones `lucide-react` padronizados com `strokeWidth={1.5}` e `aria-hidden="true"`.
+  - Região `.sr-only` em [`src/client/App.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/App.tsx#L262-L266) e `.telemetry-badge` em [`TelemetryOverlay.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/telemetry/TelemetryOverlay.tsx#L56) configuradas com `role="status"` e `aria-live="polite"`.
+  - Nomenclatura CSS 100% em `kebab-case` (`.layer-peel-list`, `.neuro-equation-chip`, `@keyframes bookmark-fade-in`) e ícones `lucide-react` padronizados com `strokeWidth={1.5}` e `aria-hidden="true"`.
 
 ### Onda 2B — `ui-motion-interaction` (`motion_contract` + `interaction_contract`)
 - **`motion_contract` (`[PASS]`)**:
@@ -70,13 +70,13 @@ Este documento consolida os entregáveis determinísticos das esteiras:
 
 ### Onda 3 — `ui-deterministic-observer` (`observer_audit_report` — Gatekeeper 6D)
 - `[AUDIT-01: SHELL-CLS]` **`[PASS]`**: UI Islands isoladas, dimensões fixas de barra/sidebar e $\text{CLS} < 0.1$.
-- `[AUDIT-02: NAV-INTENT]` **`[PASS]`**: `TabView` WAI-ARIA, busca `Ctrl+K` e foco direcional completo na árvore TA2.
+- `[AUDIT-02: NAV-INTENT]` **`[PASS]`**: `TabView` WAI-ARIA (4 abas), busca `Ctrl+K` e foco direcional completo na árvore TA2.
 - `[AUDIT-03: CONTROLS-44PX]` **`[PASS]`**: `.btn-tactile` com `min-height: 44px`, anti-squish universal e validação WAI-ARIA.
 - `[AUDIT-04: DATA-60FPS]` **`[PASS]`**: Árvore TA2 com expansão sob demanda (pastas iniciam recolhidas), trava de inatividade no `useFrame` e regiões `aria-live="polite"` / `role="status"`.
 - `[AUDIT-05: MOTION-GPU]` **`[PASS]`**: Zero `transition: all`, animações restritas ao compositor GPU, multi-input (`Touch/Mouse/Trackpad/Key`) e `@media (prefers-reduced-motion: reduce)`.
 - `[AUDIT-06: A11Y-WCAG]` **`[PASS]`**: Contraste $\ge 4.5:1$ nos 5 temas minerais, anéis `:focus-visible` (`2px solid var(--accent)`) e semântica WAI-ARIA.
-- `[AUDIT-07: CWV-WORKERS]` **`[PASS]`**: Code-splitting determinístico em [`vite.config.ts`](file:///C:/Users/melki/dev/repos/appmy/vite.config.ts) (`anatomy-catalog`, `three-core`, `r3f-drei-vendor`, `react-vendor`, `icons-vendor`) sem chunks vazios e com decodificação Draco WebAssembly/Worker.
-- `[AUDIT-08: ARCH-DI-TESTS]` **`[PASS]`**: Tipagem estrita (`0 any` em `src/` e `tests/`), State Bus centralizado em Zustand (`useAnatomyStore.ts`) e 234 testes automatizados aprovados em 32 suítes Vitest.
+- `[AUDIT-07: CWV-WORKERS]` **`[PASS]`**: Code-splitting determinístico em [`vite.config.ts`](file:///C:/Users/melki/dev/repos/appmy/vite.config.ts) (`anatomy-catalog`, `three-core`, `r3f-drei-vendor`, `react-vendor`, `icons-vendor`) sem chunks vazios e com decodificação Draco WebAssembly/Worker + `CacheStorage` automático em background.
+- `[AUDIT-08: ARCH-DI-TESTS]` **`[PASS]`**: Tipagem estrita (`0 any` em `src/` e `tests/`), State Bus centralizado em Zustand (`useAnatomyStore.ts`) e **253 testes automatizados aprovados em 33 suítes Vitest (`100.0/100` Nível 4)**.
 - `[AUDIT-09: LIGHT-SHADOW]` **`[PASS]`**: 5 temas minerais com sombras em 3 camadas (`--shadow-key`, `--shadow-well`, `--shadow-card`), rim light especular (`--specular-top`) e zero cobalto neon.
 
 ---

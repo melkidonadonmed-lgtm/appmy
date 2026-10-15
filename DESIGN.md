@@ -1,37 +1,47 @@
-# Guia do Designer & Especificação do Design System
+# Design System: Atlas 3D de Anatomia Médica (`appmy`)
+**Project ID:** `app-anatomy` / `appmy` (Z-Anatomy 3D Clinical Workstation)
 
-Documento canônico de arquitetura visual, tokens de design, componentes de interface, ergonomia médica e diretrizes para renderização 3D da plataforma **Atlas 3D de Anatomia Médica** (`app-anatomy` / `appmy`).
-
----
-
-## 1. Filosofia e Princípios Visuais
-
-O design do Atlas de Anatomia foi concebido sob o paradigma do **Minimalismo Executivo Hospitalar**. A interface gráfica não concorre com a peça anatômica tridimensional; ela atua como uma moldura clínica precisa, sóbria e funcional, inspirada em estações de trabalho de radiologia, neuronavegação cirúrgica e softwares de tomografia computadorizada de última geração.
-
-### 1.1. Pilares Inegociáveis
-
-1. **Foco Cirúrgico e Imersão Máxima**:
-   O modelo 3D (335 ossos reais e sistemas viscerais) é o protagonista absoluto. Elementos de controle secundários residem em painéis retráteis ou HUDs flutuantes translúcidos. O modo tela cheia (*Zen Mode*, atalho `Z`) libera 100% da viewport para manipulação tridimensional.
-
-2. **Padrão Estrito "Zero Emojis"**:
-   É expressamente proibido o uso de caracteres emoji na interface gráfica, rótulos, botões, modais ou mensagens de sistema. A iconografia é 100% composta por glifos vetoriais lineares padronizados da biblioteca `Lucide Icons` com traçado de espessura ótica constante (`stroke-width="1.5"`).
-
-3. **Cromática Funcional e Anti-Fadiga (Dark Mode Cirúrgico)**:
-   A paleta primária baseia-se em tons profundos de azul-ardósia e grafite (`Slate` e `Zinc`), reduzindo o cansaço visual em sessões prolongadas de dissecação virtual e conferindo contraste ótimo para materiais ósseos e viscerais. Cores saturadas puras (`#0000FF`, `#00FF00`) são banidas; acentos e alertas utilizam tonalidades atenuadas e funcionais.
-
-4. **Sombras Táteis em 3 Camadas e Rim Light Especular**:
-   É proibido o uso de sombras utilitárias genéricas (`shadow-lg`, `shadow-xl`, `shadow-2xl`). O isolamento espacial de cards, trilhos e teclas segue a física óptica do **Design System Tátil Melki** em 3 camadas (`--shadow-key`, `--shadow-well`, `--shadow-card`) combinada com luz de borda especular no topo (`inset 0 1px 0 var(--specular-top)`), luminância crescente ($L_{\text{well}} < L_{\text{primary}} < L_{\text{secondary}} < L_{\text{tertiary}}$) e `backdrop-filter: blur(12px)`.
-
-5. **Rigidez de Nomenclatura e Fidelidade Anatômica**:
-   Todo componente que expõe dados anatômicos respeita o padrão bilingue: Português do Brasil (PT-BR) em destaque para assimilação rápida e Latim oficial canônico segundo a **Terminologia Anatomica internacional (TA2)** com código FMA (*Foundational Model of Anatomy*).
+Documento canônico de arquitetura visual, tokens semânticos, componentes de interface tátil, ergonomia médica e diretrizes de renderização 3D da plataforma **Atlas 3D de Anatomia Médica**.
 
 ---
 
-## 2. Design Tokens & Fundamentos Visuais
+## 1. Visual Theme & Atmosphere (Filosofia e Atmosfera Visual)
 
-### 2.1. Os 5 Temas Táteis Minerais (`data-theme` em `src/client/index.css`)
+O design do **Atlas 3D de Anatomia Médica** opera sob o paradigma do **Minimalismo Executivo Hospitalar e Fisicalidade Tátil Mineral**. A interface gráfica atua como uma moldura cirúrgica silenciosa e de altíssima precisão ao redor do modelo anatômico tridimensional real (`.GLB` Z-Anatomy), inspirada em estações de neuronavegação cirúrgica, monitores PACS de radiologia e instrumentos médicos de titânio e obsidiana fosca.
 
-A aplicação implementa **5 temas táteis minerais** persistidos em `localStorage` (`appmy_ui_theme`) e declarados em [`src/client/index.css`](file:///src/client/index.css#L1-L110), com zero ocorrência de cobalto neon (`#0066FF`, `#2563EB`, `#3B82F6`):
+### Pilares Inegociáveis da Atmosfera
+1. **Protagonismo Absoluto da Peça Anatômica Reais (`.GLB`)**:
+   - A aplicação renderiza exclusivamente a anatomia real Z-Anatomy (335 ossos e sistemas viscerais/neurovasculares), sem botões de alternância para formas geométricas primitivas/didáticas.
+   - O modo **Tela Cheia** (*Zen Mode*, atalho `Z`) recolhe a barra lateral para entregar o canvas WebGL desimpedido.
+2. **Orçamento de Densidade Visual (Regra 1+2)**:
+   - Cada região funcional respeita o limite de **1 ação primária (CTA)** acompanhada de no máximo **2 grupos de ações secundárias discretas**, prevenindo fadiga de decisão.
+3. **Automação Técnica Silenciosa em Background**:
+   - Gerenciamento de cache offline (`CacheStorage` para arquivos `.glb` e decoders Draco WASM), montagem seletiva em GPU/VRAM e telemetria de saúde de servidor ocorrem de forma invisível em segundo plano, sem poluir a interface com botões operacionais de infraestrutura.
+4. **Padrão Estrito "Zero Emojis"**:
+   - É expressamente proibido o uso de emojis na UI, rótulos ou modais. Toda iconografia utiliza glifos vetoriais lineares `Lucide Icons` com traçado constante (`stroke-width="1.5"`) e `aria-hidden="true"`.
+5. **Física Óptica e Elevação Tátil em 3 Camadas**:
+   - É proibido o uso de sombras genéricas (`shadow-lg`, `shadow-xl`) ou cobalto neon (`#0066FF`, `#2563EB`, `#3B82F6`).
+   - Superfícies obedecem à hierarquia estrita de luminância crescente ($L_{\text{well}} < L_{\text{primary}} < L_{\text{secondary}} < L_{\text{tertiary}}$), com cavidades rebaixadas (`--bg-well`) mais escuras que o fundo e teclas/cards mais claros com luz especular superior de `1px` (`inset 0 1px 0 var(--specular-top)`).
+
+---
+
+## 2. Color Palette & Roles (Paleta de Cores Semântica e Taxonômica)
+
+### 2.1. Paleta Base do Tema Padrão (`phantom-obsidian`)
+* **Deepest Surgical Obsidian Well (`#060912`)** — `--bg-well`: Usado em cavidades rebaixadas, trilhos de abas (`role="tablist"`), docks de botões agrupados e fundos de inputs.
+* **Primary Clinical Slate-Night (`#0a0f1d`)** — `--bg-primary`: Fundo principal da janela e atmosfera profunda do viewport WebGL 3D.
+* **Elevated Charcoal-Slate Panel (`#111827`)** — `--bg-secondary`: Superfície estrutural da barra superior (`TopNav`), painel lateral esquerdo e gaveta neuroclínica.
+* **Tactile Keycap Slate (`#1f2937`)** — `--bg-tertiary` / `--border`: Superfície de teclas elevadas, pílulas ativas, cabeçalhos de acordeão e linhas divisórias sutis de `1px`.
+* **Frosted Obsidian Glass (`rgba(17, 24, 39, 0.88)`)** — `--card-bg`: Vidro fosco translúcido com `backdrop-filter: blur(12px)` para HUDs flutuantes sobre o canvas 3D.
+* **Crisp Alabaster White (`#f9fafb`)** — `--text-primary`: Títulos principais, nomes anatômicos em Português (PT-BR) e valores numéricos de precisão.
+* **Muted Clinical Pewter (`#9ca3af`)** — `--text-secondary`: Nomenclatura oficial em Latim (TA2), rótulos secundários e descrições funcionais.
+* **Surgical Cyan Accent (`#38bdf8`)** — `--accent`: Cor interativa primária para pílulas selecionadas, indicadores de foco de teclado, pontos de ancoragem 3D e contornos ativos.
+* **Deep Cerulean Hover (`#0284c7`)** — `--accent-hover`: Estado de pressão/hover em controles primários e preenchimento de checkboxes ativos.
+* **Biometric Emerald (`#10b981`)** — `--success`: Indicadores de integridade fisiológica normal e confirmação.
+* **Clinical Amber Alert (`#f59e0b`)** — `--warning`: Alertas moderados de limiar hemodinâmico ou reserva complacente.
+* **Arterial Crimson Danger (`#ef4444`)** — `--danger`: Ações destrutivas, fechamento de modais e alertas críticos de hipertensão intracraniana.
+
+### 2.2. Os 5 Temas Táteis Minerais (`data-theme` em [`src/client/index.css`](file:///C:/Users/melki/dev/repos/appmy/src/client/index.css#L1-L110))
 
 | Tema (`data-theme`) | `--bg-well` | `--bg-primary` | `--bg-secondary` | `--bg-tertiary` | `--accent` | Caráter Mineral |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -41,278 +51,106 @@ A aplicação implementa **5 temas táteis minerais** persistidos em `localStora
 | **`steadfast-stainless`** | `#090c10` | `#0f1419` | `#161d24` | `#202a34` | `#93c5fd` | Aço cirúrgico inoxidável |
 | **`warm-editorial-paper`** | `#110f0e` | `#181614` | `#211e1b` | `#2c2824` | `#e7e5e4` | Grafite editorial quente |
 
-#### Tokens Globais de Superfície, Luz e Sombra (`phantom-obsidian`)
-
-| Token CSS | Valor | Função Semântica na Interface |
-| :--- | :--- | :--- |
-| `--bg-primary` | `#0a0f1d` | Fundo principal da aplicação e tela base do canvas WebGL |
-| `--bg-secondary` | `#111827` | Superfície de painéis laterais, toolbars e caixas modais |
-| `--bg-tertiary` | `#1f2937` | Fundo de botões ativos, agrupadores de lista e divisórias |
-| `--bg-well` | `#060912` | Cavidade rebaixada (trilhos de abas e grupos de botões) |
-| `--specular-top` | `rgba(255, 255, 255, 0.16)` | Rim light especular superior de 1px |
-| `--shadow-key` | `0 2px 5px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.35), inset 0 1px 0 var(--specular-top)` | Elevação tátil de teclas e pílulas ativas |
-| `--shadow-well` | `inset 0 2px 4px rgba(0,0,0,0.65), 0 1px 0 rgba(255,255,255,0.05)` | Sombra interna de cavidades rebaixadas |
-| `--shadow-card` | `0 14px 32px rgba(0,0,0,0.55), inset 0 1px 0 var(--specular-top)` | Elevação de HUDs e cards flutuantes |
-| `--card-bg` | `rgba(17, 24, 39, 0.88)` | Vidro fosco (*glassmorphism*) para HUDs e cards flutuantes |
-| `--text-primary` | `#f9fafb` | Títulos, nomes anatômicos principais e valores de telemetria |
-| `--text-secondary`| `#9ca3af` | Rótulos descritivos, nomes em Latim TA2 e textos de apoio |
-| `--accent` | `#38bdf8` | Cor primária interativa (Ciano Cirúrgico), focos e bordas ativas |
-| `--accent-hover` | `#0284c7` | Estado de sobreposição (*hover*) para ações principais |
-| `--border` | `#1f2937` | Linha divisória de separação estrutural e contorno de painéis |
-| `--success` | `#10b981` | Status online de microsserviços, integridade de malhas e OK |
-| `--warning` | `#f59e0b` | Alertas de limite de VRAM, draw calls elevadas ou avisos |
-| `--danger` | `#ef4444` | Fechar seleção, ocultar peças, desconexões ou falhas |
-
-### 2.2. Paleta Cromática Taxonômica Z-Anatomy
-
-Cada sistema anatômico possui representação cromática padronizada para identificação visual imediata no catálogo, nos badges e nos materiais PBR:
-
-| Sistema Anatômico | Capítulo TA2 | Código Hex | Aplicação no Sistema |
-| :--- | :--- | :--- | :--- |
-| **Sistema Esquelético (Osteologia)** | Cap. 2 | `#f4ede2` | Peças ósseas, cartilagens costais e sínfises |
-| **Sistema Muscular (Miologia)** | Cap. 3 | `#dc2626` | Ventres musculares e feixes contráteis |
-| **Sistema Cardiovascular (Angiologia)** | Cap. 5 | `#ef4444` / `#3b82f6` | Vermelho cirúrgico (artérias) e Azul profundo (veias) |
-| **Sistema Nervoso (Neuroanatomia)** | Cap. 4 | `#eab308` | Encéfalo, medula espinhal e troncos nervosos |
-| **Sistema Respiratório** | Cap. 7 | `#06b6d4` | Traqueia, árvore brônquica e parênquima pulmonar |
-| **Sistema Digestório** | Cap. 8 | `#f59e0b` | Trato gastrointestinal, fígado e glândulas anexas |
-| **Sistema Urinário** | Cap. 9 | `#8b5cf6` | Rins, ureteres, bexiga e uretra |
-| **Sistema Linfático** | Cap. 6 | `#10b981` | Linfonodos, ductos linfáticos e baço |
-| **Sistema Articular (Sindesmologia)** | Cap. 2 | `#cbd5e1` | Cápsulas articulares, ligamentos e meniscos |
-| **Sistema Endócrino** | Cap. 11 | `#ec4899` | Hipófise, tireoide, adrenais e gônadas |
-
-### 2.3. Tipografia e Escala de Texto
-
-A aplicação emprega duas famílias tipográficas canônicas:
-
-- **Fonte de Interface e Leitura Médica (`--font-sans`)**: `Inter`, `-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, `Roboto`, `sans-serif`. Otimizada para leitura técnica rápida em ecrãs de alta densidade.
-- **Fonte de Telemetria e Códigos Canônicos (`--font-mono`)**: `JetBrains Mono`, `monospace`. Empregada exclusivamente para exibição de identificadores FMA, coordenadas espaciais 3D, valores de telemetria (FPS, draw calls, triângulos) e logs técnicos.
-
-#### Escala Tipográfica Padrão
-
-```text
-Display / Brand:       18px (1.125rem) | Peso: 700 (Bold)        | Tracking: -0.025em
-Título de Seção:       14px (0.875rem) | Peso: 600 (Semi-Bold)   | Tracking: -0.015em
-Nome de Peça (PT-BR):  13px (0.8125rem)| Peso: 600 (Semi-Bold)   | Cor: #f9fafb
-Nome Científico (Lat): 11px (0.6875rem)| Peso: 400 (Regular)     | Estilo: Italic | Cor: #9ca3af
-Rótulos de Controle:   11px (0.6875rem)| Peso: 600 (Semi-Bold)   | Transform: UPPERCASE | Tracking: +0.05em
-Badges & Metadados:    10px (0.625rem) | Peso: 500 (Medium)      | Mono para códigos FMA
-```
+### 2.3. Paleta Cromática Taxonômica Z-Anatomy (Materiais PBR e Badges)
+* **Anatomical Ivory Bone (`#f4ede2`)**: Sistema Esquelético e Cartilaginoso (Cap. 2 TA2).
+* **Myofascial Carmine (`#dc2626`)**: Sistema Muscular (Cap. 3 TA2).
+* **Neural Gold (`#eab308`)**: Sistema Nervoso Central e Periférico (Cap. 4 TA2).
+* **Arterial Coral / Venous Sapphire (`#ef4444` / `#3b82f6`)**: Sistema Cardiovascular (Cap. 5 TA2).
+* **Lymphatic Jade (`#10b981`)**: Órgãos Linfoides (Cap. 6 TA2).
+* **Pulmonary Cyan (`#06b6d4`)**: Sistema Respiratório (Cap. 7 TA2).
+* **Visceral Ochre (`#f59e0b`)**: Sistema Digestório (Cap. 8 TA2).
+* **Renal Amethyst (`#8b5cf6`)**: Sistema Urinário e Genital (Cap. 9–10 TA2).
+* **Endocrine Rose (`#ec4899`)**: Glândulas Endócrinas (Cap. 11 TA2).
 
 ---
 
-## 3. Arquitetura de Layout & Grid Espacial
+## 3. Typography Rules (Tipografia e Hierarquia de Leitura)
 
-O shell da aplicação adota um grid estrito sem barra de rolagem global na janela (`overflow: hidden`), dividido em três zonas estruturais:
+A interface utiliza pareamento tipográfico triplo definido em [`src/client/index.css`](file:///C:/Users/melki/dev/repos/appmy/src/client/index.css#L11-L15):
+* **Display & Cabeçalhos (`--font-display`)**: `'Plus Jakarta Sans'`, `'Inter'`, `sans-serif` — traço geométrico humanista com tracking negativo (`-0.025em`) para títulos de dossiês clínicos e identidade visual.
+* **Leitura Médica & Controles (`--font-sans`)**: `'Inter'`, `-apple-system`, `BlinkMacSystemFont`, `sans-serif` — alta legibilidade em tamanhos compactos (`11px` a `13px`).
+* **Telemetria, Equações & Códigos FMA (`--font-mono`)**: `'JetBrains Mono'`, `monospace` — `font-variant-numeric: tabular-nums` obrigatório em contadores de peças, coordenadas MPR em centímetros, pressões (`mmHg`) e códigos FMA/TA2.
+
+### Escala Tipográfica Canônica
+* **Brand Header**: `16px` (`1rem`), peso `700` (Bold), tracking `-0.02em`.
+* **Título de Estrutura (PT-BR)**: `13px` (`0.8125rem`), peso `600` (Semi-Bold), cor `#f9fafb`.
+* **Nomenclatura Científica (Latim TA2)**: `11px` (`0.6875rem`), peso `400` (Regular), estilo *Itálico*, cor `#9ca3af`.
+* **Rótulos de Seção e Abas**: `11px` (`0.6875rem`), peso `600` (Semi-Bold), `UPPERCASE`, tracking `+0.05em`.
+* **Chips FMA e Badges Numéricos**: `10px` (`0.625rem`), peso `500` (Medium), fonte mono tabular.
+
+---
+
+## 4. Component Stylings (Especificação de Componentes Táteis)
+
+* **Teclas e Botões Táteis (`.btn-tactile`, `.mode-btn`)**:
+  - Cantos suavemente arredondados (`6px` a `8px`), altura mínima ergonômica com `white-space: nowrap` e `flex-shrink: 0` (anti-esmagamento).
+  - Elevação física com sombra de 3 camadas (`--shadow-key`: `0 2px 5px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.35), inset 0 1px 0 var(--specular-top)`).
+  - Estado ativo: borda iluminada em Ciano Cirúrgico (`#38bdf8`) e fundo `--bg-tertiary` (`#1f2937`).
+* **Cavidades e Trilhos de Abas (`.well-tactile`, `.header-mode-group`)**:
+  - Moldura rebaixada (`background: var(--bg-well)`, `#060912`) com sombra interna (`--shadow-well`: `inset 0 2px 4px rgba(0,0,0,0.65)`) que abriga grupos de pílulas de modo ou seletores de abas.
+* **Cards Flutuantes e HUDs Clínicos (`.card-tactile`, `.dissection-toolbar`)**:
+  - Cantos arredondados (`10px` a `12px`), fundo translúcido (`--card-bg`) com desfoque de fundo (`backdrop-filter: blur(12px)`), borda fina de `1px solid var(--border)` e sombra profunda difusa (`--shadow-card`).
+* **Inputs de Busca e Sliders (`.outliner-search-input`)**:
+  - Campo de busca com `34px` de altura alojado em cavidade escura, ícone de lupa à esquerda, botão de limpeza rápida à direita e contorno de foco nítido (`#38bdf8`).
+  - Sliders de opacidade e corte MPR com preenchimento contínuo e leitura numérica tabular ao lado.
+* **Callout 3D Deslocado (`AnatomicalCallout3D`)**:
+  - Renderizado em escala constante 1:1 de tela via `<Html center>` (sem `distanceFactor`), conectando o ponto de ancoragem luminoso (`8px x 8px` em `#38bdf8`) no centro real da peça a um card compacto (`210px`) fora da silhueta anatômica por meio de linha guia SVG tracejada.
+
+---
+
+## 5. Layout Principles (Arquitetura Espacial e Navegação Limpa)
+
+O shell da aplicação opera em tela cheia fixa (`100vw x 100vh`, `overflow: hidden`), estruturado para eliminar redundância de controles:
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ TOP NAVIGATION BAR (56px) - Brand, Seletor de Modo, Controle de Densidade (100%/35%/0%), Zen Mode (Z)  │
+│ TOP NAVIGATION BAR (56px) — 3 Zonas:                                                                   │
+│ [Esquerda: Brand Atlas 3D] | [Centro: 6 Presets Diretos] | [Direita: Estúdio Neuro + Restaurar/Tela/Tema]│
 ├───────────────────────────────┬────────────────────────────────────────────────────────────────────────┤
-│ SIDEBAR ESQUERDA (360px fixo) │ VIEWPORT 3D CENTRAL (100% da largura restante)                        │
+│ SIDEBAR ESQUERDA (320px)      │ VIEWPORT 3D CENTRAL (100% da largura restante)                        │
 │                               │                                                                        │
-│ 1. FICHA CLÍNICA (Topo)       │  [HUD DE TELEMETRIA]            [BARRA DE DISSECÇÃO MPR]                │
-│    - Nome PT-BR & Latim TA2   │  FPS: 60 | Triângulos: 420k     Plano: Sagital/Coronal/Axial           │
-│    - Badges FMA & Sistema     │                                                                        │
-│    - Ações: Foco/Isolar/Ocultar│                                 [GIZMO DE ORIENTAÇÃO 3D]               │
-│    - Detalhes Anatômicos      │                                 ViewCube com projeções canônicas       │
-│                               │                                                                        │
-│ 2. FILTROS RÁPIDOS SELECIONÁ- │                                                                        │
-│    VEIS (Retrátil)            │                                                                        │
-│    - 11 Sistemas Anatômicos   │                                                                        │
-│    - 7 Regiões do Esqueleto   │                                                                        │
-│                               │                                                                        │
-│ 3. ÁRVORE TAXONÔMICA (335 ossos)│                                [BARRA DE PRESETS RÁPIDOS]              │
-│    - Checkboxes Tri-state     │                                Crânio | Coluna | Tórax | Membros       │
-│    - Busca instantânea        │                                                                        │
+│ • Busca Global (Ctrl+K)       │            [BARRA DE DISSECÇÃO COMPACTA — Topo Central]                │
+│ • Seletor Masculino/Feminino  │            Sólido | Raio-X | Corte MPR | Bisturi 3D | [Expandir]       │
+│ • 4 Abas WAI-ARIA:            │                                                                        │
+│   1. TA2 (Árvore limpa)       │                                                                        │
+│   2. Camadas (11 Sistemas)    │                       (Peça Anatômica .GLB Real)                       │
+│   3. Neuro (SNC/LCR/Vascular) │                                                                        │
+│   4. Clínica (Ficha TA2/FMA)  │  [Enquadrar 3D]                                         [Marcadores]   │
 └───────────────────────────────┴────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 3.1. Barra Superior de Navegação (`TopNav`, Altura: 56px)
+### 5.1. Barra Superior em 3 Zonas ([`src/client/App.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/App.tsx#L121-L216))
+1. **Zona Esquerda (Identidade)**: Ícone `Layers` + título **Atlas 3D de Anatomia**.
+2. **Zona Central (6 Presets Anatômicos Diretos)**: Trilho `.well-tactile` com acionamento imediato de **Corpo Inteiro**, **Esqueleto**, **Crânio**, **Neuro**, **Tórax** e **Vísceras** (eliminando a necessidade de barra duplicada de presets na base do canvas).
+3. **Zona Direita (Regra 1+2)**:
+   - **CTA Primário**: Botão **Estúdio Neuroclínico** (abre a gaveta de simulação fisiológica de Monro-Kellie, PIC/PPC, LCR e territórios vasculares).
+   - **Ações Secundárias Discretas**: **Restaurar** (reseta câmera e dissecção), **Tela Cheia** (Zen Mode `Z`) e seletor compacto de **Tema** (5 temas minerais).
 
-- **Identidade da Aplicação**:
-  - Ícone `Layers` na tonalidade `#38bdf8`.
-  - Título principal com gradiente suave (`linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)`).
-  - Badge pulsante de prontidão médica: *"Z-Anatomy: Esqueleto Completo (335 Ossos) & Órgãos Reais"*.
-- **Controles de Visualização**:
-  - Seletor de Modelo: `Corpo Real (.GLB)` vs `Vista Didática (Crânio)`.
-  - Seletor de Densidade Óssea:
-    - `Sólido (100%)` (opacidade 1.0 com renderização vívida).
-    - `Translúcido (35%)` (revela estruturas internas e órgãos subjacentes).
-    - `Oculto (0%)` (apaga o esqueleto para dissecação puramente visceral).
-- **Atalho de Foco Cirúrgico**: Botão para alternância rápida do `Zen Mode` (atalho `Z`), colapsando todas as barras para entregar 100% do monitor ao modelo 3D.
-- **Alternador de Modos**: Navegação entre `Atlas 3D` e o painel `Cloud & Telemetria`.
+### 5.2. Painel Lateral Esquerdo Unificado ([`AnatomyTreePanel.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyTreePanel.tsx#L1-L300))
+* Topo fixo com **Busca Global (`Ctrl+K`)**, alternador de dimorfismo **Masculino / Feminino** e barra de **4 abas WAI-ARIA (`role="tablist"`)**:
+  1. **TA2**: Árvore hierárquica oficial limpa com checkboxes *tri-state*, contadores de peças visíveis e ações de foco/isolamento no hover (sem barras de filtros repetidas acima das pastas).
+  2. **Camadas** ([`AnatomyFiltersSection.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyFiltersSection.tsx#L1-L290)): Filtro de região esquelética e lista enxuta das 11 camadas anatômicas com toggle de visibilidade e slider individual de opacidade (sem ícones decorativos, sem setas de reordenação manual e sem controles de cache/GPU expostos).
+  3. **Neuro** ([`NeuroAnatomyPanelSection.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/NeuroAnatomyPanelSection.tsx)): Subcamadas neuroanatômicas reais (Encéfalo, Ventrículos/LCR, Drenagem Venosa, Polígono de Willis, Pares Cranianos e Tratos).
+  4. **Clínica** ([`AnatomyClinicalCard.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyClinicalCard.tsx)): Dossiê bilíngue PT-BR / Latim TA2, código FMA, ações rápidas (`Focar`, `Isolar`, `Ocultar`) e notas clínicas.
 
-### 3.2. Painel Lateral Esquerdo Unificado (`AnatomyTreePanel`, Largura: 320px)
-
-Consolidado para evitar a fragmentação em duas barras opostas, estruturado em **3 abas WAI-ARIA (`role="tablist"`)** precedidas pela caixa de busca global (`GlobalSearchBox`, atalho `Ctrl+K`):
-
-1. **Aba 1 — Árvore TA2 (`TreeGroup` / `TreeItem`)**:
-   - Estrutura hierárquica respeitando a classificação anatômica internacional, com botões de expansão/recolhimento global (`Expandir` / `Recolher`).
-   - Caixas de seleção com três estados determinísticos (*tri-state*): `Marcado`, `Indeterminado` e `Desmarcado`, além de contadores canônicos de peças visíveis e isolamento com 1 clique.
-2. **Aba 2 — Filtros & Módulos (`AnatomyFiltersSection` + `ModuleLayersSection`)**:
-   - Grid compacto de Sistemas Médicos com seleção concorrente ordenada de fora para dentro.
-   - Seletor horizontal com 7 Regiões Anatômicas (`Corpo Inteiro`, `Crânio & Face`, `Coluna`, `Caixa Torácica`, `Membros Sup.`, `Pelve`, `Membros Inf.`).
-   - Controles de camadas cirúrgicas (`1/6` a `6/6`), Exploded View, MPR e opacidade esquelética sincronizada (`100%`, `35%`, `0%`).
-3. **Aba 3 — Ficha Clínica (`AnatomyClinicalCard`)**:
-   - Ativada automaticamente ao selecionar uma peça no 3D ou na busca.
-   - Apresenta: Ícone `Stethoscope`, título bilíngue (PT-BR + Latim TA2), etiqueta FMA, ações rápidas (`Focar (F)`, `Isolar (I)`, `Ocultar (H)`), sobreposição rápida de camadas com sliders individuais de transparência e literatura médica expansível.
-
-### 3.3. Viewport 3D Central Expandido (`.viewport-center-area`)
-
-Ocupa 100% da largura restante da janela (mínimo de 1024px até resoluções 4K UHD), garantindo campo de visão irrestrito:
-
-- **Callout 3D Deslocado (`AnatomicalCallout3D`)**:
-  - Renderizado em escala constante 1:1 de tela via `<Html center>` (sem `distanceFactor`), evitando que o card infle ou distorça ao dar zoom in.
-  - Ponto de ancoragem luminoso (`8px x 8px` em `#38bdf8`) no centro anatômico real da peça conectado por linha guia SVG tracejada (`64px x 46px`) ao cartão compacto (`210px`, `max-width: 220px`) posicionado fora da silhueta do modelo.
-- **HUD de Telemetria (`TelemetryOverlay`)**:
-  - Posicionado no canto superior esquerdo do canvas.
-  - Indicadores em tempo real: FPS (com threshold visual: verde para $\ge 55$, amarelo para $30\text{--}54$, vermelho para $< 30$), triângulos renderizados e draw calls de GPU.
-- **Barra Clínica de Dissecção Tomográfica Multiplanar (`DissectionToolbar`)**:
-  - Dock flutuante no topo central com controles diretos no modo **Sólido** (Exploded View `0%–100%`, Plano Cirúrgico `1/6–6/6`, Ghosting e Reset `R`) e controles de corte tomográfico no modo **Corte MPR** (Sagital, Coronal, Axial, deslocamento em cm, inversão e lâmina 3D).
-- **Cubo de Orientação Tridimensional (`OrientationGizmo`)**:
-  - ViewCube no canto superior direito do viewport, permitindo reposicionamento instantâneo da câmera para as faces Anterior (`+Z`), Posterior (`-Z`), Lateral Direita (`-X`), Lateral Esquerda (`+X`), Superior (`+Y`) e Inferior (`-Y`).
-- **Barra Inferior de Presets Anatômicos (`QuickPresetsBar`)**:
-  - Posicionada na base do viewport para acionamento com um clique (`Geral`, `Esqueleto`, `Crânio`, `Tórax & Cardio`, `Viscerologia` e `Marcadores Clínicos` persistidos em `localStorage`).
+### 5.3. Viewport 3D Desimpedido e Controles Flutuantes Mínimos
+* **Barra Superior de Dissecção ([`DissectionToolbar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/DissectionToolbar.tsx#L67-L267))**: Inicia recolhida exibindo apenas os modos **Sólido**, **Raio-X**, **Corte MPR** e **Bisturi 3D** (+ `Desfazer` quando há peças ocultas). Os sliders de *Exploded View* e *Profundidade Cirúrgica (1/6 a 6/6)* aparecem apenas ao expandir o painel.
+* **Enquadramento Rápido ([`OrientationGizmo.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/canvas/OrientationGizmo.tsx#L1-L31))**: Pílula única discreta **`Enquadrar 3D`** no canto inferior esquerdo do canvas (substituindo a grade antiga de 12 botões de rotação/visão posterior).
+* **Marcadores Clínicos ([`QuickPresetsBar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/QuickPresetsBar.tsx#L1-L150))**: Botão único **`Marcadores`** no canto inferior direito para salvar e restaurar estados cirúrgicos em `localStorage`.
 
 ---
 
-## 4. Catálogo Canônico de Componentes de UI
+## 6. Diretrizes 3D, Ergonomia & Checklist de Qualidade
 
-### 4.1. Botões e Ações Interativas
+### 6.1. Materiais PBR, Exploded View e Corte MPR
+* **Osteologia PBR**: `MeshStandardMaterial` em marfim `#f4ede2`, `roughness: 0.45–0.60`, `metalness: 0.00–0.05`.
+* **Viscerologia e Vascular PBR**: `roughness: 0.25–0.42`, deduplicação automática entre arquivos `.glb` (`isDuplicateCrossSystemMesh`) para impedir *Z-fighting*.
+* **Bússola Axial de Visão Explodida (`explodedEngine.ts`)**: Preservação homolateral estrita (`.l` expande para `+X`, `.r` para `-X`, sem jamais cruzar o plano sagital mediano).
+* **Corte Tomográfico MPR**: Planos Sagital, Coronal e Axial com deslocamento contínuo em centímetros e identificação automática do marco anatômico (`mprLandmarks.ts`).
 
-| Componente | Classe CSS Canônica | Estados e Comportamento Visual |
-| :--- | :--- | :--- |
-| **Botão de Modo (TopNav)** | `.mode-btn` | Texto reduzido (12px), fundo transparente, bordas arredondadas (6px). Ativo recebe fundo `#1f2937` e acento ciano `#38bdf8`. |
-| **Pílula de Ação Clínica** | `.outliner-action-pill` | Altura compacta (26px), micro-ícone de 12px, transição ao passar o mouse com borda `#38bdf8`. |
-| **Botão de Ação Perigosa** | `.outliner-icon-btn.danger`| Ícone `X`, borda sutil, hover em tom avermelhado (`rgba(239, 68, 68, 0.2)`). |
-| **Filtro Selecionável** | `.outliner-filter-btn` | Grid de 2 colunas com ícone temático, texto truncado com ellipsis e contorno ativo iluminado. |
-| **Botão de Presets 3D** | `.preset-pill-btn` | Formato pílula (*rounded-full*), fundo translúcido com blur, ativo recebe brilho ciano suave. |
-
-### 4.2. Controles de Seleção e Busca
-
-- **Campo de Busca de Estruturas**:
-  - Input com altura de 34px, fundo `#0f172a`, borda `1px solid #1e293b`.
-  - Ícone de lupa posicionado à esquerda e botão de limpeza rápida à direita.
-  - Foco: borda acentuada em `#38bdf8` sem sombra externa (*outline-none*).
-- **Caixas de Seleção Tri-State**:
-  - Dimensão: $14 \times 14\text{ px}$.
-  - Fundo inativo: `rgba(15, 23, 42, 0.8)` com borda `#334155`.
-  - Ativo total: Preenchimento `#0284c7` com glifo de check vetorizado.
-  - Parcial/Misto: Fundo escuro com traço horizontal ciano indicando estado indeterminado.
-
-### 4.3. Badges, Chips e Rótulos Médicos
-
-- **Badge de Terminologia Canônica (FMA / TA2)**:
-  - Estilo: `.fma-chip` (fonte `JetBrains Mono`, tamanho 10px, padding `2px 6px`, borda ciano suave com 20% de opacidade).
-- **Badge de Sistema Anatômico**:
-  - Estilo: `.outliner-system-tag` (Inter, uppercase, peso 600, tamanho 10px, cor de acordo com a paleta taxonômica da seção 2.2).
-- **Atalhos de Teclado no HUD**:
-  - Estilo: Tag `<kbd>` estilizada com fundo `#1e293b`, borda `#334155`, cantos chanfrados (3px) e fonte mono.
-
----
-
-## 5. Diretrizes para Visualização 3D & Technical Artists
-
-### 5.1. Materiais PBR e Iluminação Cirúrgica
-
-Para garantir autenticidade anatômica sem perder fluidez em GPUs integradas:
-
-1. **Material Ósseo Canônico**:
-   - `MeshStandardMaterial` com textura de cor baseada no matiz ósseo marfim `#f4ede2`.
-   - `Roughness`: Entre `0.45` e `0.60` (dispersão biológica sem aspecto plástico ou cerâmico).
-   - `Metalness`: `0.00` a `0.05` (materiais biológicos possuem condutividade metálica nula).
-2. **Materiais Viscerais e Vasculares**:
-   - `Roughness`: Entre `0.25` e `0.42` (levemente reflexivos, simulando serosa e umidade fisiológica).
-   - Deduplicação Cross-GLB (`isDuplicateCrossSystemMesh`) ativa para eliminar malhas exportadas em duplicidade entre arquivos `.glb` (evitando *Z-fighting*).
-3. **Iluminação de Três Pontos**:
-   - Luz Principal (*Key Light*): Direcional neutra (temperatura 5500K) posicionada antero-superior a 45 graus.
-   - Luz de Preenchimento (*Fill Light*): Luz difusa hemisférica suave (tom ciano/frio para preenchimento de cavidades).
-   - Luz de Recorte (*Rim Light*): Direcional posterior suave para destacar silhuetas anatômicas contra o fundo escuro.
-
-### 5.2. Motor de Visão Explodida (*Exploded View*)
-
-A desarticulação tridimensional não utiliza dispersão esférica aleatória. Cada osso e sistema segue a **Bússola Axial e Descompactação Homolateral (`explodedEngine.ts`)**:
-
-- **Centro Anatômico Real (`getMeshAnatomicalCenter`)**: Computado a partir do `boundingBox` dos vértices aplicando `mesh.scale`, `mesh.quaternion`, `initialPosition` e `modelOffset`.
-- **Preservação Homolateral Estrita**: Estruturas com sufixo `.l` expandem exclusivamente para `+X` (Esquerda) e estruturas `.r` para `-X` (Direita), sem jamais cruzar o plano sagital mediano.
-- **Calvária Craniana e Face**: Esfenoide e occipital atuam como âncoras no foco craniano; frontal, parietais, temporais e viscerocrânio expandem radialmente.
-- **Coluna Vertebral**: Âncora axial no modo de corpo inteiro; descompactação vertical ao longo do eixo `Y` (com sacro fixo) quando a região `Coluna` está selecionada.
-- **Caixa Torácica e Membros**: Abertura lateral bilateral proporcional à distância em relação ao esqueleto axial, preservando `initialPosition` imutável em `mesh.userData`.
-
-### 5.3. Dissecção Tomográfica Multiplanar (MPR)
-
-A renderização do corte utiliza planos de clipagem do Three.js (`clippingPlanes`) integrados aos materiais padrão:
-
-- O corte deve exibir a cápsula cortical e a cavidade medular com cor sólida de preenchimento (*stencil cap shader*), evitando a ilusão de ossos ocos.
-- As linhas dos eixos sagital (vermelho), coronal (verde) e axial (azul) adotam padrão pontilhado cirúrgico de 1px quando o gizmo auxiliar está ativo.
-
-### 5.4. Orçamento de Performance de GPU (Quality Budget)
-
-| Métrica de Desempenho | Meta Alvo | Limite Máximo Tolerado | Ação de Mitigação |
-| :--- | :--- | :--- | :--- |
-| **Taxa de Quadros (FPS)** | 60 FPS estáveis | 45 FPS em rotações rápidas | Ativar decimação dinâmica de LOD |
-| **Draw Calls por Quadro** | $\le 120$ chamadas | 200 chamadas | Agrupamento de geometrias estáticas |
-| **Polígonos Simultâneos** | $\le 600.000$ triângulos | 1.200.000 triângulos | Compressão Draco WASM nível 7 |
-| **Uso de VRAM (Geometrias)**| $\le 180\text{ MB}$ | 350 MB | Descarregar texturas não visíveis |
-
----
-
-## 6. Ergonomia Médica, Acessibilidade & Hotkeys
-
-### 6.1. Mapa Oficial de Atalhos de Teclado
-
-Projetado para permitir que o usuário opere a dissecção e a visualização com uma única mão sobre o teclado:
-
-```text
-┌─────────────────┬──────────────────────────────────────────────────────────────────┐
-│ TECLA DE ATALHO │ AÇÃO NO ATLAS ANATÔMICO                                          │
-├─────────────────┼──────────────────────────────────────────────────────────────────┤
-│ Z               │ Alterna Modo Foco Cirúrgico (Zen Mode: 100% tela limpa)          │
-│ F               │ Foca a câmera no centro da peça anatômica selecionada            │
-│ I               │ Isola a peça selecionada, ocultando todas as outras              │
-│ H               │ Oculta a estrutura atualmente selecionada                        │
-│ Esc ou X        │ Desseleciona a peça ativa e fecha o dossiê clínico               │
-│ R               │ Reseta a câmera, orientação e planos de dissecção para o padrão  │
-│ 1 a 7           │ Aciona diretamente os presets anatômicos (Crânio, Coluna, etc.)   │
-└─────────────────┴──────────────────────────────────────────────────────────────────┘
-```
-
-### 6.2. Diretrizes de Acessibilidade (WCAG 2.1 AAA)
-
-1. **Contraste de Cor**: Todo texto clínico e rótulo de elemento interativo apresenta taxa de contraste mínima de $7:1$ em relação ao fundo escuro correspondente.
-2. **Navegabilidade por Teclado**: Todos os botões, cabeçalhos de acordeão e itens de lista possuem atributos `tabIndex={0}`, ouvintes para `Enter` e `Space`, e contorno de foco de alto contraste (`outline: 2px solid #38bdf8`).
-3. **Semântica e Leitores de Tela**:
-   - Ícones decorativos recebem obrigatoriamente `aria-hidden="true"`.
-   - Botões de alternância e recolhimento incluem `aria-expanded="true/false"` e `aria-controls`.
-   - A ficha médica inclui `role="region"` com `aria-label="Ficha clínica da estrutura selecionada"`.
-
----
-
-## 7. Anti-Padrões & Matriz de Reprovação de Design
-
-Toda contribuição de interface ou componente deve ser avaliada contra a matriz abaixo antes de ser aceita no repositório:
-
-| Prática Terminantemente Proibida | Alternativa Canônica Obrigatória |
-| :--- | :--- |
-| **Uso de emojis em qualquer parte da UI** | Utilizar ícones lineares padronizados da suíte `Lucide Icons`. |
-| **Sombras intensas (`shadow-xl`, `shadow-2xl`)** | Utilizar bordas finas de 1px com tons Slate (`#1f2937`) e `backdrop-blur`. |
-| **Cores saturadas puras (ex: `#00f`, `#0f0`)** | Utilizar paleta cirúrgica atenuada (`#38bdf8`, `#10b981`, `#ef4444`). |
-| **Scrollbars padrão do navegador nativas** | Utilizar a classe `.scrollbar-thin` com trilho discreto e thumb refinado. |
-| **Dupla sidebar simultânea consumindo viewport**| Sidebar lateral esquerda unificada com card clínico integrado no topo. |
-| **Textos de rótulo em caixa mista despadronizados**| Utilizar `uppercase text-[11px] font-semibold tracking-wider`. |
-| **Ausência de suporte a teclado em botões custom**| Incluir suporte nativo a `tabIndex`, `onKeyDown` para `Enter` e `Space`. |
-| **Esqueleto com materiais plásticos especulares**| Manter `roughness` entre 0.45 e 0.60 e `metalness: 0.0`. |
-
----
-
-## 8. Checklist de Homologação de Novas Telas
-
-Antes de lançar ou modificar componentes de UI:
-
-- `[ ]` **Zero Emojis**: Foi verificado por regex que nenhum caractere emoji gráfico existe no código JSX/TSX ou CSS?
-- `[ ]` **Tokens de Cor**: Todas as cores utilizadas referenciam variáveis CSS globais ou a paleta canônica?
-- `[ ]` **Tipografia Canônica**: Textos utilizam `Inter` para leitura médica e `JetBrains Mono` para códigos técnicos?
-- `[ ]` **Responsividade e Zen Mode**: O componente colapsa ou se adapta elegantemente ao ativar o atalho `Z`?
-- `[ ]` **Acessibilidade e Foco**: O componente é operável 100% via teclado com contorno de foco visível?
-- `[ ]` **Fidelidade Z-Anatomy**: Novas peças anatômicas possuem mapeamento com identificador FMA e Latim TA2?
-- `[ ]` **Quality Gates**: `npm run typecheck`, `npm test` e `npm run build` executam com Exit Code 0?
+### 6.2. Atalhos de Teclado e Acessibilidade (WCAG 2.1 AAA)
+* **`Z`**: Alterna Modo Tela Cheia (*Zen Mode*).
+* **`F` / `I` / `H`**: Foca (`F`), Isola (`I`) ou Oculta (`H`) a peça anatômica selecionada.
+* **`R`**: Restaura câmera, opacidade e planos de dissecção ao padrão inicial.
+* **`Esc`**: Desseleciona a peça ativa e fecha popovers abertos.
+* **Acessibilidade**: Contraste mínimo de `7:1` em textos clínicos, suporte completo a teclado (`tabIndex={0}`, `Enter`/`Space`), `prefers-reduced-motion: reduce` respeitado e região viva `.sr-only` (`role="status" aria-live="polite"`) para status assíncrono.

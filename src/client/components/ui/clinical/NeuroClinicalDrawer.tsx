@@ -6,8 +6,6 @@ import {
   Activity,
   Scan,
   Stethoscope,
-  Layers,
-  Eye,
 } from 'lucide-react';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 import { CraniumForaminaTab } from './CraniumForaminaTab.tsx';
@@ -37,8 +35,6 @@ export const NeuroClinicalDrawer: React.FC = () => {
   const clinicalStudioTab = useAnatomyStore((s) => s.clinicalStudioTab);
   const setClinicalStudioTab = useAnatomyStore((s) => s.setClinicalStudioTab);
   const setViewType = useAnatomyStore((s) => s.setViewType);
-  const setActiveSystem = useAnatomyStore((s) => s.setActiveSystem);
-  const setExplosionProgress = useAnatomyStore((s) => s.setExplosionProgress);
 
   useEffect(() => {
     if (!clinicalStudioOpen) return;
@@ -60,18 +56,6 @@ export const NeuroClinicalDrawer: React.FC = () => {
     applyPreset('neuroanatomy');
   };
 
-  const activateDidacticNeuro3D = () => {
-    setViewType('exploded');
-    setActiveSystem('nervous');
-    setExplosionProgress(0.35);
-  };
-
-  const activateDidacticSkull3D = () => {
-    setViewType('exploded');
-    setActiveSystem('skeletal');
-    setExplosionProgress(0.4);
-  };
-
   return (
     <section
       className="neuro-clinical-drawer"
@@ -86,9 +70,9 @@ export const NeuroClinicalDrawer: React.FC = () => {
             <Brain size={16} strokeWidth={1.5} aria-hidden="true" />
           </div>
           <div className="neuro-drawer-titles">
-            <h2 className="neuro-drawer-title">Estúdio Neuroclínico & Correlação Topográfica</h2>
+            <h2 className="neuro-drawer-title">Estúdio Neuroclínico</h2>
             <p className="neuro-drawer-subtitle">
-              Osteologia Craniana • 14 Forames • Brodmann • NC I–XII • TC/ASPECTS • Casos Clínicos
+              14 Forames • Brodmann • 12 Pares Cranianos • TC/ASPECTS • Casos Clínicos
             </p>
           </div>
         </div>
@@ -98,28 +82,10 @@ export const NeuroClinicalDrawer: React.FC = () => {
             type="button"
             onClick={activateRealNeuroGlb3D}
             className="neuro-quick-scene-btn"
-            title="Ativar Encéfalo Real Z-Anatomy (.GLB) com Crânio Translúcido"
+            title="Focar Encéfalo 3D com Crânio Translúcido"
           >
             <Brain size={12} strokeWidth={1.5} aria-hidden="true" />
-            <span>Encéfalo Real (.GLB)</span>
-          </button>
-          <button
-            type="button"
-            onClick={activateDidacticSkull3D}
-            className="neuro-quick-scene-btn"
-            title="Ativar Vista Didática 3D do Crânio Explodido"
-          >
-            <Layers size={12} strokeWidth={1.5} aria-hidden="true" />
-            <span>Crânio Didático 3D</span>
-          </button>
-          <button
-            type="button"
-            onClick={activateDidacticNeuro3D}
-            className="neuro-quick-scene-btn"
-            title="Ativar Vista Didática 3D do Encéfalo, Núcleos Profundos, Willis e Nervos Cranianos"
-          >
-            <Eye size={12} strokeWidth={1.5} aria-hidden="true" />
-            <span>Encéfalo Didático 3D</span>
+            <span>Focar Encéfalo 3D</span>
           </button>
           <button
             type="button"

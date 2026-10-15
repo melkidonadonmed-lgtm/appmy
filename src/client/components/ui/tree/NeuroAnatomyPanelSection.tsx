@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import {
   Brain,
   Focus,
-  Layers,
   Eye,
   EyeOff,
   Activity,
@@ -42,12 +41,9 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
   const [category, setCategory] = useState<NeuroCategoryFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const viewType = useAnatomyStore((s) => s.viewType);
-  const setViewType = useAnatomyStore((s) => s.setViewType);
   const selectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
   const focusClinicalTargetIds = useAnatomyStore((s) => s.focusClinicalTargetIds);
-  const applyPreset = useAnatomyStore((s) => s.applyPreset);
   const setClinicalStudioOpen = useAnatomyStore((s) => s.setClinicalStudioOpen);
   const setClinicalStudioTab = useAnatomyStore((s) => s.setClinicalStudioTab);
   const peelNodeOnClick = useAnatomyStore((s) => s.peelNodeOnClick);
@@ -146,56 +142,23 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
       <div className="filter-section-card">
         <div className="filter-section-header">
           <div className="filter-section-title">
-            <Brain size={14} strokeWidth={1.5} className="filter-icon-accent" />
+            <Brain size={14} strokeWidth={1.5} className="filter-icon-accent" aria-hidden="true" />
             <span>Neuroanatomia 3D & Craniotomia</span>
           </div>
-          <span className="filter-badge-value">
-            {viewType === 'realistic' ? 'Malha Real .GLB' : 'Esquema Didático'}
-          </span>
         </div>
-
-        <p className="filter-helper-text">
-          Explore o encéfalo real escaneado, núcleos da base, sistema ventricular e os 12 pares cranianos com transparência craniana automática.
-        </p>
 
         <div className="filter-presets-grid" style={{ marginTop: '0.35rem' }}>
           <button
             type="button"
-            onClick={() => {
-              setViewType('realistic');
-              applyPreset('neuroanatomy');
-            }}
-            className={`filter-preset-btn ${viewType === 'realistic' ? 'active' : ''}`}
-            title="Ativar Encéfalo Real (.GLB) com Crânio Translúcido"
-          >
-            <Brain size={13} strokeWidth={1.5} />
-            <span>Encéfalo Real (.GLB)</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setViewType('exploded');
-              useAnatomyStore.getState().setActiveSystem('nervous');
-              useAnatomyStore.getState().setExplosionProgress(0.35);
-            }}
-            className={`filter-preset-btn ${viewType === 'exploded' ? 'active' : ''}`}
-            title="Alternar para Esquema Didático Explosivo 3D dos Lobos e Núcleos"
-          >
-            <Layers size={13} strokeWidth={1.5} />
-            <span>Esquema Didático 3D</span>
-          </button>
-
-          <button
-            type="button"
             onClick={handleToggleCalvariaCraniotomy}
+            aria-pressed={isCalvariaPeeled}
             className={`filter-preset-btn ${isCalvariaPeeled ? 'active' : ''}`}
             title="Retirar/Restaurar a Calota Craniana (Frontal + Parietais) para expor o Córtex"
           >
             {isCalvariaPeeled ? (
-              <RotateCcw size={13} strokeWidth={1.5} />
+              <RotateCcw size={13} strokeWidth={1.5} aria-hidden="true" />
             ) : (
-              <Scissors size={13} strokeWidth={1.5} />
+              <Scissors size={13} strokeWidth={1.5} aria-hidden="true" />
             )}
             <span>{isCalvariaPeeled ? 'Restaurar Calvária' : 'Retirar Calvária'}</span>
           </button>
@@ -206,7 +169,7 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
             className="filter-preset-btn"
             title="Abrir Estúdio Neuroclínico Completo (14 Forames, ASPECTS e Casos Clínicos)"
           >
-            <Stethoscope size={13} strokeWidth={1.5} />
+            <Stethoscope size={13} strokeWidth={1.5} aria-hidden="true" />
             <span>Estúdio Clínico</span>
           </button>
         </div>
@@ -221,16 +184,20 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
               { label: 'Oculto 0%', val: 0.0 },
               { label: 'Cristal 28%', val: 0.28 },
               { label: 'Sólido 100%', val: 1.0 },
-            ].map((opt) => (
-              <button
-                key={opt.label}
-                type="button"
-                onClick={() => setSystemOpacity('skeletal', opt.val)}
-                className={`layer-opacity-pill ${Math.abs((systemOpacities.skeletal ?? 1) - opt.val) < 0.05 ? 'active' : ''}`}
-              >
-                {opt.label}
-              </button>
-            ))}
+            ].map((opt) => {
+              const isOpacityActive = Math.abs((systemOpacities.skeletal ?? 1) - opt.val) < 0.05;
+              return (
+                <button
+                  key={opt.label}
+                  type="button"
+                  aria-pressed={isOpacityActive}
+                  onClick={() => setSystemOpacity('skeletal', opt.val)}
+                  className={`layer-opacity-pill ${isOpacityActive ? 'active' : ''}`}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -238,7 +205,7 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
       {/* 2. Filtro por Divisão Neuroanatômica + Busca */}
       <div className="filter-section-card">
         <div className="outliner-search-box" style={{ marginBottom: '0.45rem' }}>
-          <Search size={13} strokeWidth={1.5} className="outliner-search-icon" />
+          <Search size={13} strokeWidth={1.5} className="outliner-search-icon" aria-hidden="true" />
           <input
             type="search"
             value={searchQuery}
@@ -249,7 +216,7 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
           />
         </div>
 
-        <div className="filter-region-pills">
+        <div className="filter-region-pills" role="group" aria-label="Divisões neuroanatômicas">
           {[
             { id: 'all', label: 'Todos (34)' },
             { id: 'cortex', label: 'Córtex & Brodmann' },
@@ -257,16 +224,20 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
             { id: 'brainstem_cerebellum', label: 'Tronco & Cerebelo' },
             { id: 'cranial_nerves', label: '12 Pares (NC I–XII)' },
             { id: 'vascular_csf', label: 'Ventrículos & Willis' },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setCategory(tab.id as NeuroCategoryFilter)}
-              className={`filter-region-pill ${category === tab.id ? 'active' : ''}`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          ].map((tab) => {
+            const isTabActive = category === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                aria-pressed={isTabActive}
+                onClick={() => setCategory(tab.id as NeuroCategoryFilter)}
+                className={`filter-region-pill ${isTabActive ? 'active' : ''}`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -275,13 +246,13 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
         <div className="filter-section-card">
           <div className="filter-section-header">
             <div className="filter-section-title">
-              <Eye size={14} strokeWidth={1.5} className="filter-icon-accent" />
+              <Eye size={14} strokeWidth={1.5} className="filter-icon-accent" aria-hidden="true" />
               <span>Estruturas Encefálicas & Funcionais</span>
             </div>
             <span className="filter-badge-value">{filteredNeuroNodes.length}</span>
           </div>
 
-          <div className="layer-Peel-list">
+          <div className="layer-peel-list">
             {filteredNeuroNodes.map((node) => {
               const resolvedZaId = resolveNeuroClinicalTargetToCatalogId(node.id);
               const isSelected =
@@ -327,7 +298,7 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
                         className="layer-opacity-pill active"
                         title={`Focar ${node.namePtBr} no Modelo 3D`}
                       >
-                        <Focus size={11} strokeWidth={1.5} />
+                        <Focus size={11} strokeWidth={1.5} aria-hidden="true" />
                         <span style={{ marginLeft: '0.2rem' }}>3D</span>
                       </button>
                       <button
@@ -336,9 +307,14 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
                           peelNodeOnClick(resolvedZaId, node.namePtBr, [node.id, resolvedZaId])
                         }
                         className="layer-opacity-pill"
+                        aria-label={isHidden ? `Estrutura ${node.namePtBr} ocultada` : `Retirar ${node.namePtBr}`}
                         title={isHidden ? 'Estrutura ocultada (use Desfazer para restaurar)' : `Retirar/Ocultar ${node.namePtBr} (Camada)`}
                       >
-                        {isHidden ? <EyeOff size={11} strokeWidth={1.5} /> : <Scissors size={11} strokeWidth={1.5} />}
+                        {isHidden ? (
+                          <EyeOff size={11} strokeWidth={1.5} aria-hidden="true" />
+                        ) : (
+                          <Scissors size={11} strokeWidth={1.5} aria-hidden="true" />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -361,7 +337,7 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
         <div className="filter-section-card">
           <div className="filter-section-header">
             <div className="filter-section-title">
-              <Activity size={14} strokeWidth={1.5} className="filter-icon-accent" />
+              <Activity size={14} strokeWidth={1.5} className="filter-icon-accent" aria-hidden="true" />
               <span>12 Pares Cranianos (NC I–XII)</span>
             </div>
             <button
@@ -374,7 +350,7 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
             </button>
           </div>
 
-          <div className="layer-Peel-list">
+          <div className="layer-peel-list">
             {filteredCranialNerves.map((cn) => {
               const resolvedZaId = resolveNeuroClinicalTargetToCatalogId(
                 cn.targetNodeIds[0],
@@ -406,7 +382,7 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
                       className="layer-opacity-pill active"
                       title={`Localizar ${cn.romanNumeral} (${cn.namePtBr}) no Encéfalo 3D`}
                     >
-                      <Focus size={11} strokeWidth={1.5} />
+                      <Focus size={11} strokeWidth={1.5} aria-hidden="true" />
                       <span style={{ marginLeft: '0.2rem' }}>3D</span>
                     </button>
                   </div>

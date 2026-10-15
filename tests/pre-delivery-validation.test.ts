@@ -1,8 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as THREE from 'three';
 import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
 import { Z_ANATOMY_CATALOG, Z_ANATOMY_BY_ID } from '../src/shared/constants/zAnatomyCatalog.ts';
+import { bindExplodedNode } from '../src/core/explodedEngine.ts';
 
 describe('Validação Pré-Entrega: Exploded View, Isolamento das Sidebars e Interatividade', () => {
   beforeEach(() => {
@@ -38,18 +40,18 @@ describe('Validação Pré-Entrega: Exploded View, Isolamento das Sidebars e Int
       }
     });
 
-    it('deve garantir que a dispersão radial inteligente gere deslocamento positivo para qualquer peça sem vetor no catálogo', () => {
-      // Simula uma malha sem vetor explícito no catálogo
-      const fakePos = { x: 0.35, y: 1.5, z: 0.2 };
-      const dirX = Math.abs(fakePos.x) > 0.01 ? Math.sign(fakePos.x) * (Math.abs(fakePos.x) * 2.2 + 0.4) : 0;
-      const dirY = fakePos.y > 1.35 ? (fakePos.y - 1.35) * 1.6 + 0.3 : 0;
-      const dirZ = Math.abs(fakePos.z) > 0.01 ? Math.sign(fakePos.z) * (Math.abs(fakePos.z) * 2.0 + 0.35) : 0;
+    it('deve garantir que bindExplodedNode gere deslocamento radial positivo para peça sem vetor explícito no catálogo', () => {
+      const unmappedMesh = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.05));
+      unmappedMesh.name = 'Unmapped_cranial_lateral_structure.l';
+      unmappedMesh.position.set(0.35, 1.5, 0.2);
 
-      const norm = Math.sqrt(dirX * dirX + dirY * dirY + dirZ * dirZ);
-      expect(norm).toBeGreaterThan(1.0);
-      expect(dirX).toBeGreaterThan(0); // Peça do lado direito afasta para o lado direito
-      expect(dirY).toBeGreaterThan(0); // Peça cranial sobe
-      expect(dirZ).toBeGreaterThan(0); // Peça anterior vai para a frente
+      const binding = bindExplodedNode(unmappedMesh, 'all');
+
+      expect(binding.isAnchor).toBe(false);
+      expect(binding.targetOffset.length()).toBeGreaterThan(0.1);
+      expect(binding.targetOffset.x).toBeGreaterThan(0);
+      expect(binding.targetOffset.y).toBeGreaterThan(0);
+      expect(binding.targetOffset.z).toBeGreaterThan(0);
     });
   });
 

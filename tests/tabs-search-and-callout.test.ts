@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
 import { Z_ANATOMY_CATALOG } from '../src/shared/constants/zAnatomyCatalog.ts';
+import { buildTaxonomicTree } from '../src/shared/utils/buildTaxonomicTree.ts';
+import { filterTaxonomicTree } from '../src/shared/utils/filterTaxonomicTree.ts';
 
 describe('Suíte de Testes: Navegabilidade por Abas, Search Global e Callout 3D Deslocado', () => {
   beforeEach(() => {
@@ -21,11 +23,14 @@ describe('Suíte de Testes: Navegabilidade por Abas, Search Global e Callout 3D 
       expect(state.sidebarTab).toBe('tree');
     });
 
-    it('deve alternar entre as abas "tree", "filters" e "details" via setSidebarTab', () => {
+    it('deve alternar entre as 4 abas "tree", "filters", "neuro" e "details" via setSidebarTab', () => {
       const store = useAnatomyStore.getState();
 
       store.setSidebarTab('filters');
       expect(useAnatomyStore.getState().sidebarTab).toBe('filters');
+
+      store.setSidebarTab('neuro');
+      expect(useAnatomyStore.getState().sidebarTab).toBe('neuro');
 
       store.setSidebarTab('details');
       expect(useAnatomyStore.getState().sidebarTab).toBe('details');
@@ -36,6 +41,8 @@ describe('Suíte de Testes: Navegabilidade por Abas, Search Global e Callout 3D 
   });
 
   describe('2. Integridade e Normalização da Busca Médica Global', () => {
+    const baseTree = buildTaxonomicTree(Z_ANATOMY_CATALOG);
+
     function searchCatalog(query: string) {
       const normalized = query
         .toLowerCase()
@@ -50,7 +57,7 @@ describe('Suíte de Testes: Navegabilidade por Abas, Search Global e Callout 3D 
       });
     }
 
-    it('deve localizar a Maxila Esquerda por busca sem acento e com acento', () => {
+    it('deve localizar a Maxila Esquerda por busca sem acento e com acento no catálogo e em filterTaxonomicTree', () => {
       const resultsWithoutAccent = searchCatalog('maxila');
       expect(resultsWithoutAccent.length).toBeGreaterThan(0);
       const found = resultsWithoutAccent.find((r) => r.node.toLowerCase().includes('maxilla'));
@@ -58,12 +65,18 @@ describe('Suíte de Testes: Navegabilidade por Abas, Search Global e Callout 3D 
 
       const resultsWithAccent = searchCatalog('Maxíla');
       expect(resultsWithAccent.length).toBe(resultsWithoutAccent.length);
+
+      const treeHits = filterTaxonomicTree(baseTree, 'Maxíla');
+      expect(treeHits.length).toBeGreaterThan(0);
     });
 
     it('deve localizar estruturas pesquisando por termo canônico em latim TA2', () => {
       const results = searchCatalog('Ramus inferolateralis');
       expect(results.length).toBeGreaterThan(0);
       expect(results[0].system).toBe('cardiovascular');
+
+      const treeHits = filterTaxonomicTree(baseTree, 'Ramus inferolateralis');
+      expect(treeHits.some((n) => n.id === 'sys_cardiovascular')).toBe(true);
     });
 
     it('ao selecionar nó na busca, deve atualizar selectedNodeId e cameraFocusTarget', () => {
