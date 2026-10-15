@@ -57,4 +57,34 @@ describe('Validação de Ontologia e Dados Clínicos de Miologia (Capítulo 3 - 
     expect(masseterL.explosionVector!.x).toBeLessThan(0);
     expect(masseterR.explosionVector!.y).toBeCloseTo(masseterL.explosionVector!.y, 1);
   });
+
+  it('deve diferenciar Fáscias translúcidas peroladas de Ventres Musculares Estriados no motor 3D', async () => {
+    const {
+      isFasciaOrAponeurosis,
+      getMuscularTissueProfile,
+      applyAnatomicalTissueShader,
+    } = await import('../src/core/visibilityManager.ts');
+    const THREE = await import('three');
+
+    expect(isFasciaOrAponeurosis('Deltoid fascia.l')).toBe(true);
+    expect(isFasciaOrAponeurosis('Fascia lata.r')).toBe(true);
+    expect(isFasciaOrAponeurosis('Deltoid muscle.l')).toBe(false);
+
+    const fasciaProfile = getMuscularTissueProfile('Deltoid fascia.l');
+    expect(fasciaProfile.tissueType).toBe('fascia');
+    expect(fasciaProfile.colorHex).toBe('#e2e8f0');
+    expect(fasciaProfile.opacityFactor).toBeCloseTo(0.42);
+
+    const muscleProfile = getMuscularTissueProfile('Deltoid muscle.l');
+    expect(muscleProfile.tissueType).toBe('muscle');
+    expect(muscleProfile.opacityFactor).toBeCloseTo(1.0);
+
+    // Shader procedural de estrias musculares e fáscia
+    const mat = new THREE.MeshStandardMaterial();
+    applyAnatomicalTissueShader(mat, muscleProfile.tissueType, [0.1, 0.95, 0.1]);
+    expect(typeof mat.onBeforeCompile).toBe('function');
+    expect(typeof mat.customProgramCacheKey).toBe('function');
+    expect(mat.customProgramCacheKey()).toContain('anat_tissue_muscle');
+  });
 });
+

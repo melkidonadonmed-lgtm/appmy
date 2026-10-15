@@ -60,6 +60,35 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
 
   const visibleCount = Math.max(0, totalCount - hiddenCount);
 
+  // Indicador cromático de tecido/camada para orientação visual imediata
+  const getGroupAccentColor = (): string | null => {
+    if (node.id === 'sub_muscular_fascia') return '#e2e8f0'; // Fáscia branco-perolada translúcida
+    if (node.id === 'sub_muscular_superficial') return '#e05245'; // Músculo estriado superficial
+    if (node.id === 'sub_muscular_deep') return '#9e261f'; // Músculo estriado profundo
+    if (node.id === 'sub_muscular_bursae') return '#7dd3fc'; // Bolsas sinoviais ciano
+    if (node.depth === 1) {
+      switch (node.systemId) {
+        case 'integumentary':
+          return '#f5cba7';
+        case 'muscular':
+          return '#e05245';
+        case 'skeletal':
+          return '#e5dccb';
+        case 'cardiovascular':
+          return '#ef4444';
+        case 'lymphatic':
+          return '#10b981';
+        case 'nervous':
+          return '#facc15';
+        default:
+          return '#38bdf8';
+      }
+    }
+    return null;
+  };
+
+  const accentColor = getGroupAccentColor();
+
   return (
     <div
       className="outliner-group"
@@ -104,7 +133,7 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
             )}
           </button>
 
-          {/* Checkbox Tri-State */}
+          {/* Checkbox Tri-State Unificado (Árvore = Filtro) */}
           <button
             type="button"
             role="checkbox"
@@ -113,19 +142,11 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
             onClick={(e) => {
               e.stopPropagation();
               toggleGroupVisibility(node.descendantIds);
-              if (node.type === 'system' && node.systemId) {
-                const store = useAnatomyStore.getState();
-                if (!isChecked) {
-                  store.addSystem(node.systemId as any);
-                } else {
-                  store.removeSystem(node.systemId as any);
-                }
-              }
             }}
             title={
               isChecked
-                ? 'Ocultar todas as estruturas deste grupo'
-                : 'Exibir todas as estruturas deste grupo'
+                ? 'Ocultar todas as estruturas desta camada/grupo'
+                : 'Exibir todas as estruturas desta camada/grupo'
             }
             className={`outliner-checkbox-btn ${
               isChecked ? 'checked' : isIndeterminate ? 'indeterminate' : ''
@@ -135,6 +156,18 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
             {isIndeterminate && <Minus size={11} strokeWidth={3} aria-hidden="true" />}
           </button>
 
+          {/* Marcador Cromático de Camada/Tecido */}
+          {accentColor && (
+            <span
+              className="outliner-tissue-dot"
+              style={{
+                backgroundColor: accentColor,
+                opacity: isUnchecked ? 0.3 : 1,
+              }}
+              aria-hidden="true"
+            />
+          )}
+
           {/* Rótulo do Grupo */}
           <span
             className={`outliner-group-title ${
@@ -143,7 +176,7 @@ export const TreeGroup: React.FC<TreeGroupProps> = ({
                 : node.depth === 2
                 ? 'depth-2'
                 : 'depth-3'
-            }`}
+            } ${isUnchecked ? 'is-hidden-group' : ''}`}
           >
             {node.namePt}
           </span>

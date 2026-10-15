@@ -32422,6 +32422,19839 @@ export const Z_ANATOMY_CATALOG: ZAnatomyItem[] = [
       "y": 0,
       "z": 0.5
     }
+  },
+  {
+    "id": "za:vh_f_fat_l",
+    "node": "VH_F_fat_L",
+    "fmaId": "TA2:vh_f_fat_l",
+    "namePtBr": "Tecido Adiposo Subcutâneo e Mamário (Esquerdo)",
+    "nameEn": "Tecido Adiposo Subcutâneo e Mamário (left)",
+    "nameLatin": "Corpus adiposum mammae sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tecido Subcutâneo & Adiposo"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_areolar_tubercles_l",
+    "node": "VH_F_areolar_tubercles_L",
+    "fmaId": "TA2:vh_f_areolar_tubercles_l",
+    "namePtBr": "Glândulas Areolares (de Montgomery) (Esquerdo)",
+    "nameEn": "Glândulas Areolares (de Montgomery) (left)",
+    "nameLatin": "Glandulae areolares sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tegumento Superficial & Epiderme"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_nipple_l",
+    "node": "VH_F_nipple_L",
+    "fmaId": "TA2:vh_f_nipple_l",
+    "namePtBr": "Papila Mamária (Mamilo) (Esquerdo)",
+    "nameEn": "Papila Mamária (Mamilo) (left)",
+    "nameLatin": "Papilla mammaria sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tegumento Superficial & Epiderme"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_areola_l",
+    "node": "VH_F_areola_L",
+    "fmaId": "TA2:vh_f_areola_l",
+    "namePtBr": "Aréola Mamária (Esquerdo)",
+    "nameEn": "Aréola Mamária (left)",
+    "nameLatin": "Areola mammae sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tegumento Superficial & Epiderme"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_mammary_lobes_l",
+    "node": "VH_F_mammary_lobes_L",
+    "fmaId": "TA2:vh_f_mammary_lobes_l",
+    "namePtBr": "Lobos da Glândula Mamária (Esquerdo)",
+    "nameEn": "Lobos da Glândula Mamária (left)",
+    "nameLatin": "Lobi glandulae mammariae sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Parênquima & Ductos Mamários"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_main_lactiferous_ducts_l",
+    "node": "VH_F_main_lactiferous_ducts_L",
+    "fmaId": "TA2:vh_f_main_lactiferous_ducts_l",
+    "namePtBr": "Ductos Lactíferos Principais (Esquerdo)",
+    "nameEn": "Ductos Lactíferos Principais (left)",
+    "nameLatin": "Ductus lactiferi sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Parênquima & Ductos Mamários"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_main_lactiferous_sinuses_l",
+    "node": "VH_F_main_lactiferous_sinuses_L",
+    "fmaId": "TA2:vh_f_main_lactiferous_sinuses_l",
+    "namePtBr": "Seios Lactíferos (Esquerdo)",
+    "nameEn": "Seios Lactíferos (left)",
+    "nameLatin": "Sinus lactiferi sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Parênquima & Ductos Mamários"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_suspensory_ligaments_l",
+    "node": "VH_F_suspensory_ligaments_L",
+    "fmaId": "TA2:vh_f_suspensory_ligaments_l",
+    "namePtBr": "Ligamentos Suspensores da Mama (de Cooper) (Esquerdo)",
+    "nameEn": "Ligamentos Suspensores da Mama (de Cooper) (left)",
+    "nameLatin": "Ligamenta suspensoria mammaria sinister",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Fáscia Superficial & Retináculos Cutâneos"
+    ],
+    "explosionVector": {
+      "x": -0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_fat_r",
+    "node": "VH_F_fat_R",
+    "fmaId": "TA2:vh_f_fat_r",
+    "namePtBr": "Tecido Adiposo Subcutâneo e Mamário (Direito)",
+    "nameEn": "Tecido Adiposo Subcutâneo e Mamário (right)",
+    "nameLatin": "Corpus adiposum mammae dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tecido Subcutâneo & Adiposo"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_areolar_tubercles_r",
+    "node": "VH_F_areolar_tubercles_R",
+    "fmaId": "TA2:vh_f_areolar_tubercles_r",
+    "namePtBr": "Glândulas Areolares (de Montgomery) (Direito)",
+    "nameEn": "Glândulas Areolares (de Montgomery) (right)",
+    "nameLatin": "Glandulae areolares dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tegumento Superficial & Epiderme"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_nipple_r",
+    "node": "VH_F_nipple_R",
+    "fmaId": "TA2:vh_f_nipple_r",
+    "namePtBr": "Papila Mamária (Mamilo) (Direito)",
+    "nameEn": "Papila Mamária (Mamilo) (right)",
+    "nameLatin": "Papilla mammaria dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tegumento Superficial & Epiderme"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_areola_r",
+    "node": "VH_F_areola_R",
+    "fmaId": "TA2:vh_f_areola_r",
+    "namePtBr": "Aréola Mamária (Direito)",
+    "nameEn": "Aréola Mamária (right)",
+    "nameLatin": "Areola mammae dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Tegumento Superficial & Epiderme"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_main_lactiferous_sinuses_r",
+    "node": "VH_F_main_lactiferous_sinuses_R",
+    "fmaId": "TA2:vh_f_main_lactiferous_sinuses_r",
+    "namePtBr": "Seios Lactíferos (Direito)",
+    "nameEn": "Seios Lactíferos (right)",
+    "nameLatin": "Sinus lactiferi dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Parênquima & Ductos Mamários"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_main_lactiferous_ducts_r",
+    "node": "VH_F_main_lactiferous_ducts_R",
+    "fmaId": "TA2:vh_f_main_lactiferous_ducts_r",
+    "namePtBr": "Ductos Lactíferos Principais (Direito)",
+    "nameEn": "Ductos Lactíferos Principais (right)",
+    "nameLatin": "Ductus lactiferi dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Parênquima & Ductos Mamários"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_mammary_lobes_r",
+    "node": "VH_F_mammary_lobes_R",
+    "fmaId": "TA2:vh_f_mammary_lobes_r",
+    "namePtBr": "Lobos da Glândula Mamária (Direito)",
+    "nameEn": "Lobos da Glândula Mamária (right)",
+    "nameLatin": "Lobi glandulae mammariae dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Parênquima & Ductos Mamários"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:vh_f_suspensory_ligaments_r",
+    "node": "VH_F_suspensory_ligaments_R",
+    "fmaId": "TA2:vh_f_suspensory_ligaments_r",
+    "namePtBr": "Ligamentos Suspensores da Mama (de Cooper) (Direito)",
+    "nameEn": "Ligamentos Suspensores da Mama (de Cooper) (right)",
+    "nameLatin": "Ligamenta suspensoria mammaria dexter",
+    "chapter": 14,
+    "system": "integumentary",
+    "meshFile": "integumentary_female.glb",
+    "path": [
+      "Fáscia Superficial & Retináculos Cutâneos"
+    ],
+    "explosionVector": {
+      "x": 0.85,
+      "y": 0.15,
+      "z": 1.1
+    }
+  },
+  {
+    "id": "za:abdominal_part_of_pectoralis_major_muscle_l",
+    "node": "(Abdominal part of pectoralis major muscle).l",
+    "fmaId": "TA2:abdominal_part_of_pectoralis_major_muscle_l",
+    "namePtBr": "Abdominal part of pectoralis major Músculo Esquerdo",
+    "nameEn": "Abdominal part of pectoralis major muscle (left)",
+    "nameLatin": "Abdominal part of pectoralis major muscle",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abdominal_part_of_pectoralis_major_muscle_r",
+    "node": "(Abdominal part of pectoralis major muscle).r",
+    "fmaId": "TA2:abdominal_part_of_pectoralis_major_muscle_r",
+    "namePtBr": "Abdominal part of pectoralis major Músculo Direito",
+    "nameEn": "Abdominal part of pectoralis major muscle (right)",
+    "nameLatin": "Abdominal part of pectoralis major muscle",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_minimus_l",
+    "node": "(Adductor minimus).l",
+    "fmaId": "TA2:adductor_minimus_l",
+    "namePtBr": "Adductor minimus Esquerdo",
+    "nameEn": "Adductor minimus (left)",
+    "nameLatin": "Adductor minimus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_minimus_r",
+    "node": "(Adductor minimus).r",
+    "fmaId": "TA2:adductor_minimus_r",
+    "namePtBr": "Adductor minimus Direito",
+    "nameEn": "Adductor minimus (right)",
+    "nameLatin": "Adductor minimus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliopectineal_bursa_l",
+    "node": "(Iliopectineal bursa).l",
+    "fmaId": "TA2:iliopectineal_bursa_l",
+    "namePtBr": "Iliopectineal Bolsa Sinovial Esquerdo",
+    "nameEn": "Iliopectineal bursa (left)",
+    "nameLatin": "Iliopectineal bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliopectineal_bursa_r",
+    "node": "(Iliopectineal bursa).r",
+    "fmaId": "TA2:iliopectineal_bursa_r",
+    "namePtBr": "Iliopectineal Bolsa Sinovial Direito",
+    "nameEn": "Iliopectineal bursa (right)",
+    "nameLatin": "Iliopectineal bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:opponens_digiti_minimi_muscle_of_foot_l",
+    "node": "(Opponens digiti minimi muscle of foot).l",
+    "fmaId": "TA2:opponens_digiti_minimi_muscle_of_foot_l",
+    "namePtBr": "Opponens digiti minimi Músculo of foot Esquerdo",
+    "nameEn": "Opponens digiti minimi muscle of foot (left)",
+    "nameLatin": "Opponens digiti minimi muscle of foot",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:opponens_digiti_minimi_muscle_of_foot_r",
+    "node": "(Opponens digiti minimi muscle of foot).r",
+    "fmaId": "TA2:opponens_digiti_minimi_muscle_of_foot_r",
+    "namePtBr": "Opponens digiti minimi Músculo of foot Direito",
+    "nameEn": "Opponens digiti minimi muscle of foot (right)",
+    "nameLatin": "Opponens digiti minimi muscle of foot",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_digiti_minimi_of_foot_l",
+    "node": "Abductor digiti minimi of foot.l",
+    "fmaId": "TA2:abductor_digiti_minimi_of_foot_l",
+    "namePtBr": "Abductor digiti minimi of foot Esquerdo",
+    "nameEn": "Abductor digiti minimi of foot (left)",
+    "nameLatin": "Abductor digiti minimi pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_digiti_minimi_of_foot_r",
+    "node": "Abductor digiti minimi of foot.r",
+    "fmaId": "TA2:abductor_digiti_minimi_of_foot_r",
+    "namePtBr": "Abductor digiti minimi of foot Direito",
+    "nameEn": "Abductor digiti minimi of foot (right)",
+    "nameLatin": "Abductor digiti minimi pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_digiti_minimi_of_hand_l",
+    "node": "Abductor digiti minimi of hand.l",
+    "fmaId": "TA2:abductor_digiti_minimi_of_hand_l",
+    "namePtBr": "Abductor digiti minimi of hand Esquerdo",
+    "nameEn": "Abductor digiti minimi of hand (left)",
+    "nameLatin": "Abductor digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_digiti_minimi_of_hand_r",
+    "node": "Abductor digiti minimi of hand.r",
+    "fmaId": "TA2:abductor_digiti_minimi_of_hand_r",
+    "namePtBr": "Abductor digiti minimi of hand Direito",
+    "nameEn": "Abductor digiti minimi of hand (right)",
+    "nameLatin": "Abductor digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_hallucis_l",
+    "node": "Abductor hallucis.l",
+    "fmaId": "TA2:abductor_hallucis_l",
+    "namePtBr": "Abductor hallucis Esquerdo",
+    "nameEn": "Abductor hallucis (left)",
+    "nameLatin": "Abductor hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_hallucis_r",
+    "node": "Abductor hallucis.r",
+    "fmaId": "TA2:abductor_hallucis_r",
+    "namePtBr": "Abductor hallucis Direito",
+    "nameEn": "Abductor hallucis (right)",
+    "nameLatin": "Abductor hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_pollicis_brevis_l",
+    "node": "Abductor pollicis brevis.l",
+    "fmaId": "TA2:abductor_pollicis_brevis_l",
+    "namePtBr": "Abductor pollicis brevis Esquerdo",
+    "nameEn": "Abductor pollicis brevis (left)",
+    "nameLatin": "Abductor brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_pollicis_brevis_r",
+    "node": "Abductor pollicis brevis.r",
+    "fmaId": "TA2:abductor_pollicis_brevis_r",
+    "namePtBr": "Abductor pollicis brevis Direito",
+    "nameEn": "Abductor pollicis brevis (right)",
+    "nameLatin": "Abductor brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_pollicis_longus_l",
+    "node": "Abductor pollicis longus.l",
+    "fmaId": "TA2:abductor_pollicis_longus_l",
+    "namePtBr": "Abductor pollicis longus Esquerdo",
+    "nameEn": "Abductor pollicis longus (left)",
+    "nameLatin": "Abductor longus pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:abductor_pollicis_longus_r",
+    "node": "Abductor pollicis longus.r",
+    "fmaId": "TA2:abductor_pollicis_longus_r",
+    "namePtBr": "Abductor pollicis longus Direito",
+    "nameEn": "Abductor pollicis longus (right)",
+    "nameLatin": "Abductor longus pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:acromial_part_of_deltoid_muscle_l",
+    "node": "Acromial part of deltoid muscle.l",
+    "fmaId": "TA2:acromial_part_of_deltoid_muscle_l",
+    "namePtBr": "Acromial part of deltoid Músculo Esquerdo",
+    "nameEn": "Acromial part of deltoid muscle (left)",
+    "nameLatin": "Pars acromialis musculi deltoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Deltoid muscle"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:acromial_part_of_deltoid_muscle_r",
+    "node": "Acromial part of deltoid muscle.r",
+    "fmaId": "TA2:acromial_part_of_deltoid_muscle_r",
+    "namePtBr": "Acromial part of deltoid Músculo Direito",
+    "nameEn": "Acromial part of deltoid muscle (right)",
+    "nameLatin": "Pars acromialis musculi deltoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Deltoid muscle"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_brevis_l",
+    "node": "Adductor brevis.l",
+    "fmaId": "TA2:adductor_brevis_l",
+    "namePtBr": "Adductor brevis Esquerdo",
+    "nameEn": "Adductor brevis (left)",
+    "nameLatin": "Adductor brevis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_brevis_r",
+    "node": "Adductor brevis.r",
+    "fmaId": "TA2:adductor_brevis_r",
+    "namePtBr": "Adductor brevis Direito",
+    "nameEn": "Adductor brevis (right)",
+    "nameLatin": "Adductor brevis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_longus_l",
+    "node": "Adductor longus.l",
+    "fmaId": "TA2:adductor_longus_l",
+    "namePtBr": "Adductor longus Esquerdo",
+    "nameEn": "Adductor longus (left)",
+    "nameLatin": "Adductor longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_longus_r",
+    "node": "Adductor longus.r",
+    "fmaId": "TA2:adductor_longus_r",
+    "namePtBr": "Adductor longus Direito",
+    "nameEn": "Adductor longus (right)",
+    "nameLatin": "Adductor longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_magnus_l",
+    "node": "Adductor magnus.l",
+    "fmaId": "TA2:adductor_magnus_l",
+    "namePtBr": "Adductor magnus Esquerdo",
+    "nameEn": "Adductor magnus (left)",
+    "nameLatin": "Adductor magnus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:adductor_magnus_r",
+    "node": "Adductor magnus.r",
+    "fmaId": "TA2:adductor_magnus_r",
+    "namePtBr": "Adductor magnus Direito",
+    "nameEn": "Adductor magnus (right)",
+    "nameLatin": "Adductor magnus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anconeus_muscle_l",
+    "node": "Anconeus muscle.l",
+    "fmaId": "TA2:anconeus_muscle_l",
+    "namePtBr": "Anconeus Músculo Esquerdo",
+    "nameEn": "Anconeus muscle (left)",
+    "nameLatin": "Musculus anconeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anconeus_muscle_r",
+    "node": "Anconeus muscle.r",
+    "fmaId": "TA2:anconeus_muscle_r",
+    "namePtBr": "Anconeus Músculo Direito",
+    "nameEn": "Anconeus muscle (right)",
+    "nameLatin": "Musculus anconeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anserine_bursa_l",
+    "node": "Anserine bursa.l",
+    "fmaId": "TA2:anserine_bursa_l",
+    "namePtBr": "Anserine Bolsa Sinovial Esquerdo",
+    "nameEn": "Anserine bursa (left)",
+    "nameLatin": "Bursa anserina",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anserine_bursa_r",
+    "node": "Anserine bursa.r",
+    "fmaId": "TA2:anserine_bursa_r",
+    "namePtBr": "Anserine Bolsa Sinovial Direito",
+    "nameEn": "Anserine bursa (right)",
+    "nameLatin": "Bursa anserina",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:antebrachial_fascia_l",
+    "node": "Antebrachial fascia.l",
+    "fmaId": "TA2:antebrachial_fascia_l",
+    "namePtBr": "Antebrachial Fáscia Esquerdo",
+    "nameEn": "Antebrachial fascia (left)",
+    "nameLatin": "Fascia antebrachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:antebrachial_fascia_r",
+    "node": "Antebrachial fascia.r",
+    "fmaId": "TA2:antebrachial_fascia_r",
+    "namePtBr": "Antebrachial Fáscia Direito",
+    "nameEn": "Antebrachial fascia (right)",
+    "nameLatin": "Fascia antebrachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anterior_belly_of_digastric_muscle_l",
+    "node": "Anterior belly of digastric muscle.l",
+    "fmaId": "TA2:anterior_belly_of_digastric_muscle_l",
+    "namePtBr": "Anterior belly of digastric Músculo Esquerdo",
+    "nameEn": "Anterior belly of digastric muscle (left)",
+    "nameLatin": "Venter anterior musculi digastrici",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anterior_belly_of_digastric_muscle_r",
+    "node": "Anterior belly of digastric muscle.r",
+    "fmaId": "TA2:anterior_belly_of_digastric_muscle_r",
+    "namePtBr": "Anterior belly of digastric Músculo Direito",
+    "nameEn": "Anterior belly of digastric muscle (right)",
+    "nameLatin": "Venter anterior musculi digastrici",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anterior_intermuscular_septum_of_leg_l",
+    "node": "Anterior intermuscular septum of leg.l",
+    "fmaId": "TA2:anterior_intermuscular_septum_of_leg_l",
+    "namePtBr": "Anterior intermuscular Septo of leg Esquerdo",
+    "nameEn": "Anterior intermuscular septum of leg (left)",
+    "nameLatin": "Septum intermusculare anterius cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anterior_intermuscular_septum_of_leg_r",
+    "node": "Anterior intermuscular septum of leg.r",
+    "fmaId": "TA2:anterior_intermuscular_septum_of_leg_r",
+    "namePtBr": "Anterior intermuscular Septo of leg Direito",
+    "nameEn": "Anterior intermuscular septum of leg (right)",
+    "nameLatin": "Septum intermusculare anterius cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:anterior_layer_of_thoracolumbar_fascia_l",
+    "node": "Anterior layer of thoracolumbar fascia.l",
+    "fmaId": "TA2:anterior_layer_of_thoracolumbar_fascia_l",
+    "namePtBr": "Anterior layer of thoracolumbar Fáscia Esquerdo",
+    "nameEn": "Anterior layer of thoracolumbar fascia (left)",
+    "nameLatin": "Lamina anterior fasciae thoracolumbaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.3,
+      "z": -0.3
+    }
+  },
+  {
+    "id": "za:anterior_layer_of_thoracolumbar_fascia_r",
+    "node": "Anterior layer of thoracolumbar fascia.r",
+    "fmaId": "TA2:anterior_layer_of_thoracolumbar_fascia_r",
+    "namePtBr": "Anterior layer of thoracolumbar Fáscia Direito",
+    "nameEn": "Anterior layer of thoracolumbar fascia (right)",
+    "nameLatin": "Lamina anterior fasciae thoracolumbaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.3,
+      "z": -0.3
+    }
+  },
+  {
+    "id": "za:ary_epiglottic_part_of_oblique_arytenoid_muscle_l",
+    "node": "Ary-epiglottic part of oblique arytenoid muscle.l",
+    "fmaId": "TA2:ary_epiglottic_part_of_oblique_arytenoid_muscle_l",
+    "namePtBr": "Ary-epiglottic part of oblique arytenoid Músculo Esquerdo",
+    "nameEn": "Ary-epiglottic part of oblique arytenoid muscle (left)",
+    "nameLatin": "Pars aryepiglottica musculi arytenoidei obliqui",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:ary_epiglottic_part_of_oblique_arytenoid_muscle_r",
+    "node": "Ary-epiglottic part of oblique arytenoid muscle.r",
+    "fmaId": "TA2:ary_epiglottic_part_of_oblique_arytenoid_muscle_r",
+    "namePtBr": "Ary-epiglottic part of oblique arytenoid Músculo Direito",
+    "nameEn": "Ary-epiglottic part of oblique arytenoid muscle (right)",
+    "nameLatin": "Pars aryepiglottica musculi arytenoidei obliqui",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:ascending_part_of_trapezius_muscle_l",
+    "node": "Ascending part of trapezius muscle.l",
+    "fmaId": "TA2:ascending_part_of_trapezius_muscle_l",
+    "namePtBr": "Ascending part of trapezius Músculo Esquerdo",
+    "nameEn": "Ascending part of trapezius muscle (left)",
+    "nameLatin": "Pars ascendens musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back",
+      "Trapezius muscle"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:ascending_part_of_trapezius_muscle_r",
+    "node": "Ascending part of trapezius muscle.r",
+    "fmaId": "TA2:ascending_part_of_trapezius_muscle_r",
+    "namePtBr": "Ascending part of trapezius Músculo Direito",
+    "nameEn": "Ascending part of trapezius muscle (right)",
+    "nameLatin": "Pars ascendens musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back",
+      "Trapezius muscle"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:bicipitoradial_bursa_l",
+    "node": "Bicipitoradial bursa.l",
+    "fmaId": "TA2:bicipitoradial_bursa_l",
+    "namePtBr": "Bicipitoradial Bolsa Sinovial Esquerdo",
+    "nameEn": "Bicipitoradial bursa (left)",
+    "nameLatin": "Bursa bicipitoradialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:bicipitoradial_bursa_r",
+    "node": "Bicipitoradial bursa.r",
+    "fmaId": "TA2:bicipitoradial_bursa_r",
+    "namePtBr": "Bicipitoradial Bolsa Sinovial Direito",
+    "nameEn": "Bicipitoradial bursa (right)",
+    "nameLatin": "Bursa bicipitoradialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:brachial_fascia_l",
+    "node": "Brachial fascia.l",
+    "fmaId": "TA2:brachial_fascia_l",
+    "namePtBr": "Brachial Fáscia Esquerdo",
+    "nameEn": "Brachial fascia (left)",
+    "nameLatin": "Fascia brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:brachial_fascia_r",
+    "node": "Brachial fascia.r",
+    "fmaId": "TA2:brachial_fascia_r",
+    "namePtBr": "Brachial Fáscia Direito",
+    "nameEn": "Brachial fascia (right)",
+    "nameLatin": "Fascia brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:brachialis_muscle_l",
+    "node": "Brachialis muscle.l",
+    "fmaId": "TA2:brachialis_muscle_l",
+    "namePtBr": "Brachialis Músculo Esquerdo",
+    "nameEn": "Brachialis muscle (left)",
+    "nameLatin": "Musculus brachialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:brachialis_muscle_r",
+    "node": "Brachialis muscle.r",
+    "fmaId": "TA2:brachialis_muscle_r",
+    "namePtBr": "Brachialis Músculo Direito",
+    "nameEn": "Brachialis muscle (right)",
+    "nameLatin": "Musculus brachialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:brachioradialis_muscle_l",
+    "node": "Brachioradialis muscle.l",
+    "fmaId": "TA2:brachioradialis_muscle_l",
+    "namePtBr": "Brachioradialis Músculo Esquerdo",
+    "nameEn": "Brachioradialis muscle (left)",
+    "nameLatin": "Musculus brachioradialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:brachioradialis_muscle_r",
+    "node": "Brachioradialis muscle.r",
+    "fmaId": "TA2:brachioradialis_muscle_r",
+    "namePtBr": "Brachioradialis Músculo Direito",
+    "nameEn": "Brachioradialis muscle (right)",
+    "nameLatin": "Musculus brachioradialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:bucinator_l",
+    "node": "Bucinator.l",
+    "fmaId": "TA2:bucinator_l",
+    "namePtBr": "Bucinator Esquerdo",
+    "nameEn": "Bucinator (left)",
+    "nameLatin": "Bucinator",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:bucinator_r",
+    "node": "Bucinator.r",
+    "fmaId": "TA2:bucinator_r",
+    "namePtBr": "Bucinator Direito",
+    "nameEn": "Bucinator (right)",
+    "nameLatin": "Bucinator",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:bursa_of_piriformis_muscle_l",
+    "node": "Bursa of piriformis muscle.l",
+    "fmaId": "TA2:bursa_of_piriformis_muscle_l",
+    "namePtBr": "Bolsa Sinovial of piriformis Músculo Esquerdo",
+    "nameEn": "Bursa of piriformis muscle (left)",
+    "nameLatin": "Bursa musculi piriformis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:bursa_of_piriformis_muscle_r",
+    "node": "Bursa of piriformis muscle.r",
+    "fmaId": "TA2:bursa_of_piriformis_muscle_r",
+    "namePtBr": "Bolsa Sinovial of piriformis Músculo Direito",
+    "nameEn": "Bursa of piriformis muscle (right)",
+    "nameLatin": "Bursa musculi piriformis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:calcaneal_tendon_l",
+    "node": "Calcaneal tendon.l",
+    "fmaId": "TA2:calcaneal_tendon_l",
+    "namePtBr": "Calcaneal Tendão Esquerdo",
+    "nameEn": "Calcaneal tendon (left)",
+    "nameLatin": "Tendo calcaneus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:calcaneal_tendon_r",
+    "node": "Calcaneal tendon.r",
+    "fmaId": "TA2:calcaneal_tendon_r",
+    "namePtBr": "Calcaneal Tendão Direito",
+    "nameEn": "Calcaneal tendon (right)",
+    "nameLatin": "Tendo calcaneus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:clavicular_head_of_pectoralis_major_muscle_l",
+    "node": "Clavicular head of pectoralis major muscle.l",
+    "fmaId": "TA2:clavicular_head_of_pectoralis_major_muscle_l",
+    "namePtBr": "Clavicular head of pectoralis major Músculo Esquerdo",
+    "nameEn": "Clavicular head of pectoralis major muscle (left)",
+    "nameLatin": "Pars clavicularis musculi pectoralis majoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Thoracic part of muscular system",
+      "Pectoralis major muscle"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:clavicular_head_of_pectoralis_major_muscle_r",
+    "node": "Clavicular head of pectoralis major muscle.r",
+    "fmaId": "TA2:clavicular_head_of_pectoralis_major_muscle_r",
+    "namePtBr": "Clavicular head of pectoralis major Músculo Direito",
+    "nameEn": "Clavicular head of pectoralis major muscle (right)",
+    "nameLatin": "Pars clavicularis musculi pectoralis majoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Thoracic part of muscular system",
+      "Pectoralis major muscle"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:clavicular_part_of_deltoid_muscle_l",
+    "node": "Clavicular part of deltoid muscle.l",
+    "fmaId": "TA2:clavicular_part_of_deltoid_muscle_l",
+    "namePtBr": "Clavicular part of deltoid Músculo Esquerdo",
+    "nameEn": "Clavicular part of deltoid muscle (left)",
+    "nameLatin": "Pars clavicularis musculi deltoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Deltoid muscle"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:clavicular_part_of_deltoid_muscle_r",
+    "node": "Clavicular part of deltoid muscle.r",
+    "fmaId": "TA2:clavicular_part_of_deltoid_muscle_r",
+    "namePtBr": "Clavicular part of deltoid Músculo Direito",
+    "nameEn": "Clavicular part of deltoid muscle (right)",
+    "nameLatin": "Pars clavicularis musculi deltoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Deltoid muscle"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:clavipectoral_fascia_l",
+    "node": "Clavipectoral fascia.l",
+    "fmaId": "TA2:clavipectoral_fascia_l",
+    "namePtBr": "Clavipectoral Fáscia Esquerdo",
+    "nameEn": "Clavipectoral fascia (left)",
+    "nameLatin": "Fascia clavipectoralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:clavipectoral_fascia_r",
+    "node": "Clavipectoral fascia.r",
+    "fmaId": "TA2:clavipectoral_fascia_r",
+    "namePtBr": "Clavipectoral Fáscia Direito",
+    "nameEn": "Clavipectoral fascia (right)",
+    "nameLatin": "Fascia clavipectoralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:coccygeus_muscle_l",
+    "node": "Coccygeus muscle.l",
+    "fmaId": "TA2:coccygeus_muscle_l",
+    "namePtBr": "Coccygeus Músculo Esquerdo",
+    "nameEn": "Coccygeus muscle (left)",
+    "nameLatin": "Musculus coccygeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:coccygeus_muscle_r",
+    "node": "Coccygeus muscle.r",
+    "fmaId": "TA2:coccygeus_muscle_r",
+    "namePtBr": "Coccygeus Músculo Direito",
+    "nameEn": "Coccygeus muscle (right)",
+    "nameLatin": "Musculus coccygeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:common_flexor_tendon_sheath_l",
+    "node": "Common flexor tendon sheath.l",
+    "fmaId": "TA2:common_flexor_tendon_sheath_l",
+    "namePtBr": "Common flexor Bainha Tendínea Esquerdo",
+    "nameEn": "Common flexor tendon sheath (left)",
+    "nameLatin": "Vagina communis tendinum flexorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:common_flexor_tendon_sheath_r",
+    "node": "Common flexor tendon sheath.r",
+    "fmaId": "TA2:common_flexor_tendon_sheath_r",
+    "namePtBr": "Common flexor Bainha Tendínea Direito",
+    "nameEn": "Common flexor tendon sheath (right)",
+    "nameLatin": "Vagina communis tendinum flexorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:common_tendinous_ring_l",
+    "node": "Common tendinous ring.l",
+    "fmaId": "TA2:common_tendinous_ring_l",
+    "namePtBr": "Common tendinous ring Esquerdo",
+    "nameEn": "Common tendinous ring (left)",
+    "nameLatin": "Anulus tendineus communis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:common_tendinous_ring_r",
+    "node": "Common tendinous ring.r",
+    "fmaId": "TA2:common_tendinous_ring_r",
+    "namePtBr": "Common tendinous ring Direito",
+    "nameEn": "Common tendinous ring (right)",
+    "nameLatin": "Anulus tendineus communis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:common_tendon_sheath_of_fibularis_muscles_l",
+    "node": "Common tendon sheath of fibularis muscles.l",
+    "fmaId": "TA2:common_tendon_sheath_of_fibularis_muscles_l",
+    "namePtBr": "Common Bainha Tendínea of fibularis muscles Esquerdo",
+    "nameEn": "Common tendon sheath of fibularis muscles (left)",
+    "nameLatin": "Vagina communis tendinum musculorum fibularium",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:common_tendon_sheath_of_fibularis_muscles_r",
+    "node": "Common tendon sheath of fibularis muscles.r",
+    "fmaId": "TA2:common_tendon_sheath_of_fibularis_muscles_r",
+    "namePtBr": "Common Bainha Tendínea of fibularis muscles Direito",
+    "nameEn": "Common tendon sheath of fibularis muscles (right)",
+    "nameLatin": "Vagina communis tendinum musculorum fibularium",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:coracobrachial_bursa_l",
+    "node": "Coracobrachial bursa.l",
+    "fmaId": "TA2:coracobrachial_bursa_l",
+    "namePtBr": "Coracobrachial Bolsa Sinovial Esquerdo",
+    "nameEn": "Coracobrachial bursa (left)",
+    "nameLatin": "Coracobrachial bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:coracobrachial_bursa_r",
+    "node": "Coracobrachial bursa.r",
+    "fmaId": "TA2:coracobrachial_bursa_r",
+    "namePtBr": "Coracobrachial Bolsa Sinovial Direito",
+    "nameEn": "Coracobrachial bursa (right)",
+    "nameLatin": "Coracobrachial bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:coracobrachialis_muscle_l",
+    "node": "Coracobrachialis muscle.l",
+    "fmaId": "TA2:coracobrachialis_muscle_l",
+    "namePtBr": "Coracobrachialis Músculo Esquerdo",
+    "nameEn": "Coracobrachialis muscle (left)",
+    "nameLatin": "Musculus coracobrachialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:coracobrachialis_muscle_r",
+    "node": "Coracobrachialis muscle.r",
+    "fmaId": "TA2:coracobrachialis_muscle_r",
+    "namePtBr": "Coracobrachialis Músculo Direito",
+    "nameEn": "Coracobrachialis muscle (right)",
+    "nameLatin": "Musculus coracobrachialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:corrugator_supercilii_l",
+    "node": "Corrugator supercilii.l",
+    "fmaId": "TA2:corrugator_supercilii_l",
+    "namePtBr": "Corrugator supercilii Esquerdo",
+    "nameEn": "Corrugator supercilii (left)",
+    "nameLatin": "Musculus corrugator supercilii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:corrugator_supercilii_r",
+    "node": "Corrugator supercilii.r",
+    "fmaId": "TA2:corrugator_supercilii_r",
+    "namePtBr": "Corrugator supercilii Direito",
+    "nameEn": "Corrugator supercilii (right)",
+    "nameLatin": "Musculus corrugator supercilii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:cruciform_part_of_fibrous_sheath_of_digit_of_hand_l",
+    "node": "Cruciform part of fibrous sheath of digit of hand.l",
+    "fmaId": "TA2:cruciform_part_of_fibrous_sheath_of_digit_of_hand_l",
+    "namePtBr": "Cruciform part of fibrous sheath of digit of hand Esquerdo",
+    "nameEn": "Cruciform part of fibrous sheath of digit of hand (left)",
+    "nameLatin": "Cruciform part of fibrous sheath of digit of hand",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:cruciform_part_of_fibrous_sheath_of_digit_of_hand_r",
+    "node": "Cruciform part of fibrous sheath of digit of hand.r",
+    "fmaId": "TA2:cruciform_part_of_fibrous_sheath_of_digit_of_hand_r",
+    "namePtBr": "Cruciform part of fibrous sheath of digit of hand Direito",
+    "nameEn": "Cruciform part of fibrous sheath of digit of hand (right)",
+    "nameLatin": "Cruciform part of fibrous sheath of digit of hand",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:crural_fascia_l",
+    "node": "Crural fascia.l",
+    "fmaId": "TA2:crural_fascia_l",
+    "namePtBr": "Crural Fáscia Esquerdo",
+    "nameEn": "Crural fascia (left)",
+    "nameLatin": "Fascia cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:crural_fascia_r",
+    "node": "Crural fascia.r",
+    "fmaId": "TA2:crural_fascia_r",
+    "namePtBr": "Crural Fáscia Direito",
+    "nameEn": "Crural fascia (right)",
+    "nameLatin": "Fascia cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deep_head_of_flexor_pollicis_brevis_l",
+    "node": "Deep head of flexor pollicis brevis.l",
+    "fmaId": "TA2:deep_head_of_flexor_pollicis_brevis_l",
+    "namePtBr": "Deep head of flexor pollicis brevis Esquerdo",
+    "nameEn": "Deep head of flexor pollicis brevis (left)",
+    "nameLatin": "Caput profundum flexoris brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deep_head_of_flexor_pollicis_brevis_r",
+    "node": "Deep head of flexor pollicis brevis.r",
+    "fmaId": "TA2:deep_head_of_flexor_pollicis_brevis_r",
+    "namePtBr": "Deep head of flexor pollicis brevis Direito",
+    "nameEn": "Deep head of flexor pollicis brevis (right)",
+    "nameLatin": "Caput profundum flexoris brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deep_head_of_pronator_teres_l",
+    "node": "Deep head of pronator teres.l",
+    "fmaId": "TA2:deep_head_of_pronator_teres_l",
+    "namePtBr": "Deep head of pronator teres Esquerdo",
+    "nameEn": "Deep head of pronator teres (left)",
+    "nameLatin": "Caput profundum pronatoris teretis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deep_head_of_pronator_teres_r",
+    "node": "Deep head of pronator teres.r",
+    "fmaId": "TA2:deep_head_of_pronator_teres_r",
+    "namePtBr": "Deep head of pronator teres Direito",
+    "nameEn": "Deep head of pronator teres (right)",
+    "nameLatin": "Caput profundum pronatoris teretis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deep_infrapatellar_bursa_l",
+    "node": "Deep infrapatellar bursa.l",
+    "fmaId": "TA2:deep_infrapatellar_bursa_l",
+    "namePtBr": "Deep infrapatellar Bolsa Sinovial Esquerdo",
+    "nameEn": "Deep infrapatellar bursa (left)",
+    "nameLatin": "Bursa infrapatellaris profunda",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:deep_infrapatellar_bursa_r",
+    "node": "Deep infrapatellar bursa.r",
+    "fmaId": "TA2:deep_infrapatellar_bursa_r",
+    "namePtBr": "Deep infrapatellar Bolsa Sinovial Direito",
+    "nameEn": "Deep infrapatellar bursa (right)",
+    "nameLatin": "Bursa infrapatellaris profunda",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:deep_part_of_masseter_l",
+    "node": "Deep part of masseter.l",
+    "fmaId": "TA2:deep_part_of_masseter_l",
+    "namePtBr": "Deep part of masseter Esquerdo",
+    "nameEn": "Deep part of masseter (left)",
+    "nameLatin": "Pars profunda masseteris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deep_part_of_masseter_r",
+    "node": "Deep part of masseter.r",
+    "fmaId": "TA2:deep_part_of_masseter_r",
+    "namePtBr": "Deep part of masseter Direito",
+    "nameEn": "Deep part of masseter (right)",
+    "nameLatin": "Pars profunda masseteris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deltoid_fascia_l",
+    "node": "Deltoid fascia.l",
+    "fmaId": "TA2:deltoid_fascia_l",
+    "namePtBr": "Deltoid Fáscia Esquerdo",
+    "nameEn": "Deltoid fascia (left)",
+    "nameLatin": "Fascia deltoidea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:deltoid_fascia_r",
+    "node": "Deltoid fascia.r",
+    "fmaId": "TA2:deltoid_fascia_r",
+    "namePtBr": "Deltoid Fáscia Direito",
+    "nameEn": "Deltoid fascia (right)",
+    "nameLatin": "Fascia deltoidea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:depressor_anguli_oris_l",
+    "node": "Depressor anguli oris.l",
+    "fmaId": "TA2:depressor_anguli_oris_l",
+    "namePtBr": "Depressor anguli oris Esquerdo",
+    "nameEn": "Depressor anguli oris (left)",
+    "nameLatin": "Depressor anguli oris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:depressor_anguli_oris_r",
+    "node": "Depressor anguli oris.r",
+    "fmaId": "TA2:depressor_anguli_oris_r",
+    "namePtBr": "Depressor anguli oris Direito",
+    "nameEn": "Depressor anguli oris (right)",
+    "nameLatin": "Depressor anguli oris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:depressor_labii_inferioris_l",
+    "node": "Depressor labii inferioris.l",
+    "fmaId": "TA2:depressor_labii_inferioris_l",
+    "namePtBr": "Depressor labii inferioris Esquerdo",
+    "nameEn": "Depressor labii inferioris (left)",
+    "nameLatin": "Depressor labii inferioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:depressor_labii_inferioris_r",
+    "node": "Depressor labii inferioris.r",
+    "fmaId": "TA2:depressor_labii_inferioris_r",
+    "namePtBr": "Depressor labii inferioris Direito",
+    "nameEn": "Depressor labii inferioris (right)",
+    "nameLatin": "Depressor labii inferioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:depressor_septi_nasi_l",
+    "node": "Depressor septi nasi.l",
+    "fmaId": "TA2:depressor_septi_nasi_l",
+    "namePtBr": "Depressor septi nasi Esquerdo",
+    "nameEn": "Depressor septi nasi (left)",
+    "nameLatin": "Depressor septi nasi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:depressor_septi_nasi_r",
+    "node": "Depressor septi nasi.r",
+    "fmaId": "TA2:depressor_septi_nasi_r",
+    "namePtBr": "Depressor septi nasi Direito",
+    "nameEn": "Depressor septi nasi (right)",
+    "nameLatin": "Depressor septi nasi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:descending_part_of_trapezius_muscle_l",
+    "node": "Descending part of trapezius muscle.l",
+    "fmaId": "TA2:descending_part_of_trapezius_muscle_l",
+    "namePtBr": "Descending part of trapezius Músculo Esquerdo",
+    "nameEn": "Descending part of trapezius muscle (left)",
+    "nameLatin": "Pars descendens musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back",
+      "Trapezius muscle"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:descending_part_of_trapezius_muscle_r",
+    "node": "Descending part of trapezius muscle.r",
+    "fmaId": "TA2:descending_part_of_trapezius_muscle_r",
+    "namePtBr": "Descending part of trapezius Músculo Direito",
+    "nameEn": "Descending part of trapezius muscle (right)",
+    "nameLatin": "Pars descendens musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back",
+      "Trapezius muscle"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:diaphragm",
+    "node": "Diaphragm",
+    "fmaId": "TA2:diaphragm",
+    "namePtBr": "Diaphragm",
+    "nameEn": "Diaphragm",
+    "nameLatin": "Diaphragma",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:diaphragmatic_fascia",
+    "node": "Diaphragmatic fascia",
+    "fmaId": "TA2:diaphragmatic_fascia",
+    "namePtBr": "Diaphragmatic Fáscia",
+    "nameEn": "Diaphragmatic fascia",
+    "nameLatin": "Fascia diaphragmatica",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_fascia_of_hand_l",
+    "node": "Dorsal fascia of hand.l",
+    "fmaId": "TA2:dorsal_fascia_of_hand_l",
+    "namePtBr": "Dorsal Fáscia of hand Esquerdo",
+    "nameEn": "Dorsal fascia of hand (left)",
+    "nameLatin": "Fascia dorsalis manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_fascia_of_hand_r",
+    "node": "Dorsal fascia of hand.r",
+    "fmaId": "TA2:dorsal_fascia_of_hand_r",
+    "namePtBr": "Dorsal Fáscia of hand Direito",
+    "nameEn": "Dorsal fascia of hand (right)",
+    "nameLatin": "Fascia dorsalis manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_interossei_muscles_of_foot_l",
+    "node": "Dorsal interossei muscles of foot.l",
+    "fmaId": "TA2:dorsal_interossei_muscles_of_foot_l",
+    "namePtBr": "Dorsal interossei muscles of foot Esquerdo",
+    "nameEn": "Dorsal interossei muscles of foot (left)",
+    "nameLatin": "Musculi interossei dorsales pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_interossei_muscles_of_foot_r",
+    "node": "Dorsal interossei muscles of foot.r",
+    "fmaId": "TA2:dorsal_interossei_muscles_of_foot_r",
+    "namePtBr": "Dorsal interossei muscles of foot Direito",
+    "nameEn": "Dorsal interossei muscles of foot (right)",
+    "nameLatin": "Musculi interossei dorsales pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_interossei_muscles_of_hand_l",
+    "node": "Dorsal interossei muscles of hand.l",
+    "fmaId": "TA2:dorsal_interossei_muscles_of_hand_l",
+    "namePtBr": "Dorsal interossei muscles of hand Esquerdo",
+    "nameEn": "Dorsal interossei muscles of hand (left)",
+    "nameLatin": "Musculi interossei dorsales manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_interossei_muscles_of_hand_r",
+    "node": "Dorsal interossei muscles of hand.r",
+    "fmaId": "TA2:dorsal_interossei_muscles_of_hand_r",
+    "namePtBr": "Dorsal interossei muscles of hand Direito",
+    "nameEn": "Dorsal interossei muscles of hand (right)",
+    "nameLatin": "Musculi interossei dorsales manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_parts_of_lateral_intertransversarii_lumborum_muscles_l",
+    "node": "Dorsal parts of lateral intertransversarii lumborum muscles.l",
+    "fmaId": "TA2:dorsal_parts_of_lateral_intertransversarii_lumborum_muscles_l",
+    "namePtBr": "Dorsal parts of lateral intertransversarii lumborum muscles Esquerdo",
+    "nameEn": "Dorsal parts of lateral intertransversarii lumborum muscles (left)",
+    "nameLatin": "Partes dors. musculorum intertransversariorum lat. lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:dorsal_parts_of_lateral_intertransversarii_lumborum_muscles_r",
+    "node": "Dorsal parts of lateral intertransversarii lumborum muscles.r",
+    "fmaId": "TA2:dorsal_parts_of_lateral_intertransversarii_lumborum_muscles_r",
+    "namePtBr": "Dorsal parts of lateral intertransversarii lumborum muscles Direito",
+    "nameEn": "Dorsal parts of lateral intertransversarii lumborum muscles (right)",
+    "nameLatin": "Partes dors. musculorum intertransversariorum lat. lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:epicranial_aponeurosis_l",
+    "node": "Epicranial aponeurosis.l",
+    "fmaId": "TA2:epicranial_aponeurosis_l",
+    "namePtBr": "Epicranial Aponeurose Esquerdo",
+    "nameEn": "Epicranial aponeurosis (left)",
+    "nameLatin": "Galea aponeurotica",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:epicranial_aponeurosis_r",
+    "node": "Epicranial aponeurosis.r",
+    "fmaId": "TA2:epicranial_aponeurosis_r",
+    "namePtBr": "Epicranial Aponeurose Direito",
+    "nameEn": "Epicranial aponeurosis (right)",
+    "nameLatin": "Galea aponeurotica",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_carpi_radialis_brevis_l",
+    "node": "Extensor carpi radialis brevis.l",
+    "fmaId": "TA2:extensor_carpi_radialis_brevis_l",
+    "namePtBr": "Extensor carpi radialis brevis Esquerdo",
+    "nameEn": "Extensor carpi radialis brevis (left)",
+    "nameLatin": "Extensor radialis brevis carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_carpi_radialis_brevis_r",
+    "node": "Extensor carpi radialis brevis.r",
+    "fmaId": "TA2:extensor_carpi_radialis_brevis_r",
+    "namePtBr": "Extensor carpi radialis brevis Direito",
+    "nameEn": "Extensor carpi radialis brevis (right)",
+    "nameLatin": "Extensor radialis brevis carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_carpi_radialis_longus_l",
+    "node": "Extensor carpi radialis longus.l",
+    "fmaId": "TA2:extensor_carpi_radialis_longus_l",
+    "namePtBr": "Extensor carpi radialis longus Esquerdo",
+    "nameEn": "Extensor carpi radialis longus (left)",
+    "nameLatin": "Extensor radialis longus carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_carpi_radialis_longus_r",
+    "node": "Extensor carpi radialis longus.r",
+    "fmaId": "TA2:extensor_carpi_radialis_longus_r",
+    "namePtBr": "Extensor carpi radialis longus Direito",
+    "nameEn": "Extensor carpi radialis longus (right)",
+    "nameLatin": "Extensor radialis longus carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digiti_minimi_l",
+    "node": "Extensor digiti minimi.l",
+    "fmaId": "TA2:extensor_digiti_minimi_l",
+    "namePtBr": "Extensor digiti minimi Esquerdo",
+    "nameEn": "Extensor digiti minimi (left)",
+    "nameLatin": "Extensor digiti minimi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digiti_minimi_r",
+    "node": "Extensor digiti minimi.r",
+    "fmaId": "TA2:extensor_digiti_minimi_r",
+    "namePtBr": "Extensor digiti minimi Direito",
+    "nameEn": "Extensor digiti minimi (right)",
+    "nameLatin": "Extensor digiti minimi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digitorum_brevis_l",
+    "node": "Extensor digitorum brevis.l",
+    "fmaId": "TA2:extensor_digitorum_brevis_l",
+    "namePtBr": "Extensor digitorum brevis Esquerdo",
+    "nameEn": "Extensor digitorum brevis (left)",
+    "nameLatin": "Extensor brevis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digitorum_brevis_r",
+    "node": "Extensor digitorum brevis.r",
+    "fmaId": "TA2:extensor_digitorum_brevis_r",
+    "namePtBr": "Extensor digitorum brevis Direito",
+    "nameEn": "Extensor digitorum brevis (right)",
+    "nameLatin": "Extensor brevis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digitorum_longus_l",
+    "node": "Extensor digitorum longus.l",
+    "fmaId": "TA2:extensor_digitorum_longus_l",
+    "namePtBr": "Extensor digitorum longus Esquerdo",
+    "nameEn": "Extensor digitorum longus (left)",
+    "nameLatin": "Extensor longus digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digitorum_longus_r",
+    "node": "Extensor digitorum longus.r",
+    "fmaId": "TA2:extensor_digitorum_longus_r",
+    "namePtBr": "Extensor digitorum longus Direito",
+    "nameEn": "Extensor digitorum longus (right)",
+    "nameLatin": "Extensor longus digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digitorum_l",
+    "node": "Extensor digitorum.l",
+    "fmaId": "TA2:extensor_digitorum_l",
+    "namePtBr": "Extensor digitorum Esquerdo",
+    "nameEn": "Extensor digitorum (left)",
+    "nameLatin": "Extensor digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_digitorum_r",
+    "node": "Extensor digitorum.r",
+    "fmaId": "TA2:extensor_digitorum_r",
+    "namePtBr": "Extensor digitorum Direito",
+    "nameEn": "Extensor digitorum (right)",
+    "nameLatin": "Extensor digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_hallucis_brevis_l",
+    "node": "Extensor hallucis brevis.l",
+    "fmaId": "TA2:extensor_hallucis_brevis_l",
+    "namePtBr": "Extensor hallucis brevis Esquerdo",
+    "nameEn": "Extensor hallucis brevis (left)",
+    "nameLatin": "Extensor brevis hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_hallucis_brevis_r",
+    "node": "Extensor hallucis brevis.r",
+    "fmaId": "TA2:extensor_hallucis_brevis_r",
+    "namePtBr": "Extensor hallucis brevis Direito",
+    "nameEn": "Extensor hallucis brevis (right)",
+    "nameLatin": "Extensor brevis hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_hallucis_longus_l",
+    "node": "Extensor hallucis longus.l",
+    "fmaId": "TA2:extensor_hallucis_longus_l",
+    "namePtBr": "Extensor hallucis longus Esquerdo",
+    "nameEn": "Extensor hallucis longus (left)",
+    "nameLatin": "Extensor longus hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_hallucis_longus_r",
+    "node": "Extensor hallucis longus.r",
+    "fmaId": "TA2:extensor_hallucis_longus_r",
+    "namePtBr": "Extensor hallucis longus Direito",
+    "nameEn": "Extensor hallucis longus (right)",
+    "nameLatin": "Extensor longus hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_indicis_l",
+    "node": "Extensor indicis.l",
+    "fmaId": "TA2:extensor_indicis_l",
+    "namePtBr": "Extensor indicis Esquerdo",
+    "nameEn": "Extensor indicis (left)",
+    "nameLatin": "Extensor indicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_indicis_r",
+    "node": "Extensor indicis.r",
+    "fmaId": "TA2:extensor_indicis_r",
+    "namePtBr": "Extensor indicis Direito",
+    "nameEn": "Extensor indicis (right)",
+    "nameLatin": "Extensor indicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_pollicis_brevis_l",
+    "node": "Extensor pollicis brevis.l",
+    "fmaId": "TA2:extensor_pollicis_brevis_l",
+    "namePtBr": "Extensor pollicis brevis Esquerdo",
+    "nameEn": "Extensor pollicis brevis (left)",
+    "nameLatin": "Extensor brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_pollicis_brevis_r",
+    "node": "Extensor pollicis brevis.r",
+    "fmaId": "TA2:extensor_pollicis_brevis_r",
+    "namePtBr": "Extensor pollicis brevis Direito",
+    "nameEn": "Extensor pollicis brevis (right)",
+    "nameLatin": "Extensor brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_pollicis_longus_l",
+    "node": "Extensor pollicis longus.l",
+    "fmaId": "TA2:extensor_pollicis_longus_l",
+    "namePtBr": "Extensor pollicis longus Esquerdo",
+    "nameEn": "Extensor pollicis longus (left)",
+    "nameLatin": "Extensor longus pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_pollicis_longus_r",
+    "node": "Extensor pollicis longus.r",
+    "fmaId": "TA2:extensor_pollicis_longus_r",
+    "namePtBr": "Extensor pollicis longus Direito",
+    "nameEn": "Extensor pollicis longus (right)",
+    "nameLatin": "Extensor longus pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_retinaculum_of_wrist_l",
+    "node": "Extensor retinaculum of wrist.l",
+    "fmaId": "TA2:extensor_retinaculum_of_wrist_l",
+    "namePtBr": "Extensor Retináculo of wrist Esquerdo",
+    "nameEn": "Extensor retinaculum of wrist (left)",
+    "nameLatin": "Retinaculum extensorium carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of upper limb",
+      "Fascia of upper limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:extensor_retinaculum_of_wrist_r",
+    "node": "Extensor retinaculum of wrist.r",
+    "fmaId": "TA2:extensor_retinaculum_of_wrist_r",
+    "namePtBr": "Extensor Retináculo of wrist Direito",
+    "nameEn": "Extensor retinaculum of wrist (right)",
+    "nameLatin": "Retinaculum extensorium carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of upper limb",
+      "Fascia of upper limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_abdominal_oblique_muscle_l",
+    "node": "External abdominal oblique muscle.l",
+    "fmaId": "TA2:external_abdominal_oblique_muscle_l",
+    "namePtBr": "External abdominal oblique Músculo Esquerdo",
+    "nameEn": "External abdominal oblique muscle (left)",
+    "nameLatin": "Musculus obliquus externus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_abdominal_oblique_muscle_r",
+    "node": "External abdominal oblique muscle.r",
+    "fmaId": "TA2:external_abdominal_oblique_muscle_r",
+    "namePtBr": "External abdominal oblique Músculo Direito",
+    "nameEn": "External abdominal oblique muscle (right)",
+    "nameLatin": "Musculus obliquus externus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_anal_sphincter_l",
+    "node": "External anal sphincter.l",
+    "fmaId": "TA2:external_anal_sphincter_l",
+    "namePtBr": "External anal sphincter Esquerdo",
+    "nameEn": "External anal sphincter (left)",
+    "nameLatin": "Sphincter externus ani",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_anal_sphincter_r",
+    "node": "External anal sphincter.r",
+    "fmaId": "TA2:external_anal_sphincter_r",
+    "namePtBr": "External anal sphincter Direito",
+    "nameEn": "External anal sphincter (right)",
+    "nameLatin": "Sphincter externus ani",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_intercostal_muscles_l",
+    "node": "External intercostal muscles.l",
+    "fmaId": "TA2:external_intercostal_muscles_l",
+    "namePtBr": "External intercostal muscles Esquerdo",
+    "nameEn": "External intercostal muscles (left)",
+    "nameLatin": "Musculi intercostales externi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_intercostal_muscles_r",
+    "node": "External intercostal muscles.r",
+    "fmaId": "TA2:external_intercostal_muscles_r",
+    "namePtBr": "External intercostal muscles Direito",
+    "nameEn": "External intercostal muscles (right)",
+    "nameLatin": "Musculi intercostales externi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_part_of_thyro_arytenoid_muscle_l",
+    "node": "External part of thyro-arytenoid muscle.l",
+    "fmaId": "TA2:external_part_of_thyro_arytenoid_muscle_l",
+    "namePtBr": "External part of thyro-arytenoid Músculo Esquerdo",
+    "nameEn": "External part of thyro-arytenoid muscle (left)",
+    "nameLatin": "Pars externa musculi thyreoarytenoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:external_part_of_thyro_arytenoid_muscle_r",
+    "node": "External part of thyro-arytenoid muscle.r",
+    "fmaId": "TA2:external_part_of_thyro_arytenoid_muscle_r",
+    "namePtBr": "External part of thyro-arytenoid Músculo Direito",
+    "nameEn": "External part of thyro-arytenoid muscle (right)",
+    "nameLatin": "Pars externa musculi thyreoarytenoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:fascia_lata_l",
+    "node": "Fascia lata.l",
+    "fmaId": "TA2:fascia_lata_l",
+    "namePtBr": "Fáscia lata Esquerdo",
+    "nameEn": "Fascia lata (left)",
+    "nameLatin": "Fascia lata",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:fascia_lata_r",
+    "node": "Fascia lata.r",
+    "fmaId": "TA2:fascia_lata_r",
+    "namePtBr": "Fáscia lata Direito",
+    "nameEn": "Fascia lata (right)",
+    "nameLatin": "Fascia lata",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:fibularis_brevis_muscle_l",
+    "node": "Fibularis brevis muscle.l",
+    "fmaId": "TA2:fibularis_brevis_muscle_l",
+    "namePtBr": "Fibularis brevis Músculo Esquerdo",
+    "nameEn": "Fibularis brevis muscle (left)",
+    "nameLatin": "Musculus fibularis brevis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Lateral compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:fibularis_brevis_muscle_r",
+    "node": "Fibularis brevis muscle.r",
+    "fmaId": "TA2:fibularis_brevis_muscle_r",
+    "namePtBr": "Fibularis brevis Músculo Direito",
+    "nameEn": "Fibularis brevis muscle (right)",
+    "nameLatin": "Musculus fibularis brevis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Lateral compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:fibularis_longus_muscle_l",
+    "node": "Fibularis longus muscle.l",
+    "fmaId": "TA2:fibularis_longus_muscle_l",
+    "namePtBr": "Fibularis longus Músculo Esquerdo",
+    "nameEn": "Fibularis longus muscle (left)",
+    "nameLatin": "Musculus fibularis longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Lateral compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:fibularis_longus_muscle_r",
+    "node": "Fibularis longus muscle.r",
+    "fmaId": "TA2:fibularis_longus_muscle_r",
+    "namePtBr": "Fibularis longus Músculo Direito",
+    "nameEn": "Fibularis longus muscle (right)",
+    "nameLatin": "Musculus fibularis longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Lateral compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:fibularis_tertius_muscle_l",
+    "node": "Fibularis tertius muscle.l",
+    "fmaId": "TA2:fibularis_tertius_muscle_l",
+    "namePtBr": "Fibularis tertius Músculo Esquerdo",
+    "nameEn": "Fibularis tertius muscle (left)",
+    "nameLatin": "Musculus fibularis tertius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:fibularis_tertius_muscle_r",
+    "node": "Fibularis tertius muscle.r",
+    "fmaId": "TA2:fibularis_tertius_muscle_r",
+    "namePtBr": "Fibularis tertius Músculo Direito",
+    "nameEn": "Fibularis tertius muscle (right)",
+    "nameLatin": "Musculus fibularis tertius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:flexor_carpi_radialis_l",
+    "node": "Flexor carpi radialis.l",
+    "fmaId": "TA2:flexor_carpi_radialis_l",
+    "namePtBr": "Flexor carpi radialis Esquerdo",
+    "nameEn": "Flexor carpi radialis (left)",
+    "nameLatin": "Flexor radialis carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_carpi_radialis_r",
+    "node": "Flexor carpi radialis.r",
+    "fmaId": "TA2:flexor_carpi_radialis_r",
+    "namePtBr": "Flexor carpi radialis Direito",
+    "nameEn": "Flexor carpi radialis (right)",
+    "nameLatin": "Flexor radialis carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digiti_minimi_of_foot_l",
+    "node": "Flexor digiti minimi of foot.l",
+    "fmaId": "TA2:flexor_digiti_minimi_of_foot_l",
+    "namePtBr": "Flexor digiti minimi of foot Esquerdo",
+    "nameEn": "Flexor digiti minimi of foot (left)",
+    "nameLatin": "Flexor digiti minimi pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digiti_minimi_of_foot_r",
+    "node": "Flexor digiti minimi of foot.r",
+    "fmaId": "TA2:flexor_digiti_minimi_of_foot_r",
+    "namePtBr": "Flexor digiti minimi of foot Direito",
+    "nameEn": "Flexor digiti minimi of foot (right)",
+    "nameLatin": "Flexor digiti minimi pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digiti_minimi_of_hand_l",
+    "node": "Flexor digiti minimi of hand.l",
+    "fmaId": "TA2:flexor_digiti_minimi_of_hand_l",
+    "namePtBr": "Flexor digiti minimi of hand Esquerdo",
+    "nameEn": "Flexor digiti minimi of hand (left)",
+    "nameLatin": "Flexor digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digiti_minimi_of_hand_r",
+    "node": "Flexor digiti minimi of hand.r",
+    "fmaId": "TA2:flexor_digiti_minimi_of_hand_r",
+    "namePtBr": "Flexor digiti minimi of hand Direito",
+    "nameEn": "Flexor digiti minimi of hand (right)",
+    "nameLatin": "Flexor digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digitorum_brevis_l",
+    "node": "Flexor digitorum brevis.l",
+    "fmaId": "TA2:flexor_digitorum_brevis_l",
+    "namePtBr": "Flexor digitorum brevis Esquerdo",
+    "nameEn": "Flexor digitorum brevis (left)",
+    "nameLatin": "Flexor brevis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digitorum_brevis_r",
+    "node": "Flexor digitorum brevis.r",
+    "fmaId": "TA2:flexor_digitorum_brevis_r",
+    "namePtBr": "Flexor digitorum brevis Direito",
+    "nameEn": "Flexor digitorum brevis (right)",
+    "nameLatin": "Flexor brevis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digitorum_longus_l",
+    "node": "Flexor digitorum longus.l",
+    "fmaId": "TA2:flexor_digitorum_longus_l",
+    "namePtBr": "Flexor digitorum longus Esquerdo",
+    "nameEn": "Flexor digitorum longus (left)",
+    "nameLatin": "Musculus flexor digitorum longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digitorum_longus_r",
+    "node": "Flexor digitorum longus.r",
+    "fmaId": "TA2:flexor_digitorum_longus_r",
+    "namePtBr": "Flexor digitorum longus Direito",
+    "nameEn": "Flexor digitorum longus (right)",
+    "nameLatin": "Musculus flexor digitorum longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digitorum_profundus_l",
+    "node": "Flexor digitorum profundus.l",
+    "fmaId": "TA2:flexor_digitorum_profundus_l",
+    "namePtBr": "Flexor digitorum profundus Esquerdo",
+    "nameEn": "Flexor digitorum profundus (left)",
+    "nameLatin": "Flexor profundus digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_digitorum_profundus_r",
+    "node": "Flexor digitorum profundus.r",
+    "fmaId": "TA2:flexor_digitorum_profundus_r",
+    "namePtBr": "Flexor digitorum profundus Direito",
+    "nameEn": "Flexor digitorum profundus (right)",
+    "nameLatin": "Flexor profundus digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_hallucis_longus_l",
+    "node": "Flexor hallucis longus.l",
+    "fmaId": "TA2:flexor_hallucis_longus_l",
+    "namePtBr": "Flexor hallucis longus Esquerdo",
+    "nameEn": "Flexor hallucis longus (left)",
+    "nameLatin": "Flexor longus hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_hallucis_longus_r",
+    "node": "Flexor hallucis longus.r",
+    "fmaId": "TA2:flexor_hallucis_longus_r",
+    "namePtBr": "Flexor hallucis longus Direito",
+    "nameEn": "Flexor hallucis longus (right)",
+    "nameLatin": "Flexor longus hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_pollicis_longus_l",
+    "node": "Flexor pollicis longus.l",
+    "fmaId": "TA2:flexor_pollicis_longus_l",
+    "namePtBr": "Flexor pollicis longus Esquerdo",
+    "nameEn": "Flexor pollicis longus (left)",
+    "nameLatin": "Flexor longus pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_pollicis_longus_r",
+    "node": "Flexor pollicis longus.r",
+    "fmaId": "TA2:flexor_pollicis_longus_r",
+    "namePtBr": "Flexor pollicis longus Direito",
+    "nameEn": "Flexor pollicis longus (right)",
+    "nameLatin": "Flexor longus pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_retinaculum_of_ankle_l",
+    "node": "Flexor retinaculum of ankle.l",
+    "fmaId": "TA2:flexor_retinaculum_of_ankle_l",
+    "namePtBr": "Flexor Retináculo of ankle Esquerdo",
+    "nameEn": "Flexor retinaculum of ankle (left)",
+    "nameLatin": "Retinaculum flexorium tali",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_retinaculum_of_ankle_r",
+    "node": "Flexor retinaculum of ankle.r",
+    "fmaId": "TA2:flexor_retinaculum_of_ankle_r",
+    "namePtBr": "Flexor Retináculo of ankle Direito",
+    "nameEn": "Flexor retinaculum of ankle (right)",
+    "nameLatin": "Retinaculum flexorium tali",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_retinaculum_of_wrist_l",
+    "node": "Flexor retinaculum of wrist.l",
+    "fmaId": "TA2:flexor_retinaculum_of_wrist_l",
+    "namePtBr": "Flexor Retináculo of wrist Esquerdo",
+    "nameEn": "Flexor retinaculum of wrist (left)",
+    "nameLatin": "Retinaculum flexorium carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of upper limb",
+      "Fascia of upper limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:flexor_retinaculum_of_wrist_r",
+    "node": "Flexor retinaculum of wrist.r",
+    "fmaId": "TA2:flexor_retinaculum_of_wrist_r",
+    "namePtBr": "Flexor Retináculo of wrist Direito",
+    "nameEn": "Flexor retinaculum of wrist (right)",
+    "nameLatin": "Retinaculum flexorium carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of upper limb",
+      "Fascia of upper limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:frontalis_muscle_l",
+    "node": "Frontalis muscle.l",
+    "fmaId": "TA2:frontalis_muscle_l",
+    "namePtBr": "Frontalis Músculo Esquerdo",
+    "nameEn": "Frontalis muscle (left)",
+    "nameLatin": "Musculus frontalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:frontalis_muscle_r",
+    "node": "Frontalis muscle.r",
+    "fmaId": "TA2:frontalis_muscle_r",
+    "namePtBr": "Frontalis Músculo Direito",
+    "nameEn": "Frontalis muscle (right)",
+    "nameLatin": "Musculus frontalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:genioglossus_muscle_l",
+    "node": "Genioglossus muscle.l",
+    "fmaId": "TA2:genioglossus_muscle_l",
+    "namePtBr": "Genioglossus Músculo Esquerdo",
+    "nameEn": "Genioglossus muscle (left)",
+    "nameLatin": "Musculus genioglossus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:genioglossus_muscle_r",
+    "node": "Genioglossus muscle.r",
+    "fmaId": "TA2:genioglossus_muscle_r",
+    "namePtBr": "Genioglossus Músculo Direito",
+    "nameEn": "Genioglossus muscle (right)",
+    "nameLatin": "Musculus genioglossus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:geniohyoid_muscle_l",
+    "node": "Geniohyoid muscle.l",
+    "fmaId": "TA2:geniohyoid_muscle_l",
+    "namePtBr": "Geniohyoid Músculo Esquerdo",
+    "nameEn": "Geniohyoid muscle (left)",
+    "nameLatin": "Musculus geniohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:geniohyoid_muscle_r",
+    "node": "Geniohyoid muscle.r",
+    "fmaId": "TA2:geniohyoid_muscle_r",
+    "namePtBr": "Geniohyoid Músculo Direito",
+    "nameEn": "Geniohyoid muscle (right)",
+    "nameLatin": "Musculus geniohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gluteus_maximus_muscle_l",
+    "node": "Gluteus maximus muscle.l",
+    "fmaId": "TA2:gluteus_maximus_muscle_l",
+    "namePtBr": "Gluteus maximus Músculo Esquerdo",
+    "nameEn": "Gluteus maximus muscle (left)",
+    "nameLatin": "Musculus gluteus maximus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gluteus_maximus_muscle_r",
+    "node": "Gluteus maximus muscle.r",
+    "fmaId": "TA2:gluteus_maximus_muscle_r",
+    "namePtBr": "Gluteus maximus Músculo Direito",
+    "nameEn": "Gluteus maximus muscle (right)",
+    "nameLatin": "Musculus gluteus maximus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gluteus_medius_muscle_l",
+    "node": "Gluteus medius muscle.l",
+    "fmaId": "TA2:gluteus_medius_muscle_l",
+    "namePtBr": "Gluteus medius Músculo Esquerdo",
+    "nameEn": "Gluteus medius muscle (left)",
+    "nameLatin": "Musculus gluteus medius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gluteus_medius_muscle_r",
+    "node": "Gluteus medius muscle.r",
+    "fmaId": "TA2:gluteus_medius_muscle_r",
+    "namePtBr": "Gluteus medius Músculo Direito",
+    "nameEn": "Gluteus medius muscle (right)",
+    "nameLatin": "Musculus gluteus medius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gluteus_minimus_muscle_l",
+    "node": "Gluteus minimus muscle.l",
+    "fmaId": "TA2:gluteus_minimus_muscle_l",
+    "namePtBr": "Gluteus minimus Músculo Esquerdo",
+    "nameEn": "Gluteus minimus muscle (left)",
+    "nameLatin": "Musculus gluteus minimus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gluteus_minimus_muscle_r",
+    "node": "Gluteus minimus muscle.r",
+    "fmaId": "TA2:gluteus_minimus_muscle_r",
+    "namePtBr": "Gluteus minimus Músculo Direito",
+    "nameEn": "Gluteus minimus muscle (right)",
+    "nameLatin": "Musculus gluteus minimus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gracilis_muscle_l",
+    "node": "Gracilis muscle.l",
+    "fmaId": "TA2:gracilis_muscle_l",
+    "namePtBr": "Gracilis Músculo Esquerdo",
+    "nameEn": "Gracilis muscle (left)",
+    "nameLatin": "Musculus gracilis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:gracilis_muscle_r",
+    "node": "Gracilis muscle.r",
+    "fmaId": "TA2:gracilis_muscle_r",
+    "namePtBr": "Gracilis Músculo Direito",
+    "nameEn": "Gracilis muscle (right)",
+    "nameLatin": "Musculus gracilis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:humeral_head_of_extensor_carpi_ulnaris_l",
+    "node": "Humeral head of extensor carpi ulnaris.l",
+    "fmaId": "TA2:humeral_head_of_extensor_carpi_ulnaris_l",
+    "namePtBr": "Humeral head of extensor carpi ulnaris Esquerdo",
+    "nameEn": "Humeral head of extensor carpi ulnaris (left)",
+    "nameLatin": "Caput humerale extensoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:humeral_head_of_extensor_carpi_ulnaris_r",
+    "node": "Humeral head of extensor carpi ulnaris.r",
+    "fmaId": "TA2:humeral_head_of_extensor_carpi_ulnaris_r",
+    "namePtBr": "Humeral head of extensor carpi ulnaris Direito",
+    "nameEn": "Humeral head of extensor carpi ulnaris (right)",
+    "nameLatin": "Caput humerale extensoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:humeral_head_of_flexor_carpi_ulnaris_l",
+    "node": "Humeral head of flexor carpi ulnaris.l",
+    "fmaId": "TA2:humeral_head_of_flexor_carpi_ulnaris_l",
+    "namePtBr": "Humeral head of flexor carpi ulnaris Esquerdo",
+    "nameEn": "Humeral head of flexor carpi ulnaris (left)",
+    "nameLatin": "Caput humerale flexoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:humeral_head_of_flexor_carpi_ulnaris_r",
+    "node": "Humeral head of flexor carpi ulnaris.r",
+    "fmaId": "TA2:humeral_head_of_flexor_carpi_ulnaris_r",
+    "namePtBr": "Humeral head of flexor carpi ulnaris Direito",
+    "nameEn": "Humeral head of flexor carpi ulnaris (right)",
+    "nameLatin": "Caput humerale flexoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:humero_ulnar_head_of_flexor_digitorum_superficialis_l",
+    "node": "Humero-ulnar head of flexor digitorum superficialis.l",
+    "fmaId": "TA2:humero_ulnar_head_of_flexor_digitorum_superficialis_l",
+    "namePtBr": "Humero-ulnar head of flexor digitorum superficialis Esquerdo",
+    "nameEn": "Humero-ulnar head of flexor digitorum superficialis (left)",
+    "nameLatin": "Caput humeroulnare flexoris superficialis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:humero_ulnar_head_of_flexor_digitorum_superficialis_r",
+    "node": "Humero-ulnar head of flexor digitorum superficialis.r",
+    "fmaId": "TA2:humero_ulnar_head_of_flexor_digitorum_superficialis_r",
+    "namePtBr": "Humero-ulnar head of flexor digitorum superficialis Direito",
+    "nameEn": "Humero-ulnar head of flexor digitorum superficialis (right)",
+    "nameLatin": "Caput humeroulnare flexoris superficialis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:hyoglossus_muscle_l",
+    "node": "Hyoglossus muscle.l",
+    "fmaId": "TA2:hyoglossus_muscle_l",
+    "namePtBr": "Hyoglossus Músculo Esquerdo",
+    "nameEn": "Hyoglossus muscle (left)",
+    "nameLatin": "Musculus hyoglossus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:hyoglossus_muscle_r",
+    "node": "Hyoglossus muscle.r",
+    "fmaId": "TA2:hyoglossus_muscle_r",
+    "namePtBr": "Hyoglossus Músculo Direito",
+    "nameEn": "Hyoglossus muscle (right)",
+    "nameLatin": "Musculus hyoglossus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliacus_muscle_l",
+    "node": "Iliacus muscle.l",
+    "fmaId": "TA2:iliacus_muscle_l",
+    "namePtBr": "Iliacus Músculo Esquerdo",
+    "nameEn": "Iliacus muscle (left)",
+    "nameLatin": "Musculus iliacus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliacus_muscle_r",
+    "node": "Iliacus muscle.r",
+    "fmaId": "TA2:iliacus_muscle_r",
+    "namePtBr": "Iliacus Músculo Direito",
+    "nameEn": "Iliacus muscle (right)",
+    "nameLatin": "Musculus iliacus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliococcygeus_muscle_l",
+    "node": "Iliococcygeus muscle.l",
+    "fmaId": "TA2:iliococcygeus_muscle_l",
+    "namePtBr": "Iliococcygeus Músculo Esquerdo",
+    "nameEn": "Iliococcygeus muscle (left)",
+    "nameLatin": "Musculus iliococcygeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliococcygeus_muscle_r",
+    "node": "Iliococcygeus muscle.r",
+    "fmaId": "TA2:iliococcygeus_muscle_r",
+    "namePtBr": "Iliococcygeus Músculo Direito",
+    "nameEn": "Iliococcygeus muscle (right)",
+    "nameLatin": "Musculus iliococcygeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliocostalis_colli_muscle",
+    "node": "Iliocostalis colli muscle",
+    "fmaId": "TA2:iliocostalis_colli_muscle",
+    "namePtBr": "Iliocostalis colli Músculo",
+    "nameEn": "Iliocostalis colli muscle",
+    "nameLatin": "Musculus iliocostalis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliocostalis_colli_muscle_r",
+    "node": "Iliocostalis colli muscle.r",
+    "fmaId": "TA2:iliocostalis_colli_muscle_r",
+    "namePtBr": "Iliocostalis colli Músculo Direito",
+    "nameEn": "Iliocostalis colli muscle (right)",
+    "nameLatin": "Musculus iliocostalis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliocostalis_lumborum_muscle_l",
+    "node": "Iliocostalis lumborum muscle.l",
+    "fmaId": "TA2:iliocostalis_lumborum_muscle_l",
+    "namePtBr": "Iliocostalis lumborum Músculo Esquerdo",
+    "nameEn": "Iliocostalis lumborum muscle (left)",
+    "nameLatin": "Musculus iliocostalis lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliocostalis_lumborum_muscle_r",
+    "node": "Iliocostalis lumborum muscle.r",
+    "fmaId": "TA2:iliocostalis_lumborum_muscle_r",
+    "namePtBr": "Iliocostalis lumborum Músculo Direito",
+    "nameEn": "Iliocostalis lumborum muscle (right)",
+    "nameLatin": "Musculus iliocostalis lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliocostalis_thoracis_muscle_l",
+    "node": "Iliocostalis thoracis muscle.l",
+    "fmaId": "TA2:iliocostalis_thoracis_muscle_l",
+    "namePtBr": "Iliocostalis thoracis Músculo Esquerdo",
+    "nameEn": "Iliocostalis thoracis muscle (left)",
+    "nameLatin": "Musculus iliocostalis thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliocostalis_thoracis_muscle_r",
+    "node": "Iliocostalis thoracis muscle.r",
+    "fmaId": "TA2:iliocostalis_thoracis_muscle_r",
+    "namePtBr": "Iliocostalis thoracis Músculo Direito",
+    "nameEn": "Iliocostalis thoracis muscle (right)",
+    "nameLatin": "Musculus iliocostalis thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliopectineal_arch_l",
+    "node": "Iliopectineal arch.l",
+    "fmaId": "TA2:iliopectineal_arch_l",
+    "namePtBr": "Iliopectineal arch Esquerdo",
+    "nameEn": "Iliopectineal arch (left)",
+    "nameLatin": "Arcus iliopectineus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliopectineal_arch_r",
+    "node": "Iliopectineal arch.r",
+    "fmaId": "TA2:iliopectineal_arch_r",
+    "namePtBr": "Iliopectineal arch Direito",
+    "nameEn": "Iliopectineal arch (right)",
+    "nameLatin": "Arcus iliopectineus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliopsoas_fascia_l",
+    "node": "Iliopsoas fascia.l",
+    "fmaId": "TA2:iliopsoas_fascia_l",
+    "namePtBr": "Iliopsoas Fáscia Esquerdo",
+    "nameEn": "Iliopsoas fascia (left)",
+    "nameLatin": "Fascia iliopsoae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliopsoas_fascia_r",
+    "node": "Iliopsoas fascia.r",
+    "fmaId": "TA2:iliopsoas_fascia_r",
+    "namePtBr": "Iliopsoas Fáscia Direito",
+    "nameEn": "Iliopsoas fascia (right)",
+    "nameLatin": "Fascia iliopsoae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:iliotibial_tract_l",
+    "node": "Iliotibial tract.l",
+    "fmaId": "TA2:iliotibial_tract_l",
+    "namePtBr": "Iliotibial Trato Esquerdo",
+    "nameEn": "Iliotibial tract (left)",
+    "nameLatin": "Tractus iliotibialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:iliotibial_tract_r",
+    "node": "Iliotibial tract.r",
+    "fmaId": "TA2:iliotibial_tract_r",
+    "namePtBr": "Iliotibial Trato Direito",
+    "nameEn": "Iliotibial tract (right)",
+    "nameLatin": "Tractus iliotibialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:inferior_extensor_retinaculum_of_ankle_l",
+    "node": "Inferior extensor retinaculum of ankle.l",
+    "fmaId": "TA2:inferior_extensor_retinaculum_of_ankle_l",
+    "namePtBr": "Inferior extensor Retináculo of ankle Esquerdo",
+    "nameEn": "Inferior extensor retinaculum of ankle (left)",
+    "nameLatin": "Retinaculum extensorium inferius tali",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_extensor_retinaculum_of_ankle_r",
+    "node": "Inferior extensor retinaculum of ankle.r",
+    "fmaId": "TA2:inferior_extensor_retinaculum_of_ankle_r",
+    "namePtBr": "Inferior extensor Retináculo of ankle Direito",
+    "nameEn": "Inferior extensor retinaculum of ankle (right)",
+    "nameLatin": "Retinaculum extensorium inferius tali",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_fibular_retinaculum_l",
+    "node": "Inferior fibular retinaculum.l",
+    "fmaId": "TA2:inferior_fibular_retinaculum_l",
+    "namePtBr": "Inferior fibular Retináculo Esquerdo",
+    "nameEn": "Inferior fibular retinaculum (left)",
+    "nameLatin": "Retinaculum fibulare inferius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:inferior_fibular_retinaculum_r",
+    "node": "Inferior fibular retinaculum.r",
+    "fmaId": "TA2:inferior_fibular_retinaculum_r",
+    "namePtBr": "Inferior fibular Retináculo Direito",
+    "nameEn": "Inferior fibular retinaculum (right)",
+    "nameLatin": "Retinaculum fibulare inferius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:inferior_gemellus_muscle_l",
+    "node": "Inferior gemellus muscle.l",
+    "fmaId": "TA2:inferior_gemellus_muscle_l",
+    "namePtBr": "Inferior gemellus Músculo Esquerdo",
+    "nameEn": "Inferior gemellus muscle (left)",
+    "nameLatin": "Musculus gemellus inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_gemellus_muscle_r",
+    "node": "Inferior gemellus muscle.r",
+    "fmaId": "TA2:inferior_gemellus_muscle_r",
+    "namePtBr": "Inferior gemellus Músculo Direito",
+    "nameEn": "Inferior gemellus muscle (right)",
+    "nameLatin": "Musculus gemellus inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_head_of_lateral_pterygoid_muscle_l",
+    "node": "Inferior head of lateral pterygoid muscle.l",
+    "fmaId": "TA2:inferior_head_of_lateral_pterygoid_muscle_l",
+    "namePtBr": "Inferior head of lateral pterygoid Músculo Esquerdo",
+    "nameEn": "Inferior head of lateral pterygoid muscle (left)",
+    "nameLatin": "Caput inferius musculi pterygoidei lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_head_of_lateral_pterygoid_muscle_r",
+    "node": "Inferior head of lateral pterygoid muscle.r",
+    "fmaId": "TA2:inferior_head_of_lateral_pterygoid_muscle_r",
+    "namePtBr": "Inferior head of lateral pterygoid Músculo Direito",
+    "nameEn": "Inferior head of lateral pterygoid muscle (right)",
+    "nameLatin": "Caput inferius musculi pterygoidei lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_oblique_muscle_l",
+    "node": "Inferior oblique muscle.l",
+    "fmaId": "TA2:inferior_oblique_muscle_l",
+    "namePtBr": "Inferior oblique Músculo Esquerdo",
+    "nameEn": "Inferior oblique muscle (left)",
+    "nameLatin": "Musculus obliquus inferior bulbi oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_oblique_muscle_r",
+    "node": "Inferior oblique muscle.r",
+    "fmaId": "TA2:inferior_oblique_muscle_r",
+    "namePtBr": "Inferior oblique Músculo Direito",
+    "nameEn": "Inferior oblique muscle (right)",
+    "nameLatin": "Musculus obliquus inferior bulbi oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_pharyngeal_constrictor_l",
+    "node": "Inferior pharyngeal constrictor.l",
+    "fmaId": "TA2:inferior_pharyngeal_constrictor_l",
+    "namePtBr": "Inferior pharyngeal constrictor Esquerdo",
+    "nameEn": "Inferior pharyngeal constrictor (left)",
+    "nameLatin": "Constrictor inferior pharyngis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_pharyngeal_constrictor_r",
+    "node": "Inferior pharyngeal constrictor.r",
+    "fmaId": "TA2:inferior_pharyngeal_constrictor_r",
+    "namePtBr": "Inferior pharyngeal constrictor Direito",
+    "nameEn": "Inferior pharyngeal constrictor (right)",
+    "nameLatin": "Constrictor inferior pharyngis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_rectus_muscle_l",
+    "node": "Inferior rectus muscle.l",
+    "fmaId": "TA2:inferior_rectus_muscle_l",
+    "namePtBr": "Inferior rectus Músculo Esquerdo",
+    "nameEn": "Inferior rectus muscle (left)",
+    "nameLatin": "Musculus rectus inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_rectus_muscle_r",
+    "node": "Inferior rectus muscle.r",
+    "fmaId": "TA2:inferior_rectus_muscle_r",
+    "namePtBr": "Inferior rectus Músculo Direito",
+    "nameEn": "Inferior rectus muscle (right)",
+    "nameLatin": "Musculus rectus inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_subtendinous_bursa_of_biceps_femoris_muscle_l",
+    "node": "Inferior subtendinous bursa of biceps femoris muscle.l",
+    "fmaId": "TA2:inferior_subtendinous_bursa_of_biceps_femoris_muscle_l",
+    "namePtBr": "Inferior subtendinous Bolsa Sinovial of biceps femoris Músculo Esquerdo",
+    "nameEn": "Inferior subtendinous bursa of biceps femoris muscle (left)",
+    "nameLatin": "Bursa subtendinea inferior musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_subtendinous_bursa_of_biceps_femoris_muscle_r",
+    "node": "Inferior subtendinous bursa of biceps femoris muscle.r",
+    "fmaId": "TA2:inferior_subtendinous_bursa_of_biceps_femoris_muscle_r",
+    "namePtBr": "Inferior subtendinous Bolsa Sinovial of biceps femoris Músculo Direito",
+    "nameEn": "Inferior subtendinous bursa of biceps femoris muscle (right)",
+    "nameLatin": "Bursa subtendinea inferior musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_tarsus_l",
+    "node": "Inferior tarsus.l",
+    "fmaId": "TA2:inferior_tarsus_l",
+    "namePtBr": "Inferior tarsus Esquerdo",
+    "nameEn": "Inferior tarsus (left)",
+    "nameLatin": "Tarsus inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inferior_tarsus_r",
+    "node": "Inferior tarsus.r",
+    "fmaId": "TA2:inferior_tarsus_r",
+    "namePtBr": "Inferior tarsus Direito",
+    "nameEn": "Inferior tarsus (right)",
+    "nameLatin": "Tarsus inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:infraspinatus_muscle_l",
+    "node": "Infraspinatus muscle.l",
+    "fmaId": "TA2:infraspinatus_muscle_l",
+    "namePtBr": "Infraspinatus Músculo Esquerdo",
+    "nameEn": "Infraspinatus muscle (left)",
+    "nameLatin": "Musculus infraspinatus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:infraspinatus_muscle_r",
+    "node": "Infraspinatus muscle.r",
+    "fmaId": "TA2:infraspinatus_muscle_r",
+    "namePtBr": "Infraspinatus Músculo Direito",
+    "nameEn": "Infraspinatus muscle (right)",
+    "nameLatin": "Musculus infraspinatus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inguinal_ligament_l",
+    "node": "Inguinal ligament.l",
+    "fmaId": "TA2:inguinal_ligament_l",
+    "namePtBr": "Inguinal Ligamento Esquerdo",
+    "nameEn": "Inguinal ligament (left)",
+    "nameLatin": "Ligamentum inguinale",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:inguinal_ligament_r",
+    "node": "Inguinal ligament.r",
+    "fmaId": "TA2:inguinal_ligament_r",
+    "namePtBr": "Inguinal Ligamento Direito",
+    "nameEn": "Inguinal ligament (right)",
+    "nameLatin": "Ligamentum inguinale",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:innermost_intercostal_muscles_l",
+    "node": "Innermost intercostal muscles.l",
+    "fmaId": "TA2:innermost_intercostal_muscles_l",
+    "namePtBr": "Innermost intercostal muscles Esquerdo",
+    "nameEn": "Innermost intercostal muscles (left)",
+    "nameLatin": "Musculi intercostales intimi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:innermost_intercostal_muscles_r",
+    "node": "Innermost intercostal muscles.r",
+    "fmaId": "TA2:innermost_intercostal_muscles_r",
+    "namePtBr": "Innermost intercostal muscles Direito",
+    "nameEn": "Innermost intercostal muscles (right)",
+    "nameLatin": "Musculi intercostales intimi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:intermediate_tendon_of_digastric_muscle_l",
+    "node": "Intermediate tendon of digastric muscle.l",
+    "fmaId": "TA2:intermediate_tendon_of_digastric_muscle_l",
+    "namePtBr": "Intermediate Tendão of digastric Músculo Esquerdo",
+    "nameEn": "Intermediate tendon of digastric muscle (left)",
+    "nameLatin": "Tendo intermedius musculi digastrici",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:intermediate_tendon_of_digastric_muscle_r",
+    "node": "Intermediate tendon of digastric muscle.r",
+    "fmaId": "TA2:intermediate_tendon_of_digastric_muscle_r",
+    "namePtBr": "Intermediate Tendão of digastric Músculo Direito",
+    "nameEn": "Intermediate tendon of digastric muscle (right)",
+    "nameLatin": "Tendo intermedius musculi digastrici",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:intermuscular_gluteal_bursae_l",
+    "node": "Intermuscular gluteal bursae.l",
+    "fmaId": "TA2:intermuscular_gluteal_bursae_l",
+    "namePtBr": "Intermuscular gluteal Bolsas Sinoviais Esquerdo",
+    "nameEn": "Intermuscular gluteal bursae (left)",
+    "nameLatin": "Bursae intermusculares gluteae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:intermuscular_gluteal_bursae_r",
+    "node": "Intermuscular gluteal bursae.r",
+    "fmaId": "TA2:intermuscular_gluteal_bursae_r",
+    "namePtBr": "Intermuscular gluteal Bolsas Sinoviais Direito",
+    "nameEn": "Intermuscular gluteal bursae (right)",
+    "nameLatin": "Bursae intermusculares gluteae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:internal_abdominal_oblique_muscle_l",
+    "node": "Internal abdominal oblique muscle.l",
+    "fmaId": "TA2:internal_abdominal_oblique_muscle_l",
+    "namePtBr": "Internal abdominal oblique Músculo Esquerdo",
+    "nameEn": "Internal abdominal oblique muscle (left)",
+    "nameLatin": "Musculus obliquus internus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:internal_abdominal_oblique_muscle_r",
+    "node": "Internal abdominal oblique muscle.r",
+    "fmaId": "TA2:internal_abdominal_oblique_muscle_r",
+    "namePtBr": "Internal abdominal oblique Músculo Direito",
+    "nameEn": "Internal abdominal oblique muscle (right)",
+    "nameLatin": "Musculus obliquus internus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:internal_intercostal_muscles_l",
+    "node": "Internal intercostal muscles.l",
+    "fmaId": "TA2:internal_intercostal_muscles_l",
+    "namePtBr": "Internal intercostal muscles Esquerdo",
+    "nameEn": "Internal intercostal muscles (left)",
+    "nameLatin": "Musculi intercostales interni",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:internal_intercostal_muscles_r",
+    "node": "Internal intercostal muscles.r",
+    "fmaId": "TA2:internal_intercostal_muscles_r",
+    "namePtBr": "Internal intercostal muscles Direito",
+    "nameEn": "Internal intercostal muscles (right)",
+    "nameLatin": "Musculi intercostales interni",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:interspinales_colli_muscles_l",
+    "node": "Interspinales colli muscles.l",
+    "fmaId": "TA2:interspinales_colli_muscles_l",
+    "namePtBr": "Interspinales colli muscles Esquerdo",
+    "nameEn": "Interspinales colli muscles (left)",
+    "nameLatin": "Musculi interspinales colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:interspinales_colli_muscles_r",
+    "node": "Interspinales colli muscles.r",
+    "fmaId": "TA2:interspinales_colli_muscles_r",
+    "namePtBr": "Interspinales colli muscles Direito",
+    "nameEn": "Interspinales colli muscles (right)",
+    "nameLatin": "Musculi interspinales colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:interspinales_lumborum_muscles_l",
+    "node": "Interspinales lumborum muscles.l",
+    "fmaId": "TA2:interspinales_lumborum_muscles_l",
+    "namePtBr": "Interspinales lumborum muscles Esquerdo",
+    "nameEn": "Interspinales lumborum muscles (left)",
+    "nameLatin": "Musculi interspinales lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:interspinales_lumborum_muscles_r",
+    "node": "Interspinales lumborum muscles.r",
+    "fmaId": "TA2:interspinales_lumborum_muscles_r",
+    "namePtBr": "Interspinales lumborum muscles Direito",
+    "nameEn": "Interspinales lumborum muscles (right)",
+    "nameLatin": "Musculi interspinales lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:interspinales_thoracis_muscles_l",
+    "node": "Interspinales thoracis muscles.l",
+    "fmaId": "TA2:interspinales_thoracis_muscles_l",
+    "namePtBr": "Interspinales thoracis muscles Esquerdo",
+    "nameEn": "Interspinales thoracis muscles (left)",
+    "nameLatin": "Musculi interspinales thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:interspinales_thoracis_muscles_r",
+    "node": "Interspinales thoracis muscles.r",
+    "fmaId": "TA2:interspinales_thoracis_muscles_r",
+    "namePtBr": "Interspinales thoracis muscles Direito",
+    "nameEn": "Interspinales thoracis muscles (right)",
+    "nameLatin": "Musculi interspinales thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:intertubercular_tendon_sheath_l",
+    "node": "Intertubercular tendon sheath.l",
+    "fmaId": "TA2:intertubercular_tendon_sheath_l",
+    "namePtBr": "Intertubercular Bainha Tendínea Esquerdo",
+    "nameEn": "Intertubercular tendon sheath (left)",
+    "nameLatin": "Vagina tendinis intertubercularis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:intertubercular_tendon_sheath_r",
+    "node": "Intertubercular tendon sheath.r",
+    "fmaId": "TA2:intertubercular_tendon_sheath_r",
+    "namePtBr": "Intertubercular Bainha Tendínea Direito",
+    "nameEn": "Intertubercular tendon sheath (right)",
+    "nameLatin": "Vagina tendinis intertubercularis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:investing_abdominal_fascia_l",
+    "node": "Investing abdominal fascia.l",
+    "fmaId": "TA2:investing_abdominal_fascia_l",
+    "namePtBr": "Investing abdominal Fáscia Esquerdo",
+    "nameEn": "Investing abdominal fascia (left)",
+    "nameLatin": "Fascia investiens abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:investing_abdominal_fascia_r",
+    "node": "Investing abdominal fascia.r",
+    "fmaId": "TA2:investing_abdominal_fascia_r",
+    "namePtBr": "Investing abdominal Fáscia Direito",
+    "nameEn": "Investing abdominal fascia (right)",
+    "nameLatin": "Fascia investiens abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_crico_arytenoid_muscle_l",
+    "node": "Lateral crico-arytenoid muscle.l",
+    "fmaId": "TA2:lateral_crico_arytenoid_muscle_l",
+    "namePtBr": "Lateral crico-arytenoid Músculo Esquerdo",
+    "nameEn": "Lateral crico-arytenoid muscle (left)",
+    "nameLatin": "Musculus cricoarytendoideus lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_crico_arytenoid_muscle_r",
+    "node": "Lateral crico-arytenoid muscle.r",
+    "fmaId": "TA2:lateral_crico_arytenoid_muscle_r",
+    "namePtBr": "Lateral crico-arytenoid Músculo Direito",
+    "nameEn": "Lateral crico-arytenoid muscle (right)",
+    "nameLatin": "Musculus cricoarytendoideus lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_femoral_intermuscular_septum_l",
+    "node": "Lateral femoral intermuscular septum.l",
+    "fmaId": "TA2:lateral_femoral_intermuscular_septum_l",
+    "namePtBr": "Lateral femoral intermuscular Septo Esquerdo",
+    "nameEn": "Lateral femoral intermuscular septum (left)",
+    "nameLatin": "Septum intermusculare laterale femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_femoral_intermuscular_septum_r",
+    "node": "Lateral femoral intermuscular septum.r",
+    "fmaId": "TA2:lateral_femoral_intermuscular_septum_r",
+    "namePtBr": "Lateral femoral intermuscular Septo Direito",
+    "nameEn": "Lateral femoral intermuscular septum (right)",
+    "nameLatin": "Septum intermusculare laterale femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_head_of_flexor_hallucis_brevis_l",
+    "node": "Lateral head of flexor hallucis brevis.l",
+    "fmaId": "TA2:lateral_head_of_flexor_hallucis_brevis_l",
+    "namePtBr": "Lateral head of flexor hallucis brevis Esquerdo",
+    "nameEn": "Lateral head of flexor hallucis brevis (left)",
+    "nameLatin": "Caput laterale flexoris brevis hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_head_of_flexor_hallucis_brevis_r",
+    "node": "Lateral head of flexor hallucis brevis.r",
+    "fmaId": "TA2:lateral_head_of_flexor_hallucis_brevis_r",
+    "namePtBr": "Lateral head of flexor hallucis brevis Direito",
+    "nameEn": "Lateral head of flexor hallucis brevis (right)",
+    "nameLatin": "Caput laterale flexoris brevis hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_head_of_gastrocnemius_l",
+    "node": "Lateral head of gastrocnemius.l",
+    "fmaId": "TA2:lateral_head_of_gastrocnemius_l",
+    "namePtBr": "Lateral head of gastrocnemius Esquerdo",
+    "nameEn": "Lateral head of gastrocnemius (left)",
+    "nameLatin": "Caput laterale musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_head_of_gastrocnemius_r",
+    "node": "Lateral head of gastrocnemius.r",
+    "fmaId": "TA2:lateral_head_of_gastrocnemius_r",
+    "namePtBr": "Lateral head of gastrocnemius Direito",
+    "nameEn": "Lateral head of gastrocnemius (right)",
+    "nameLatin": "Caput laterale musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_head_of_triceps_brachii_l",
+    "node": "Lateral head of triceps brachii.l",
+    "fmaId": "TA2:lateral_head_of_triceps_brachii_l",
+    "namePtBr": "Lateral head of triceps brachii Esquerdo",
+    "nameEn": "Lateral head of triceps brachii (left)",
+    "nameLatin": "Caput laterale musculi tricipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_head_of_triceps_brachii_r",
+    "node": "Lateral head of triceps brachii.r",
+    "fmaId": "TA2:lateral_head_of_triceps_brachii_r",
+    "namePtBr": "Lateral head of triceps brachii Direito",
+    "nameEn": "Lateral head of triceps brachii (right)",
+    "nameLatin": "Caput laterale musculi tricipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_intermuscular_septum_of_arm_l",
+    "node": "Lateral intermuscular septum of arm.l",
+    "fmaId": "TA2:lateral_intermuscular_septum_of_arm_l",
+    "namePtBr": "Lateral intermuscular Septo of arm Esquerdo",
+    "nameEn": "Lateral intermuscular septum of arm (left)",
+    "nameLatin": "Septum intermusculare laterale brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_intermuscular_septum_of_arm_r",
+    "node": "Lateral intermuscular septum of arm.r",
+    "fmaId": "TA2:lateral_intermuscular_septum_of_arm_r",
+    "namePtBr": "Lateral intermuscular Septo of arm Direito",
+    "nameEn": "Lateral intermuscular septum of arm (right)",
+    "nameLatin": "Septum intermusculare laterale brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_patellar_retinaculum_l",
+    "node": "Lateral patellar retinaculum.l",
+    "fmaId": "TA2:lateral_patellar_retinaculum_l",
+    "namePtBr": "Lateral patellar Retináculo Esquerdo",
+    "nameEn": "Lateral patellar retinaculum (left)",
+    "nameLatin": "Retinaculum laterale patellae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:lateral_patellar_retinaculum_r",
+    "node": "Lateral patellar retinaculum.r",
+    "fmaId": "TA2:lateral_patellar_retinaculum_r",
+    "namePtBr": "Lateral patellar Retináculo Direito",
+    "nameEn": "Lateral patellar retinaculum (right)",
+    "nameLatin": "Retinaculum laterale patellae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:lateral_rectus_muscle_l",
+    "node": "Lateral rectus muscle.l",
+    "fmaId": "TA2:lateral_rectus_muscle_l",
+    "namePtBr": "Lateral rectus Músculo Esquerdo",
+    "nameEn": "Lateral rectus muscle (left)",
+    "nameLatin": "Musculus rectus lateralis bulbi oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_rectus_muscle_r",
+    "node": "Lateral rectus muscle.r",
+    "fmaId": "TA2:lateral_rectus_muscle_r",
+    "namePtBr": "Lateral rectus Músculo Direito",
+    "nameEn": "Lateral rectus muscle (right)",
+    "nameLatin": "Musculus rectus lateralis bulbi oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_subtendinous_bursa_of_gastrocnemius_muscle_l",
+    "node": "Lateral subtendinous bursa of gastrocnemius muscle.l",
+    "fmaId": "TA2:lateral_subtendinous_bursa_of_gastrocnemius_muscle_l",
+    "namePtBr": "Lateral subtendinous Bolsa Sinovial of gastrocnemius Músculo Esquerdo",
+    "nameEn": "Lateral subtendinous bursa of gastrocnemius muscle (left)",
+    "nameLatin": "Bursa subtendinea lateralis musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lateral_subtendinous_bursa_of_gastrocnemius_muscle_r",
+    "node": "Lateral subtendinous bursa of gastrocnemius muscle.r",
+    "fmaId": "TA2:lateral_subtendinous_bursa_of_gastrocnemius_muscle_r",
+    "namePtBr": "Lateral subtendinous Bolsa Sinovial of gastrocnemius Músculo Direito",
+    "nameEn": "Lateral subtendinous bursa of gastrocnemius muscle (right)",
+    "nameLatin": "Bursa subtendinea lateralis musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:latissimus_dorsi_muscle_l",
+    "node": "Latissimus dorsi muscle.l",
+    "fmaId": "TA2:latissimus_dorsi_muscle_l",
+    "namePtBr": "Latissimus dorsi Músculo Esquerdo",
+    "nameEn": "Latissimus dorsi muscle (left)",
+    "nameLatin": "Musculus latissimus dorsi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:latissimus_dorsi_muscle_r",
+    "node": "Latissimus dorsi muscle.r",
+    "fmaId": "TA2:latissimus_dorsi_muscle_r",
+    "namePtBr": "Latissimus dorsi Músculo Direito",
+    "nameEn": "Latissimus dorsi muscle (right)",
+    "nameLatin": "Musculus latissimus dorsi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_anguli_oris_l",
+    "node": "Levator anguli oris.l",
+    "fmaId": "TA2:levator_anguli_oris_l",
+    "namePtBr": "Levator anguli oris Esquerdo",
+    "nameEn": "Levator anguli oris (left)",
+    "nameLatin": "Levator anguli oris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_anguli_oris_r",
+    "node": "Levator anguli oris.r",
+    "fmaId": "TA2:levator_anguli_oris_r",
+    "namePtBr": "Levator anguli oris Direito",
+    "nameEn": "Levator anguli oris (right)",
+    "nameLatin": "Levator anguli oris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_labii_superioris_l",
+    "node": "Levator labii superioris.l",
+    "fmaId": "TA2:levator_labii_superioris_l",
+    "namePtBr": "Levator labii superioris Esquerdo",
+    "nameEn": "Levator labii superioris (left)",
+    "nameLatin": "Levator labii superioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_labii_superioris_r",
+    "node": "Levator labii superioris.r",
+    "fmaId": "TA2:levator_labii_superioris_r",
+    "namePtBr": "Levator labii superioris Direito",
+    "nameEn": "Levator labii superioris (right)",
+    "nameLatin": "Levator labii superioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_nasolabialis_l",
+    "node": "Levator nasolabialis.l",
+    "fmaId": "TA2:levator_nasolabialis_l",
+    "namePtBr": "Levator nasolabialis Esquerdo",
+    "nameEn": "Levator nasolabialis (left)",
+    "nameLatin": "Levator nasolabialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_nasolabialis_r",
+    "node": "Levator nasolabialis.r",
+    "fmaId": "TA2:levator_nasolabialis_r",
+    "namePtBr": "Levator nasolabialis Direito",
+    "nameEn": "Levator nasolabialis (right)",
+    "nameLatin": "Levator nasolabialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_palpebrae_superioris_l",
+    "node": "Levator palpebrae superioris.l",
+    "fmaId": "TA2:levator_palpebrae_superioris_l",
+    "namePtBr": "Levator palpebrae superioris Esquerdo",
+    "nameEn": "Levator palpebrae superioris (left)",
+    "nameLatin": "Levator palpebrae superioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_palpebrae_superioris_r",
+    "node": "Levator palpebrae superioris.r",
+    "fmaId": "TA2:levator_palpebrae_superioris_r",
+    "namePtBr": "Levator palpebrae superioris Direito",
+    "nameEn": "Levator palpebrae superioris (right)",
+    "nameLatin": "Levator palpebrae superioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levator_scapulae_l",
+    "node": "Levator scapulae.l",
+    "fmaId": "TA2:levator_scapulae_l",
+    "namePtBr": "Levator scapulae Esquerdo",
+    "nameEn": "Levator scapulae (left)",
+    "nameLatin": "Levator scapulae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -1.2,
+      "y": 0.2,
+      "z": -0.7
+    }
+  },
+  {
+    "id": "za:levator_scapulae_r",
+    "node": "Levator scapulae.r",
+    "fmaId": "TA2:levator_scapulae_r",
+    "namePtBr": "Levator scapulae Direito",
+    "nameEn": "Levator scapulae (right)",
+    "nameLatin": "Levator scapulae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 1.2,
+      "y": 0.2,
+      "z": -0.7
+    }
+  },
+  {
+    "id": "za:levatores_breves_costarum_l",
+    "node": "Levatores breves costarum.l",
+    "fmaId": "TA2:levatores_breves_costarum_l",
+    "namePtBr": "Levatores breves costarum Esquerdo",
+    "nameEn": "Levatores breves costarum (left)",
+    "nameLatin": "Levatores breves costarum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levatores_breves_costarum_r",
+    "node": "Levatores breves costarum.r",
+    "fmaId": "TA2:levatores_breves_costarum_r",
+    "namePtBr": "Levatores breves costarum Direito",
+    "nameEn": "Levatores breves costarum (right)",
+    "nameLatin": "Levatores breves costarum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levatores_longi_costarum_l",
+    "node": "Levatores longi costarum.l",
+    "fmaId": "TA2:levatores_longi_costarum_l",
+    "namePtBr": "Levatores longi costarum Esquerdo",
+    "nameEn": "Levatores longi costarum (left)",
+    "nameLatin": "Levatores longi costarum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:levatores_longi_costarum_r",
+    "node": "Levatores longi costarum.r",
+    "fmaId": "TA2:levatores_longi_costarum_r",
+    "namePtBr": "Levatores longi costarum Direito",
+    "nameEn": "Levatores longi costarum (right)",
+    "nameLatin": "Levatores longi costarum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:linea_alba",
+    "node": "Linea alba",
+    "fmaId": "TA2:linea_alba",
+    "namePtBr": "Linea alba",
+    "nameEn": "Linea alba",
+    "nameLatin": "Linea alba",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:long_head_of_biceps_brachii_l",
+    "node": "Long head of biceps brachii.l",
+    "fmaId": "TA2:long_head_of_biceps_brachii_l",
+    "namePtBr": "Long head of biceps brachii Esquerdo",
+    "nameEn": "Long head of biceps brachii (left)",
+    "nameLatin": "Caput longum musculi bicipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:long_head_of_biceps_brachii_r",
+    "node": "Long head of biceps brachii.r",
+    "fmaId": "TA2:long_head_of_biceps_brachii_r",
+    "namePtBr": "Long head of biceps brachii Direito",
+    "nameEn": "Long head of biceps brachii (right)",
+    "nameLatin": "Caput longum musculi bicipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:long_head_of_biceps_femoris_l",
+    "node": "Long head of biceps femoris.l",
+    "fmaId": "TA2:long_head_of_biceps_femoris_l",
+    "namePtBr": "Long head of biceps femoris Esquerdo",
+    "nameEn": "Long head of biceps femoris (left)",
+    "nameLatin": "Caput longum musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:long_head_of_biceps_femoris_r",
+    "node": "Long head of biceps femoris.r",
+    "fmaId": "TA2:long_head_of_biceps_femoris_r",
+    "namePtBr": "Long head of biceps femoris Direito",
+    "nameEn": "Long head of biceps femoris (right)",
+    "nameLatin": "Caput longum musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:long_head_of_triceps_brachii_l",
+    "node": "Long head of triceps brachii.l",
+    "fmaId": "TA2:long_head_of_triceps_brachii_l",
+    "namePtBr": "Long head of triceps brachii Esquerdo",
+    "nameEn": "Long head of triceps brachii (left)",
+    "nameLatin": "Caput longum musculi tricipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:long_head_of_triceps_brachii_r",
+    "node": "Long head of triceps brachii.r",
+    "fmaId": "TA2:long_head_of_triceps_brachii_r",
+    "namePtBr": "Long head of triceps brachii Direito",
+    "nameEn": "Long head of triceps brachii (right)",
+    "nameLatin": "Caput longum musculi tricipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longissimus_capitis_muscle_l",
+    "node": "Longissimus capitis muscle.l",
+    "fmaId": "TA2:longissimus_capitis_muscle_l",
+    "namePtBr": "Longissimus capitis Músculo Esquerdo",
+    "nameEn": "Longissimus capitis muscle (left)",
+    "nameLatin": "Musculus longissimus capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longissimus_capitis_muscle_r",
+    "node": "Longissimus capitis muscle.r",
+    "fmaId": "TA2:longissimus_capitis_muscle_r",
+    "namePtBr": "Longissimus capitis Músculo Direito",
+    "nameEn": "Longissimus capitis muscle (right)",
+    "nameLatin": "Musculus longissimus capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longissimus_colli_muscle_l",
+    "node": "Longissimus colli muscle.l",
+    "fmaId": "TA2:longissimus_colli_muscle_l",
+    "namePtBr": "Longissimus colli Músculo Esquerdo",
+    "nameEn": "Longissimus colli muscle (left)",
+    "nameLatin": "Musculus longissimus colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longissimus_colli_muscle_r",
+    "node": "Longissimus colli muscle.r",
+    "fmaId": "TA2:longissimus_colli_muscle_r",
+    "namePtBr": "Longissimus colli Músculo Direito",
+    "nameEn": "Longissimus colli muscle (right)",
+    "nameLatin": "Musculus longissimus colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longissimus_thoracis_muscle_l",
+    "node": "Longissimus thoracis muscle.l",
+    "fmaId": "TA2:longissimus_thoracis_muscle_l",
+    "namePtBr": "Longissimus thoracis Músculo Esquerdo",
+    "nameEn": "Longissimus thoracis muscle (left)",
+    "nameLatin": "Musculus longissimus thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longissimus_thoracis_muscle_r",
+    "node": "Longissimus thoracis muscle.r",
+    "fmaId": "TA2:longissimus_thoracis_muscle_r",
+    "namePtBr": "Longissimus thoracis Músculo Direito",
+    "nameEn": "Longissimus thoracis muscle (right)",
+    "nameLatin": "Musculus longissimus thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longus_capitis_muscle_l",
+    "node": "Longus capitis muscle.l",
+    "fmaId": "TA2:longus_capitis_muscle_l",
+    "namePtBr": "Longus capitis Músculo Esquerdo",
+    "nameEn": "Longus capitis muscle (left)",
+    "nameLatin": "Musculus longus capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longus_capitis_muscle_r",
+    "node": "Longus capitis muscle.r",
+    "fmaId": "TA2:longus_capitis_muscle_r",
+    "namePtBr": "Longus capitis Músculo Direito",
+    "nameEn": "Longus capitis muscle (right)",
+    "nameLatin": "Musculus longus capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longus_colli_muscle_l",
+    "node": "Longus colli muscle.l",
+    "fmaId": "TA2:longus_colli_muscle_l",
+    "namePtBr": "Longus colli Músculo Esquerdo",
+    "nameEn": "Longus colli muscle (left)",
+    "nameLatin": "Musculus longus colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:longus_colli_muscle_r",
+    "node": "Longus colli muscle.r",
+    "fmaId": "TA2:longus_colli_muscle_r",
+    "namePtBr": "Longus colli Músculo Direito",
+    "nameEn": "Longus colli muscle (right)",
+    "nameLatin": "Musculus longus colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lumbrical_muscles_of_foot_l",
+    "node": "Lumbrical muscles of foot.l",
+    "fmaId": "TA2:lumbrical_muscles_of_foot_l",
+    "namePtBr": "Lumbrical muscles of foot Esquerdo",
+    "nameEn": "Lumbrical muscles of foot (left)",
+    "nameLatin": "Musculi lumbricales pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lumbrical_muscles_of_foot_r",
+    "node": "Lumbrical muscles of foot.r",
+    "fmaId": "TA2:lumbrical_muscles_of_foot_r",
+    "namePtBr": "Lumbrical muscles of foot Direito",
+    "nameEn": "Lumbrical muscles of foot (right)",
+    "nameLatin": "Musculi lumbricales pedis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lumbrical_muscles_of_hand_l",
+    "node": "Lumbrical muscles of hand.l",
+    "fmaId": "TA2:lumbrical_muscles_of_hand_l",
+    "namePtBr": "Lumbrical muscles of hand Esquerdo",
+    "nameEn": "Lumbrical muscles of hand (left)",
+    "nameLatin": "Musculi lumbricales manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:lumbrical_muscles_of_hand_r",
+    "node": "Lumbrical muscles of hand.r",
+    "fmaId": "TA2:lumbrical_muscles_of_hand_r",
+    "namePtBr": "Lumbrical muscles of hand Direito",
+    "nameEn": "Lumbrical muscles of hand (right)",
+    "nameLatin": "Musculi lumbricales manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:masseteric_fascia_l",
+    "node": "Masseteric fascia.l",
+    "fmaId": "TA2:masseteric_fascia_l",
+    "namePtBr": "Masseteric Fáscia Esquerdo",
+    "nameEn": "Masseteric fascia (left)",
+    "nameLatin": "Fascia masseterica",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:masseteric_fascia_r",
+    "node": "Masseteric fascia.r",
+    "fmaId": "TA2:masseteric_fascia_r",
+    "namePtBr": "Masseteric Fáscia Direito",
+    "nameEn": "Masseteric fascia (right)",
+    "nameLatin": "Fascia masseterica",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_femoral_intermuscular_septum_l",
+    "node": "Medial femoral intermuscular septum.l",
+    "fmaId": "TA2:medial_femoral_intermuscular_septum_l",
+    "namePtBr": "Medial femoral intermuscular Septo Esquerdo",
+    "nameEn": "Medial femoral intermuscular septum (left)",
+    "nameLatin": "Septum intermusculare mediale femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_femoral_intermuscular_septum_r",
+    "node": "Medial femoral intermuscular septum.r",
+    "fmaId": "TA2:medial_femoral_intermuscular_septum_r",
+    "namePtBr": "Medial femoral intermuscular Septo Direito",
+    "nameEn": "Medial femoral intermuscular septum (right)",
+    "nameLatin": "Septum intermusculare mediale femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_head_of_flexor_hallucis_brevis_l",
+    "node": "Medial head of flexor hallucis brevis.l",
+    "fmaId": "TA2:medial_head_of_flexor_hallucis_brevis_l",
+    "namePtBr": "Medial head of flexor hallucis brevis Esquerdo",
+    "nameEn": "Medial head of flexor hallucis brevis (left)",
+    "nameLatin": "Caput mediale flexoris brevis hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_head_of_flexor_hallucis_brevis_r",
+    "node": "Medial head of flexor hallucis brevis.r",
+    "fmaId": "TA2:medial_head_of_flexor_hallucis_brevis_r",
+    "namePtBr": "Medial head of flexor hallucis brevis Direito",
+    "nameEn": "Medial head of flexor hallucis brevis (right)",
+    "nameLatin": "Caput mediale flexoris brevis hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_head_of_gastrocnemius_l",
+    "node": "Medial head of gastrocnemius.l",
+    "fmaId": "TA2:medial_head_of_gastrocnemius_l",
+    "namePtBr": "Medial head of gastrocnemius Esquerdo",
+    "nameEn": "Medial head of gastrocnemius (left)",
+    "nameLatin": "Caput mediale musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_head_of_gastrocnemius_r",
+    "node": "Medial head of gastrocnemius.r",
+    "fmaId": "TA2:medial_head_of_gastrocnemius_r",
+    "namePtBr": "Medial head of gastrocnemius Direito",
+    "nameEn": "Medial head of gastrocnemius (right)",
+    "nameLatin": "Caput mediale musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_head_of_triceps_brachii_l",
+    "node": "Medial head of triceps brachii.l",
+    "fmaId": "TA2:medial_head_of_triceps_brachii_l",
+    "namePtBr": "Medial head of triceps brachii Esquerdo",
+    "nameEn": "Medial head of triceps brachii (left)",
+    "nameLatin": "Caput mediale musculi tricipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_head_of_triceps_brachii_r",
+    "node": "Medial head of triceps brachii.r",
+    "fmaId": "TA2:medial_head_of_triceps_brachii_r",
+    "namePtBr": "Medial head of triceps brachii Direito",
+    "nameEn": "Medial head of triceps brachii (right)",
+    "nameLatin": "Caput mediale musculi tricipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_intermuscular_septum_of_arm_l",
+    "node": "Medial intermuscular septum of arm.l",
+    "fmaId": "TA2:medial_intermuscular_septum_of_arm_l",
+    "namePtBr": "Medial intermuscular Septo of arm Esquerdo",
+    "nameEn": "Medial intermuscular septum of arm (left)",
+    "nameLatin": "Septum intermusculare mediale brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_intermuscular_septum_of_arm_r",
+    "node": "Medial intermuscular septum of arm.r",
+    "fmaId": "TA2:medial_intermuscular_septum_of_arm_r",
+    "namePtBr": "Medial intermuscular Septo of arm Direito",
+    "nameEn": "Medial intermuscular septum of arm (right)",
+    "nameLatin": "Septum intermusculare mediale brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_patellar_retinaculum_l",
+    "node": "Medial patellar retinaculum.l",
+    "fmaId": "TA2:medial_patellar_retinaculum_l",
+    "namePtBr": "Medial patellar Retináculo Esquerdo",
+    "nameEn": "Medial patellar retinaculum (left)",
+    "nameLatin": "Retinaculum mediale patellae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:medial_patellar_retinaculum_r",
+    "node": "Medial patellar retinaculum.r",
+    "fmaId": "TA2:medial_patellar_retinaculum_r",
+    "namePtBr": "Medial patellar Retináculo Direito",
+    "nameEn": "Medial patellar retinaculum (right)",
+    "nameLatin": "Retinaculum mediale patellae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:medial_pterygoid_muscle_l",
+    "node": "Medial pterygoid muscle.l",
+    "fmaId": "TA2:medial_pterygoid_muscle_l",
+    "namePtBr": "Medial pterygoid Músculo Esquerdo",
+    "nameEn": "Medial pterygoid muscle (left)",
+    "nameLatin": "Musculus pterygoideus medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_pterygoid_muscle_r",
+    "node": "Medial pterygoid muscle.r",
+    "fmaId": "TA2:medial_pterygoid_muscle_r",
+    "namePtBr": "Medial pterygoid Músculo Direito",
+    "nameEn": "Medial pterygoid muscle (right)",
+    "nameLatin": "Musculus pterygoideus medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_rectus_muscle_l",
+    "node": "Medial rectus muscle.l",
+    "fmaId": "TA2:medial_rectus_muscle_l",
+    "namePtBr": "Medial rectus Músculo Esquerdo",
+    "nameEn": "Medial rectus muscle (left)",
+    "nameLatin": "Musculus rectus medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_rectus_muscle_r",
+    "node": "Medial rectus muscle.r",
+    "fmaId": "TA2:medial_rectus_muscle_r",
+    "namePtBr": "Medial rectus Músculo Direito",
+    "nameEn": "Medial rectus muscle (right)",
+    "nameLatin": "Musculus rectus medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_subtendinous_bursa_of_gastrocnemius_muscle_l",
+    "node": "Medial subtendinous bursa of gastrocnemius muscle.l",
+    "fmaId": "TA2:medial_subtendinous_bursa_of_gastrocnemius_muscle_l",
+    "namePtBr": "Medial subtendinous Bolsa Sinovial of gastrocnemius Músculo Esquerdo",
+    "nameEn": "Medial subtendinous bursa of gastrocnemius muscle (left)",
+    "nameLatin": "Bursa subtendinea medialis musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:medial_subtendinous_bursa_of_gastrocnemius_muscle_r",
+    "node": "Medial subtendinous bursa of gastrocnemius muscle.r",
+    "fmaId": "TA2:medial_subtendinous_bursa_of_gastrocnemius_muscle_r",
+    "namePtBr": "Medial subtendinous Bolsa Sinovial of gastrocnemius Músculo Direito",
+    "nameEn": "Medial subtendinous bursa of gastrocnemius muscle (right)",
+    "nameLatin": "Bursa subtendinea medialis musculi gastrocnemii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:mentalis_muscle_l",
+    "node": "Mentalis muscle.l",
+    "fmaId": "TA2:mentalis_muscle_l",
+    "namePtBr": "Mentalis Músculo Esquerdo",
+    "nameEn": "Mentalis muscle (left)",
+    "nameLatin": "Musculus mentalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:mentalis_muscle_r",
+    "node": "Mentalis muscle.r",
+    "fmaId": "TA2:mentalis_muscle_r",
+    "namePtBr": "Mentalis Músculo Direito",
+    "nameEn": "Mentalis muscle (right)",
+    "nameLatin": "Musculus mentalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:middle_layer_of_thoracolumbar_fascia_l",
+    "node": "Middle layer of thoracolumbar fascia.l",
+    "fmaId": "TA2:middle_layer_of_thoracolumbar_fascia_l",
+    "namePtBr": "Middle layer of thoracolumbar Fáscia Esquerdo",
+    "nameEn": "Middle layer of thoracolumbar fascia (left)",
+    "nameLatin": "Lamina media fasciae thoracolumbaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.3,
+      "z": -0.3
+    }
+  },
+  {
+    "id": "za:middle_layer_of_thoracolumbar_fascia_r",
+    "node": "Middle layer of thoracolumbar fascia.r",
+    "fmaId": "TA2:middle_layer_of_thoracolumbar_fascia_r",
+    "namePtBr": "Middle layer of thoracolumbar Fáscia Direito",
+    "nameEn": "Middle layer of thoracolumbar fascia (right)",
+    "nameLatin": "Lamina media fasciae thoracolumbaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.3,
+      "z": -0.3
+    }
+  },
+  {
+    "id": "za:middle_pharyngeal_constrictor_l",
+    "node": "Middle pharyngeal constrictor.l",
+    "fmaId": "TA2:middle_pharyngeal_constrictor_l",
+    "namePtBr": "Middle pharyngeal constrictor Esquerdo",
+    "nameEn": "Middle pharyngeal constrictor (left)",
+    "nameLatin": "Constrictor medius pharyngis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:middle_pharyngeal_constrictor_r",
+    "node": "Middle pharyngeal constrictor.r",
+    "fmaId": "TA2:middle_pharyngeal_constrictor_r",
+    "namePtBr": "Middle pharyngeal constrictor Direito",
+    "nameEn": "Middle pharyngeal constrictor (right)",
+    "nameLatin": "Constrictor medius pharyngis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:multifidus_colli_muscle_l",
+    "node": "Multifidus colli muscle.l",
+    "fmaId": "TA2:multifidus_colli_muscle_l",
+    "namePtBr": "Multifidus colli Músculo Esquerdo",
+    "nameEn": "Multifidus colli muscle (left)",
+    "nameLatin": "Musculus multifidus colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:multifidus_colli_muscle_r",
+    "node": "Multifidus colli muscle.r",
+    "fmaId": "TA2:multifidus_colli_muscle_r",
+    "namePtBr": "Multifidus colli Músculo Direito",
+    "nameEn": "Multifidus colli muscle (right)",
+    "nameLatin": "Musculus multifidus colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:multifidus_lumborum_muscle_l",
+    "node": "Multifidus lumborum muscle.l",
+    "fmaId": "TA2:multifidus_lumborum_muscle_l",
+    "namePtBr": "Multifidus lumborum Músculo Esquerdo",
+    "nameEn": "Multifidus lumborum muscle (left)",
+    "nameLatin": "Musculus multifidus lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:multifidus_lumborum_muscle_r",
+    "node": "Multifidus lumborum muscle.r",
+    "fmaId": "TA2:multifidus_lumborum_muscle_r",
+    "namePtBr": "Multifidus lumborum Músculo Direito",
+    "nameEn": "Multifidus lumborum muscle (right)",
+    "nameLatin": "Musculus multifidus lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:multifidus_thoracis_muscle_l",
+    "node": "Multifidus thoracis muscle.l",
+    "fmaId": "TA2:multifidus_thoracis_muscle_l",
+    "namePtBr": "Multifidus thoracis Músculo Esquerdo",
+    "nameEn": "Multifidus thoracis muscle (left)",
+    "nameLatin": "Musculus multifidus thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:multifidus_thoracis_muscle_r",
+    "node": "Multifidus thoracis muscle.r",
+    "fmaId": "TA2:multifidus_thoracis_muscle_r",
+    "namePtBr": "Multifidus thoracis Músculo Direito",
+    "nameEn": "Multifidus thoracis muscle (right)",
+    "nameLatin": "Musculus multifidus thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:mylohyoid_muscle_l",
+    "node": "Mylohyoid muscle.l",
+    "fmaId": "TA2:mylohyoid_muscle_l",
+    "namePtBr": "Mylohyoid Músculo Esquerdo",
+    "nameEn": "Mylohyoid muscle (left)",
+    "nameLatin": "Musculus mylohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:mylohyoid_muscle_r",
+    "node": "Mylohyoid muscle.r",
+    "fmaId": "TA2:mylohyoid_muscle_r",
+    "namePtBr": "Mylohyoid Músculo Direito",
+    "nameEn": "Mylohyoid muscle (right)",
+    "nameLatin": "Musculus mylohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:nasalis_muscle_l",
+    "node": "Nasalis muscle.l",
+    "fmaId": "TA2:nasalis_muscle_l",
+    "namePtBr": "Nasalis Músculo Esquerdo",
+    "nameEn": "Nasalis muscle (left)",
+    "nameLatin": "Musculus nasalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:nasalis_muscle_r",
+    "node": "Nasalis muscle.r",
+    "fmaId": "TA2:nasalis_muscle_r",
+    "namePtBr": "Nasalis Músculo Direito",
+    "nameEn": "Nasalis muscle (right)",
+    "nameLatin": "Musculus nasalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:oblique_head_of_adductor_hallucis_l",
+    "node": "Oblique head of adductor hallucis.l",
+    "fmaId": "TA2:oblique_head_of_adductor_hallucis_l",
+    "namePtBr": "Oblique head of adductor hallucis Esquerdo",
+    "nameEn": "Oblique head of adductor hallucis (left)",
+    "nameLatin": "Caput obliquum adductoris hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:oblique_head_of_adductor_hallucis_r",
+    "node": "Oblique head of adductor hallucis.r",
+    "fmaId": "TA2:oblique_head_of_adductor_hallucis_r",
+    "namePtBr": "Oblique head of adductor hallucis Direito",
+    "nameEn": "Oblique head of adductor hallucis (right)",
+    "nameLatin": "Caput obliquum adductoris hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:oblique_head_of_adductor_pollicis_l",
+    "node": "Oblique head of adductor pollicis.l",
+    "fmaId": "TA2:oblique_head_of_adductor_pollicis_l",
+    "namePtBr": "Oblique head of adductor pollicis Esquerdo",
+    "nameEn": "Oblique head of adductor pollicis (left)",
+    "nameLatin": "Caput obliquum adductoris pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:oblique_head_of_adductor_pollicis_r",
+    "node": "Oblique head of adductor pollicis.r",
+    "fmaId": "TA2:oblique_head_of_adductor_pollicis_r",
+    "namePtBr": "Oblique head of adductor pollicis Direito",
+    "nameEn": "Oblique head of adductor pollicis (right)",
+    "nameLatin": "Caput obliquum adductoris pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:oblique_part_of_cricothyroid_muscle_l",
+    "node": "Oblique part of cricothyroid muscle.l",
+    "fmaId": "TA2:oblique_part_of_cricothyroid_muscle_l",
+    "namePtBr": "Oblique part of cricothyroid Músculo Esquerdo",
+    "nameEn": "Oblique part of cricothyroid muscle (left)",
+    "nameLatin": "Pars obliqua musculi cricothyreoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:oblique_part_of_cricothyroid_muscle_r",
+    "node": "Oblique part of cricothyroid muscle.r",
+    "fmaId": "TA2:oblique_part_of_cricothyroid_muscle_r",
+    "namePtBr": "Oblique part of cricothyroid Músculo Direito",
+    "nameEn": "Oblique part of cricothyroid muscle (right)",
+    "nameLatin": "Pars obliqua musculi cricothyreoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obliquus_inferior_capitis_muscle_l",
+    "node": "Obliquus inferior capitis muscle.l",
+    "fmaId": "TA2:obliquus_inferior_capitis_muscle_l",
+    "namePtBr": "Obliquus inferior capitis Músculo Esquerdo",
+    "nameEn": "Obliquus inferior capitis muscle (left)",
+    "nameLatin": "Musculus obliquus inferior capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obliquus_inferior_capitis_muscle_r",
+    "node": "Obliquus inferior capitis muscle.r",
+    "fmaId": "TA2:obliquus_inferior_capitis_muscle_r",
+    "namePtBr": "Obliquus inferior capitis Músculo Direito",
+    "nameEn": "Obliquus inferior capitis muscle (right)",
+    "nameLatin": "Musculus obliquus inferior capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obliquus_superior_capitis_muscle_l",
+    "node": "Obliquus superior capitis muscle.l",
+    "fmaId": "TA2:obliquus_superior_capitis_muscle_l",
+    "namePtBr": "Obliquus superior capitis Músculo Esquerdo",
+    "nameEn": "Obliquus superior capitis muscle (left)",
+    "nameLatin": "Musculus obliquus superior capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obliquus_superior_capitis_muscle_r",
+    "node": "Obliquus superior capitis muscle.r",
+    "fmaId": "TA2:obliquus_superior_capitis_muscle_r",
+    "namePtBr": "Obliquus superior capitis Músculo Direito",
+    "nameEn": "Obliquus superior capitis muscle (right)",
+    "nameLatin": "Musculus obliquus superior capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obturator_externus_l",
+    "node": "Obturator externus.l",
+    "fmaId": "TA2:obturator_externus_l",
+    "namePtBr": "Obturator externus Esquerdo",
+    "nameEn": "Obturator externus (left)",
+    "nameLatin": "Obturator externus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obturator_externus_r",
+    "node": "Obturator externus.r",
+    "fmaId": "TA2:obturator_externus_r",
+    "namePtBr": "Obturator externus Direito",
+    "nameEn": "Obturator externus (right)",
+    "nameLatin": "Obturator externus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obturator_internus_l",
+    "node": "Obturator internus.l",
+    "fmaId": "TA2:obturator_internus_l",
+    "namePtBr": "Obturator internus Esquerdo",
+    "nameEn": "Obturator internus (left)",
+    "nameLatin": "Obturator internus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:obturator_internus_r",
+    "node": "Obturator internus.r",
+    "fmaId": "TA2:obturator_internus_r",
+    "namePtBr": "Obturator internus Direito",
+    "nameEn": "Obturator internus (right)",
+    "nameLatin": "Obturator internus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:occipitalis_muscle_l",
+    "node": "Occipitalis muscle.l",
+    "fmaId": "TA2:occipitalis_muscle_l",
+    "namePtBr": "Occipitalis Músculo Esquerdo",
+    "nameEn": "Occipitalis muscle (left)",
+    "nameLatin": "Musculus occipitalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:occipitalis_muscle_r",
+    "node": "Occipitalis muscle.r",
+    "fmaId": "TA2:occipitalis_muscle_r",
+    "namePtBr": "Occipitalis Músculo Direito",
+    "nameEn": "Occipitalis muscle (right)",
+    "nameLatin": "Musculus occipitalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:omohyoid_muscle_l",
+    "node": "Omohyoid muscle.l",
+    "fmaId": "TA2:omohyoid_muscle_l",
+    "namePtBr": "Omohyoid Músculo Esquerdo",
+    "nameEn": "Omohyoid muscle (left)",
+    "nameLatin": "Musculus omohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:omohyoid_muscle_r",
+    "node": "Omohyoid muscle.r",
+    "fmaId": "TA2:omohyoid_muscle_r",
+    "namePtBr": "Omohyoid Músculo Direito",
+    "nameEn": "Omohyoid muscle (right)",
+    "nameLatin": "Musculus omohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:opponens_digiti_minimi_muscle_of_hand_l",
+    "node": "Opponens digiti minimi muscle of hand.l",
+    "fmaId": "TA2:opponens_digiti_minimi_muscle_of_hand_l",
+    "namePtBr": "Opponens digiti minimi Músculo of hand Esquerdo",
+    "nameEn": "Opponens digiti minimi muscle of hand (left)",
+    "nameLatin": "Musculus opponens digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:opponens_digiti_minimi_muscle_of_hand_r",
+    "node": "Opponens digiti minimi muscle of hand.r",
+    "fmaId": "TA2:opponens_digiti_minimi_muscle_of_hand_r",
+    "namePtBr": "Opponens digiti minimi Músculo of hand Direito",
+    "nameEn": "Opponens digiti minimi muscle of hand (right)",
+    "nameLatin": "Musculus opponens digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:opponens_pollicis_muscle_l",
+    "node": "Opponens pollicis muscle.l",
+    "fmaId": "TA2:opponens_pollicis_muscle_l",
+    "namePtBr": "Opponens pollicis Músculo Esquerdo",
+    "nameEn": "Opponens pollicis muscle (left)",
+    "nameLatin": "Musculus opponens pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:opponens_pollicis_muscle_r",
+    "node": "Opponens pollicis muscle.r",
+    "fmaId": "TA2:opponens_pollicis_muscle_r",
+    "namePtBr": "Opponens pollicis Músculo Direito",
+    "nameEn": "Opponens pollicis muscle (right)",
+    "nameLatin": "Musculus opponens pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:orbicularis_oris_muscle_l",
+    "node": "Orbicularis oris muscle.l",
+    "fmaId": "TA2:orbicularis_oris_muscle_l",
+    "namePtBr": "Orbicularis oris Músculo Esquerdo",
+    "nameEn": "Orbicularis oris muscle (left)",
+    "nameLatin": "Musculus orbicularis oris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:orbicularis_oris_muscle_r",
+    "node": "Orbicularis oris muscle.r",
+    "fmaId": "TA2:orbicularis_oris_muscle_r",
+    "namePtBr": "Orbicularis oris Músculo Direito",
+    "nameEn": "Orbicularis oris muscle (right)",
+    "nameLatin": "Musculus orbicularis oris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:orbital_part_of_orbicularis_oculi_l",
+    "node": "Orbital part of orbicularis oculi.l",
+    "fmaId": "TA2:orbital_part_of_orbicularis_oculi_l",
+    "namePtBr": "Orbital part of orbicularis oculi Esquerdo",
+    "nameEn": "Orbital part of orbicularis oculi (left)",
+    "nameLatin": "Pars orbitalis musculi orbicularis oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:orbital_part_of_orbicularis_oculi_r",
+    "node": "Orbital part of orbicularis oculi.r",
+    "fmaId": "TA2:orbital_part_of_orbicularis_oculi_r",
+    "namePtBr": "Orbital part of orbicularis oculi Direito",
+    "nameEn": "Orbital part of orbicularis oculi (right)",
+    "nameLatin": "Pars orbitalis musculi orbicularis oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palatopharyngeus_muscle_l",
+    "node": "Palatopharyngeus muscle.l",
+    "fmaId": "TA2:palatopharyngeus_muscle_l",
+    "namePtBr": "Palatopharyngeus Músculo Esquerdo",
+    "nameEn": "Palatopharyngeus muscle (left)",
+    "nameLatin": "Musculus palatopharyngeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palatopharyngeus_muscle_r",
+    "node": "Palatopharyngeus muscle.r",
+    "fmaId": "TA2:palatopharyngeus_muscle_r",
+    "namePtBr": "Palatopharyngeus Músculo Direito",
+    "nameEn": "Palatopharyngeus muscle (right)",
+    "nameLatin": "Musculus palatopharyngeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palmar_aponeurosis_l",
+    "node": "Palmar aponeurosis.l",
+    "fmaId": "TA2:palmar_aponeurosis_l",
+    "namePtBr": "Palmar Aponeurose Esquerdo",
+    "nameEn": "Palmar aponeurosis (left)",
+    "nameLatin": "Aponeurosis palmaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palmar_aponeurosis_r",
+    "node": "Palmar aponeurosis.r",
+    "fmaId": "TA2:palmar_aponeurosis_r",
+    "namePtBr": "Palmar Aponeurose Direito",
+    "nameEn": "Palmar aponeurosis (right)",
+    "nameLatin": "Aponeurosis palmaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palmar_interossei_muscles_l",
+    "node": "Palmar interossei muscles.l",
+    "fmaId": "TA2:palmar_interossei_muscles_l",
+    "namePtBr": "Palmar interossei muscles Esquerdo",
+    "nameEn": "Palmar interossei muscles (left)",
+    "nameLatin": "Musculi interossei palmares",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palmar_interossei_muscles_r",
+    "node": "Palmar interossei muscles.r",
+    "fmaId": "TA2:palmar_interossei_muscles_r",
+    "namePtBr": "Palmar interossei muscles Direito",
+    "nameEn": "Palmar interossei muscles (right)",
+    "nameLatin": "Musculi interossei palmares",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palmaris_longus_muscle_l",
+    "node": "Palmaris longus muscle.l",
+    "fmaId": "TA2:palmaris_longus_muscle_l",
+    "namePtBr": "Palmaris longus Músculo Esquerdo",
+    "nameEn": "Palmaris longus muscle (left)",
+    "nameLatin": "Musculus palmaris longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palmaris_longus_muscle_r",
+    "node": "Palmaris longus muscle.r",
+    "fmaId": "TA2:palmaris_longus_muscle_r",
+    "namePtBr": "Palmaris longus Músculo Direito",
+    "nameEn": "Palmaris longus muscle (right)",
+    "nameLatin": "Musculus palmaris longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palpebral_part_of_orbicularis_oculi_l",
+    "node": "Palpebral part of orbicularis oculi.l",
+    "fmaId": "TA2:palpebral_part_of_orbicularis_oculi_l",
+    "namePtBr": "Palpebral part of orbicularis oculi Esquerdo",
+    "nameEn": "Palpebral part of orbicularis oculi (left)",
+    "nameLatin": "Pars palpebralis musculi orbicularis oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:palpebral_part_of_orbicularis_oculi_r",
+    "node": "Palpebral part of orbicularis oculi.r",
+    "fmaId": "TA2:palpebral_part_of_orbicularis_oculi_r",
+    "namePtBr": "Palpebral part of orbicularis oculi Direito",
+    "nameEn": "Palpebral part of orbicularis oculi (right)",
+    "nameLatin": "Pars palpebralis musculi orbicularis oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pectineus_muscle_l",
+    "node": "Pectineus muscle.l",
+    "fmaId": "TA2:pectineus_muscle_l",
+    "namePtBr": "Pectineus Músculo Esquerdo",
+    "nameEn": "Pectineus muscle (left)",
+    "nameLatin": "Musculus pectineus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pectineus_muscle_r",
+    "node": "Pectineus muscle.r",
+    "fmaId": "TA2:pectineus_muscle_r",
+    "namePtBr": "Pectineus Músculo Direito",
+    "nameEn": "Pectineus muscle (right)",
+    "nameLatin": "Musculus pectineus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Medial compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pectoral_fascia_l",
+    "node": "Pectoral fascia.l",
+    "fmaId": "TA2:pectoral_fascia_l",
+    "namePtBr": "Pectoral Fáscia Esquerdo",
+    "nameEn": "Pectoral fascia (left)",
+    "nameLatin": "Fascia pectoralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pectoral_fascia_r",
+    "node": "Pectoral fascia.r",
+    "fmaId": "TA2:pectoral_fascia_r",
+    "namePtBr": "Pectoral Fáscia Direito",
+    "nameEn": "Pectoral fascia (right)",
+    "nameLatin": "Fascia pectoralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pectoralis_minor_muscle_l",
+    "node": "Pectoralis minor muscle.l",
+    "fmaId": "TA2:pectoralis_minor_muscle_l",
+    "namePtBr": "Pectoralis minor Músculo Esquerdo",
+    "nameEn": "Pectoralis minor muscle (left)",
+    "nameLatin": "Musculus pectoralis minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pectoralis_minor_muscle_r",
+    "node": "Pectoralis minor muscle.r",
+    "fmaId": "TA2:pectoralis_minor_muscle_r",
+    "namePtBr": "Pectoralis minor Músculo Direito",
+    "nameEn": "Pectoralis minor muscle (right)",
+    "nameLatin": "Musculus pectoralis minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:piriformis_fascia_l",
+    "node": "Piriformis fascia.l",
+    "fmaId": "TA2:piriformis_fascia_l",
+    "namePtBr": "Piriformis Fáscia Esquerdo",
+    "nameEn": "Piriformis fascia (left)",
+    "nameLatin": "Fascia musculi piriformis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:piriformis_fascia_r",
+    "node": "Piriformis fascia.r",
+    "fmaId": "TA2:piriformis_fascia_r",
+    "namePtBr": "Piriformis Fáscia Direito",
+    "nameEn": "Piriformis fascia (right)",
+    "nameLatin": "Fascia musculi piriformis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:piriformis_muscle_l",
+    "node": "Piriformis muscle.l",
+    "fmaId": "TA2:piriformis_muscle_l",
+    "namePtBr": "Piriformis Músculo Esquerdo",
+    "nameEn": "Piriformis muscle (left)",
+    "nameLatin": "Musculus piriformis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:piriformis_muscle_r",
+    "node": "Piriformis muscle.r",
+    "fmaId": "TA2:piriformis_muscle_r",
+    "namePtBr": "Piriformis Músculo Direito",
+    "nameEn": "Piriformis muscle (right)",
+    "nameLatin": "Musculus piriformis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:plantar_aponeurosis_l",
+    "node": "Plantar aponeurosis.l",
+    "fmaId": "TA2:plantar_aponeurosis_l",
+    "namePtBr": "Plantar Aponeurose Esquerdo",
+    "nameEn": "Plantar aponeurosis (left)",
+    "nameLatin": "Aponeurosis plantaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:plantar_aponeurosis_r",
+    "node": "Plantar aponeurosis.r",
+    "fmaId": "TA2:plantar_aponeurosis_r",
+    "namePtBr": "Plantar Aponeurose Direito",
+    "nameEn": "Plantar aponeurosis (right)",
+    "nameLatin": "Aponeurosis plantaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:plantar_interossei_muscles_l",
+    "node": "Plantar interossei muscles.l",
+    "fmaId": "TA2:plantar_interossei_muscles_l",
+    "namePtBr": "Plantar interossei muscles Esquerdo",
+    "nameEn": "Plantar interossei muscles (left)",
+    "nameLatin": "Musculi interossei plantares",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:plantar_interossei_muscles_r",
+    "node": "Plantar interossei muscles.r",
+    "fmaId": "TA2:plantar_interossei_muscles_r",
+    "namePtBr": "Plantar interossei muscles Direito",
+    "nameEn": "Plantar interossei muscles (right)",
+    "nameLatin": "Musculi interossei plantares",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:plantar_tendon_sheath_of_fibularis_longus_muscle_l",
+    "node": "Plantar tendon sheath of fibularis longus muscle.l",
+    "fmaId": "TA2:plantar_tendon_sheath_of_fibularis_longus_muscle_l",
+    "namePtBr": "Plantar Bainha Tendínea of fibularis longus Músculo Esquerdo",
+    "nameEn": "Plantar tendon sheath of fibularis longus muscle (left)",
+    "nameLatin": "Vagina plantaris tendinis musculi fibularis longi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:plantar_tendon_sheath_of_fibularis_longus_muscle_r",
+    "node": "Plantar tendon sheath of fibularis longus muscle.r",
+    "fmaId": "TA2:plantar_tendon_sheath_of_fibularis_longus_muscle_r",
+    "namePtBr": "Plantar Bainha Tendínea of fibularis longus Músculo Direito",
+    "nameEn": "Plantar tendon sheath of fibularis longus muscle (right)",
+    "nameLatin": "Vagina plantaris tendinis musculi fibularis longi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:plantaris_muscle_l",
+    "node": "Plantaris muscle.l",
+    "fmaId": "TA2:plantaris_muscle_l",
+    "namePtBr": "Plantaris Músculo Esquerdo",
+    "nameEn": "Plantaris muscle (left)",
+    "nameLatin": "Musculus plantaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:plantaris_muscle_r",
+    "node": "Plantaris muscle.r",
+    "fmaId": "TA2:plantaris_muscle_r",
+    "namePtBr": "Plantaris Músculo Direito",
+    "nameEn": "Plantaris muscle (right)",
+    "nameLatin": "Musculus plantaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:platysma_l",
+    "node": "Platysma.l",
+    "fmaId": "TA2:platysma_l",
+    "namePtBr": "Platysma Esquerdo",
+    "nameEn": "Platysma (left)",
+    "nameLatin": "Platysma",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:platysma_r",
+    "node": "Platysma.r",
+    "fmaId": "TA2:platysma_r",
+    "namePtBr": "Platysma Direito",
+    "nameEn": "Platysma (right)",
+    "nameLatin": "Platysma",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:popliteal_fascia_l",
+    "node": "Popliteal fascia.l",
+    "fmaId": "TA2:popliteal_fascia_l",
+    "namePtBr": "Popliteal Fáscia Esquerdo",
+    "nameEn": "Popliteal fascia (left)",
+    "nameLatin": "Fascia poplitea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:popliteal_fascia_r",
+    "node": "Popliteal fascia.r",
+    "fmaId": "TA2:popliteal_fascia_r",
+    "namePtBr": "Popliteal Fáscia Direito",
+    "nameEn": "Popliteal fascia (right)",
+    "nameLatin": "Fascia poplitea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:popliteus_muscle_l",
+    "node": "Popliteus muscle.l",
+    "fmaId": "TA2:popliteus_muscle_l",
+    "namePtBr": "Popliteus Músculo Esquerdo",
+    "nameEn": "Popliteus muscle (left)",
+    "nameLatin": "Musculus popliteus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:popliteus_muscle_r",
+    "node": "Popliteus muscle.r",
+    "fmaId": "TA2:popliteus_muscle_r",
+    "namePtBr": "Popliteus Músculo Direito",
+    "nameEn": "Popliteus muscle (right)",
+    "nameLatin": "Musculus popliteus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:posterior_belly_of_digastric_muscle_l",
+    "node": "Posterior belly of digastric muscle.l",
+    "fmaId": "TA2:posterior_belly_of_digastric_muscle_l",
+    "namePtBr": "Posterior belly of digastric Músculo Esquerdo",
+    "nameEn": "Posterior belly of digastric muscle (left)",
+    "nameLatin": "Venter posterior musculi digastrici",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:posterior_belly_of_digastric_muscle_r",
+    "node": "Posterior belly of digastric muscle.r",
+    "fmaId": "TA2:posterior_belly_of_digastric_muscle_r",
+    "namePtBr": "Posterior belly of digastric Músculo Direito",
+    "nameEn": "Posterior belly of digastric muscle (right)",
+    "nameLatin": "Venter posterior musculi digastrici",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:posterior_crico_arytenoid_muscle_l",
+    "node": "Posterior crico-arytenoid muscle.l",
+    "fmaId": "TA2:posterior_crico_arytenoid_muscle_l",
+    "namePtBr": "Posterior crico-arytenoid Músculo Esquerdo",
+    "nameEn": "Posterior crico-arytenoid muscle (left)",
+    "nameLatin": "Musculus cricoarytenoideus posterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:posterior_crico_arytenoid_muscle_r",
+    "node": "Posterior crico-arytenoid muscle.r",
+    "fmaId": "TA2:posterior_crico_arytenoid_muscle_r",
+    "namePtBr": "Posterior crico-arytenoid Músculo Direito",
+    "nameEn": "Posterior crico-arytenoid muscle (right)",
+    "nameLatin": "Musculus cricoarytenoideus posterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:posterior_intermuscular_septum_of_leg_l",
+    "node": "Posterior intermuscular septum of leg.l",
+    "fmaId": "TA2:posterior_intermuscular_septum_of_leg_l",
+    "namePtBr": "Posterior intermuscular Septo of leg Esquerdo",
+    "nameEn": "Posterior intermuscular septum of leg (left)",
+    "nameLatin": "Septum intermusculare posterius cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:posterior_intermuscular_septum_of_leg_r",
+    "node": "Posterior intermuscular septum of leg.r",
+    "fmaId": "TA2:posterior_intermuscular_septum_of_leg_r",
+    "namePtBr": "Posterior intermuscular Septo of leg Direito",
+    "nameEn": "Posterior intermuscular septum of leg (right)",
+    "nameLatin": "Septum intermusculare posterius cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:posterior_layer_of_thoracolumbar_fascia_l",
+    "node": "Posterior layer of thoracolumbar fascia.l",
+    "fmaId": "TA2:posterior_layer_of_thoracolumbar_fascia_l",
+    "namePtBr": "Posterior layer of thoracolumbar Fáscia Esquerdo",
+    "nameEn": "Posterior layer of thoracolumbar fascia (left)",
+    "nameLatin": "Lamina posterior fasciae thoracolumbaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.3,
+      "z": -0.3
+    }
+  },
+  {
+    "id": "za:posterior_layer_of_thoracolumbar_fascia_r",
+    "node": "Posterior layer of thoracolumbar fascia.r",
+    "fmaId": "TA2:posterior_layer_of_thoracolumbar_fascia_r",
+    "namePtBr": "Posterior layer of thoracolumbar Fáscia Direito",
+    "nameEn": "Posterior layer of thoracolumbar fascia (right)",
+    "nameLatin": "Lamina posterior fasciae thoracolumbaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.3,
+      "z": -0.3
+    }
+  },
+  {
+    "id": "za:procerus_muscle_l",
+    "node": "Procerus muscle.l",
+    "fmaId": "TA2:procerus_muscle_l",
+    "namePtBr": "Procerus Músculo Esquerdo",
+    "nameEn": "Procerus muscle (left)",
+    "nameLatin": "Musculus procerus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:procerus_muscle_r",
+    "node": "Procerus muscle.r",
+    "fmaId": "TA2:procerus_muscle_r",
+    "namePtBr": "Procerus Músculo Direito",
+    "nameEn": "Procerus muscle (right)",
+    "nameLatin": "Musculus procerus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pronator_quadratus_l",
+    "node": "Pronator quadratus.l",
+    "fmaId": "TA2:pronator_quadratus_l",
+    "namePtBr": "Pronator quadratus Esquerdo",
+    "nameEn": "Pronator quadratus (left)",
+    "nameLatin": "Pronator quadratus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pronator_quadratus_r",
+    "node": "Pronator quadratus.r",
+    "fmaId": "TA2:pronator_quadratus_r",
+    "namePtBr": "Pronator quadratus Direito",
+    "nameEn": "Pronator quadratus (right)",
+    "nameLatin": "Pronator quadratus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:psoas_major_l",
+    "node": "Psoas major.l",
+    "fmaId": "TA2:psoas_major_l",
+    "namePtBr": "Psoas major Esquerdo",
+    "nameEn": "Psoas major (left)",
+    "nameLatin": "Psoas major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:psoas_major_r",
+    "node": "Psoas major.r",
+    "fmaId": "TA2:psoas_major_r",
+    "namePtBr": "Psoas major Direito",
+    "nameEn": "Psoas major (right)",
+    "nameLatin": "Psoas major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pubo_analis_muscle_l",
+    "node": "Pubo-analis muscle.l",
+    "fmaId": "TA2:pubo_analis_muscle_l",
+    "namePtBr": "Pubo-analis Músculo Esquerdo",
+    "nameEn": "Pubo-analis muscle (left)",
+    "nameLatin": "Musculus puboanalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pubo_analis_muscle_r",
+    "node": "Pubo-analis muscle.r",
+    "fmaId": "TA2:pubo_analis_muscle_r",
+    "namePtBr": "Pubo-analis Músculo Direito",
+    "nameEn": "Pubo-analis muscle (right)",
+    "nameLatin": "Musculus puboanalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pubococcygeus_muscle_l",
+    "node": "Pubococcygeus muscle.l",
+    "fmaId": "TA2:pubococcygeus_muscle_l",
+    "namePtBr": "Pubococcygeus Músculo Esquerdo",
+    "nameEn": "Pubococcygeus muscle (left)",
+    "nameLatin": "Musculus pubococcygeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pubococcygeus_muscle_r",
+    "node": "Pubococcygeus muscle.r",
+    "fmaId": "TA2:pubococcygeus_muscle_r",
+    "namePtBr": "Pubococcygeus Músculo Direito",
+    "nameEn": "Pubococcygeus muscle (right)",
+    "nameLatin": "Musculus pubococcygeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pyramidalis_muscle_l",
+    "node": "Pyramidalis muscle.l",
+    "fmaId": "TA2:pyramidalis_muscle_l",
+    "namePtBr": "Pyramidalis Músculo Esquerdo",
+    "nameEn": "Pyramidalis muscle (left)",
+    "nameLatin": "Musculus pyramidalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:pyramidalis_muscle_r",
+    "node": "Pyramidalis muscle.r",
+    "fmaId": "TA2:pyramidalis_muscle_r",
+    "namePtBr": "Pyramidalis Músculo Direito",
+    "nameEn": "Pyramidalis muscle (right)",
+    "nameLatin": "Musculus pyramidalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:quadratus_femoris_muscle_l",
+    "node": "Quadratus femoris muscle.l",
+    "fmaId": "TA2:quadratus_femoris_muscle_l",
+    "namePtBr": "Quadratus femoris Músculo Esquerdo",
+    "nameEn": "Quadratus femoris muscle (left)",
+    "nameLatin": "Musculus quadratus femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:quadratus_femoris_muscle_r",
+    "node": "Quadratus femoris muscle.r",
+    "fmaId": "TA2:quadratus_femoris_muscle_r",
+    "namePtBr": "Quadratus femoris Músculo Direito",
+    "nameEn": "Quadratus femoris muscle (right)",
+    "nameLatin": "Musculus quadratus femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:quadratus_lumborum_muscle_l",
+    "node": "Quadratus lumborum muscle.l",
+    "fmaId": "TA2:quadratus_lumborum_muscle_l",
+    "namePtBr": "Quadratus lumborum Músculo Esquerdo",
+    "nameEn": "Quadratus lumborum muscle (left)",
+    "nameLatin": "Musculus quadratus lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:quadratus_lumborum_muscle_r",
+    "node": "Quadratus lumborum muscle.r",
+    "fmaId": "TA2:quadratus_lumborum_muscle_r",
+    "namePtBr": "Quadratus lumborum Músculo Direito",
+    "nameEn": "Quadratus lumborum muscle (right)",
+    "nameLatin": "Musculus quadratus lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:quadratus_plantae_muscle_l",
+    "node": "Quadratus plantae muscle.l",
+    "fmaId": "TA2:quadratus_plantae_muscle_l",
+    "namePtBr": "Quadratus plantae Músculo Esquerdo",
+    "nameEn": "Quadratus plantae muscle (left)",
+    "nameLatin": "Musculus quadratus plantae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:quadratus_plantae_muscle_r",
+    "node": "Quadratus plantae muscle.r",
+    "fmaId": "TA2:quadratus_plantae_muscle_r",
+    "namePtBr": "Quadratus plantae Músculo Direito",
+    "nameEn": "Quadratus plantae muscle (right)",
+    "nameLatin": "Musculus quadratus plantae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:radial_head_of_flexor_digitorum_superficialis_l",
+    "node": "Radial head of flexor digitorum superficialis.l",
+    "fmaId": "TA2:radial_head_of_flexor_digitorum_superficialis_l",
+    "namePtBr": "Radial head of flexor digitorum superficialis Esquerdo",
+    "nameEn": "Radial head of flexor digitorum superficialis (left)",
+    "nameLatin": "Caput radiale flexoris superficialis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:radial_head_of_flexor_digitorum_superficialis_r",
+    "node": "Radial head of flexor digitorum superficialis.r",
+    "fmaId": "TA2:radial_head_of_flexor_digitorum_superficialis_r",
+    "namePtBr": "Radial head of flexor digitorum superficialis Direito",
+    "nameEn": "Radial head of flexor digitorum superficialis (right)",
+    "nameLatin": "Caput radiale flexoris superficialis digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_abdominis_muscle_l",
+    "node": "Rectus abdominis muscle.l",
+    "fmaId": "TA2:rectus_abdominis_muscle_l",
+    "namePtBr": "Rectus abdominis Músculo Esquerdo",
+    "nameEn": "Rectus abdominis muscle (left)",
+    "nameLatin": "Musculus rectus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_abdominis_muscle_r",
+    "node": "Rectus abdominis muscle.r",
+    "fmaId": "TA2:rectus_abdominis_muscle_r",
+    "namePtBr": "Rectus abdominis Músculo Direito",
+    "nameEn": "Rectus abdominis muscle (right)",
+    "nameLatin": "Musculus rectus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_anterior_capitis_muscle_l",
+    "node": "Rectus anterior capitis muscle.l",
+    "fmaId": "TA2:rectus_anterior_capitis_muscle_l",
+    "namePtBr": "Rectus anterior capitis Músculo Esquerdo",
+    "nameEn": "Rectus anterior capitis muscle (left)",
+    "nameLatin": "Musculus rectus anterior capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_anterior_capitis_muscle_r",
+    "node": "Rectus anterior capitis muscle.r",
+    "fmaId": "TA2:rectus_anterior_capitis_muscle_r",
+    "namePtBr": "Rectus anterior capitis Músculo Direito",
+    "nameEn": "Rectus anterior capitis muscle (right)",
+    "nameLatin": "Musculus rectus anterior capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_femoris_muscle_l",
+    "node": "Rectus femoris muscle.l",
+    "fmaId": "TA2:rectus_femoris_muscle_l",
+    "namePtBr": "Rectus femoris Músculo Esquerdo",
+    "nameEn": "Rectus femoris muscle (left)",
+    "nameLatin": "Musculus rectus femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_femoris_muscle_r",
+    "node": "Rectus femoris muscle.r",
+    "fmaId": "TA2:rectus_femoris_muscle_r",
+    "namePtBr": "Rectus femoris Músculo Direito",
+    "nameEn": "Rectus femoris muscle (right)",
+    "nameLatin": "Musculus rectus femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_lateralis_capitis_muscle_l",
+    "node": "Rectus lateralis capitis muscle.l",
+    "fmaId": "TA2:rectus_lateralis_capitis_muscle_l",
+    "namePtBr": "Rectus lateralis capitis Músculo Esquerdo",
+    "nameEn": "Rectus lateralis capitis muscle (left)",
+    "nameLatin": "Musculus rectus lateralis capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_lateralis_capitis_muscle_r",
+    "node": "Rectus lateralis capitis muscle.r",
+    "fmaId": "TA2:rectus_lateralis_capitis_muscle_r",
+    "namePtBr": "Rectus lateralis capitis Músculo Direito",
+    "nameEn": "Rectus lateralis capitis muscle (right)",
+    "nameLatin": "Musculus rectus lateralis capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_posterior_major_capitis_muscle_l",
+    "node": "Rectus posterior major capitis muscle.l",
+    "fmaId": "TA2:rectus_posterior_major_capitis_muscle_l",
+    "namePtBr": "Rectus posterior major capitis Músculo Esquerdo",
+    "nameEn": "Rectus posterior major capitis muscle (left)",
+    "nameLatin": "Musculus rectus posterior major capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_posterior_major_capitis_muscle_r",
+    "node": "Rectus posterior major capitis muscle.r",
+    "fmaId": "TA2:rectus_posterior_major_capitis_muscle_r",
+    "namePtBr": "Rectus posterior major capitis Músculo Direito",
+    "nameEn": "Rectus posterior major capitis muscle (right)",
+    "nameLatin": "Musculus rectus posterior major capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_posterior_minor_capitis_muscle_l",
+    "node": "Rectus posterior minor capitis muscle.l",
+    "fmaId": "TA2:rectus_posterior_minor_capitis_muscle_l",
+    "namePtBr": "Rectus posterior minor capitis Músculo Esquerdo",
+    "nameEn": "Rectus posterior minor capitis muscle (left)",
+    "nameLatin": "Musculus rectus posterior minor capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rectus_posterior_minor_capitis_muscle_r",
+    "node": "Rectus posterior minor capitis muscle.r",
+    "fmaId": "TA2:rectus_posterior_minor_capitis_muscle_r",
+    "namePtBr": "Rectus posterior minor capitis Músculo Direito",
+    "nameEn": "Rectus posterior minor capitis muscle (right)",
+    "nameLatin": "Musculus rectus posterior minor capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Suboccipital muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rhomboid_major_muscle_l",
+    "node": "Rhomboid major muscle.l",
+    "fmaId": "TA2:rhomboid_major_muscle_l",
+    "namePtBr": "Rhomboid major Músculo Esquerdo",
+    "nameEn": "Rhomboid major muscle (left)",
+    "nameLatin": "Musculus rhomboideus major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rhomboid_major_muscle_r",
+    "node": "Rhomboid major muscle.r",
+    "fmaId": "TA2:rhomboid_major_muscle_r",
+    "namePtBr": "Rhomboid major Músculo Direito",
+    "nameEn": "Rhomboid major muscle (right)",
+    "nameLatin": "Musculus rhomboideus major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rhomboid_minor_muscle_l",
+    "node": "Rhomboid minor muscle.l",
+    "fmaId": "TA2:rhomboid_minor_muscle_l",
+    "namePtBr": "Rhomboid minor Músculo Esquerdo",
+    "nameEn": "Rhomboid minor muscle (left)",
+    "nameLatin": "Musculus rhomboideus minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rhomboid_minor_muscle_r",
+    "node": "Rhomboid minor muscle.r",
+    "fmaId": "TA2:rhomboid_minor_muscle_r",
+    "namePtBr": "Rhomboid minor Músculo Direito",
+    "nameEn": "Rhomboid minor muscle (right)",
+    "nameLatin": "Musculus rhomboideus minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:risorius_muscle_l",
+    "node": "Risorius muscle.l",
+    "fmaId": "TA2:risorius_muscle_l",
+    "namePtBr": "Risorius Músculo Esquerdo",
+    "nameEn": "Risorius muscle (left)",
+    "nameLatin": "Musculus risorius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:risorius_muscle_r",
+    "node": "Risorius muscle.r",
+    "fmaId": "TA2:risorius_muscle_r",
+    "namePtBr": "Risorius Músculo Direito",
+    "nameEn": "Risorius muscle (right)",
+    "nameLatin": "Musculus risorius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rotatores_l",
+    "node": "Rotatores.l",
+    "fmaId": "TA2:rotatores_l",
+    "namePtBr": "Rotatores Esquerdo",
+    "nameEn": "Rotatores (left)",
+    "nameLatin": "Rotatores",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles",
+      "Rotatores"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:rotatores_r",
+    "node": "Rotatores.r",
+    "fmaId": "TA2:rotatores_r",
+    "namePtBr": "Rotatores Direito",
+    "nameEn": "Rotatores (right)",
+    "nameLatin": "Rotatores",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles",
+      "Rotatores"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sartorius_muscle_l",
+    "node": "Sartorius muscle.l",
+    "fmaId": "TA2:sartorius_muscle_l",
+    "namePtBr": "Sartorius Músculo Esquerdo",
+    "nameEn": "Sartorius muscle (left)",
+    "nameLatin": "Musculus sartorius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sartorius_muscle_r",
+    "node": "Sartorius muscle.r",
+    "fmaId": "TA2:sartorius_muscle_r",
+    "namePtBr": "Sartorius Músculo Direito",
+    "nameEn": "Sartorius muscle (right)",
+    "nameLatin": "Musculus sartorius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:scalenus_anterior_muscle_l",
+    "node": "Scalenus anterior muscle.l",
+    "fmaId": "TA2:scalenus_anterior_muscle_l",
+    "namePtBr": "Scalenus anterior Músculo Esquerdo",
+    "nameEn": "Scalenus anterior muscle (left)",
+    "nameLatin": "Musculus scalenus anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:scalenus_anterior_muscle_r",
+    "node": "Scalenus anterior muscle.r",
+    "fmaId": "TA2:scalenus_anterior_muscle_r",
+    "namePtBr": "Scalenus anterior Músculo Direito",
+    "nameEn": "Scalenus anterior muscle (right)",
+    "nameLatin": "Musculus scalenus anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:scalenus_medius_muscle_l",
+    "node": "Scalenus medius muscle.l",
+    "fmaId": "TA2:scalenus_medius_muscle_l",
+    "namePtBr": "Scalenus medius Músculo Esquerdo",
+    "nameEn": "Scalenus medius muscle (left)",
+    "nameLatin": "Musculus scalenus medius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:scalenus_medius_muscle_r",
+    "node": "Scalenus medius muscle.r",
+    "fmaId": "TA2:scalenus_medius_muscle_r",
+    "namePtBr": "Scalenus medius Músculo Direito",
+    "nameEn": "Scalenus medius muscle (right)",
+    "nameLatin": "Musculus scalenus medius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:scalenus_posterior_muscle_l",
+    "node": "Scalenus posterior muscle.l",
+    "fmaId": "TA2:scalenus_posterior_muscle_l",
+    "namePtBr": "Scalenus posterior Músculo Esquerdo",
+    "nameEn": "Scalenus posterior muscle (left)",
+    "nameLatin": "Musculus scalenus posterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:scalenus_posterior_muscle_r",
+    "node": "Scalenus posterior muscle.r",
+    "fmaId": "TA2:scalenus_posterior_muscle_r",
+    "namePtBr": "Scalenus posterior Músculo Direito",
+    "nameEn": "Scalenus posterior muscle (right)",
+    "nameLatin": "Musculus scalenus posterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:scapular_spinal_part_of_deltoid_muscle_l",
+    "node": "Scapular spinal part of deltoid muscle.l",
+    "fmaId": "TA2:scapular_spinal_part_of_deltoid_muscle_l",
+    "namePtBr": "Scapular spinal part of deltoid Músculo Esquerdo",
+    "nameEn": "Scapular spinal part of deltoid muscle (left)",
+    "nameLatin": "Pars spinalis scapularis musculi deltoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Deltoid muscle"
+    ],
+    "explosionVector": {
+      "x": -1.2,
+      "y": 0.2,
+      "z": -0.7
+    }
+  },
+  {
+    "id": "za:scapular_spinal_part_of_deltoid_muscle_r",
+    "node": "Scapular spinal part of deltoid muscle.r",
+    "fmaId": "TA2:scapular_spinal_part_of_deltoid_muscle_r",
+    "namePtBr": "Scapular spinal part of deltoid Músculo Direito",
+    "nameEn": "Scapular spinal part of deltoid muscle (right)",
+    "nameLatin": "Pars spinalis scapularis musculi deltoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Deltoid muscle"
+    ],
+    "explosionVector": {
+      "x": 1.2,
+      "y": 0.2,
+      "z": -0.7
+    }
+  },
+  {
+    "id": "za:sciatic_bursa_of_gluteus_maximus_muscle_l",
+    "node": "Sciatic bursa of gluteus maximus muscle.l",
+    "fmaId": "TA2:sciatic_bursa_of_gluteus_maximus_muscle_l",
+    "namePtBr": "Sciatic Bolsa Sinovial of gluteus maximus Músculo Esquerdo",
+    "nameEn": "Sciatic bursa of gluteus maximus muscle (left)",
+    "nameLatin": "Bursa ischiadica musculi glutei maximi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sciatic_bursa_of_gluteus_maximus_muscle_r",
+    "node": "Sciatic bursa of gluteus maximus muscle.r",
+    "fmaId": "TA2:sciatic_bursa_of_gluteus_maximus_muscle_r",
+    "namePtBr": "Sciatic Bolsa Sinovial of gluteus maximus Músculo Direito",
+    "nameEn": "Sciatic bursa of gluteus maximus muscle (right)",
+    "nameLatin": "Bursa ischiadica musculi glutei maximi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sciatic_bursa_of_obturator_internus_l",
+    "node": "Sciatic bursa of obturator internus.l",
+    "fmaId": "TA2:sciatic_bursa_of_obturator_internus_l",
+    "namePtBr": "Sciatic Bolsa Sinovial of obturator internus Esquerdo",
+    "nameEn": "Sciatic bursa of obturator internus (left)",
+    "nameLatin": "Bursa ischiadica obturatoris interni",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sciatic_bursa_of_obturator_internus_r",
+    "node": "Sciatic bursa of obturator internus.r",
+    "fmaId": "TA2:sciatic_bursa_of_obturator_internus_r",
+    "namePtBr": "Sciatic Bolsa Sinovial of obturator internus Direito",
+    "nameEn": "Sciatic bursa of obturator internus (right)",
+    "nameLatin": "Bursa ischiadica obturatoris interni",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semimembranosus_bursa_l",
+    "node": "Semimembranosus bursa.l",
+    "fmaId": "TA2:semimembranosus_bursa_l",
+    "namePtBr": "Semimembranosus Bolsa Sinovial Esquerdo",
+    "nameEn": "Semimembranosus bursa (left)",
+    "nameLatin": "Bursa musculi semimembranosi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semimembranosus_bursa_r",
+    "node": "Semimembranosus bursa.r",
+    "fmaId": "TA2:semimembranosus_bursa_r",
+    "namePtBr": "Semimembranosus Bolsa Sinovial Direito",
+    "nameEn": "Semimembranosus bursa (right)",
+    "nameLatin": "Bursa musculi semimembranosi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semimembranosus_muscle_l",
+    "node": "Semimembranosus muscle.l",
+    "fmaId": "TA2:semimembranosus_muscle_l",
+    "namePtBr": "Semimembranosus Músculo Esquerdo",
+    "nameEn": "Semimembranosus muscle (left)",
+    "nameLatin": "Musculus semimembranosus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semimembranosus_muscle_r",
+    "node": "Semimembranosus muscle.r",
+    "fmaId": "TA2:semimembranosus_muscle_r",
+    "namePtBr": "Semimembranosus Músculo Direito",
+    "nameEn": "Semimembranosus muscle (right)",
+    "nameLatin": "Musculus semimembranosus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semispinalis_colli_muscle_l",
+    "node": "Semispinalis colli muscle.l",
+    "fmaId": "TA2:semispinalis_colli_muscle_l",
+    "namePtBr": "Semispinalis colli Músculo Esquerdo",
+    "nameEn": "Semispinalis colli muscle (left)",
+    "nameLatin": "Musculus semispinalis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semispinalis_colli_muscle_r",
+    "node": "Semispinalis colli muscle.r",
+    "fmaId": "TA2:semispinalis_colli_muscle_r",
+    "namePtBr": "Semispinalis colli Músculo Direito",
+    "nameEn": "Semispinalis colli muscle (right)",
+    "nameLatin": "Musculus semispinalis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semispinalis_thoracis_muscle_l",
+    "node": "Semispinalis thoracis muscle.l",
+    "fmaId": "TA2:semispinalis_thoracis_muscle_l",
+    "namePtBr": "Semispinalis thoracis Músculo Esquerdo",
+    "nameEn": "Semispinalis thoracis muscle (left)",
+    "nameLatin": "Musculus semispinalis thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semispinalis_thoracis_muscle_r",
+    "node": "Semispinalis thoracis muscle.r",
+    "fmaId": "TA2:semispinalis_thoracis_muscle_r",
+    "namePtBr": "Semispinalis thoracis Músculo Direito",
+    "nameEn": "Semispinalis thoracis muscle (right)",
+    "nameLatin": "Musculus semispinalis thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Transversospinal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semitendinosus_muscle_l",
+    "node": "Semitendinosus muscle.l",
+    "fmaId": "TA2:semitendinosus_muscle_l",
+    "namePtBr": "Semitendinosus Músculo Esquerdo",
+    "nameEn": "Semitendinosus muscle (left)",
+    "nameLatin": "Musculus semitendinosus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:semitendinosus_muscle_r",
+    "node": "Semitendinosus muscle.r",
+    "fmaId": "TA2:semitendinosus_muscle_r",
+    "namePtBr": "Semitendinosus Músculo Direito",
+    "nameEn": "Semitendinosus muscle (right)",
+    "nameLatin": "Musculus semitendinosus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:serratus_anterior_muscle_l",
+    "node": "Serratus anterior muscle.l",
+    "fmaId": "TA2:serratus_anterior_muscle_l",
+    "namePtBr": "Serratus anterior Músculo Esquerdo",
+    "nameEn": "Serratus anterior muscle (left)",
+    "nameLatin": "Musculus serratus anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:serratus_anterior_muscle_r",
+    "node": "Serratus anterior muscle.r",
+    "fmaId": "TA2:serratus_anterior_muscle_r",
+    "namePtBr": "Serratus anterior Músculo Direito",
+    "nameEn": "Serratus anterior muscle (right)",
+    "nameLatin": "Musculus serratus anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:serratus_posterior_inferior_muscle_l",
+    "node": "Serratus posterior inferior muscle.l",
+    "fmaId": "TA2:serratus_posterior_inferior_muscle_l",
+    "namePtBr": "Serratus posterior inferior Músculo Esquerdo",
+    "nameEn": "Serratus posterior inferior muscle (left)",
+    "nameLatin": "Musculus serratus posterior inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:serratus_posterior_inferior_muscle_r",
+    "node": "Serratus posterior inferior muscle.r",
+    "fmaId": "TA2:serratus_posterior_inferior_muscle_r",
+    "namePtBr": "Serratus posterior inferior Músculo Direito",
+    "nameEn": "Serratus posterior inferior muscle (right)",
+    "nameLatin": "Musculus serratus posterior inferior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:serratus_posterior_superior_muscle_l",
+    "node": "Serratus posterior superior muscle.l",
+    "fmaId": "TA2:serratus_posterior_superior_muscle_l",
+    "namePtBr": "Serratus posterior superior Músculo Esquerdo",
+    "nameEn": "Serratus posterior superior muscle (left)",
+    "nameLatin": "Musculus serratus posterior superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:serratus_posterior_superior_muscle_r",
+    "node": "Serratus posterior superior muscle.r",
+    "fmaId": "TA2:serratus_posterior_superior_muscle_r",
+    "namePtBr": "Serratus posterior superior Músculo Direito",
+    "nameEn": "Serratus posterior superior muscle (right)",
+    "nameLatin": "Musculus serratus posterior superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:short_head_of_biceps_brachii_l",
+    "node": "Short head of biceps brachii.l",
+    "fmaId": "TA2:short_head_of_biceps_brachii_l",
+    "namePtBr": "Short head of biceps brachii Esquerdo",
+    "nameEn": "Short head of biceps brachii (left)",
+    "nameLatin": "Caput breve musculi bicipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:short_head_of_biceps_brachii_r",
+    "node": "Short head of biceps brachii.r",
+    "fmaId": "TA2:short_head_of_biceps_brachii_r",
+    "namePtBr": "Short head of biceps brachii Direito",
+    "nameEn": "Short head of biceps brachii (right)",
+    "nameLatin": "Caput breve musculi bicipitis brachii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of arm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:short_head_of_biceps_femoris_l",
+    "node": "Short head of biceps femoris.l",
+    "fmaId": "TA2:short_head_of_biceps_femoris_l",
+    "namePtBr": "Short head of biceps femoris Esquerdo",
+    "nameEn": "Short head of biceps femoris (left)",
+    "nameLatin": "Caput breve musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:short_head_of_biceps_femoris_r",
+    "node": "Short head of biceps femoris.r",
+    "fmaId": "TA2:short_head_of_biceps_femoris_r",
+    "namePtBr": "Short head of biceps femoris Direito",
+    "nameEn": "Short head of biceps femoris (right)",
+    "nameLatin": "Caput breve musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:soleus_muscle_l",
+    "node": "Soleus muscle.l",
+    "fmaId": "TA2:soleus_muscle_l",
+    "namePtBr": "Soleus Músculo Esquerdo",
+    "nameEn": "Soleus muscle (left)",
+    "nameLatin": "Musculus soleus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:soleus_muscle_r",
+    "node": "Soleus muscle.r",
+    "fmaId": "TA2:soleus_muscle_r",
+    "namePtBr": "Soleus Músculo Direito",
+    "nameEn": "Soleus muscle (right)",
+    "nameLatin": "Musculus soleus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:spinalis_capitis_muscle_l",
+    "node": "Spinalis capitis muscle.l",
+    "fmaId": "TA2:spinalis_capitis_muscle_l",
+    "namePtBr": "Spinalis capitis Músculo Esquerdo",
+    "nameEn": "Spinalis capitis muscle (left)",
+    "nameLatin": "Musculus spinalis capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:spinalis_capitis_muscle_r",
+    "node": "Spinalis capitis muscle.r",
+    "fmaId": "TA2:spinalis_capitis_muscle_r",
+    "namePtBr": "Spinalis capitis Músculo Direito",
+    "nameEn": "Spinalis capitis muscle (right)",
+    "nameLatin": "Musculus spinalis capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:spinalis_colli_muscle_l",
+    "node": "Spinalis colli muscle.l",
+    "fmaId": "TA2:spinalis_colli_muscle_l",
+    "namePtBr": "Spinalis colli Músculo Esquerdo",
+    "nameEn": "Spinalis colli muscle (left)",
+    "nameLatin": "Musculus spinalis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:spinalis_colli_muscle_r",
+    "node": "Spinalis colli muscle.r",
+    "fmaId": "TA2:spinalis_colli_muscle_r",
+    "namePtBr": "Spinalis colli Músculo Direito",
+    "nameEn": "Spinalis colli muscle (right)",
+    "nameLatin": "Musculus spinalis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:spinalis_thoracis_muscle_l",
+    "node": "Spinalis thoracis muscle.l",
+    "fmaId": "TA2:spinalis_thoracis_muscle_l",
+    "namePtBr": "Spinalis thoracis Músculo Esquerdo",
+    "nameEn": "Spinalis thoracis muscle (left)",
+    "nameLatin": "Musculus spinalis thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:spinalis_thoracis_muscle_r",
+    "node": "Spinalis thoracis muscle.r",
+    "fmaId": "TA2:spinalis_thoracis_muscle_r",
+    "namePtBr": "Spinalis thoracis Músculo Direito",
+    "nameEn": "Spinalis thoracis muscle (right)",
+    "nameLatin": "Musculus spinalis thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Epaxial muscles",
+      "Erector spinae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:splenius_capitis_muscle_l",
+    "node": "Splenius capitis muscle.l",
+    "fmaId": "TA2:splenius_capitis_muscle_l",
+    "namePtBr": "Splenius capitis Músculo Esquerdo",
+    "nameEn": "Splenius capitis muscle (left)",
+    "nameLatin": "Musculus splenius capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:splenius_capitis_muscle_r",
+    "node": "Splenius capitis muscle.r",
+    "fmaId": "TA2:splenius_capitis_muscle_r",
+    "namePtBr": "Splenius capitis Músculo Direito",
+    "nameEn": "Splenius capitis muscle (right)",
+    "nameLatin": "Musculus splenius capitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:splenius_colli_muscle_l",
+    "node": "Splenius colli muscle.l",
+    "fmaId": "TA2:splenius_colli_muscle_l",
+    "namePtBr": "Splenius colli Músculo Esquerdo",
+    "nameEn": "Splenius colli muscle (left)",
+    "nameLatin": "Musculus splenius colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:splenius_colli_muscle_r",
+    "node": "Splenius colli muscle.r",
+    "fmaId": "TA2:splenius_colli_muscle_r",
+    "namePtBr": "Splenius colli Músculo Direito",
+    "nameEn": "Splenius colli muscle (right)",
+    "nameLatin": "Musculus splenius colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternocleidomastoid_muscle_l",
+    "node": "Sternocleidomastoid muscle.l",
+    "fmaId": "TA2:sternocleidomastoid_muscle_l",
+    "namePtBr": "Sternocleidomastoid Músculo Esquerdo",
+    "nameEn": "Sternocleidomastoid muscle (left)",
+    "nameLatin": "Musculus sternocleidomastoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternocleidomastoid_muscle_r",
+    "node": "Sternocleidomastoid muscle.r",
+    "fmaId": "TA2:sternocleidomastoid_muscle_r",
+    "namePtBr": "Sternocleidomastoid Músculo Direito",
+    "nameEn": "Sternocleidomastoid muscle (right)",
+    "nameLatin": "Musculus sternocleidomastoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternocostal_head_of_pectoralis_major_muscle_l",
+    "node": "Sternocostal head of pectoralis major muscle.l",
+    "fmaId": "TA2:sternocostal_head_of_pectoralis_major_muscle_l",
+    "namePtBr": "Sternocostal head of pectoralis major Músculo Esquerdo",
+    "nameEn": "Sternocostal head of pectoralis major muscle (left)",
+    "nameLatin": "Pars sternocostalis musculi pectoralis majoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Thoracic part of muscular system",
+      "Pectoralis major muscle"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternocostal_head_of_pectoralis_major_muscle_r",
+    "node": "Sternocostal head of pectoralis major muscle.r",
+    "fmaId": "TA2:sternocostal_head_of_pectoralis_major_muscle_r",
+    "namePtBr": "Sternocostal head of pectoralis major Músculo Direito",
+    "nameEn": "Sternocostal head of pectoralis major muscle (right)",
+    "nameLatin": "Pars sternocostalis musculi pectoralis majoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Thoracic part of muscular system",
+      "Pectoralis major muscle"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternohyoid_muscle_l",
+    "node": "Sternohyoid muscle.l",
+    "fmaId": "TA2:sternohyoid_muscle_l",
+    "namePtBr": "Sternohyoid Músculo Esquerdo",
+    "nameEn": "Sternohyoid muscle (left)",
+    "nameLatin": "Musculus sternohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternohyoid_muscle_r",
+    "node": "Sternohyoid muscle.r",
+    "fmaId": "TA2:sternohyoid_muscle_r",
+    "namePtBr": "Sternohyoid Músculo Direito",
+    "nameEn": "Sternohyoid muscle (right)",
+    "nameLatin": "Musculus sternohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternothyroid_muscle_l",
+    "node": "Sternothyroid muscle.l",
+    "fmaId": "TA2:sternothyroid_muscle_l",
+    "namePtBr": "Sternothyroid Músculo Esquerdo",
+    "nameEn": "Sternothyroid muscle (left)",
+    "nameLatin": "Musculus sternothyreoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:sternothyroid_muscle_r",
+    "node": "Sternothyroid muscle.r",
+    "fmaId": "TA2:sternothyroid_muscle_r",
+    "namePtBr": "Sternothyroid Músculo Direito",
+    "nameEn": "Sternothyroid muscle (right)",
+    "nameLatin": "Musculus sternothyreoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:straight_part_of_cricothyroid_muscle_l",
+    "node": "Straight part of cricothyroid muscle.l",
+    "fmaId": "TA2:straight_part_of_cricothyroid_muscle_l",
+    "namePtBr": "Straight part of cricothyroid Músculo Esquerdo",
+    "nameEn": "Straight part of cricothyroid muscle (left)",
+    "nameLatin": "Pars recta musculi cricothyreoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:straight_part_of_cricothyroid_muscle_r",
+    "node": "Straight part of cricothyroid muscle.r",
+    "fmaId": "TA2:straight_part_of_cricothyroid_muscle_r",
+    "namePtBr": "Straight part of cricothyroid Músculo Direito",
+    "nameEn": "Straight part of cricothyroid muscle (right)",
+    "nameLatin": "Pars recta musculi cricothyreoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:stylohyoid_muscle_l",
+    "node": "Stylohyoid muscle.l",
+    "fmaId": "TA2:stylohyoid_muscle_l",
+    "namePtBr": "Stylohyoid Músculo Esquerdo",
+    "nameEn": "Stylohyoid muscle (left)",
+    "nameLatin": "Musculus stylohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:stylohyoid_muscle_r",
+    "node": "Stylohyoid muscle.r",
+    "fmaId": "TA2:stylohyoid_muscle_r",
+    "namePtBr": "Stylohyoid Músculo Direito",
+    "nameEn": "Stylohyoid muscle (right)",
+    "nameLatin": "Musculus stylohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:stylopharyngeus_muscle_l",
+    "node": "Stylopharyngeus muscle.l",
+    "fmaId": "TA2:stylopharyngeus_muscle_l",
+    "namePtBr": "Stylopharyngeus Músculo Esquerdo",
+    "nameEn": "Stylopharyngeus muscle (left)",
+    "nameLatin": "Musculus stylopharyngeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:stylopharyngeus_muscle_r",
+    "node": "Stylopharyngeus muscle.r",
+    "fmaId": "TA2:stylopharyngeus_muscle_r",
+    "namePtBr": "Stylopharyngeus Músculo Direito",
+    "nameEn": "Stylopharyngeus muscle (right)",
+    "nameLatin": "Musculus stylopharyngeus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subacromial_bursa_l",
+    "node": "Subacromial bursa.l",
+    "fmaId": "TA2:subacromial_bursa_l",
+    "namePtBr": "Subacromial Bolsa Sinovial Esquerdo",
+    "nameEn": "Subacromial bursa (left)",
+    "nameLatin": "Bursa subacromialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subacromial_bursa_r",
+    "node": "Subacromial bursa.r",
+    "fmaId": "TA2:subacromial_bursa_r",
+    "namePtBr": "Subacromial Bolsa Sinovial Direito",
+    "nameEn": "Subacromial bursa (right)",
+    "nameLatin": "Bursa subacromialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subclavius_muscle_l",
+    "node": "Subclavius muscle.l",
+    "fmaId": "TA2:subclavius_muscle_l",
+    "namePtBr": "Subclavius Músculo Esquerdo",
+    "nameEn": "Subclavius muscle (left)",
+    "nameLatin": "Musculus subclavius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subclavius_muscle_r",
+    "node": "Subclavius muscle.r",
+    "fmaId": "TA2:subclavius_muscle_r",
+    "namePtBr": "Subclavius Músculo Direito",
+    "nameEn": "Subclavius muscle (right)",
+    "nameLatin": "Musculus subclavius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_acromial_bursa_l",
+    "node": "Subcutaneous acromial bursa.l",
+    "fmaId": "TA2:subcutaneous_acromial_bursa_l",
+    "namePtBr": "Subcutaneous acromial Bolsa Sinovial Esquerdo",
+    "nameEn": "Subcutaneous acromial bursa (left)",
+    "nameLatin": "Subcutaneous acromial bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_acromial_bursa_r",
+    "node": "Subcutaneous acromial bursa.r",
+    "fmaId": "TA2:subcutaneous_acromial_bursa_r",
+    "namePtBr": "Subcutaneous acromial Bolsa Sinovial Direito",
+    "nameEn": "Subcutaneous acromial bursa (right)",
+    "nameLatin": "Subcutaneous acromial bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_bursa_of_lateral_malleolus_l",
+    "node": "Subcutaneous bursa of lateral malleolus.l",
+    "fmaId": "TA2:subcutaneous_bursa_of_lateral_malleolus_l",
+    "namePtBr": "Subcutaneous Bolsa Sinovial of lateral malleolus Esquerdo",
+    "nameEn": "Subcutaneous bursa of lateral malleolus (left)",
+    "nameLatin": "Bursa subcutanea malleoli lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_bursa_of_lateral_malleolus_r",
+    "node": "Subcutaneous bursa of lateral malleolus.r",
+    "fmaId": "TA2:subcutaneous_bursa_of_lateral_malleolus_r",
+    "namePtBr": "Subcutaneous Bolsa Sinovial of lateral malleolus Direito",
+    "nameEn": "Subcutaneous bursa of lateral malleolus (right)",
+    "nameLatin": "Bursa subcutanea malleoli lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_bursa_of_medial_malleolus_l",
+    "node": "Subcutaneous bursa of medial malleolus.l",
+    "fmaId": "TA2:subcutaneous_bursa_of_medial_malleolus_l",
+    "namePtBr": "Subcutaneous Bolsa Sinovial of medial malleolus Esquerdo",
+    "nameEn": "Subcutaneous bursa of medial malleolus (left)",
+    "nameLatin": "Bursa subcutanea malleoli medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_bursa_of_medial_malleolus_r",
+    "node": "Subcutaneous bursa of medial malleolus.r",
+    "fmaId": "TA2:subcutaneous_bursa_of_medial_malleolus_r",
+    "namePtBr": "Subcutaneous Bolsa Sinovial of medial malleolus Direito",
+    "nameEn": "Subcutaneous bursa of medial malleolus (right)",
+    "nameLatin": "Bursa subcutanea malleoli medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_bursa_of_tuberosity_of_tibia_l",
+    "node": "Subcutaneous bursa of tuberosity of tibia.l",
+    "fmaId": "TA2:subcutaneous_bursa_of_tuberosity_of_tibia_l",
+    "namePtBr": "Subcutaneous Bolsa Sinovial of tuberosity of tibia Esquerdo",
+    "nameEn": "Subcutaneous bursa of tuberosity of tibia (left)",
+    "nameLatin": "Bursa subcutanea tuberositatis tibiae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:subcutaneous_bursa_of_tuberosity_of_tibia_r",
+    "node": "Subcutaneous bursa of tuberosity of tibia.r",
+    "fmaId": "TA2:subcutaneous_bursa_of_tuberosity_of_tibia_r",
+    "namePtBr": "Subcutaneous Bolsa Sinovial of tuberosity of tibia Direito",
+    "nameEn": "Subcutaneous bursa of tuberosity of tibia (right)",
+    "nameLatin": "Bursa subcutanea tuberositatis tibiae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:subcutaneous_calcaneal_bursa_l",
+    "node": "Subcutaneous calcaneal bursa.l",
+    "fmaId": "TA2:subcutaneous_calcaneal_bursa_l",
+    "namePtBr": "Subcutaneous calcaneal Bolsa Sinovial Esquerdo",
+    "nameEn": "Subcutaneous calcaneal bursa (left)",
+    "nameLatin": "Bursa subcutanea calcanea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_calcaneal_bursa_r",
+    "node": "Subcutaneous calcaneal bursa.r",
+    "fmaId": "TA2:subcutaneous_calcaneal_bursa_r",
+    "namePtBr": "Subcutaneous calcaneal Bolsa Sinovial Direito",
+    "nameEn": "Subcutaneous calcaneal bursa (right)",
+    "nameLatin": "Bursa subcutanea calcanea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_infrapatellar_bursa_l",
+    "node": "Subcutaneous infrapatellar bursa.l",
+    "fmaId": "TA2:subcutaneous_infrapatellar_bursa_l",
+    "namePtBr": "Subcutaneous infrapatellar Bolsa Sinovial Esquerdo",
+    "nameEn": "Subcutaneous infrapatellar bursa (left)",
+    "nameLatin": "Bursa subcutanea infrapatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:subcutaneous_infrapatellar_bursa_r",
+    "node": "Subcutaneous infrapatellar bursa.r",
+    "fmaId": "TA2:subcutaneous_infrapatellar_bursa_r",
+    "namePtBr": "Subcutaneous infrapatellar Bolsa Sinovial Direito",
+    "nameEn": "Subcutaneous infrapatellar bursa (right)",
+    "nameLatin": "Bursa subcutanea infrapatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:subcutaneous_prepatellar_bursa_l",
+    "node": "Subcutaneous prepatellar bursa.l",
+    "fmaId": "TA2:subcutaneous_prepatellar_bursa_l",
+    "namePtBr": "Subcutaneous prepatellar Bolsa Sinovial Esquerdo",
+    "nameEn": "Subcutaneous prepatellar bursa (left)",
+    "nameLatin": "Bursa subcutanea prepatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:subcutaneous_prepatellar_bursa_r",
+    "node": "Subcutaneous prepatellar bursa.r",
+    "fmaId": "TA2:subcutaneous_prepatellar_bursa_r",
+    "namePtBr": "Subcutaneous prepatellar Bolsa Sinovial Direito",
+    "nameEn": "Subcutaneous prepatellar bursa (right)",
+    "nameLatin": "Bursa subcutanea prepatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:subcutaneous_trochanteric_bursa_l",
+    "node": "Subcutaneous trochanteric bursa.l",
+    "fmaId": "TA2:subcutaneous_trochanteric_bursa_l",
+    "namePtBr": "Subcutaneous trochanteric Bolsa Sinovial Esquerdo",
+    "nameEn": "Subcutaneous trochanteric bursa (left)",
+    "nameLatin": "Bursa subcutanea trochanterica",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subcutaneous_trochanteric_bursa_r",
+    "node": "Subcutaneous trochanteric bursa.r",
+    "fmaId": "TA2:subcutaneous_trochanteric_bursa_r",
+    "namePtBr": "Subcutaneous trochanteric Bolsa Sinovial Direito",
+    "nameEn": "Subcutaneous trochanteric bursa (right)",
+    "nameLatin": "Bursa subcutanea trochanterica",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subdeltoid_bursa_l",
+    "node": "Subdeltoid bursa.l",
+    "fmaId": "TA2:subdeltoid_bursa_l",
+    "namePtBr": "Subdeltoid Bolsa Sinovial Esquerdo",
+    "nameEn": "Subdeltoid bursa (left)",
+    "nameLatin": "Bursa subdeltoidea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subdeltoid_bursa_r",
+    "node": "Subdeltoid bursa.r",
+    "fmaId": "TA2:subdeltoid_bursa_r",
+    "namePtBr": "Subdeltoid Bolsa Sinovial Direito",
+    "nameEn": "Subdeltoid bursa (right)",
+    "nameLatin": "Bursa subdeltoidea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subfacial_prepatellar_bursa_l",
+    "node": "Subfacial prepatellar bursa.l",
+    "fmaId": "TA2:subfacial_prepatellar_bursa_l",
+    "namePtBr": "Subfacial prepatellar Bolsa Sinovial Esquerdo",
+    "nameEn": "Subfacial prepatellar bursa (left)",
+    "nameLatin": "Subfacial prepatellar bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:subfacial_prepatellar_bursa_r",
+    "node": "Subfacial prepatellar bursa.r",
+    "fmaId": "TA2:subfacial_prepatellar_bursa_r",
+    "namePtBr": "Subfacial prepatellar Bolsa Sinovial Direito",
+    "nameEn": "Subfacial prepatellar bursa (right)",
+    "nameLatin": "Subfacial prepatellar bursa",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:subscapularis_muscle_l",
+    "node": "Subscapularis muscle.l",
+    "fmaId": "TA2:subscapularis_muscle_l",
+    "namePtBr": "Subscapularis Músculo Esquerdo",
+    "nameEn": "Subscapularis muscle (left)",
+    "nameLatin": "Musculus subscapularis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": -1.2,
+      "y": 0.2,
+      "z": -0.7
+    }
+  },
+  {
+    "id": "za:subscapularis_muscle_r",
+    "node": "Subscapularis muscle.r",
+    "fmaId": "TA2:subscapularis_muscle_r",
+    "namePtBr": "Subscapularis Músculo Direito",
+    "nameEn": "Subscapularis muscle (right)",
+    "nameLatin": "Musculus subscapularis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": 1.2,
+      "y": 0.2,
+      "z": -0.7
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_iliacus_muscle_l",
+    "node": "Subtendinous bursa of iliacus muscle.l",
+    "fmaId": "TA2:subtendinous_bursa_of_iliacus_muscle_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of iliacus Músculo Esquerdo",
+    "nameEn": "Subtendinous bursa of iliacus muscle (left)",
+    "nameLatin": "Bursa subtendinea iliaca",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_iliacus_muscle_r",
+    "node": "Subtendinous bursa of iliacus muscle.r",
+    "fmaId": "TA2:subtendinous_bursa_of_iliacus_muscle_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of iliacus Músculo Direito",
+    "nameEn": "Subtendinous bursa of iliacus muscle (right)",
+    "nameLatin": "Bursa subtendinea iliaca",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_infraspinatus_muscle_l",
+    "node": "Subtendinous bursa of infraspinatus muscle.l",
+    "fmaId": "TA2:subtendinous_bursa_of_infraspinatus_muscle_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of infraspinatus Músculo Esquerdo",
+    "nameEn": "Subtendinous bursa of infraspinatus muscle (left)",
+    "nameLatin": "Bursa subtendinea musculi infraspinati",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_infraspinatus_muscle_r",
+    "node": "Subtendinous bursa of infraspinatus muscle.r",
+    "fmaId": "TA2:subtendinous_bursa_of_infraspinatus_muscle_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of infraspinatus Músculo Direito",
+    "nameEn": "Subtendinous bursa of infraspinatus muscle (right)",
+    "nameLatin": "Bursa subtendinea musculi infraspinati",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_obturator_internus_l",
+    "node": "Subtendinous bursa of obturator internus.l",
+    "fmaId": "TA2:subtendinous_bursa_of_obturator_internus_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of obturator internus Esquerdo",
+    "nameEn": "Subtendinous bursa of obturator internus (left)",
+    "nameLatin": "Bursa subtendinea obturatoris interni",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_obturator_internus_r",
+    "node": "Subtendinous bursa of obturator internus.r",
+    "fmaId": "TA2:subtendinous_bursa_of_obturator_internus_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of obturator internus Direito",
+    "nameEn": "Subtendinous bursa of obturator internus (right)",
+    "nameLatin": "Bursa subtendinea obturatoris interni",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_sartorius_muscle_l",
+    "node": "Subtendinous bursa of sartorius muscle.l",
+    "fmaId": "TA2:subtendinous_bursa_of_sartorius_muscle_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of sartorius Músculo Esquerdo",
+    "nameEn": "Subtendinous bursa of sartorius muscle (left)",
+    "nameLatin": "Bursa subtendinea musculi sartorii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_sartorius_muscle_r",
+    "node": "Subtendinous bursa of sartorius muscle.r",
+    "fmaId": "TA2:subtendinous_bursa_of_sartorius_muscle_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of sartorius Músculo Direito",
+    "nameEn": "Subtendinous bursa of sartorius muscle (right)",
+    "nameLatin": "Bursa subtendinea musculi sartorii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_teres_major_muscle_l",
+    "node": "Subtendinous bursa of teres major muscle.l",
+    "fmaId": "TA2:subtendinous_bursa_of_teres_major_muscle_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of teres major Músculo Esquerdo",
+    "nameEn": "Subtendinous bursa of teres major muscle (left)",
+    "nameLatin": "Bursa subtendinea musculi teretis majoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_teres_major_muscle_r",
+    "node": "Subtendinous bursa of teres major muscle.r",
+    "fmaId": "TA2:subtendinous_bursa_of_teres_major_muscle_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of teres major Músculo Direito",
+    "nameEn": "Subtendinous bursa of teres major muscle (right)",
+    "nameLatin": "Bursa subtendinea musculi teretis majoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_tibialis_anterior_l",
+    "node": "Subtendinous bursa of tibialis anterior.l",
+    "fmaId": "TA2:subtendinous_bursa_of_tibialis_anterior_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of tibialis anterior Esquerdo",
+    "nameEn": "Subtendinous bursa of tibialis anterior (left)",
+    "nameLatin": "Bursa subtendinea musculi tibialis anterioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_tibialis_anterior_r",
+    "node": "Subtendinous bursa of tibialis anterior.r",
+    "fmaId": "TA2:subtendinous_bursa_of_tibialis_anterior_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of tibialis anterior Direito",
+    "nameEn": "Subtendinous bursa of tibialis anterior (right)",
+    "nameLatin": "Bursa subtendinea musculi tibialis anterioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_trapezius_muscle_l",
+    "node": "Subtendinous bursa of trapezius muscle.l",
+    "fmaId": "TA2:subtendinous_bursa_of_trapezius_muscle_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of trapezius Músculo Esquerdo",
+    "nameEn": "Subtendinous bursa of trapezius muscle (left)",
+    "nameLatin": "Bursa subtendinea musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_trapezius_muscle_r",
+    "node": "Subtendinous bursa of trapezius muscle.r",
+    "fmaId": "TA2:subtendinous_bursa_of_trapezius_muscle_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of trapezius Músculo Direito",
+    "nameEn": "Subtendinous bursa of trapezius muscle (right)",
+    "nameLatin": "Bursa subtendinea musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_triceps_brachii_muscle_l",
+    "node": "Subtendinous bursa of triceps brachii muscle.l",
+    "fmaId": "TA2:subtendinous_bursa_of_triceps_brachii_muscle_l",
+    "namePtBr": "Subtendinous Bolsa Sinovial of triceps brachii Músculo Esquerdo",
+    "nameEn": "Subtendinous bursa of triceps brachii muscle (left)",
+    "nameLatin": "Bursa subtendinea musculi tricipitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_bursa_of_triceps_brachii_muscle_r",
+    "node": "Subtendinous bursa of triceps brachii muscle.r",
+    "fmaId": "TA2:subtendinous_bursa_of_triceps_brachii_muscle_r",
+    "namePtBr": "Subtendinous Bolsa Sinovial of triceps brachii Músculo Direito",
+    "nameEn": "Subtendinous bursa of triceps brachii muscle (right)",
+    "nameLatin": "Bursa subtendinea musculi tricipitis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_calcaneal_bursa_l",
+    "node": "Subtendinous calcaneal bursa.l",
+    "fmaId": "TA2:subtendinous_calcaneal_bursa_l",
+    "namePtBr": "Subtendinous calcaneal Bolsa Sinovial Esquerdo",
+    "nameEn": "Subtendinous calcaneal bursa (left)",
+    "nameLatin": "Bursa subtendinea calcanea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_calcaneal_bursa_r",
+    "node": "Subtendinous calcaneal bursa.r",
+    "fmaId": "TA2:subtendinous_calcaneal_bursa_r",
+    "namePtBr": "Subtendinous calcaneal Bolsa Sinovial Direito",
+    "nameEn": "Subtendinous calcaneal bursa (right)",
+    "nameLatin": "Bursa subtendinea calcanea",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:subtendinous_prepatellar_bursa_l",
+    "node": "Subtendinous prepatellar bursa.l",
+    "fmaId": "TA2:subtendinous_prepatellar_bursa_l",
+    "namePtBr": "Subtendinous prepatellar Bolsa Sinovial Esquerdo",
+    "nameEn": "Subtendinous prepatellar bursa (left)",
+    "nameLatin": "Bursa subtendinea prepatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:subtendinous_prepatellar_bursa_r",
+    "node": "Subtendinous prepatellar bursa.r",
+    "fmaId": "TA2:subtendinous_prepatellar_bursa_r",
+    "namePtBr": "Subtendinous prepatellar Bolsa Sinovial Direito",
+    "nameEn": "Subtendinous prepatellar bursa (right)",
+    "nameLatin": "Bursa subtendinea prepatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:superficial_head_of_flexor_pollicis_brevis_l",
+    "node": "Superficial head of flexor pollicis brevis.l",
+    "fmaId": "TA2:superficial_head_of_flexor_pollicis_brevis_l",
+    "namePtBr": "Superficial head of flexor pollicis brevis Esquerdo",
+    "nameEn": "Superficial head of flexor pollicis brevis (left)",
+    "nameLatin": "Caput superficiale flexoris brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_head_of_flexor_pollicis_brevis_r",
+    "node": "Superficial head of flexor pollicis brevis.r",
+    "fmaId": "TA2:superficial_head_of_flexor_pollicis_brevis_r",
+    "namePtBr": "Superficial head of flexor pollicis brevis Direito",
+    "nameEn": "Superficial head of flexor pollicis brevis (right)",
+    "nameLatin": "Caput superficiale flexoris brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_head_of_pronator_teres_l",
+    "node": "Superficial head of pronator teres.l",
+    "fmaId": "TA2:superficial_head_of_pronator_teres_l",
+    "namePtBr": "Superficial head of pronator teres Esquerdo",
+    "nameEn": "Superficial head of pronator teres (left)",
+    "nameLatin": "Caput superficiale pronatoris teretis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_head_of_pronator_teres_r",
+    "node": "Superficial head of pronator teres.r",
+    "fmaId": "TA2:superficial_head_of_pronator_teres_r",
+    "namePtBr": "Superficial head of pronator teres Direito",
+    "nameEn": "Superficial head of pronator teres (right)",
+    "nameLatin": "Caput superficiale pronatoris teretis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_investing_cervical_fascia_l",
+    "node": "Superficial investing cervical fascia.l",
+    "fmaId": "TA2:superficial_investing_cervical_fascia_l",
+    "namePtBr": "Superficial investing cervical Fáscia Esquerdo",
+    "nameEn": "Superficial investing cervical fascia (left)",
+    "nameLatin": "Fascia investiens superficialis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:superficial_investing_cervical_fascia_r",
+    "node": "Superficial investing cervical fascia.r",
+    "fmaId": "TA2:superficial_investing_cervical_fascia_r",
+    "namePtBr": "Superficial investing cervical Fáscia Direito",
+    "nameEn": "Superficial investing cervical fascia (right)",
+    "nameLatin": "Fascia investiens superficialis colli",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:superficial_layer_of_temporal_fascia_l",
+    "node": "Superficial layer of temporal fascia.l",
+    "fmaId": "TA2:superficial_layer_of_temporal_fascia_l",
+    "namePtBr": "Superficial layer of temporal Fáscia Esquerdo",
+    "nameEn": "Superficial layer of temporal fascia (left)",
+    "nameLatin": "Lamina superficialis fasciae temporalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_layer_of_temporal_fascia_r",
+    "node": "Superficial layer of temporal fascia.r",
+    "fmaId": "TA2:superficial_layer_of_temporal_fascia_r",
+    "namePtBr": "Superficial layer of temporal Fáscia Direito",
+    "nameEn": "Superficial layer of temporal fascia (right)",
+    "nameLatin": "Lamina superficialis fasciae temporalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Superficial muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_part_of_masseter_l",
+    "node": "Superficial part of masseter.l",
+    "fmaId": "TA2:superficial_part_of_masseter_l",
+    "namePtBr": "Superficial part of masseter Esquerdo",
+    "nameEn": "Superficial part of masseter (left)",
+    "nameLatin": "Pars superficialis masseteris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_part_of_masseter_r",
+    "node": "Superficial part of masseter.r",
+    "fmaId": "TA2:superficial_part_of_masseter_r",
+    "namePtBr": "Superficial part of masseter Direito",
+    "nameEn": "Superficial part of masseter (right)",
+    "nameLatin": "Pars superficialis masseteris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superficial_transverse_metacarpal_ligament_l",
+    "node": "Superficial transverse metacarpal ligament.l",
+    "fmaId": "TA2:superficial_transverse_metacarpal_ligament_l",
+    "namePtBr": "Superficial transverse Metacarpal Ligamento Esquerdo",
+    "nameEn": "Superficial transverse metacarpal ligament (left)",
+    "nameLatin": "Ligamentum metacarpeum transversum superficiale",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of upper limb",
+      "Fascia of upper limb"
+    ],
+    "explosionVector": {
+      "x": -1.8,
+      "y": -0.5,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:superficial_transverse_metacarpal_ligament_r",
+    "node": "Superficial transverse metacarpal ligament.r",
+    "fmaId": "TA2:superficial_transverse_metacarpal_ligament_r",
+    "namePtBr": "Superficial transverse Metacarpal Ligamento Direito",
+    "nameEn": "Superficial transverse metacarpal ligament (right)",
+    "nameLatin": "Ligamentum metacarpeum transversum superficiale",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of upper limb",
+      "Fascia of upper limb"
+    ],
+    "explosionVector": {
+      "x": 1.8,
+      "y": -0.5,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:superficial_transverse_metatarsal_ligament_l",
+    "node": "Superficial transverse metatarsal ligament.l",
+    "fmaId": "TA2:superficial_transverse_metatarsal_ligament_l",
+    "namePtBr": "Superficial transverse Metatarsal Ligamento Esquerdo",
+    "nameEn": "Superficial transverse metatarsal ligament (left)",
+    "nameLatin": "Ligamentum metatarseum transversum superficiale",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -1.4,
+      "y": -0.8,
+      "z": 0.2
+    }
+  },
+  {
+    "id": "za:superficial_transverse_metatarsal_ligament_r",
+    "node": "Superficial transverse metatarsal ligament.r",
+    "fmaId": "TA2:superficial_transverse_metatarsal_ligament_r",
+    "namePtBr": "Superficial transverse Metatarsal Ligamento Direito",
+    "nameEn": "Superficial transverse metatarsal ligament (right)",
+    "nameLatin": "Ligamentum metatarseum transversum superficiale",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 1.4,
+      "y": -0.8,
+      "z": 0.2
+    }
+  },
+  {
+    "id": "za:superior_bursa_of_biceps_femoris_muscle_l",
+    "node": "Superior bursa of biceps femoris muscle.l",
+    "fmaId": "TA2:superior_bursa_of_biceps_femoris_muscle_l",
+    "namePtBr": "Superior Bolsa Sinovial of biceps femoris Músculo Esquerdo",
+    "nameEn": "Superior bursa of biceps femoris muscle (left)",
+    "nameLatin": "Bursa superior musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_bursa_of_biceps_femoris_muscle_r",
+    "node": "Superior bursa of biceps femoris muscle.r",
+    "fmaId": "TA2:superior_bursa_of_biceps_femoris_muscle_r",
+    "namePtBr": "Superior Bolsa Sinovial of biceps femoris Músculo Direito",
+    "nameEn": "Superior bursa of biceps femoris muscle (right)",
+    "nameLatin": "Bursa superior musculi bicipitis femoris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_extensor_retinaculum_of_ankle_l",
+    "node": "Superior extensor retinaculum of ankle.l",
+    "fmaId": "TA2:superior_extensor_retinaculum_of_ankle_l",
+    "namePtBr": "Superior extensor Retináculo of ankle Esquerdo",
+    "nameEn": "Superior extensor retinaculum of ankle (left)",
+    "nameLatin": "Retinaculum extensorium superius tali",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_extensor_retinaculum_of_ankle_r",
+    "node": "Superior extensor retinaculum of ankle.r",
+    "fmaId": "TA2:superior_extensor_retinaculum_of_ankle_r",
+    "namePtBr": "Superior extensor Retináculo of ankle Direito",
+    "nameEn": "Superior extensor retinaculum of ankle (right)",
+    "nameLatin": "Retinaculum extensorium superius tali",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_fibular_retinaculum_l",
+    "node": "Superior fibular retinaculum.l",
+    "fmaId": "TA2:superior_fibular_retinaculum_l",
+    "namePtBr": "Superior fibular Retináculo Esquerdo",
+    "nameEn": "Superior fibular retinaculum (left)",
+    "nameLatin": "Retinaculum fibulare superius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:superior_fibular_retinaculum_r",
+    "node": "Superior fibular retinaculum.r",
+    "fmaId": "TA2:superior_fibular_retinaculum_r",
+    "namePtBr": "Superior fibular Retináculo Direito",
+    "nameEn": "Superior fibular retinaculum (right)",
+    "nameLatin": "Retinaculum fibulare superius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Muscular system of lower limb",
+      "Muscles of lower limb"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:superior_gemellus_muscle_l",
+    "node": "Superior gemellus muscle.l",
+    "fmaId": "TA2:superior_gemellus_muscle_l",
+    "namePtBr": "Superior gemellus Músculo Esquerdo",
+    "nameEn": "Superior gemellus muscle (left)",
+    "nameLatin": "Musculus gemellus superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_gemellus_muscle_r",
+    "node": "Superior gemellus muscle.r",
+    "fmaId": "TA2:superior_gemellus_muscle_r",
+    "namePtBr": "Superior gemellus Músculo Direito",
+    "nameEn": "Superior gemellus muscle (right)",
+    "nameLatin": "Musculus gemellus superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Deep gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_head_of_lateral_pterygoid_muscle_l",
+    "node": "Superior head of lateral pterygoid muscle.l",
+    "fmaId": "TA2:superior_head_of_lateral_pterygoid_muscle_l",
+    "namePtBr": "Superior head of lateral pterygoid Músculo Esquerdo",
+    "nameEn": "Superior head of lateral pterygoid muscle (left)",
+    "nameLatin": "Caput superius musculi pterygoidei lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_head_of_lateral_pterygoid_muscle_r",
+    "node": "Superior head of lateral pterygoid muscle.r",
+    "fmaId": "TA2:superior_head_of_lateral_pterygoid_muscle_r",
+    "namePtBr": "Superior head of lateral pterygoid Músculo Direito",
+    "nameEn": "Superior head of lateral pterygoid muscle (right)",
+    "nameLatin": "Caput superius musculi pterygoidei lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_oblique_muscle_l",
+    "node": "Superior oblique muscle.l",
+    "fmaId": "TA2:superior_oblique_muscle_l",
+    "namePtBr": "Superior oblique Músculo Esquerdo",
+    "nameEn": "Superior oblique muscle (left)",
+    "nameLatin": "Musculus obliquus superior bulbi oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_oblique_muscle_r",
+    "node": "Superior oblique muscle.r",
+    "fmaId": "TA2:superior_oblique_muscle_r",
+    "namePtBr": "Superior oblique Músculo Direito",
+    "nameEn": "Superior oblique muscle (right)",
+    "nameLatin": "Musculus obliquus superior bulbi oculi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_pharyngeal_constrictor_l",
+    "node": "Superior pharyngeal constrictor.l",
+    "fmaId": "TA2:superior_pharyngeal_constrictor_l",
+    "namePtBr": "Superior pharyngeal constrictor Esquerdo",
+    "nameEn": "Superior pharyngeal constrictor (left)",
+    "nameLatin": "Constrictor superior pharyngis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_pharyngeal_constrictor_r",
+    "node": "Superior pharyngeal constrictor.r",
+    "fmaId": "TA2:superior_pharyngeal_constrictor_r",
+    "namePtBr": "Superior pharyngeal constrictor Direito",
+    "nameEn": "Superior pharyngeal constrictor (right)",
+    "nameLatin": "Constrictor superior pharyngis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Pharyngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_rectus_muscle_l",
+    "node": "Superior rectus muscle.l",
+    "fmaId": "TA2:superior_rectus_muscle_l",
+    "namePtBr": "Superior rectus Músculo Esquerdo",
+    "nameEn": "Superior rectus muscle (left)",
+    "nameLatin": "Musculus rectus superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_rectus_muscle_r",
+    "node": "Superior rectus muscle.r",
+    "fmaId": "TA2:superior_rectus_muscle_r",
+    "namePtBr": "Superior rectus Músculo Direito",
+    "nameEn": "Superior rectus muscle (right)",
+    "nameLatin": "Musculus rectus superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_tarsus_l",
+    "node": "Superior tarsus.l",
+    "fmaId": "TA2:superior_tarsus_l",
+    "namePtBr": "Superior tarsus Esquerdo",
+    "nameEn": "Superior tarsus (left)",
+    "nameLatin": "Tarsus superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:superior_tarsus_r",
+    "node": "Superior tarsus.r",
+    "fmaId": "TA2:superior_tarsus_r",
+    "namePtBr": "Superior tarsus Direito",
+    "nameEn": "Superior tarsus (right)",
+    "nameLatin": "Tarsus superior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:supinator_l",
+    "node": "Supinator.l",
+    "fmaId": "TA2:supinator_l",
+    "namePtBr": "Supinator Esquerdo",
+    "nameEn": "Supinator (left)",
+    "nameLatin": "Supinator",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:supinator_r",
+    "node": "Supinator.r",
+    "fmaId": "TA2:supinator_r",
+    "namePtBr": "Supinator Direito",
+    "nameEn": "Supinator (right)",
+    "nameLatin": "Supinator",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:suprapatellar_bursa_l",
+    "node": "Suprapatellar bursa.l",
+    "fmaId": "TA2:suprapatellar_bursa_l",
+    "namePtBr": "Suprapatellar Bolsa Sinovial Esquerdo",
+    "nameEn": "Suprapatellar bursa (left)",
+    "nameLatin": "Bursa suprapatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:suprapatellar_bursa_r",
+    "node": "Suprapatellar bursa.r",
+    "fmaId": "TA2:suprapatellar_bursa_r",
+    "namePtBr": "Suprapatellar Bolsa Sinovial Direito",
+    "nameEn": "Suprapatellar bursa (right)",
+    "nameLatin": "Bursa suprapatellaris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.7,
+      "y": -0.5,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:supraspinatus_muscle_l",
+    "node": "Supraspinatus muscle.l",
+    "fmaId": "TA2:supraspinatus_muscle_l",
+    "namePtBr": "Supraspinatus Músculo Esquerdo",
+    "nameEn": "Supraspinatus muscle (left)",
+    "nameLatin": "Musculus supraspinatus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:supraspinatus_muscle_r",
+    "node": "Supraspinatus muscle.r",
+    "fmaId": "TA2:supraspinatus_muscle_r",
+    "namePtBr": "Supraspinatus Músculo Direito",
+    "nameEn": "Supraspinatus muscle (right)",
+    "nameLatin": "Musculus supraspinatus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:synovial_sheaths_of_digits_of_hand_l",
+    "node": "Synovial sheaths of digits of hand.l",
+    "fmaId": "TA2:synovial_sheaths_of_digits_of_hand_l",
+    "namePtBr": "Synovial sheaths of digits of hand Esquerdo",
+    "nameEn": "Synovial sheaths of digits of hand (left)",
+    "nameLatin": "Vaginae synoviales digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:synovial_sheaths_of_digits_of_hand_r",
+    "node": "Synovial sheaths of digits of hand.r",
+    "fmaId": "TA2:synovial_sheaths_of_digits_of_hand_r",
+    "namePtBr": "Synovial sheaths of digits of hand Direito",
+    "nameEn": "Synovial sheaths of digits of hand (right)",
+    "nameLatin": "Vaginae synoviales digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:temporalis_muscle_l",
+    "node": "Temporalis muscle.l",
+    "fmaId": "TA2:temporalis_muscle_l",
+    "namePtBr": "Temporalis Músculo Esquerdo",
+    "nameEn": "Temporalis muscle (left)",
+    "nameLatin": "Musculus temporalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:temporalis_muscle_r",
+    "node": "Temporalis muscle.r",
+    "fmaId": "TA2:temporalis_muscle_r",
+    "namePtBr": "Temporalis Músculo Direito",
+    "nameEn": "Temporalis muscle (right)",
+    "nameLatin": "Musculus temporalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:temporoparietalis_muscle_l",
+    "node": "Temporoparietalis muscle.l",
+    "fmaId": "TA2:temporoparietalis_muscle_l",
+    "namePtBr": "Temporoparietalis Músculo Esquerdo",
+    "nameEn": "Temporoparietalis muscle (left)",
+    "nameLatin": "Musculus temporoparietalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:temporoparietalis_muscle_r",
+    "node": "Temporoparietalis muscle.r",
+    "fmaId": "TA2:temporoparietalis_muscle_r",
+    "namePtBr": "Temporoparietalis Músculo Direito",
+    "nameEn": "Temporoparietalis muscle (right)",
+    "nameLatin": "Musculus temporoparietalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendinous_arch_of_levator_ani_l",
+    "node": "Tendinous arch of levator ani.l",
+    "fmaId": "TA2:tendinous_arch_of_levator_ani_l",
+    "namePtBr": "Tendinous arch of levator ani Esquerdo",
+    "nameEn": "Tendinous arch of levator ani (left)",
+    "nameLatin": "Arcus tendineus levatoris ani",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendinous_arch_of_levator_ani_r",
+    "node": "Tendinous arch of levator ani.r",
+    "fmaId": "TA2:tendinous_arch_of_levator_ani_r",
+    "namePtBr": "Tendinous arch of levator ani Direito",
+    "nameEn": "Tendinous arch of levator ani (right)",
+    "nameLatin": "Arcus tendineus levatoris ani",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_of_extensor_digitorum_longus_l",
+    "node": "Tendon of extensor digitorum longus.l",
+    "fmaId": "TA2:tendon_of_extensor_digitorum_longus_l",
+    "namePtBr": "Tendão of extensor digitorum longus Esquerdo",
+    "nameEn": "Tendon of extensor digitorum longus (left)",
+    "nameLatin": "Tendon extensoris digitorum longi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_of_extensor_digitorum_longus_r",
+    "node": "Tendon of extensor digitorum longus.r",
+    "fmaId": "TA2:tendon_of_extensor_digitorum_longus_r",
+    "namePtBr": "Tendão of extensor digitorum longus Direito",
+    "nameEn": "Tendon of extensor digitorum longus (right)",
+    "nameLatin": "Tendon extensoris digitorum longi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_abd_pollicis_longus_ext_pollicis_brevis_l",
+    "node": "Tendon sheath - abd. pollicis longus - ext. pollicis brevis.l",
+    "fmaId": "TA2:tendon_sheath_abd_pollicis_longus_ext_pollicis_brevis_l",
+    "namePtBr": "Bainha Tendínea - abd. pollicis longus - ext. pollicis brevis Esquerdo",
+    "nameEn": "Tendon sheath - abd. pollicis longus - ext. pollicis brevis (left)",
+    "nameLatin": "Vagina tendinum abd. longi et extensoris brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_abd_pollicis_longus_ext_pollicis_brevis_r",
+    "node": "Tendon sheath - abd. pollicis longus - ext. pollicis brevis.r",
+    "fmaId": "TA2:tendon_sheath_abd_pollicis_longus_ext_pollicis_brevis_r",
+    "namePtBr": "Bainha Tendínea - abd. pollicis longus - ext. pollicis brevis Direito",
+    "nameEn": "Tendon sheath - abd. pollicis longus - ext. pollicis brevis (right)",
+    "nameLatin": "Vagina tendinum abd. longi et extensoris brevis pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_carpi_ulnaris_l",
+    "node": "Tendon sheath of extensor carpi ulnaris.l",
+    "fmaId": "TA2:tendon_sheath_of_extensor_carpi_ulnaris_l",
+    "namePtBr": "Bainha Tendínea of extensor carpi ulnaris Esquerdo",
+    "nameEn": "Tendon sheath of extensor carpi ulnaris (left)",
+    "nameLatin": "Vagina tendinis extensoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_carpi_ulnaris_r",
+    "node": "Tendon sheath of extensor carpi ulnaris.r",
+    "fmaId": "TA2:tendon_sheath_of_extensor_carpi_ulnaris_r",
+    "namePtBr": "Bainha Tendínea of extensor carpi ulnaris Direito",
+    "nameEn": "Tendon sheath of extensor carpi ulnaris (right)",
+    "nameLatin": "Vagina tendinis extensoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_digiti_minimi_manus_l",
+    "node": "Tendon sheath of extensor digiti minimi manus.l",
+    "fmaId": "TA2:tendon_sheath_of_extensor_digiti_minimi_manus_l",
+    "namePtBr": "Bainha Tendínea of extensor digiti minimi manus Esquerdo",
+    "nameEn": "Tendon sheath of extensor digiti minimi manus (left)",
+    "nameLatin": "Tendon sheath of extensor digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_digiti_minimi_manus_r",
+    "node": "Tendon sheath of extensor digiti minimi manus.r",
+    "fmaId": "TA2:tendon_sheath_of_extensor_digiti_minimi_manus_r",
+    "namePtBr": "Bainha Tendínea of extensor digiti minimi manus Direito",
+    "nameEn": "Tendon sheath of extensor digiti minimi manus (right)",
+    "nameLatin": "Tendon sheath of extensor digiti minimi manus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_digitorum_and_extensor_indicis_l",
+    "node": "Tendon sheath of extensor digitorum and extensor indicis.l",
+    "fmaId": "TA2:tendon_sheath_of_extensor_digitorum_and_extensor_indicis_l",
+    "namePtBr": "Bainha Tendínea of extensor digitorum and extensor indicis Esquerdo",
+    "nameEn": "Tendon sheath of extensor digitorum and extensor indicis (left)",
+    "nameLatin": "Vagina tendinum musc. ext. digitorum - extensoris indicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_digitorum_and_extensor_indicis_r",
+    "node": "Tendon sheath of extensor digitorum and extensor indicis.r",
+    "fmaId": "TA2:tendon_sheath_of_extensor_digitorum_and_extensor_indicis_r",
+    "namePtBr": "Bainha Tendínea of extensor digitorum and extensor indicis Direito",
+    "nameEn": "Tendon sheath of extensor digitorum and extensor indicis (right)",
+    "nameLatin": "Vagina tendinum musc. ext. digitorum - extensoris indicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_digitorum_longus_l",
+    "node": "Tendon sheath of extensor digitorum longus.l",
+    "fmaId": "TA2:tendon_sheath_of_extensor_digitorum_longus_l",
+    "namePtBr": "Bainha Tendínea of extensor digitorum longus Esquerdo",
+    "nameEn": "Tendon sheath of extensor digitorum longus (left)",
+    "nameLatin": "Vagina tendinum extensoris longi digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_digitorum_longus_r",
+    "node": "Tendon sheath of extensor digitorum longus.r",
+    "fmaId": "TA2:tendon_sheath_of_extensor_digitorum_longus_r",
+    "namePtBr": "Bainha Tendínea of extensor digitorum longus Direito",
+    "nameEn": "Tendon sheath of extensor digitorum longus (right)",
+    "nameLatin": "Vagina tendinum extensoris longi digitorum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_hallucis_longus_l",
+    "node": "Tendon sheath of extensor hallucis longus.l",
+    "fmaId": "TA2:tendon_sheath_of_extensor_hallucis_longus_l",
+    "namePtBr": "Bainha Tendínea of extensor hallucis longus Esquerdo",
+    "nameEn": "Tendon sheath of extensor hallucis longus (left)",
+    "nameLatin": "Vagina tendinis extensoris longi hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_hallucis_longus_r",
+    "node": "Tendon sheath of extensor hallucis longus.r",
+    "fmaId": "TA2:tendon_sheath_of_extensor_hallucis_longus_r",
+    "namePtBr": "Bainha Tendínea of extensor hallucis longus Direito",
+    "nameEn": "Tendon sheath of extensor hallucis longus (right)",
+    "nameLatin": "Vagina tendinis extensoris longi hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_pollicis_longus_l",
+    "node": "Tendon sheath of extensor pollicis longus.l",
+    "fmaId": "TA2:tendon_sheath_of_extensor_pollicis_longus_l",
+    "namePtBr": "Bainha Tendínea of extensor pollicis longus Esquerdo",
+    "nameEn": "Tendon sheath of extensor pollicis longus (left)",
+    "nameLatin": "Vagina tendinis musculi extensoris pollicis longi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensor_pollicis_longus_r",
+    "node": "Tendon sheath of extensor pollicis longus.r",
+    "fmaId": "TA2:tendon_sheath_of_extensor_pollicis_longus_r",
+    "namePtBr": "Bainha Tendínea of extensor pollicis longus Direito",
+    "nameEn": "Tendon sheath of extensor pollicis longus (right)",
+    "nameLatin": "Vagina tendinis musculi extensoris pollicis longi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensors_carpi_radialis_l",
+    "node": "Tendon sheath of extensors carpi radialis.l",
+    "fmaId": "TA2:tendon_sheath_of_extensors_carpi_radialis_l",
+    "namePtBr": "Bainha Tendínea of extensors carpi radialis Esquerdo",
+    "nameEn": "Tendon sheath of extensors carpi radialis (left)",
+    "nameLatin": "Tendon sheath of extensors carpi radialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_extensors_carpi_radialis_r",
+    "node": "Tendon sheath of extensors carpi radialis.r",
+    "fmaId": "TA2:tendon_sheath_of_extensors_carpi_radialis_r",
+    "namePtBr": "Bainha Tendínea of extensors carpi radialis Direito",
+    "nameEn": "Tendon sheath of extensors carpi radialis (right)",
+    "nameLatin": "Tendon sheath of extensors carpi radialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_carpi_radialis_l",
+    "node": "Tendon sheath of flexor carpi radialis.l",
+    "fmaId": "TA2:tendon_sheath_of_flexor_carpi_radialis_l",
+    "namePtBr": "Bainha Tendínea of flexor carpi radialis Esquerdo",
+    "nameEn": "Tendon sheath of flexor carpi radialis (left)",
+    "nameLatin": "Vagina tendinis flexoris radialis carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_carpi_radialis_r",
+    "node": "Tendon sheath of flexor carpi radialis.r",
+    "fmaId": "TA2:tendon_sheath_of_flexor_carpi_radialis_r",
+    "namePtBr": "Bainha Tendínea of flexor carpi radialis Direito",
+    "nameEn": "Tendon sheath of flexor carpi radialis (right)",
+    "nameLatin": "Vagina tendinis flexoris radialis carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_digitorum_longus_l",
+    "node": "Tendon sheath of flexor digitorum longus.l",
+    "fmaId": "TA2:tendon_sheath_of_flexor_digitorum_longus_l",
+    "namePtBr": "Bainha Tendínea of flexor digitorum longus Esquerdo",
+    "nameEn": "Tendon sheath of flexor digitorum longus (left)",
+    "nameLatin": "Vagina tendinis flexoris digitorum longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_digitorum_longus_r",
+    "node": "Tendon sheath of flexor digitorum longus.r",
+    "fmaId": "TA2:tendon_sheath_of_flexor_digitorum_longus_r",
+    "namePtBr": "Bainha Tendínea of flexor digitorum longus Direito",
+    "nameEn": "Tendon sheath of flexor digitorum longus (right)",
+    "nameLatin": "Vagina tendinis flexoris digitorum longus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_hallucis_longus_l",
+    "node": "Tendon sheath of flexor hallucis longus.l",
+    "fmaId": "TA2:tendon_sheath_of_flexor_hallucis_longus_l",
+    "namePtBr": "Bainha Tendínea of flexor hallucis longus Esquerdo",
+    "nameEn": "Tendon sheath of flexor hallucis longus (left)",
+    "nameLatin": "Vagina tendinis flexoris longi hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_hallucis_longus_r",
+    "node": "Tendon sheath of flexor hallucis longus.r",
+    "fmaId": "TA2:tendon_sheath_of_flexor_hallucis_longus_r",
+    "namePtBr": "Bainha Tendínea of flexor hallucis longus Direito",
+    "nameEn": "Tendon sheath of flexor hallucis longus (right)",
+    "nameLatin": "Vagina tendinis flexoris longi hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_pollicis_longus_l",
+    "node": "Tendon sheath of flexor pollicis longus.l",
+    "fmaId": "TA2:tendon_sheath_of_flexor_pollicis_longus_l",
+    "namePtBr": "Bainha Tendínea of flexor pollicis longus Esquerdo",
+    "nameEn": "Tendon sheath of flexor pollicis longus (left)",
+    "nameLatin": "Vagina tendinis flexoris longi pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_flexor_pollicis_longus_r",
+    "node": "Tendon sheath of flexor pollicis longus.r",
+    "fmaId": "TA2:tendon_sheath_of_flexor_pollicis_longus_r",
+    "namePtBr": "Bainha Tendínea of flexor pollicis longus Direito",
+    "nameEn": "Tendon sheath of flexor pollicis longus (right)",
+    "nameLatin": "Vagina tendinis flexoris longi pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_tibialis_anterior_l",
+    "node": "Tendon sheath of tibialis anterior.l",
+    "fmaId": "TA2:tendon_sheath_of_tibialis_anterior_l",
+    "namePtBr": "Bainha Tendínea of tibialis anterior Esquerdo",
+    "nameEn": "Tendon sheath of tibialis anterior (left)",
+    "nameLatin": "Tendon sheath of tibialis anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_tibialis_anterior_r",
+    "node": "Tendon sheath of tibialis anterior.r",
+    "fmaId": "TA2:tendon_sheath_of_tibialis_anterior_r",
+    "namePtBr": "Bainha Tendínea of tibialis anterior Direito",
+    "nameEn": "Tendon sheath of tibialis anterior (right)",
+    "nameLatin": "Tendon sheath of tibialis anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_tibialis_posterior_muscle_l",
+    "node": "Tendon sheath of tibialis posterior muscle.l",
+    "fmaId": "TA2:tendon_sheath_of_tibialis_posterior_muscle_l",
+    "namePtBr": "Bainha Tendínea of tibialis posterior Músculo Esquerdo",
+    "nameEn": "Tendon sheath of tibialis posterior muscle (left)",
+    "nameLatin": "Vagina tendinis musculi tibialis posterioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tendon_sheath_of_tibialis_posterior_muscle_r",
+    "node": "Tendon sheath of tibialis posterior muscle.r",
+    "fmaId": "TA2:tendon_sheath_of_tibialis_posterior_muscle_r",
+    "namePtBr": "Bainha Tendínea of tibialis posterior Músculo Direito",
+    "nameEn": "Tendon sheath of tibialis posterior muscle (right)",
+    "nameLatin": "Vagina tendinis musculi tibialis posterioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Tendon sheaths"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tensor_fasciae_latae_l",
+    "node": "Tensor fasciae latae.l",
+    "fmaId": "TA2:tensor_fasciae_latae_l",
+    "namePtBr": "Tensor fasciae latae Esquerdo",
+    "nameEn": "Tensor fasciae latae (left)",
+    "nameLatin": "Tensor fasciae latae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tensor_fasciae_latae_r",
+    "node": "Tensor fasciae latae.r",
+    "fmaId": "TA2:tensor_fasciae_latae_r",
+    "namePtBr": "Tensor fasciae latae Direito",
+    "nameEn": "Tensor fasciae latae (right)",
+    "nameLatin": "Tensor fasciae latae",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Superficial gluteal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:teres_major_muscle_l",
+    "node": "Teres major muscle.l",
+    "fmaId": "TA2:teres_major_muscle_l",
+    "namePtBr": "Teres major Músculo Esquerdo",
+    "nameEn": "Teres major muscle (left)",
+    "nameLatin": "Musculus teres major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:teres_major_muscle_r",
+    "node": "Teres major muscle.r",
+    "fmaId": "TA2:teres_major_muscle_r",
+    "namePtBr": "Teres major Músculo Direito",
+    "nameEn": "Teres major muscle (right)",
+    "nameLatin": "Musculus teres major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:teres_minor_muscle_l",
+    "node": "Teres minor muscle.l",
+    "fmaId": "TA2:teres_minor_muscle_l",
+    "namePtBr": "Teres minor Músculo Esquerdo",
+    "nameEn": "Teres minor muscle (left)",
+    "nameLatin": "Musculus teres minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:teres_minor_muscle_r",
+    "node": "Teres minor muscle.r",
+    "fmaId": "TA2:teres_minor_muscle_r",
+    "namePtBr": "Teres minor Músculo Direito",
+    "nameEn": "Teres minor muscle (right)",
+    "nameLatin": "Musculus teres minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Scapulohumeral muscles",
+      "Rotator cuff muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:thyro_epiglottic_part_of_thyro_arytenoid_muscle_l",
+    "node": "Thyro-epiglottic part of thyro-arytenoid muscle.l",
+    "fmaId": "TA2:thyro_epiglottic_part_of_thyro_arytenoid_muscle_l",
+    "namePtBr": "Thyro-epiglottic part of thyro-arytenoid Músculo Esquerdo",
+    "nameEn": "Thyro-epiglottic part of thyro-arytenoid muscle (left)",
+    "nameLatin": "Pars thyreoepiglottica musculi thyreoarytenoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:thyro_epiglottic_part_of_thyro_arytenoid_muscle_r",
+    "node": "Thyro-epiglottic part of thyro-arytenoid muscle.r",
+    "fmaId": "TA2:thyro_epiglottic_part_of_thyro_arytenoid_muscle_r",
+    "namePtBr": "Thyro-epiglottic part of thyro-arytenoid Músculo Direito",
+    "nameEn": "Thyro-epiglottic part of thyro-arytenoid muscle (right)",
+    "nameLatin": "Pars thyreoepiglottica musculi thyreoarytenoidei",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:thyrohyoid_muscle_l",
+    "node": "Thyrohyoid muscle.l",
+    "fmaId": "TA2:thyrohyoid_muscle_l",
+    "namePtBr": "Thyrohyoid Músculo Esquerdo",
+    "nameEn": "Thyrohyoid muscle (left)",
+    "nameLatin": "Musculus thyreohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:thyrohyoid_muscle_r",
+    "node": "Thyrohyoid muscle.r",
+    "fmaId": "TA2:thyrohyoid_muscle_r",
+    "namePtBr": "Thyrohyoid Músculo Direito",
+    "nameEn": "Thyrohyoid muscle (right)",
+    "nameLatin": "Musculus thyreohyoideus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:tibialis_anterior_muscle_l",
+    "node": "Tibialis anterior muscle.l",
+    "fmaId": "TA2:tibialis_anterior_muscle_l",
+    "namePtBr": "Tibialis anterior Músculo Esquerdo",
+    "nameEn": "Tibialis anterior muscle (left)",
+    "nameLatin": "Musculus tibialis anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tibialis_anterior_muscle_r",
+    "node": "Tibialis anterior muscle.r",
+    "fmaId": "TA2:tibialis_anterior_muscle_r",
+    "namePtBr": "Tibialis anterior Músculo Direito",
+    "nameEn": "Tibialis anterior muscle (right)",
+    "nameLatin": "Musculus tibialis anterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tibialis_posterior_muscle_l",
+    "node": "Tibialis posterior muscle.l",
+    "fmaId": "TA2:tibialis_posterior_muscle_l",
+    "namePtBr": "Tibialis posterior Músculo Esquerdo",
+    "nameEn": "Tibialis posterior muscle (left)",
+    "nameLatin": "Musculus tibialis posterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:tibialis_posterior_muscle_r",
+    "node": "Tibialis posterior muscle.r",
+    "fmaId": "TA2:tibialis_posterior_muscle_r",
+    "namePtBr": "Tibialis posterior Músculo Direito",
+    "nameEn": "Tibialis posterior muscle (right)",
+    "nameLatin": "Musculus tibialis posterior",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Posterior compartment of leg"
+    ],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:transversalis_fascia",
+    "node": "Transversalis fascia",
+    "fmaId": "TA2:transversalis_fascia",
+    "namePtBr": "Transversalis Fáscia",
+    "nameEn": "Transversalis fascia",
+    "nameLatin": "Fascia transversalis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_arytenoid_muscle",
+    "node": "Transverse arytenoid muscle",
+    "fmaId": "TA2:transverse_arytenoid_muscle",
+    "namePtBr": "Transverse arytenoid Músculo",
+    "nameEn": "Transverse arytenoid muscle",
+    "nameLatin": "Musculus arytenoideus transversus",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cervical part of muscular system",
+      "Muscles of neck",
+      "Laryngeal muscles"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_head_of_adductor_hallucis_l",
+    "node": "Transverse head of adductor hallucis.l",
+    "fmaId": "TA2:transverse_head_of_adductor_hallucis_l",
+    "namePtBr": "Transverse head of adductor hallucis Esquerdo",
+    "nameEn": "Transverse head of adductor hallucis (left)",
+    "nameLatin": "Caput transversum adductoris hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_head_of_adductor_hallucis_r",
+    "node": "Transverse head of adductor hallucis.r",
+    "fmaId": "TA2:transverse_head_of_adductor_hallucis_r",
+    "namePtBr": "Transverse head of adductor hallucis Direito",
+    "nameEn": "Transverse head of adductor hallucis (right)",
+    "nameLatin": "Caput transversum adductoris hallucis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Muscles of foot"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_head_of_adductor_pollicis_l",
+    "node": "Transverse head of adductor pollicis.l",
+    "fmaId": "TA2:transverse_head_of_adductor_pollicis_l",
+    "namePtBr": "Transverse head of adductor pollicis Esquerdo",
+    "nameEn": "Transverse head of adductor pollicis (left)",
+    "nameLatin": "Caput transversum adductoris pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_head_of_adductor_pollicis_r",
+    "node": "Transverse head of adductor pollicis.r",
+    "fmaId": "TA2:transverse_head_of_adductor_pollicis_r",
+    "namePtBr": "Transverse head of adductor pollicis Direito",
+    "nameEn": "Transverse head of adductor pollicis (right)",
+    "nameLatin": "Caput transversum adductoris pollicis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Muscles of hand"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_intermuscular_septum_of_leg_l",
+    "node": "Transverse intermuscular septum of leg.l",
+    "fmaId": "TA2:transverse_intermuscular_septum_of_leg_l",
+    "namePtBr": "Transverse intermuscular Septo of leg Esquerdo",
+    "nameEn": "Transverse intermuscular septum of leg (left)",
+    "nameLatin": "Septum intermusculare transversum cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_intermuscular_septum_of_leg_r",
+    "node": "Transverse intermuscular septum of leg.r",
+    "fmaId": "TA2:transverse_intermuscular_septum_of_leg_r",
+    "namePtBr": "Transverse intermuscular Septo of leg Direito",
+    "nameEn": "Transverse intermuscular septum of leg (right)",
+    "nameLatin": "Septum intermusculare transversum cruris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Fáscias, Aponeuroses & Retináculos",
+      "Fascia"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_part_of_trapezius_muscle_l",
+    "node": "Transverse part of trapezius muscle.l",
+    "fmaId": "TA2:transverse_part_of_trapezius_muscle_l",
+    "namePtBr": "Transverse part of trapezius Músculo Esquerdo",
+    "nameEn": "Transverse part of trapezius muscle (left)",
+    "nameLatin": "Pars transversa musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back",
+      "Trapezius muscle"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transverse_part_of_trapezius_muscle_r",
+    "node": "Transverse part of trapezius muscle.r",
+    "fmaId": "TA2:transverse_part_of_trapezius_muscle_r",
+    "namePtBr": "Transverse part of trapezius Músculo Direito",
+    "nameEn": "Transverse part of trapezius muscle (right)",
+    "nameLatin": "Pars transversa musculi trapezii",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back",
+      "Trapezius muscle"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transversus_abdominis_muscle_l",
+    "node": "Transversus abdominis muscle.l",
+    "fmaId": "TA2:transversus_abdominis_muscle_l",
+    "namePtBr": "Transversus abdominis Músculo Esquerdo",
+    "nameEn": "Transversus abdominis muscle (left)",
+    "nameLatin": "Musculus transversus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transversus_abdominis_muscle_r",
+    "node": "Transversus abdominis muscle.r",
+    "fmaId": "TA2:transversus_abdominis_muscle_r",
+    "namePtBr": "Transversus abdominis Músculo Direito",
+    "nameEn": "Transversus abdominis muscle (right)",
+    "nameLatin": "Musculus transversus abdominis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Abdominal part of muscular system",
+      "Muscles of abdomen"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transversus_thoracis_muscle_l",
+    "node": "Transversus thoracis muscle.l",
+    "fmaId": "TA2:transversus_thoracis_muscle_l",
+    "namePtBr": "Transversus thoracis Músculo Esquerdo",
+    "nameEn": "Transversus thoracis muscle (left)",
+    "nameLatin": "Musculus transversus thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:transversus_thoracis_muscle_r",
+    "node": "Transversus thoracis muscle.r",
+    "fmaId": "TA2:transversus_thoracis_muscle_r",
+    "namePtBr": "Transversus thoracis Músculo Direito",
+    "nameEn": "Transversus thoracis muscle (right)",
+    "nameLatin": "Musculus transversus thoracis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Other muscles"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochanteric_bursa_of_gluteus_maximus_muscle_l",
+    "node": "Trochanteric bursa of gluteus maximus muscle.l",
+    "fmaId": "TA2:trochanteric_bursa_of_gluteus_maximus_muscle_l",
+    "namePtBr": "Trochanteric Bolsa Sinovial of gluteus maximus Músculo Esquerdo",
+    "nameEn": "Trochanteric bursa of gluteus maximus muscle (left)",
+    "nameLatin": "Bursa trochanterica musculi glutei maximi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochanteric_bursa_of_gluteus_maximus_muscle_r",
+    "node": "Trochanteric bursa of gluteus maximus muscle.r",
+    "fmaId": "TA2:trochanteric_bursa_of_gluteus_maximus_muscle_r",
+    "namePtBr": "Trochanteric Bolsa Sinovial of gluteus maximus Músculo Direito",
+    "nameEn": "Trochanteric bursa of gluteus maximus muscle (right)",
+    "nameLatin": "Bursa trochanterica musculi glutei maximi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochanteric_bursa_of_gluteus_medius_muscle_l",
+    "node": "Trochanteric bursa of gluteus medius muscle.l",
+    "fmaId": "TA2:trochanteric_bursa_of_gluteus_medius_muscle_l",
+    "namePtBr": "Trochanteric Bolsa Sinovial of gluteus medius Músculo Esquerdo",
+    "nameEn": "Trochanteric bursa of gluteus medius muscle (left)",
+    "nameLatin": "Trochanteric bursa of gluteus medius muscle",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochanteric_bursa_of_gluteus_medius_muscle_r",
+    "node": "Trochanteric bursa of gluteus medius muscle.r",
+    "fmaId": "TA2:trochanteric_bursa_of_gluteus_medius_muscle_r",
+    "namePtBr": "Trochanteric Bolsa Sinovial of gluteus medius Músculo Direito",
+    "nameEn": "Trochanteric bursa of gluteus medius muscle (right)",
+    "nameLatin": "Trochanteric bursa of gluteus medius muscle",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochanteric_bursa_of_gluteus_minimus_muscle_l",
+    "node": "Trochanteric bursa of gluteus minimus muscle.l",
+    "fmaId": "TA2:trochanteric_bursa_of_gluteus_minimus_muscle_l",
+    "namePtBr": "Trochanteric Bolsa Sinovial of gluteus minimus Músculo Esquerdo",
+    "nameEn": "Trochanteric bursa of gluteus minimus muscle (left)",
+    "nameLatin": "Bursa trochanterica musculi glutei minimi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochanteric_bursa_of_gluteus_minimus_muscle_r",
+    "node": "Trochanteric bursa of gluteus minimus muscle.r",
+    "fmaId": "TA2:trochanteric_bursa_of_gluteus_minimus_muscle_r",
+    "namePtBr": "Trochanteric Bolsa Sinovial of gluteus minimus Músculo Direito",
+    "nameEn": "Trochanteric bursa of gluteus minimus muscle (right)",
+    "nameLatin": "Bursa trochanterica musculi glutei minimi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Bolsas Sinoviais & Bainhas Tendíneas",
+      "Bursae"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochlea_of_superior_oblique_muscle_l",
+    "node": "Trochlea of superior oblique muscle.l",
+    "fmaId": "TA2:trochlea_of_superior_oblique_muscle_l",
+    "namePtBr": "Trochlea of superior oblique Músculo Esquerdo",
+    "nameEn": "Trochlea of superior oblique muscle (left)",
+    "nameLatin": "Trochlea musculi obliqui superioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:trochlea_of_superior_oblique_muscle_r",
+    "node": "Trochlea of superior oblique muscle.r",
+    "fmaId": "TA2:trochlea_of_superior_oblique_muscle_r",
+    "namePtBr": "Trochlea of superior oblique Músculo Direito",
+    "nameEn": "Trochlea of superior oblique muscle (right)",
+    "nameLatin": "Trochlea musculi obliqui superioris",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:ulnar_head_of_extensor_carpi_ulnaris_l",
+    "node": "Ulnar head of extensor carpi ulnaris.l",
+    "fmaId": "TA2:ulnar_head_of_extensor_carpi_ulnaris_l",
+    "namePtBr": "Ulnar head of extensor carpi ulnaris Esquerdo",
+    "nameEn": "Ulnar head of extensor carpi ulnaris (left)",
+    "nameLatin": "Caput ulnare extensoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:ulnar_head_of_extensor_carpi_ulnaris_r",
+    "node": "Ulnar head of extensor carpi ulnaris.r",
+    "fmaId": "TA2:ulnar_head_of_extensor_carpi_ulnaris_r",
+    "namePtBr": "Ulnar head of extensor carpi ulnaris Direito",
+    "nameEn": "Ulnar head of extensor carpi ulnaris (right)",
+    "nameLatin": "Caput ulnare extensoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Posterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:ulnar_head_of_flexor_carpi_ulnaris_l",
+    "node": "Ulnar head of flexor carpi ulnaris.l",
+    "fmaId": "TA2:ulnar_head_of_flexor_carpi_ulnaris_l",
+    "namePtBr": "Ulnar head of flexor carpi ulnaris Esquerdo",
+    "nameEn": "Ulnar head of flexor carpi ulnaris (left)",
+    "nameLatin": "Caput ulnare flexoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:ulnar_head_of_flexor_carpi_ulnaris_r",
+    "node": "Ulnar head of flexor carpi ulnaris.r",
+    "fmaId": "TA2:ulnar_head_of_flexor_carpi_ulnaris_r",
+    "namePtBr": "Ulnar head of flexor carpi ulnaris Direito",
+    "nameEn": "Ulnar head of flexor carpi ulnaris (right)",
+    "nameLatin": "Caput ulnare flexoris ulnaris carpi",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of upper limb",
+      "Muscles of upper limb",
+      "Anterior compartment of forearm"
+    ],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:vastus_intermedius_muscle_l",
+    "node": "Vastus intermedius muscle.l",
+    "fmaId": "TA2:vastus_intermedius_muscle_l",
+    "namePtBr": "Vastus intermedius Músculo Esquerdo",
+    "nameEn": "Vastus intermedius muscle (left)",
+    "nameLatin": "Musculus vastus intermedius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:vastus_intermedius_muscle_r",
+    "node": "Vastus intermedius muscle.r",
+    "fmaId": "TA2:vastus_intermedius_muscle_r",
+    "namePtBr": "Vastus intermedius Músculo Direito",
+    "nameEn": "Vastus intermedius muscle (right)",
+    "nameLatin": "Musculus vastus intermedius",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:vastus_lateralis_muscle_l",
+    "node": "Vastus lateralis muscle.l",
+    "fmaId": "TA2:vastus_lateralis_muscle_l",
+    "namePtBr": "Vastus lateralis Músculo Esquerdo",
+    "nameEn": "Vastus lateralis muscle (left)",
+    "nameLatin": "Musculus vastus lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:vastus_lateralis_muscle_r",
+    "node": "Vastus lateralis muscle.r",
+    "fmaId": "TA2:vastus_lateralis_muscle_r",
+    "namePtBr": "Vastus lateralis Músculo Direito",
+    "nameEn": "Vastus lateralis muscle (right)",
+    "nameLatin": "Musculus vastus lateralis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:vastus_medialis_muscle_l",
+    "node": "Vastus medialis muscle.l",
+    "fmaId": "TA2:vastus_medialis_muscle_l",
+    "namePtBr": "Vastus medialis Músculo Esquerdo",
+    "nameEn": "Vastus medialis muscle (left)",
+    "nameLatin": "Musculus vastus medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:vastus_medialis_muscle_r",
+    "node": "Vastus medialis muscle.r",
+    "fmaId": "TA2:vastus_medialis_muscle_r",
+    "namePtBr": "Vastus medialis Músculo Direito",
+    "nameEn": "Vastus medialis muscle (right)",
+    "nameLatin": "Musculus vastus medialis",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Muscular system of lower limb",
+      "Muscles of lower limb",
+      "Anterior compartment of thigh"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:ventral_parts_of_lateral_intertransversarii_lumborum_muscles_l",
+    "node": "Ventral parts of lateral intertransversarii lumborum muscles.l",
+    "fmaId": "TA2:ventral_parts_of_lateral_intertransversarii_lumborum_muscles_l",
+    "namePtBr": "Ventral parts of lateral intertransversarii lumborum muscles Esquerdo",
+    "nameEn": "Ventral parts of lateral intertransversarii lumborum muscles (left)",
+    "nameLatin": "Partes vent. musculorum intertransversariorum lat. lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": -0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:ventral_parts_of_lateral_intertransversarii_lumborum_muscles_r",
+    "node": "Ventral parts of lateral intertransversarii lumborum muscles.r",
+    "fmaId": "TA2:ventral_parts_of_lateral_intertransversarii_lumborum_muscles_r",
+    "namePtBr": "Ventral parts of lateral intertransversarii lumborum muscles Direito",
+    "nameEn": "Ventral parts of lateral intertransversarii lumborum muscles (right)",
+    "nameLatin": "Partes vent. musculorum intertransversariorum lat. lumborum",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Profundos (Estriados)",
+      "Dorsal part of muscular system",
+      "Hypaxial muscles of back"
+    ],
+    "explosionVector": {
+      "x": 0.95,
+      "y": 0.05,
+      "z": 0.65
+    }
+  },
+  {
+    "id": "za:zygomaticus_major_muscle_l",
+    "node": "Zygomaticus major muscle.l",
+    "fmaId": "TA2:zygomaticus_major_muscle_l",
+    "namePtBr": "Zygomaticus major Músculo Esquerdo",
+    "nameEn": "Zygomaticus major muscle (left)",
+    "nameLatin": "Musculus zygomaticus major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -1.1,
+      "y": 0.0,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:zygomaticus_major_muscle_r",
+    "node": "Zygomaticus major muscle.r",
+    "fmaId": "TA2:zygomaticus_major_muscle_r",
+    "namePtBr": "Zygomaticus major Músculo Direito",
+    "nameEn": "Zygomaticus major muscle (right)",
+    "nameLatin": "Musculus zygomaticus major",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 1.1,
+      "y": 0.0,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:zygomaticus_minor_muscle_l",
+    "node": "Zygomaticus minor muscle.l",
+    "fmaId": "TA2:zygomaticus_minor_muscle_l",
+    "namePtBr": "Zygomaticus minor Músculo Esquerdo",
+    "nameEn": "Zygomaticus minor muscle (left)",
+    "nameLatin": "Musculus zygomaticus minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": -1.1,
+      "y": 0.0,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:zygomaticus_minor_muscle_r",
+    "node": "Zygomaticus minor muscle.r",
+    "fmaId": "TA2:zygomaticus_minor_muscle_r",
+    "namePtBr": "Zygomaticus minor Músculo Direito",
+    "nameEn": "Zygomaticus minor muscle (right)",
+    "nameLatin": "Musculus zygomaticus minor",
+    "chapter": 3,
+    "system": "muscular",
+    "meshFile": "muscular_male.glb",
+    "path": [
+      "Músculos Superficiais (Estriados)",
+      "Cranial part of muscular system",
+      "Muscles of head",
+      "Superficial muscles of head",
+      "Facial muscles"
+    ],
+    "explosionVector": {
+      "x": 1.1,
+      "y": 0.0,
+      "z": 0.7
+    }
+  },
+  {
+    "id": "za:deep_branch_of_transverse_cervical_artery_l",
+    "node": "(Deep branch of transverse cervical artery).l",
+    "fmaId": "TA2:deep_branch_of_transverse_cervical_artery_l",
+    "namePtBr": "Deep branch of transverse cervical artery Esquerdo",
+    "nameEn": "Deep branch of transverse cervical artery (left)",
+    "nameLatin": "Deep branch of transverse cervical artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:deep_branch_of_transverse_cervical_artery_r",
+    "node": "(Deep branch of transverse cervical artery).r",
+    "fmaId": "TA2:deep_branch_of_transverse_cervical_artery_r",
+    "namePtBr": "Deep branch of transverse cervical artery Direito",
+    "nameEn": "Deep branch of transverse cervical artery (right)",
+    "nameLatin": "Deep branch of transverse cervical artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:superficial_branch_of_transverse_cervical_artery_l",
+    "node": "(Superficial branch of transverse cervical artery).l",
+    "fmaId": "TA2:superficial_branch_of_transverse_cervical_artery_l",
+    "namePtBr": "Superficial branch of transverse cervical artery Esquerdo",
+    "nameEn": "Superficial branch of transverse cervical artery (left)",
+    "nameLatin": "Superficial branch of transverse cervical artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:superficial_branch_of_transverse_cervical_artery_r",
+    "node": "(Superficial branch of transverse cervical artery).r",
+    "fmaId": "TA2:superficial_branch_of_transverse_cervical_artery_r",
+    "namePtBr": "Superficial branch of transverse cervical artery Direito",
+    "nameEn": "Superficial branch of transverse cervical artery (right)",
+    "nameLatin": "Superficial branch of transverse cervical artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:ulnar_recurrent_artery_l",
+    "node": "(Ulnar recurrent artery).l",
+    "fmaId": "TA2:ulnar_recurrent_artery_l",
+    "namePtBr": "Ulnar recurrent artery Esquerdo",
+    "nameEn": "Ulnar recurrent artery (left)",
+    "nameLatin": "Ulnar recurrent artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:ulnar_recurrent_artery_r",
+    "node": "(Ulnar recurrent artery).r",
+    "fmaId": "TA2:ulnar_recurrent_artery_r",
+    "namePtBr": "Ulnar recurrent artery Direito",
+    "nameEn": "Ulnar recurrent artery (right)",
+    "nameLatin": "Ulnar recurrent artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:",
+    "node": "????????",
+    "fmaId": "TA2:",
+    "namePtBr": "????????",
+    "nameEn": "????????",
+    "nameLatin": "????????",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:x_l",
+    "node": "?x.l",
+    "fmaId": "TA2:x_l",
+    "namePtBr": "?x Esquerdo",
+    "nameEn": "?x (left)",
+    "nameLatin": "?x",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:x_r",
+    "node": "?x.r",
+    "fmaId": "TA2:x_r",
+    "namePtBr": "?x Direito",
+    "nameEn": "?x (right)",
+    "nameLatin": "?x",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:anterior_temporal_branch_l",
+    "node": "Anterior temporal branch.l",
+    "fmaId": "TA2:anterior_temporal_branch_l",
+    "namePtBr": "Anterior temporal branch Esquerdo",
+    "nameEn": "Anterior temporal branch (left)",
+    "nameLatin": "Anterior temporal branch",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:anterior_temporal_branch_r",
+    "node": "Anterior temporal branch.r",
+    "fmaId": "TA2:anterior_temporal_branch_r",
+    "namePtBr": "Anterior temporal branch Direito",
+    "nameEn": "Anterior temporal branch (right)",
+    "nameLatin": "Anterior temporal branch",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:artery_of_central_sulcus_l",
+    "node": "Artery of central sulcus.l",
+    "fmaId": "TA2:artery_of_central_sulcus_l",
+    "namePtBr": "Artery of central sulcus Esquerdo",
+    "nameEn": "Artery of central sulcus (left)",
+    "nameLatin": "Artery of central sulcus",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:artery_of_central_sulcus_r",
+    "node": "Artery of central sulcus.r",
+    "fmaId": "TA2:artery_of_central_sulcus_r",
+    "namePtBr": "Artery of central sulcus Direito",
+    "nameEn": "Artery of central sulcus (right)",
+    "nameLatin": "Artery of central sulcus",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:artery_of_precentral_sulcus_l",
+    "node": "Artery of precentral sulcus.l",
+    "fmaId": "TA2:artery_of_precentral_sulcus_l",
+    "namePtBr": "Artery of precentral sulcus Esquerdo",
+    "nameEn": "Artery of precentral sulcus (left)",
+    "nameLatin": "Artery of precentral sulcus",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:artery_of_precentral_sulcus_r",
+    "node": "Artery of precentral sulcus.r",
+    "fmaId": "TA2:artery_of_precentral_sulcus_r",
+    "namePtBr": "Artery of precentral sulcus Direito",
+    "nameEn": "Artery of precentral sulcus (right)",
+    "nameLatin": "Artery of precentral sulcus",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:branch_to_angular_gyrus_l",
+    "node": "Branch to angular gyrus.l",
+    "fmaId": "TA2:branch_to_angular_gyrus_l",
+    "namePtBr": "Branch to angular gyrus Esquerdo",
+    "nameEn": "Branch to angular gyrus (left)",
+    "nameLatin": "Branch to angular gyrus",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:branch_to_angular_gyrus_r",
+    "node": "Branch to angular gyrus.r",
+    "fmaId": "TA2:branch_to_angular_gyrus_r",
+    "namePtBr": "Branch to angular gyrus Direito",
+    "nameEn": "Branch to angular gyrus (right)",
+    "nameLatin": "Branch to angular gyrus",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:distal_lateral_striate_branches_l",
+    "node": "Distal lateral striate branches.l",
+    "fmaId": "TA2:distal_lateral_striate_branches_l",
+    "namePtBr": "Distal lateral striate branches Esquerdo",
+    "nameEn": "Distal lateral striate branches (left)",
+    "nameLatin": "Distal lateral striate branches",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:distal_lateral_striate_branches_r",
+    "node": "Distal lateral striate branches.r",
+    "fmaId": "TA2:distal_lateral_striate_branches_r",
+    "namePtBr": "Distal lateral striate branches Direito",
+    "nameEn": "Distal lateral striate branches (right)",
+    "nameLatin": "Distal lateral striate branches",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:inferior_vein_of_left_ventricle_posterior",
+    "node": "Inferior vein of left ventricle (//Posterior '')",
+    "fmaId": "TA2:inferior_vein_of_left_ventricle_posterior",
+    "namePtBr": "Inferior vein of left ventricle //Posterior ''",
+    "nameEn": "Inferior vein of left ventricle //Posterior ''",
+    "nameLatin": "Inferior vein of left ventricle //Posterior ''",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:insular_branches_of_middle_cerebral_artery_m2_segment_l",
+    "node": "Insular branches of middle cerebral artery (M2-segment).l",
+    "fmaId": "TA2:insular_branches_of_middle_cerebral_artery_m2_segment_l",
+    "namePtBr": "Insular branches of middle cerebral artery M2-segment Esquerdo",
+    "nameEn": "Insular branches of middle cerebral artery M2-segment (left)",
+    "nameLatin": "Insular branches of middle cerebral artery M2-segment",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:lateral_frontobasal_artery_l",
+    "node": "Lateral frontobasal artery.l",
+    "fmaId": "TA2:lateral_frontobasal_artery_l",
+    "namePtBr": "Lateral frontobasal artery Esquerdo",
+    "nameEn": "Lateral frontobasal artery (left)",
+    "nameLatin": "Lateral frontobasal artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:lateral_frontobasal_artery_r",
+    "node": "Lateral frontobasal artery.r",
+    "fmaId": "TA2:lateral_frontobasal_artery_r",
+    "namePtBr": "Lateral frontobasal artery Direito",
+    "nameEn": "Lateral frontobasal artery (right)",
+    "nameLatin": "Lateral frontobasal artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:middle_cerebral_artery_m3_segment_l",
+    "node": "Middle cerebral artery (M3 segment).l",
+    "fmaId": "TA2:middle_cerebral_artery_m3_segment_l",
+    "namePtBr": "Middle cerebral artery M3 segment Esquerdo",
+    "nameEn": "Middle cerebral artery M3 segment (left)",
+    "nameLatin": "Middle cerebral artery M3 segment",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:middle_genicular_artery_l",
+    "node": "Middle genicular artery.l",
+    "fmaId": "TA2:middle_genicular_artery_l",
+    "namePtBr": "Middle genicular artery Esquerdo",
+    "nameEn": "Middle genicular artery (left)",
+    "nameLatin": "Middle genicular artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:middle_genicular_artery_r",
+    "node": "Middle genicular artery.r",
+    "fmaId": "TA2:middle_genicular_artery_r",
+    "namePtBr": "Middle genicular artery Direito",
+    "nameEn": "Middle genicular artery (right)",
+    "nameLatin": "Middle genicular artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:posterior_parietal_artery_l",
+    "node": "Posterior parietal artery.l",
+    "fmaId": "TA2:posterior_parietal_artery_l",
+    "namePtBr": "Posterior parietal artery Esquerdo",
+    "nameEn": "Posterior parietal artery (left)",
+    "nameLatin": "Posterior parietal artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:posterior_parietal_artery_r",
+    "node": "Posterior parietal artery.r",
+    "fmaId": "TA2:posterior_parietal_artery_r",
+    "namePtBr": "Posterior parietal artery Direito",
+    "nameEn": "Posterior parietal artery (right)",
+    "nameLatin": "Posterior parietal artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:posterior_temporal_branch_l",
+    "node": "Posterior temporal branch.l",
+    "fmaId": "TA2:posterior_temporal_branch_l",
+    "namePtBr": "Posterior temporal branch Esquerdo",
+    "nameEn": "Posterior temporal branch (left)",
+    "nameLatin": "Posterior temporal branch",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:posterior_temporal_branch_r",
+    "node": "Posterior temporal branch.r",
+    "fmaId": "TA2:posterior_temporal_branch_r",
+    "namePtBr": "Posterior temporal branch Direito",
+    "nameEn": "Posterior temporal branch (right)",
+    "nameLatin": "Posterior temporal branch",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:prefrontal_artery_l",
+    "node": "Prefrontal artery.l",
+    "fmaId": "TA2:prefrontal_artery_l",
+    "namePtBr": "Prefrontal artery Esquerdo",
+    "nameEn": "Prefrontal artery (left)",
+    "nameLatin": "Prefrontal artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:prefrontal_artery_r",
+    "node": "Prefrontal artery.r",
+    "fmaId": "TA2:prefrontal_artery_r",
+    "namePtBr": "Prefrontal artery Direito",
+    "nameEn": "Prefrontal artery (right)",
+    "nameLatin": "Prefrontal artery",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:proximal_lateral_striate_branches_l",
+    "node": "Proximal lateral striate branches.l",
+    "fmaId": "TA2:proximal_lateral_striate_branches_l",
+    "namePtBr": "Proximal lateral striate branches Esquerdo",
+    "nameEn": "Proximal lateral striate branches (left)",
+    "nameLatin": "Proximal lateral striate branches",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:proximal_lateral_striate_branches_r",
+    "node": "Proximal lateral striate branches.r",
+    "fmaId": "TA2:proximal_lateral_striate_branches_r",
+    "namePtBr": "Proximal lateral striate branches Direito",
+    "nameEn": "Proximal lateral striate branches (right)",
+    "nameLatin": "Proximal lateral striate branches",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:temporo_occipital_branch_l",
+    "node": "Temporo-occipital branch.l",
+    "fmaId": "TA2:temporo_occipital_branch_l",
+    "namePtBr": "Temporo-occipital branch Esquerdo",
+    "nameEn": "Temporo-occipital branch (left)",
+    "nameLatin": "Temporo-occipital branch",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:temporo_occipital_branch_r",
+    "node": "Temporo-occipital branch.r",
+    "fmaId": "TA2:temporo_occipital_branch_r",
+    "namePtBr": "Temporo-occipital branch Direito",
+    "nameEn": "Temporo-occipital branch (right)",
+    "nameLatin": "Temporo-occipital branch",
+    "chapter": 5,
+    "system": "cardiovascular",
+    "meshFile": "cardiovascular_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.2,
+      "y": -0.1,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:anterior_tibial_node_l",
+    "node": "(Anterior tibial node).l",
+    "fmaId": "TA2:anterior_tibial_node_l",
+    "namePtBr": "Anterior tibial node Esquerdo",
+    "nameEn": "Anterior tibial node (left)",
+    "nameLatin": "Anterior tibial node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:anterior_tibial_node_r",
+    "node": "(Anterior tibial node).r",
+    "fmaId": "TA2:anterior_tibial_node_r",
+    "namePtBr": "Anterior tibial node Direito",
+    "nameEn": "Anterior tibial node (right)",
+    "nameLatin": "Anterior tibial node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:fibular_node_l",
+    "node": "(Fibular node).l",
+    "fmaId": "TA2:fibular_node_l",
+    "namePtBr": "Fibular node Esquerdo",
+    "nameEn": "Fibular node (left)",
+    "nameLatin": "Fibular node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:fibular_node_r",
+    "node": "(Fibular node).r",
+    "fmaId": "TA2:fibular_node_r",
+    "namePtBr": "Fibular node Direito",
+    "nameEn": "Fibular node (right)",
+    "nameLatin": "Fibular node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:intermediate_deep_inguinal_node_l",
+    "node": "(Intermediate deep inguinal node).l",
+    "fmaId": "TA2:intermediate_deep_inguinal_node_l",
+    "namePtBr": "Intermediate deep inguinal node Esquerdo",
+    "nameEn": "Intermediate deep inguinal node (left)",
+    "nameLatin": "Intermediate deep inguinal node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intermediate_deep_inguinal_node_r",
+    "node": "(Intermediate deep inguinal node).r",
+    "fmaId": "TA2:intermediate_deep_inguinal_node_r",
+    "namePtBr": "Intermediate deep inguinal node Direito",
+    "nameEn": "Intermediate deep inguinal node (right)",
+    "nameLatin": "Intermediate deep inguinal node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intermediate_lacunar_node_l",
+    "node": "(Intermediate lacunar node).l",
+    "fmaId": "TA2:intermediate_lacunar_node_l",
+    "namePtBr": "Intermediate lacunar node Esquerdo",
+    "nameEn": "Intermediate lacunar node (left)",
+    "nameLatin": "Intermediate lacunar node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intermediate_lacunar_node_r",
+    "node": "(Intermediate lacunar node).r",
+    "fmaId": "TA2:intermediate_lacunar_node_r",
+    "namePtBr": "Intermediate lacunar node Direito",
+    "nameEn": "Intermediate lacunar node (right)",
+    "nameLatin": "Intermediate lacunar node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_lacunar_node_l",
+    "node": "(Lateral lacunar node).l",
+    "fmaId": "TA2:lateral_lacunar_node_l",
+    "namePtBr": "Lateral lacunar node Esquerdo",
+    "nameEn": "Lateral lacunar node (left)",
+    "nameLatin": "Lateral lacunar node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_lacunar_node_r",
+    "node": "(Lateral lacunar node).r",
+    "fmaId": "TA2:lateral_lacunar_node_r",
+    "namePtBr": "Lateral lacunar node Direito",
+    "nameEn": "Lateral lacunar node (right)",
+    "nameLatin": "Lateral lacunar node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:medial_lacunar_node_l",
+    "node": "(Medial lacunar node).l",
+    "fmaId": "TA2:medial_lacunar_node_l",
+    "namePtBr": "Medial lacunar node Esquerdo",
+    "nameEn": "Medial lacunar node (left)",
+    "nameLatin": "Medial lacunar node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:medial_lacunar_node_r",
+    "node": "(Medial lacunar node).r",
+    "fmaId": "TA2:medial_lacunar_node_r",
+    "namePtBr": "Medial lacunar node Direito",
+    "nameEn": "Medial lacunar node (right)",
+    "nameLatin": "Medial lacunar node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:posterior_tibial_node_l",
+    "node": "(Posterior tibial node).l",
+    "fmaId": "TA2:posterior_tibial_node_l",
+    "namePtBr": "Posterior tibial node Esquerdo",
+    "nameEn": "Posterior tibial node (left)",
+    "nameLatin": "Posterior tibial node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:posterior_tibial_node_r",
+    "node": "(Posterior tibial node).r",
+    "fmaId": "TA2:posterior_tibial_node_r",
+    "namePtBr": "Posterior tibial node Direito",
+    "nameEn": "Posterior tibial node (right)",
+    "nameLatin": "Posterior tibial node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 1.3,
+      "y": -0.6,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:proximal_deep_inguinal_node_l",
+    "node": "(Proximal deep inguinal node).l",
+    "fmaId": "TA2:proximal_deep_inguinal_node_l",
+    "namePtBr": "Proximal deep inguinal node Esquerdo",
+    "nameEn": "Proximal deep inguinal node (left)",
+    "nameLatin": "Proximal deep inguinal node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:proximal_deep_inguinal_node_r",
+    "node": "(Proximal deep inguinal node).r",
+    "fmaId": "TA2:proximal_deep_inguinal_node_r",
+    "namePtBr": "Proximal deep inguinal node Direito",
+    "nameEn": "Proximal deep inguinal node (right)",
+    "nameLatin": "Proximal deep inguinal node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:retropyloric_nodes",
+    "node": "(Retropyloric nodes)",
+    "fmaId": "TA2:retropyloric_nodes",
+    "namePtBr": "Retropyloric nodes",
+    "nameEn": "Retropyloric nodes",
+    "nameLatin": "Retropyloric nodes",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:subpyloric_nodes",
+    "node": "(Subpyloric nodes)",
+    "fmaId": "TA2:subpyloric_nodes",
+    "namePtBr": "Subpyloric nodes",
+    "nameEn": "Subpyloric nodes",
+    "nameLatin": "Subpyloric nodes",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:suprapyloric_node",
+    "node": "(Suprapyloric node)",
+    "fmaId": "TA2:suprapyloric_node",
+    "namePtBr": "Suprapyloric node",
+    "nameEn": "Suprapyloric node",
+    "nameLatin": "Suprapyloric node",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:anterior_axillary_nodes_l",
+    "node": "Anterior axillary nodes.l",
+    "fmaId": "TA2:anterior_axillary_nodes_l",
+    "namePtBr": "Anterior axillary nodes Esquerdo",
+    "nameEn": "Anterior axillary nodes (left)",
+    "nameLatin": "Nodi axillares anteriores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:anterior_axillary_nodes_r",
+    "node": "Anterior axillary nodes.r",
+    "fmaId": "TA2:anterior_axillary_nodes_r",
+    "namePtBr": "Anterior axillary nodes Direito",
+    "nameEn": "Anterior axillary nodes (right)",
+    "nameLatin": "Nodi axillares anteriores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:anterior_inferior_jugular_nodes_l",
+    "node": "Anterior inferior jugular nodes.l",
+    "fmaId": "TA2:anterior_inferior_jugular_nodes_l",
+    "namePtBr": "Anterior inferior jugular nodes Esquerdo",
+    "nameEn": "Anterior inferior jugular nodes (left)",
+    "nameLatin": "Nodi jugulares inferiores anteriores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:anterior_inferior_jugular_nodes_r",
+    "node": "Anterior inferior jugular nodes.r",
+    "fmaId": "TA2:anterior_inferior_jugular_nodes_r",
+    "namePtBr": "Anterior inferior jugular nodes Direito",
+    "nameEn": "Anterior inferior jugular nodes (right)",
+    "nameLatin": "Nodi jugulares inferiores anteriores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:apical_axillary_nodes_l",
+    "node": "Apical axillary nodes.l",
+    "fmaId": "TA2:apical_axillary_nodes_l",
+    "namePtBr": "Apical axillary nodes Esquerdo",
+    "nameEn": "Apical axillary nodes (left)",
+    "nameLatin": "Nodi axillares apicales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:apical_axillary_nodes_r",
+    "node": "Apical axillary nodes.r",
+    "fmaId": "TA2:apical_axillary_nodes_r",
+    "namePtBr": "Apical axillary nodes Direito",
+    "nameEn": "Apical axillary nodes (right)",
+    "nameLatin": "Nodi axillares apicales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:appendicular_nodes",
+    "node": "Appendicular nodes",
+    "fmaId": "TA2:appendicular_nodes",
+    "namePtBr": "Appendicular nodes",
+    "nameEn": "Appendicular nodes",
+    "nameLatin": "Nodi appendiculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:brachial_nodes_l",
+    "node": "Brachial nodes.l",
+    "fmaId": "TA2:brachial_nodes_l",
+    "namePtBr": "Brachial nodes Esquerdo",
+    "nameEn": "Brachial nodes (left)",
+    "nameLatin": "Nodi brachiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:brachial_nodes_r",
+    "node": "Brachial nodes.r",
+    "fmaId": "TA2:brachial_nodes_r",
+    "namePtBr": "Brachial nodes Direito",
+    "nameEn": "Brachial nodes (right)",
+    "nameLatin": "Nodi brachiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:brachiocephalic_nodes",
+    "node": "Brachiocephalic nodes",
+    "fmaId": "TA2:brachiocephalic_nodes",
+    "namePtBr": "Brachiocephalic nodes",
+    "nameEn": "Brachiocephalic nodes",
+    "nameLatin": "Nodi brachiocephalici",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:bucinator_node_l",
+    "node": "Bucinator node.l",
+    "fmaId": "TA2:bucinator_node_l",
+    "namePtBr": "Bucinator node Esquerdo",
+    "nameEn": "Bucinator node (left)",
+    "nameLatin": "Nodus bucinatorius",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:bucinator_node_r",
+    "node": "Bucinator node.r",
+    "fmaId": "TA2:bucinator_node_r",
+    "namePtBr": "Bucinator node Direito",
+    "nameEn": "Bucinator node (right)",
+    "nameLatin": "Nodus bucinatorius",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:central_axillary_nodes_l",
+    "node": "Central axillary nodes.l",
+    "fmaId": "TA2:central_axillary_nodes_l",
+    "namePtBr": "Central axillary nodes Esquerdo",
+    "nameEn": "Central axillary nodes (left)",
+    "nameLatin": "Nodi axillares centrales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:central_axillary_nodes_r",
+    "node": "Central axillary nodes.r",
+    "fmaId": "TA2:central_axillary_nodes_r",
+    "namePtBr": "Central axillary nodes Direito",
+    "nameEn": "Central axillary nodes (right)",
+    "nameLatin": "Nodi axillares centrales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:central_superior_mesenteric_nodes",
+    "node": "Central superior mesenteric nodes",
+    "fmaId": "TA2:central_superior_mesenteric_nodes",
+    "namePtBr": "Central superior mesenteric nodes",
+    "nameEn": "Central superior mesenteric nodes",
+    "nameLatin": "Nodi mesenterici superiores centrales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:coeliac_nodes",
+    "node": "Coeliac nodes",
+    "fmaId": "TA2:coeliac_nodes",
+    "namePtBr": "Coeliac nodes",
+    "nameEn": "Coeliac nodes",
+    "nameLatin": "Nodi coeliaci",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:cubital_nodes_l",
+    "node": "Cubital nodes.l",
+    "fmaId": "TA2:cubital_nodes_l",
+    "namePtBr": "Cubital nodes Esquerdo",
+    "nameEn": "Cubital nodes (left)",
+    "nameLatin": "Nodi cubitales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:cubital_nodes_r",
+    "node": "Cubital nodes.r",
+    "fmaId": "TA2:cubital_nodes_r",
+    "namePtBr": "Cubital nodes Direito",
+    "nameEn": "Cubital nodes (right)",
+    "nameLatin": "Nodi cubitales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:cystic_node",
+    "node": "Cystic node",
+    "fmaId": "TA2:cystic_node",
+    "namePtBr": "Cystic node",
+    "nameEn": "Cystic node",
+    "nameLatin": "Nodus cysticus",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:deep_popliteal_nodes_l",
+    "node": "Deep popliteal nodes.l",
+    "fmaId": "TA2:deep_popliteal_nodes_l",
+    "namePtBr": "Deep popliteal nodes Esquerdo",
+    "nameEn": "Deep popliteal nodes (left)",
+    "nameLatin": "Nodi poplitei profundi",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:deep_popliteal_nodes_r",
+    "node": "Deep popliteal nodes.r",
+    "fmaId": "TA2:deep_popliteal_nodes_r",
+    "namePtBr": "Deep popliteal nodes Direito",
+    "nameEn": "Deep popliteal nodes (right)",
+    "nameLatin": "Nodi poplitei profundi",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:ileocolic_nodes",
+    "node": "Ileocolic nodes",
+    "fmaId": "TA2:ileocolic_nodes",
+    "namePtBr": "Ileocolic nodes",
+    "nameEn": "Ileocolic nodes",
+    "nameLatin": "Nodi ileocolici",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_deep_lateral_cervical_nodes_l",
+    "node": "Inferior deep lateral cervical nodes.l",
+    "fmaId": "TA2:inferior_deep_lateral_cervical_nodes_l",
+    "namePtBr": "Inferior deep lateral cervical nodes Esquerdo",
+    "nameEn": "Inferior deep lateral cervical nodes (left)",
+    "nameLatin": "Nodi cervicales laterales profundi inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:inferior_deep_lateral_cervical_nodes_r",
+    "node": "Inferior deep lateral cervical nodes.r",
+    "fmaId": "TA2:inferior_deep_lateral_cervical_nodes_r",
+    "namePtBr": "Inferior deep lateral cervical nodes Direito",
+    "nameEn": "Inferior deep lateral cervical nodes (right)",
+    "nameLatin": "Nodi cervicales laterales profundi inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:inferior_diaphragmatic_nodes",
+    "node": "Inferior diaphragmatic nodes",
+    "fmaId": "TA2:inferior_diaphragmatic_nodes",
+    "namePtBr": "Inferior diaphragmatic nodes",
+    "nameEn": "Inferior diaphragmatic nodes",
+    "nameLatin": "Nodi phrenici inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_epigastric_nodes_l",
+    "node": "Inferior epigastric nodes.l",
+    "fmaId": "TA2:inferior_epigastric_nodes_l",
+    "namePtBr": "Inferior epigastric nodes Esquerdo",
+    "nameEn": "Inferior epigastric nodes (left)",
+    "nameLatin": "Nodi epigastrici inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_epigastric_nodes_r",
+    "node": "Inferior epigastric nodes.r",
+    "fmaId": "TA2:inferior_epigastric_nodes_r",
+    "namePtBr": "Inferior epigastric nodes Direito",
+    "nameEn": "Inferior epigastric nodes (right)",
+    "nameLatin": "Nodi epigastrici inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_gluteal_nodes_l",
+    "node": "Inferior gluteal nodes.l",
+    "fmaId": "TA2:inferior_gluteal_nodes_l",
+    "namePtBr": "Inferior gluteal nodes Esquerdo",
+    "nameEn": "Inferior gluteal nodes (left)",
+    "nameLatin": "Nodi glutei inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_gluteal_nodes_r",
+    "node": "Inferior gluteal nodes.r",
+    "fmaId": "TA2:inferior_gluteal_nodes_r",
+    "namePtBr": "Inferior gluteal nodes Direito",
+    "nameEn": "Inferior gluteal nodes (right)",
+    "nameLatin": "Nodi glutei inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_pancreatic_nodes",
+    "node": "Inferior pancreatic nodes",
+    "fmaId": "TA2:inferior_pancreatic_nodes",
+    "namePtBr": "Inferior pancreatic nodes",
+    "nameEn": "Inferior pancreatic nodes",
+    "nameLatin": "Nodi pancreatici inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_superficial_inguinal_nodes_l",
+    "node": "Inferior superficial inguinal nodes.l",
+    "fmaId": "TA2:inferior_superficial_inguinal_nodes_l",
+    "namePtBr": "Inferior superficial inguinal nodes Esquerdo",
+    "nameEn": "Inferior superficial inguinal nodes (left)",
+    "nameLatin": "Nodi inguinales superficiales inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_superficial_inguinal_nodes_r",
+    "node": "Inferior superficial inguinal nodes.r",
+    "fmaId": "TA2:inferior_superficial_inguinal_nodes_r",
+    "namePtBr": "Inferior superficial inguinal nodes Direito",
+    "nameEn": "Inferior superficial inguinal nodes (right)",
+    "nameLatin": "Nodi inguinales superficiales inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:inferior_tracheobronchial_nodes",
+    "node": "Inferior tracheobronchial nodes",
+    "fmaId": "TA2:inferior_tracheobronchial_nodes",
+    "namePtBr": "Inferior tracheobronchial nodes",
+    "nameEn": "Inferior tracheobronchial nodes",
+    "nameLatin": "Nodi tracheobronchiales inferiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:infra_auricular_nodes_l",
+    "node": "Infra-auricular nodes.l",
+    "fmaId": "TA2:infra_auricular_nodes_l",
+    "namePtBr": "Infra-auricular nodes Esquerdo",
+    "nameEn": "Infra-auricular nodes (left)",
+    "nameLatin": "Nodi infraauriculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:infra_auricular_nodes_r",
+    "node": "Infra-auricular nodes.r",
+    "fmaId": "TA2:infra_auricular_nodes_r",
+    "namePtBr": "Infra-auricular nodes Direito",
+    "nameEn": "Infra-auricular nodes (right)",
+    "nameLatin": "Nodi infraauriculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:infraclavicular_nodes_l",
+    "node": "Infraclavicular nodes.l",
+    "fmaId": "TA2:infraclavicular_nodes_l",
+    "namePtBr": "Infraclavicular nodes Esquerdo",
+    "nameEn": "Infraclavicular nodes (left)",
+    "nameLatin": "Nodi infraclaviculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:infraclavicular_nodes_r",
+    "node": "Infraclavicular nodes.r",
+    "fmaId": "TA2:infraclavicular_nodes_r",
+    "namePtBr": "Infraclavicular nodes Direito",
+    "nameEn": "Infraclavicular nodes (right)",
+    "nameLatin": "Nodi infraclaviculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intercostal_nodes_l",
+    "node": "Intercostal nodes.l",
+    "fmaId": "TA2:intercostal_nodes_l",
+    "namePtBr": "Intercostal nodes Esquerdo",
+    "nameEn": "Intercostal nodes (left)",
+    "nameLatin": "Nodi intercostales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intercostal_nodes_r",
+    "node": "Intercostal nodes.r",
+    "fmaId": "TA2:intercostal_nodes_r",
+    "namePtBr": "Intercostal nodes Direito",
+    "nameEn": "Intercostal nodes (right)",
+    "nameLatin": "Nodi intercostales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intermediate_common_iliac_nodes",
+    "node": "Intermediate common iliac nodes",
+    "fmaId": "TA2:intermediate_common_iliac_nodes",
+    "namePtBr": "Intermediate common iliac nodes",
+    "nameEn": "Intermediate common iliac nodes",
+    "nameLatin": "Nodi iliaci communes intermedii",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intermediate_external_iliac_nodes_l",
+    "node": "Intermediate external iliac nodes.l",
+    "fmaId": "TA2:intermediate_external_iliac_nodes_l",
+    "namePtBr": "Intermediate external iliac nodes Esquerdo",
+    "nameEn": "Intermediate external iliac nodes (left)",
+    "nameLatin": "Nodi iliaci externi intermedii",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intermediate_external_iliac_nodes_r",
+    "node": "Intermediate external iliac nodes.r",
+    "fmaId": "TA2:intermediate_external_iliac_nodes_r",
+    "namePtBr": "Intermediate external iliac nodes Direito",
+    "nameEn": "Intermediate external iliac nodes (right)",
+    "nameLatin": "Nodi iliaci externi intermedii",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intermediate_lumbar_nodes",
+    "node": "Intermediate lumbar nodes",
+    "fmaId": "TA2:intermediate_lumbar_nodes",
+    "namePtBr": "Intermediate lumbar nodes",
+    "nameEn": "Intermediate lumbar nodes",
+    "nameLatin": "Nodi lumbales intermedii",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.3,
+      "z": -0.3
+    }
+  },
+  {
+    "id": "za:interpectoral_nodes_l",
+    "node": "Interpectoral nodes.l",
+    "fmaId": "TA2:interpectoral_nodes_l",
+    "namePtBr": "Interpectoral nodes Esquerdo",
+    "nameEn": "Interpectoral nodes (left)",
+    "nameLatin": "Nodi interpectorales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:interpectoral_nodes_r",
+    "node": "Interpectoral nodes.r",
+    "fmaId": "TA2:interpectoral_nodes_r",
+    "namePtBr": "Interpectoral nodes Direito",
+    "nameEn": "Interpectoral nodes (right)",
+    "nameLatin": "Nodi interpectorales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intraglandular_parotid_nodes_l",
+    "node": "Intraglandular parotid nodes.l",
+    "fmaId": "TA2:intraglandular_parotid_nodes_l",
+    "namePtBr": "Intraglandular parotid nodes Esquerdo",
+    "nameEn": "Intraglandular parotid nodes (left)",
+    "nameLatin": "Nodi parotidei intraglandulares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intraglandular_parotid_nodes_r",
+    "node": "Intraglandular parotid nodes.r",
+    "fmaId": "TA2:intraglandular_parotid_nodes_r",
+    "namePtBr": "Intraglandular parotid nodes Direito",
+    "nameEn": "Intraglandular parotid nodes (right)",
+    "nameLatin": "Nodi parotidei intraglandulares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:intrapulmonary_nodes",
+    "node": "Intrapulmonary nodes",
+    "fmaId": "TA2:intrapulmonary_nodes",
+    "namePtBr": "Intrapulmonary nodes",
+    "nameEn": "Intrapulmonary nodes",
+    "nameLatin": "Nodi intrapulmonales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:jugulodigastric_node_l",
+    "node": "Jugulodigastric node.l",
+    "fmaId": "TA2:jugulodigastric_node_l",
+    "namePtBr": "Jugulodigastric node Esquerdo",
+    "nameEn": "Jugulodigastric node (left)",
+    "nameLatin": "Nodus jugulodigastricus",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:jugulodigastric_node_r",
+    "node": "Jugulodigastric node.r",
+    "fmaId": "TA2:jugulodigastric_node_r",
+    "namePtBr": "Jugulodigastric node Direito",
+    "nameEn": "Jugulodigastric node (right)",
+    "nameLatin": "Nodus jugulodigastricus",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:juxta_intestinal_mesenteric_nodes",
+    "node": "Juxta-intestinal mesenteric nodes",
+    "fmaId": "TA2:juxta_intestinal_mesenteric_nodes",
+    "namePtBr": "Juxta-intestinal mesenteric nodes",
+    "nameEn": "Juxta-intestinal mesenteric nodes",
+    "nameLatin": "Nodi juxtaintestinales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:juxta_oesophageal_nodes",
+    "node": "Juxta-oesophageal nodes",
+    "fmaId": "TA2:juxta_oesophageal_nodes",
+    "namePtBr": "Juxta-oesophageal nodes",
+    "nameEn": "Juxta-oesophageal nodes",
+    "nameLatin": "Nodi juxtaoesophagei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_aortic_nodes",
+    "node": "Lateral aortic nodes",
+    "fmaId": "TA2:lateral_aortic_nodes",
+    "namePtBr": "Lateral aortic nodes",
+    "nameEn": "Lateral aortic nodes",
+    "nameLatin": "Nodi aortici laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_axillary_nodes_l",
+    "node": "Lateral axillary nodes.l",
+    "fmaId": "TA2:lateral_axillary_nodes_l",
+    "namePtBr": "Lateral axillary nodes Esquerdo",
+    "nameEn": "Lateral axillary nodes (left)",
+    "nameLatin": "Nodi axillares laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_axillary_nodes_r",
+    "node": "Lateral axillary nodes.r",
+    "fmaId": "TA2:lateral_axillary_nodes_r",
+    "namePtBr": "Lateral axillary nodes Direito",
+    "nameEn": "Lateral axillary nodes (right)",
+    "nameLatin": "Nodi axillares laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_caval_nodes",
+    "node": "Lateral caval nodes",
+    "fmaId": "TA2:lateral_caval_nodes",
+    "namePtBr": "Lateral caval nodes",
+    "nameEn": "Lateral caval nodes",
+    "nameLatin": "Nodi cavales laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_common_iliac_nodes",
+    "node": "Lateral common iliac nodes",
+    "fmaId": "TA2:lateral_common_iliac_nodes",
+    "namePtBr": "Lateral common iliac nodes",
+    "nameEn": "Lateral common iliac nodes",
+    "nameLatin": "Nodi iliaci communes laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_pericardial_nodes",
+    "node": "Lateral pericardial nodes",
+    "fmaId": "TA2:lateral_pericardial_nodes",
+    "namePtBr": "Lateral pericardial nodes",
+    "nameEn": "Lateral pericardial nodes",
+    "nameLatin": "Nodi pericardiaci laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_sacral_nodes_l",
+    "node": "Lateral sacral nodes.l",
+    "fmaId": "TA2:lateral_sacral_nodes_l",
+    "namePtBr": "Lateral sacral nodes Esquerdo",
+    "nameEn": "Lateral sacral nodes (left)",
+    "nameLatin": "Nodi sacrales laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_sacral_nodes_r",
+    "node": "Lateral sacral nodes.r",
+    "fmaId": "TA2:lateral_sacral_nodes_r",
+    "namePtBr": "Lateral sacral nodes Direito",
+    "nameEn": "Lateral sacral nodes (right)",
+    "nameLatin": "Nodi sacrales laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_superior_jugular_node_l",
+    "node": "Lateral superior jugular node.l",
+    "fmaId": "TA2:lateral_superior_jugular_node_l",
+    "namePtBr": "Lateral superior jugular node Esquerdo",
+    "nameEn": "Lateral superior jugular node (left)",
+    "nameLatin": "Nodus jugularis superior lateralis",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_superior_jugular_node_r",
+    "node": "Lateral superior jugular node.r",
+    "fmaId": "TA2:lateral_superior_jugular_node_r",
+    "namePtBr": "Lateral superior jugular node Direito",
+    "nameEn": "Lateral superior jugular node (right)",
+    "nameLatin": "Nodus jugularis superior lateralis",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_vesical_nodes_l",
+    "node": "Lateral vesical nodes.l",
+    "fmaId": "TA2:lateral_vesical_nodes_l",
+    "namePtBr": "Lateral vesical nodes Esquerdo",
+    "nameEn": "Lateral vesical nodes (left)",
+    "nameLatin": "Nodi vesicales laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:lateral_vesical_nodes_r",
+    "node": "Lateral vesical nodes.r",
+    "fmaId": "TA2:lateral_vesical_nodes_r",
+    "namePtBr": "Lateral vesical nodes Direito",
+    "nameEn": "Lateral vesical nodes (right)",
+    "nameLatin": "Nodi vesicales laterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:left_colic_nodes",
+    "node": "Left colic nodes",
+    "fmaId": "TA2:left_colic_nodes",
+    "namePtBr": "Left colic nodes",
+    "nameEn": "Left colic nodes",
+    "nameLatin": "Nodi colici sinistri",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:left_lobe_of_thymus",
+    "node": "Left lobe of thymus",
+    "fmaId": "TA2:left_lobe_of_thymus",
+    "namePtBr": "Left lobe of thymus",
+    "nameEn": "Left lobe of thymus",
+    "nameLatin": "Lobus thymi sinistri",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:mandibular_node_l",
+    "node": "Mandibular node.l",
+    "fmaId": "TA2:mandibular_node_l",
+    "namePtBr": "Mandibular node Esquerdo",
+    "nameEn": "Mandibular node (left)",
+    "nameLatin": "Nodus mandibularis",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:mandibular_node_r",
+    "node": "Mandibular node.r",
+    "fmaId": "TA2:mandibular_node_r",
+    "namePtBr": "Mandibular node Direito",
+    "nameEn": "Mandibular node (right)",
+    "nameLatin": "Nodus mandibularis",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:mastoid_nodes_l",
+    "node": "Mastoid nodes.l",
+    "fmaId": "TA2:mastoid_nodes_l",
+    "namePtBr": "Mastoid nodes Esquerdo",
+    "nameEn": "Mastoid nodes (left)",
+    "nameLatin": "Nodi mastoidei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:mastoid_nodes_r",
+    "node": "Mastoid nodes.r",
+    "fmaId": "TA2:mastoid_nodes_r",
+    "namePtBr": "Mastoid nodes Direito",
+    "nameEn": "Mastoid nodes (right)",
+    "nameLatin": "Nodi mastoidei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:medial_common_iliac_nodes",
+    "node": "Medial common iliac nodes",
+    "fmaId": "TA2:medial_common_iliac_nodes",
+    "namePtBr": "Medial common iliac nodes",
+    "nameEn": "Medial common iliac nodes",
+    "nameLatin": "Nodi iliaci communes mediales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:medial_external_iliac_nodes_l",
+    "node": "Medial external iliac nodes.l",
+    "fmaId": "TA2:medial_external_iliac_nodes_l",
+    "namePtBr": "Medial external iliac nodes Esquerdo",
+    "nameEn": "Medial external iliac nodes (left)",
+    "nameLatin": "Nodi iliaci externi mediales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:medial_external_iliac_nodes_r",
+    "node": "Medial external iliac nodes.r",
+    "fmaId": "TA2:medial_external_iliac_nodes_r",
+    "namePtBr": "Medial external iliac nodes Direito",
+    "nameEn": "Medial external iliac nodes (right)",
+    "nameLatin": "Nodi iliaci externi mediales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:median_sacral_nodes",
+    "node": "Median sacral nodes",
+    "fmaId": "TA2:median_sacral_nodes",
+    "namePtBr": "Median sacral nodes",
+    "nameEn": "Median sacral nodes",
+    "nameLatin": "Nodi sacrales mediani",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:middle_colic_nodes",
+    "node": "Middle colic nodes",
+    "fmaId": "TA2:middle_colic_nodes",
+    "namePtBr": "Middle colic nodes",
+    "nameEn": "Middle colic nodes",
+    "nameLatin": "Nodi colici medii",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:nasolabial_node_l",
+    "node": "Nasolabial node.l",
+    "fmaId": "TA2:nasolabial_node_l",
+    "namePtBr": "Nasolabial node Esquerdo",
+    "nameEn": "Nasolabial node (left)",
+    "nameLatin": "Nodus nasolabialis",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:nasolabial_node_r",
+    "node": "Nasolabial node.r",
+    "fmaId": "TA2:nasolabial_node_r",
+    "namePtBr": "Nasolabial node Direito",
+    "nameEn": "Nasolabial node (right)",
+    "nameLatin": "Nodus nasolabialis",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:node_of_arch_of_azygos_vein",
+    "node": "Node of arch of azygos vein",
+    "fmaId": "TA2:node_of_arch_of_azygos_vein",
+    "namePtBr": "Node of arch of azygos vein",
+    "nameEn": "Node of arch of azygos vein",
+    "nameLatin": "Node of arch of azygos vein",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:node_of_ligamentum_arteriosum",
+    "node": "Node of ligamentum arteriosum",
+    "fmaId": "TA2:node_of_ligamentum_arteriosum",
+    "namePtBr": "Node of ligamentum arteriosum",
+    "nameEn": "Node of ligamentum arteriosum",
+    "nameLatin": "Node of ligamentum arteriosum",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:obturator_nodes_l",
+    "node": "Obturator nodes.l",
+    "fmaId": "TA2:obturator_nodes_l",
+    "namePtBr": "Obturator nodes Esquerdo",
+    "nameEn": "Obturator nodes (left)",
+    "nameLatin": "Nodi obturatorii",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:obturator_nodes_r",
+    "node": "Obturator nodes.r",
+    "fmaId": "TA2:obturator_nodes_r",
+    "namePtBr": "Obturator nodes Direito",
+    "nameEn": "Obturator nodes (right)",
+    "nameLatin": "Nodi obturatorii",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:occipital_nodes_l",
+    "node": "Occipital nodes.l",
+    "fmaId": "TA2:occipital_nodes_l",
+    "namePtBr": "Occipital nodes Esquerdo",
+    "nameEn": "Occipital nodes (left)",
+    "nameLatin": "Nodi occipitales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:occipital_nodes_r",
+    "node": "Occipital nodes.r",
+    "fmaId": "TA2:occipital_nodes_r",
+    "namePtBr": "Occipital nodes Direito",
+    "nameEn": "Occipital nodes (right)",
+    "nameLatin": "Nodi occipitales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:palatine_tonsil_l",
+    "node": "Palatine tonsil.l",
+    "fmaId": "TA2:palatine_tonsil_l",
+    "namePtBr": "Palatine tonsil Esquerdo",
+    "nameEn": "Palatine tonsil (left)",
+    "nameLatin": "Tonsilla palatina",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:palatine_tonsil_r",
+    "node": "Palatine tonsil.r",
+    "fmaId": "TA2:palatine_tonsil_r",
+    "namePtBr": "Palatine tonsil Direito",
+    "nameEn": "Palatine tonsil (right)",
+    "nameLatin": "Tonsilla palatina",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:paracolic_superior_mesenteric_nodes",
+    "node": "Paracolic superior mesenteric nodes",
+    "fmaId": "TA2:paracolic_superior_mesenteric_nodes",
+    "namePtBr": "Paracolic superior mesenteric nodes",
+    "nameEn": "Paracolic superior mesenteric nodes",
+    "nameLatin": "Nodi mesenterici superiores paracolici",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:pararectal_nodes",
+    "node": "Pararectal nodes",
+    "fmaId": "TA2:pararectal_nodes",
+    "namePtBr": "Pararectal nodes",
+    "nameEn": "Pararectal nodes",
+    "nameLatin": "Nodi pararectales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:parasternal_nodes_l",
+    "node": "Parasternal nodes.l",
+    "fmaId": "TA2:parasternal_nodes_l",
+    "namePtBr": "Parasternal nodes Esquerdo",
+    "nameEn": "Parasternal nodes (left)",
+    "nameLatin": "Nodi parasternales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:parasternal_nodes_r",
+    "node": "Parasternal nodes.r",
+    "fmaId": "TA2:parasternal_nodes_r",
+    "namePtBr": "Parasternal nodes Direito",
+    "nameEn": "Parasternal nodes (right)",
+    "nameLatin": "Nodi parasternales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:paratracheal_cervical_nodes",
+    "node": "Paratracheal cervical nodes",
+    "fmaId": "TA2:paratracheal_cervical_nodes",
+    "namePtBr": "Paratracheal cervical nodes",
+    "nameEn": "Paratracheal cervical nodes",
+    "nameLatin": "Nodi paratracheales colli",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:paratracheal_thoracic_nodes",
+    "node": "Paratracheal thoracic nodes",
+    "fmaId": "TA2:paratracheal_thoracic_nodes",
+    "namePtBr": "Paratracheal thoracic nodes",
+    "nameEn": "Paratracheal thoracic nodes",
+    "nameLatin": "Nodi paratracheales thoracis",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:posterior_axillary_nodes_l",
+    "node": "Posterior axillary nodes.l",
+    "fmaId": "TA2:posterior_axillary_nodes_l",
+    "namePtBr": "Posterior axillary nodes Esquerdo",
+    "nameEn": "Posterior axillary nodes (left)",
+    "nameLatin": "Nodi axillares posteriores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:posterior_axillary_nodes_r",
+    "node": "Posterior axillary nodes.r",
+    "fmaId": "TA2:posterior_axillary_nodes_r",
+    "namePtBr": "Posterior axillary nodes Direito",
+    "nameEn": "Posterior axillary nodes (right)",
+    "nameLatin": "Nodi axillares posteriores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:postvesical_nodes",
+    "node": "Postvesical nodes",
+    "fmaId": "TA2:postvesical_nodes",
+    "namePtBr": "Postvesical nodes",
+    "nameEn": "Postvesical nodes",
+    "nameLatin": "Nodi postvesicales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:pre_aortic_nodes",
+    "node": "Pre-aortic nodes",
+    "fmaId": "TA2:pre_aortic_nodes",
+    "namePtBr": "Pre-aortic nodes",
+    "nameEn": "Pre-aortic nodes",
+    "nameLatin": "Nodi preaortici",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:pre_auricular_nodes_l",
+    "node": "Pre-auricular nodes.l",
+    "fmaId": "TA2:pre_auricular_nodes_l",
+    "namePtBr": "Pre-auricular nodes Esquerdo",
+    "nameEn": "Pre-auricular nodes (left)",
+    "nameLatin": "Nodi preauriculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:pre_auricular_nodes_r",
+    "node": "Pre-auricular nodes.r",
+    "fmaId": "TA2:pre_auricular_nodes_r",
+    "namePtBr": "Pre-auricular nodes Direito",
+    "nameEn": "Pre-auricular nodes (right)",
+    "nameLatin": "Nodi preauriculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:precaecal_nodes",
+    "node": "Precaecal nodes",
+    "fmaId": "TA2:precaecal_nodes",
+    "namePtBr": "Precaecal nodes",
+    "nameEn": "Precaecal nodes",
+    "nameLatin": "Nodi precaecales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:precaval_nodes",
+    "node": "Precaval nodes",
+    "fmaId": "TA2:precaval_nodes",
+    "namePtBr": "Precaval nodes",
+    "nameEn": "Precaval nodes",
+    "nameLatin": "Nodi precavales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:prepericardial_nodes",
+    "node": "Prepericardial nodes",
+    "fmaId": "TA2:prepericardial_nodes",
+    "namePtBr": "Prepericardial nodes",
+    "nameEn": "Prepericardial nodes",
+    "nameLatin": "Nodi prepericadiaci",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:pretracheal_nodes_l",
+    "node": "Pretracheal nodes.l",
+    "fmaId": "TA2:pretracheal_nodes_l",
+    "namePtBr": "Pretracheal nodes Esquerdo",
+    "nameEn": "Pretracheal nodes (left)",
+    "nameLatin": "Nodi pretracheales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:pretracheal_nodes_r",
+    "node": "Pretracheal nodes.r",
+    "fmaId": "TA2:pretracheal_nodes_r",
+    "namePtBr": "Pretracheal nodes Direito",
+    "nameEn": "Pretracheal nodes (right)",
+    "nameLatin": "Nodi pretracheales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:prevertebral_nodes",
+    "node": "Prevertebral nodes",
+    "fmaId": "TA2:prevertebral_nodes",
+    "namePtBr": "Prevertebral nodes",
+    "nameEn": "Prevertebral nodes",
+    "nameLatin": "Nodi prevertebrales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:prevesical_nodes",
+    "node": "Prevesical nodes",
+    "fmaId": "TA2:prevesical_nodes",
+    "namePtBr": "Prevesical nodes",
+    "nameEn": "Prevesical nodes",
+    "nameLatin": "Nodi prevesicales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:retro_aortic_nodes",
+    "node": "Retro-aortic nodes",
+    "fmaId": "TA2:retro_aortic_nodes",
+    "namePtBr": "Retro-aortic nodes",
+    "nameEn": "Retro-aortic nodes",
+    "nameLatin": "Nodi retroaortici",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:retrocaecal_nodes",
+    "node": "Retrocaecal nodes",
+    "fmaId": "TA2:retrocaecal_nodes",
+    "namePtBr": "Retrocaecal nodes",
+    "nameEn": "Retrocaecal nodes",
+    "nameLatin": "Nodi retrocaecales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:retrocaval_nodes",
+    "node": "Retrocaval nodes",
+    "fmaId": "TA2:retrocaval_nodes",
+    "namePtBr": "Retrocaval nodes",
+    "nameEn": "Retrocaval nodes",
+    "nameLatin": "Nodi retrocavales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:retropharyngeal_nodes_l",
+    "node": "Retropharyngeal nodes.l",
+    "fmaId": "TA2:retropharyngeal_nodes_l",
+    "namePtBr": "Retropharyngeal nodes Esquerdo",
+    "nameEn": "Retropharyngeal nodes (left)",
+    "nameLatin": "Nodi retropharyngei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:retropharyngeal_nodes_r",
+    "node": "Retropharyngeal nodes.r",
+    "fmaId": "TA2:retropharyngeal_nodes_r",
+    "namePtBr": "Retropharyngeal nodes Direito",
+    "nameEn": "Retropharyngeal nodes (right)",
+    "nameLatin": "Nodi retropharyngei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:right_colic_nodes",
+    "node": "Right colic nodes",
+    "fmaId": "TA2:right_colic_nodes",
+    "namePtBr": "Right colic nodes",
+    "nameEn": "Right colic nodes",
+    "nameLatin": "Nodi colici dextri",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:right_gastric_nodes",
+    "node": "Right gastric nodes",
+    "fmaId": "TA2:right_gastric_nodes",
+    "namePtBr": "Right gastric nodes",
+    "nameEn": "Right gastric nodes",
+    "nameLatin": "Nodi gastrici dextri caudales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:right_gastro_omental_nodes",
+    "node": "Right gastro-omental nodes",
+    "fmaId": "TA2:right_gastro_omental_nodes",
+    "namePtBr": "Right gastro-omental nodes",
+    "nameEn": "Right gastro-omental nodes",
+    "nameLatin": "Nodi gastroomentales dextri",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:right_lobe_of_thymus",
+    "node": "Right lobe of thymus",
+    "fmaId": "TA2:right_lobe_of_thymus",
+    "namePtBr": "Right lobe of thymus",
+    "nameEn": "Right lobe of thymus",
+    "nameLatin": "Lobus thymi dextri",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:sigmoid_nodes",
+    "node": "Sigmoid nodes",
+    "fmaId": "TA2:sigmoid_nodes",
+    "namePtBr": "Sigmoid nodes",
+    "nameEn": "Sigmoid nodes",
+    "nameLatin": "Nodi sigmoidei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:spleen",
+    "node": "Spleen",
+    "fmaId": "TA2:spleen",
+    "namePtBr": "Spleen",
+    "nameEn": "Spleen",
+    "nameLatin": "Lien",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:splenic_nodes",
+    "node": "Splenic nodes",
+    "fmaId": "TA2:splenic_nodes",
+    "namePtBr": "Splenic nodes",
+    "nameEn": "Splenic nodes",
+    "nameLatin": "Nodi splenici",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:subaortic_nodes",
+    "node": "Subaortic nodes",
+    "fmaId": "TA2:subaortic_nodes",
+    "namePtBr": "Subaortic nodes",
+    "nameEn": "Subaortic nodes",
+    "nameLatin": "Nodi subaortici",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:submandibular_nodes_l",
+    "node": "Submandibular nodes.l",
+    "fmaId": "TA2:submandibular_nodes_l",
+    "namePtBr": "Submandibular nodes Esquerdo",
+    "nameEn": "Submandibular nodes (left)",
+    "nameLatin": "Nodi submandibulares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:submandibular_nodes_r",
+    "node": "Submandibular nodes.r",
+    "fmaId": "TA2:submandibular_nodes_r",
+    "namePtBr": "Submandibular nodes Direito",
+    "nameEn": "Submandibular nodes (right)",
+    "nameLatin": "Nodi submandibulares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:submental_nodes_l",
+    "node": "Submental nodes.l",
+    "fmaId": "TA2:submental_nodes_l",
+    "namePtBr": "Submental nodes Esquerdo",
+    "nameEn": "Submental nodes (left)",
+    "nameLatin": "Nodi submentales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:submental_nodes_r",
+    "node": "Submental nodes.r",
+    "fmaId": "TA2:submental_nodes_r",
+    "namePtBr": "Submental nodes Direito",
+    "nameEn": "Submental nodes (right)",
+    "nameLatin": "Nodi submentales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superficial_anterior_cervical_nodes",
+    "node": "Superficial anterior cervical nodes",
+    "fmaId": "TA2:superficial_anterior_cervical_nodes",
+    "namePtBr": "Superficial anterior cervical nodes",
+    "nameEn": "Superficial anterior cervical nodes",
+    "nameLatin": "Nodi cervicales anteriores superficiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:superficial_lateral_cervical_nodes_l",
+    "node": "Superficial lateral cervical nodes.l",
+    "fmaId": "TA2:superficial_lateral_cervical_nodes_l",
+    "namePtBr": "Superficial lateral cervical nodes Esquerdo",
+    "nameEn": "Superficial lateral cervical nodes (left)",
+    "nameLatin": "Nodi cervicales laterales superficiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:superficial_lateral_cervical_nodes_r",
+    "node": "Superficial lateral cervical nodes.r",
+    "fmaId": "TA2:superficial_lateral_cervical_nodes_r",
+    "namePtBr": "Superficial lateral cervical nodes Direito",
+    "nameEn": "Superficial lateral cervical nodes (right)",
+    "nameLatin": "Nodi cervicales laterales superficiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.6,
+      "z": -0.2
+    }
+  },
+  {
+    "id": "za:superficial_parotid_nodes_l",
+    "node": "Superficial parotid nodes.l",
+    "fmaId": "TA2:superficial_parotid_nodes_l",
+    "namePtBr": "Superficial parotid nodes Esquerdo",
+    "nameEn": "Superficial parotid nodes (left)",
+    "nameLatin": "Nodi parotidei superficiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superficial_parotid_nodes_r",
+    "node": "Superficial parotid nodes.r",
+    "fmaId": "TA2:superficial_parotid_nodes_r",
+    "namePtBr": "Superficial parotid nodes Direito",
+    "nameEn": "Superficial parotid nodes (right)",
+    "nameLatin": "Nodi parotidei superficiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superficial_popliteal_nodes_l",
+    "node": "Superficial popliteal nodes.l",
+    "fmaId": "TA2:superficial_popliteal_nodes_l",
+    "namePtBr": "Superficial popliteal nodes Esquerdo",
+    "nameEn": "Superficial popliteal nodes (left)",
+    "nameLatin": "Nodi poplitei superficiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superficial_popliteal_nodes_r",
+    "node": "Superficial popliteal nodes.r",
+    "fmaId": "TA2:superficial_popliteal_nodes_r",
+    "namePtBr": "Superficial popliteal nodes Direito",
+    "nameEn": "Superficial popliteal nodes (right)",
+    "nameLatin": "Nodi poplitei superficiales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superior_diaphragmatic_nodes",
+    "node": "Superior diaphragmatic nodes",
+    "fmaId": "TA2:superior_diaphragmatic_nodes",
+    "namePtBr": "Superior diaphragmatic nodes",
+    "nameEn": "Superior diaphragmatic nodes",
+    "nameLatin": "Nodi phrenici superiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superior_gluteal_nodes_l",
+    "node": "Superior gluteal nodes.l",
+    "fmaId": "TA2:superior_gluteal_nodes_l",
+    "namePtBr": "Superior gluteal nodes Esquerdo",
+    "nameEn": "Superior gluteal nodes (left)",
+    "nameLatin": "Nodi glutei superiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superior_gluteal_nodes_r",
+    "node": "Superior gluteal nodes.r",
+    "fmaId": "TA2:superior_gluteal_nodes_r",
+    "namePtBr": "Superior gluteal nodes Direito",
+    "nameEn": "Superior gluteal nodes (right)",
+    "nameLatin": "Nodi glutei superiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superior_pancreatic_nodes",
+    "node": "Superior pancreatic nodes",
+    "fmaId": "TA2:superior_pancreatic_nodes",
+    "namePtBr": "Superior pancreatic nodes",
+    "nameEn": "Superior pancreatic nodes",
+    "nameLatin": "Nodi pancreatici superiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superior_pancreaticoduodenal_nodes",
+    "node": "Superior pancreaticoduodenal nodes",
+    "fmaId": "TA2:superior_pancreaticoduodenal_nodes",
+    "namePtBr": "Superior pancreaticoduodenal nodes",
+    "nameEn": "Superior pancreaticoduodenal nodes",
+    "nameLatin": "Nodi pancreaticoduodenales superiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superior_tracheobronchial_nodes",
+    "node": "Superior tracheobronchial nodes",
+    "fmaId": "TA2:superior_tracheobronchial_nodes",
+    "namePtBr": "Superior tracheobronchial nodes",
+    "nameEn": "Superior tracheobronchial nodes",
+    "nameLatin": "Nodi tracheobronchiales superiores",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.15,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superolateral_superficial_inguinal_nodes_l",
+    "node": "Superolateral superficial inguinal nodes.l",
+    "fmaId": "TA2:superolateral_superficial_inguinal_nodes_l",
+    "namePtBr": "Superolateral superficial inguinal nodes Esquerdo",
+    "nameEn": "Superolateral superficial inguinal nodes (left)",
+    "nameLatin": "Nodi inguinales superficiales superolaterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superolateral_superficial_inguinal_nodes_r",
+    "node": "Superolateral superficial inguinal nodes.r",
+    "fmaId": "TA2:superolateral_superficial_inguinal_nodes_r",
+    "namePtBr": "Superolateral superficial inguinal nodes Direito",
+    "nameEn": "Superolateral superficial inguinal nodes (right)",
+    "nameLatin": "Nodi inguinales superficiales superolaterales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superomedial_superficial_inguinal_nodes_l",
+    "node": "Superomedial superficial inguinal nodes.l",
+    "fmaId": "TA2:superomedial_superficial_inguinal_nodes_l",
+    "namePtBr": "Superomedial superficial inguinal nodes Esquerdo",
+    "nameEn": "Superomedial superficial inguinal nodes (left)",
+    "nameLatin": "Nodi inguinales superficiales superomediales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:superomedial_superficial_inguinal_nodes_r",
+    "node": "Superomedial superficial inguinal nodes.r",
+    "fmaId": "TA2:superomedial_superficial_inguinal_nodes_r",
+    "namePtBr": "Superomedial superficial inguinal nodes Direito",
+    "nameEn": "Superomedial superficial inguinal nodes (right)",
+    "nameLatin": "Nodi inguinales superficiales superomediales",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:supraclavicular_nodes_l",
+    "node": "Supraclavicular nodes.l",
+    "fmaId": "TA2:supraclavicular_nodes_l",
+    "namePtBr": "Supraclavicular nodes Esquerdo",
+    "nameEn": "Supraclavicular nodes (left)",
+    "nameLatin": "Nodi supraclaviculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:supraclavicular_nodes_r",
+    "node": "Supraclavicular nodes.r",
+    "fmaId": "TA2:supraclavicular_nodes_r",
+    "namePtBr": "Supraclavicular nodes Direito",
+    "nameEn": "Supraclavicular nodes (right)",
+    "nameLatin": "Nodi supraclaviculares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:supratrochlear_nodes_l",
+    "node": "Supratrochlear nodes.l",
+    "fmaId": "TA2:supratrochlear_nodes_l",
+    "namePtBr": "Supratrochlear nodes Esquerdo",
+    "nameEn": "Supratrochlear nodes (left)",
+    "nameLatin": "Nodi supratrochleares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:supratrochlear_nodes_r",
+    "node": "Supratrochlear nodes.r",
+    "fmaId": "TA2:supratrochlear_nodes_r",
+    "namePtBr": "Supratrochlear nodes Direito",
+    "nameEn": "Supratrochlear nodes (right)",
+    "nameLatin": "Nodi supratrochleares",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid system"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:thyroid_nodes_l",
+    "node": "Thyroid nodes.l",
+    "fmaId": "TA2:thyroid_nodes_l",
+    "namePtBr": "Thyroid nodes Esquerdo",
+    "nameEn": "Thyroid nodes (left)",
+    "nameLatin": "Nodi thyreoidei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": -0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:thyroid_nodes_r",
+    "node": "Thyroid nodes.r",
+    "fmaId": "TA2:thyroid_nodes_r",
+    "namePtBr": "Thyroid nodes Direito",
+    "nameEn": "Thyroid nodes (right)",
+    "nameLatin": "Nodi thyreoidei",
+    "chapter": 6,
+    "system": "lymphatic",
+    "meshFile": "lymphatic_male.glb",
+    "path": [
+      "Lymphoid organs"
+    ],
+    "explosionVector": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:posterior_transverse_collateral_sulcus_l",
+    "node": " Posterior transverse collateral sulcus.l",
+    "fmaId": "TA2:posterior_transverse_collateral_sulcus_l",
+    "namePtBr": "Posterior transverse collateral sulcus Esquerdo",
+    "nameEn": "Posterior transverse collateral sulcus (left)",
+    "nameLatin": "Posterior transverse collateral sulcus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:posterior_transverse_collateral_sulcus_r",
+    "node": " Posterior transverse collateral sulcus.r",
+    "fmaId": "TA2:posterior_transverse_collateral_sulcus_r",
+    "namePtBr": "Posterior transverse collateral sulcus Direito",
+    "nameEn": "Posterior transverse collateral sulcus (right)",
+    "nameLatin": "Posterior transverse collateral sulcus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:communicating_branch_of_median_nerve_with_ulnar_nerve_l",
+    "node": "(Communicating branch of median nerve with ulnar nerve).l",
+    "fmaId": "TA2:communicating_branch_of_median_nerve_with_ulnar_nerve_l",
+    "namePtBr": "Communicating branch of median nerve with ulnar nerve Esquerdo",
+    "nameEn": "Communicating branch of median nerve with ulnar nerve (left)",
+    "nameLatin": "Communicating branch of median nerve with ulnar nerve",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:communicating_branch_of_median_nerve_with_ulnar_nerve_r",
+    "node": "(Communicating branch of median nerve with ulnar nerve).r",
+    "fmaId": "TA2:communicating_branch_of_median_nerve_with_ulnar_nerve_r",
+    "namePtBr": "Communicating branch of median nerve with ulnar nerve Direito",
+    "nameEn": "Communicating branch of median nerve with ulnar nerve (right)",
+    "nameLatin": "Communicating branch of median nerve with ulnar nerve",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 1.6,
+      "y": -0.3,
+      "z": 0.1
+    }
+  },
+  {
+    "id": "za:anterior_occipital_sulcus_l",
+    "node": "Anterior occipital sulcus*.l",
+    "fmaId": "TA2:anterior_occipital_sulcus_l",
+    "namePtBr": "Anterior occipital sulcus* Esquerdo",
+    "nameEn": "Anterior occipital sulcus* (left)",
+    "nameLatin": "Anterior occipital sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:anterior_occipital_sulcus_r",
+    "node": "Anterior occipital sulcus*.r",
+    "fmaId": "TA2:anterior_occipital_sulcus_r",
+    "namePtBr": "Anterior occipital sulcus* Direito",
+    "nameEn": "Anterior occipital sulcus* (right)",
+    "nameLatin": "Anterior occipital sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:nervous_central_canal",
+    "node": "Central canal'",
+    "fmaId": "TA2:central_canal",
+    "namePtBr": "Central canal'",
+    "nameEn": "Central canal'",
+    "nameLatin": "Central canal'",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_posteroventral_part_l",
+    "node": "Cingulate gyrus (Posteroventral part*).l",
+    "fmaId": "TA2:cingulate_gyrus_posteroventral_part_l",
+    "namePtBr": "Cingulate gyrus Posteroventral part* Esquerdo",
+    "nameEn": "Cingulate gyrus Posteroventral part* (left)",
+    "nameLatin": "Cingulate gyrus Posteroventral part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_posteroventral_part_r",
+    "node": "Cingulate gyrus (Posteroventral part*).r",
+    "fmaId": "TA2:cingulate_gyrus_posteroventral_part_r",
+    "namePtBr": "Cingulate gyrus Posteroventral part* Direito",
+    "nameEn": "Cingulate gyrus Posteroventral part* (right)",
+    "nameLatin": "Cingulate gyrus Posteroventral part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_and_sulcus_middle_anterior_part_l",
+    "node": "Cingulate gyrus and sulcus (Middle anterior part).l",
+    "fmaId": "TA2:cingulate_gyrus_and_sulcus_middle_anterior_part_l",
+    "namePtBr": "Cingulate gyrus and sulcus Middle anterior part Esquerdo",
+    "nameEn": "Cingulate gyrus and sulcus Middle anterior part (left)",
+    "nameLatin": "Cingulate gyrus and sulcus Middle anterior part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_and_sulcus_middle_anterior_part_r",
+    "node": "Cingulate gyrus and sulcus (Middle anterior part).r",
+    "fmaId": "TA2:cingulate_gyrus_and_sulcus_middle_anterior_part_r",
+    "namePtBr": "Cingulate gyrus and sulcus Middle anterior part Direito",
+    "nameEn": "Cingulate gyrus and sulcus Middle anterior part (right)",
+    "nameLatin": "Cingulate gyrus and sulcus Middle anterior part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_and_sulcus_middle_posterior_part_l",
+    "node": "Cingulate gyrus and sulcus (Middle posterior part).l",
+    "fmaId": "TA2:cingulate_gyrus_and_sulcus_middle_posterior_part_l",
+    "namePtBr": "Cingulate gyrus and sulcus Middle posterior part Esquerdo",
+    "nameEn": "Cingulate gyrus and sulcus Middle posterior part (left)",
+    "nameLatin": "Cingulate gyrus and sulcus Middle posterior part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_and_sulcus_middle_posterior_part_r",
+    "node": "Cingulate gyrus and sulcus (Middle posterior part).r",
+    "fmaId": "TA2:cingulate_gyrus_and_sulcus_middle_posterior_part_r",
+    "namePtBr": "Cingulate gyrus and sulcus Middle posterior part Direito",
+    "nameEn": "Cingulate gyrus and sulcus Middle posterior part (right)",
+    "nameLatin": "Cingulate gyrus and sulcus Middle posterior part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_and_sulcus_posterior_dorsal_part_l",
+    "node": "Cingulate gyrus and sulcus (Posterior dorsal part).l",
+    "fmaId": "TA2:cingulate_gyrus_and_sulcus_posterior_dorsal_part_l",
+    "namePtBr": "Cingulate gyrus and sulcus Posterior dorsal part Esquerdo",
+    "nameEn": "Cingulate gyrus and sulcus Posterior dorsal part (left)",
+    "nameLatin": "Cingulate gyrus and sulcus Posterior dorsal part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_gyrus_and_sulcus_posterior_dorsal_part_r",
+    "node": "Cingulate gyrus and sulcus (Posterior dorsal part).r",
+    "fmaId": "TA2:cingulate_gyrus_and_sulcus_posterior_dorsal_part_r",
+    "namePtBr": "Cingulate gyrus and sulcus Posterior dorsal part Direito",
+    "nameEn": "Cingulate gyrus and sulcus Posterior dorsal part (right)",
+    "nameLatin": "Cingulate gyrus and sulcus Posterior dorsal part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_sulcus_marginal_part_l",
+    "node": "Cingulate sulcus (Marginal part*).l",
+    "fmaId": "TA2:cingulate_sulcus_marginal_part_l",
+    "namePtBr": "Cingulate sulcus Marginal part* Esquerdo",
+    "nameEn": "Cingulate sulcus Marginal part* (left)",
+    "nameLatin": "Cingulate sulcus Marginal part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:cingulate_sulcus_marginal_part_r",
+    "node": "Cingulate sulcus (Marginal part*).r",
+    "fmaId": "TA2:cingulate_sulcus_marginal_part_r",
+    "namePtBr": "Cingulate sulcus Marginal part* Direito",
+    "nameEn": "Cingulate sulcus Marginal part* (right)",
+    "nameLatin": "Cingulate sulcus Marginal part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:inferior_occipital_gyrus_and_sulcus_l",
+    "node": "Inferior occipital gyrus and sulcus*.l",
+    "fmaId": "TA2:inferior_occipital_gyrus_and_sulcus_l",
+    "namePtBr": "Inferior occipital gyrus and sulcus* Esquerdo",
+    "nameEn": "Inferior occipital gyrus and sulcus* (left)",
+    "nameLatin": "Inferior occipital gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:inferior_occipital_gyrus_and_sulcus_r",
+    "node": "Inferior occipital gyrus and sulcus*.r",
+    "fmaId": "TA2:inferior_occipital_gyrus_and_sulcus_r",
+    "namePtBr": "Inferior occipital gyrus and sulcus* Direito",
+    "nameEn": "Inferior occipital gyrus and sulcus* (right)",
+    "nameLatin": "Inferior occipital gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:insula_subcentral_gyrus_and_ant_and_post_sulci_l",
+    "node": "Insula (Subcentral gyrus and ant. and post. sulci*).l",
+    "fmaId": "TA2:insula_subcentral_gyrus_and_ant_and_post_sulci_l",
+    "namePtBr": "Insula Subcentral gyrus and ant. and post. sulci* Esquerdo",
+    "nameEn": "Insula Subcentral gyrus and ant. and post. sulci* (left)",
+    "nameLatin": "Insula Subcentral gyrus and ant. and post. sulci*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:insula_subcentral_gyrus_and_ant_and_post_sulci_r",
+    "node": "Insula (Subcentral gyrus and ant. and post. sulci*).r",
+    "fmaId": "TA2:insula_subcentral_gyrus_and_ant_and_post_sulci_r",
+    "namePtBr": "Insula Subcentral gyrus and ant. and post. sulci* Direito",
+    "nameEn": "Insula Subcentral gyrus and ant. and post. sulci* (right)",
+    "nameLatin": "Insula Subcentral gyrus and ant. and post. sulci*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lat_fis_ant_horizont_l",
+    "node": "Lat_Fis-ant-Horizont.l",
+    "fmaId": "TA2:lat_fis_ant_horizont_l",
+    "namePtBr": "Lat_Fis-ant-Horizont Esquerdo",
+    "nameEn": "Lat_Fis-ant-Horizont (left)",
+    "nameLatin": "Lat_Fis-ant-Horizont",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lat_fis_ant_horizont_r",
+    "node": "Lat_Fis-ant-Horizont.r",
+    "fmaId": "TA2:lat_fis_ant_horizont_r",
+    "namePtBr": "Lat_Fis-ant-Horizont Direito",
+    "nameEn": "Lat_Fis-ant-Horizont (right)",
+    "nameLatin": "Lat_Fis-ant-Horizont",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lat_fis_ant_vertical_l",
+    "node": "Lat_Fis-ant-Vertical.l",
+    "fmaId": "TA2:lat_fis_ant_vertical_l",
+    "namePtBr": "Lat_Fis-ant-Vertical Esquerdo",
+    "nameEn": "Lat_Fis-ant-Vertical (left)",
+    "nameLatin": "Lat_Fis-ant-Vertical",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lat_fis_ant_vertical_r",
+    "node": "Lat_Fis-ant-Vertical.r",
+    "fmaId": "TA2:lat_fis_ant_vertical_r",
+    "namePtBr": "Lat_Fis-ant-Vertical Direito",
+    "nameEn": "Lat_Fis-ant-Vertical (right)",
+    "nameLatin": "Lat_Fis-ant-Vertical",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lat_fis_post_l",
+    "node": "Lat_Fis-post.l",
+    "fmaId": "TA2:lat_fis_post_l",
+    "namePtBr": "Lat_Fis-post Esquerdo",
+    "nameEn": "Lat_Fis-post (left)",
+    "nameLatin": "Lat_Fis-post",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lat_fis_post_r",
+    "node": "Lat_Fis-post.r",
+    "fmaId": "TA2:lat_fis_post_r",
+    "namePtBr": "Lat_Fis-post Direito",
+    "nameEn": "Lat_Fis-post (right)",
+    "nameLatin": "Lat_Fis-post",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lateral_occipital_gyrus_middle_occipital_gyrus_l",
+    "node": "Lateral occipital gyrus (Middle occipital gyrus*).l",
+    "fmaId": "TA2:lateral_occipital_gyrus_middle_occipital_gyrus_l",
+    "namePtBr": "Lateral occipital gyrus Middle occipital gyrus* Esquerdo",
+    "nameEn": "Lateral occipital gyrus Middle occipital gyrus* (left)",
+    "nameLatin": "Lateral occipital gyrus Middle occipital gyrus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lateral_occipital_gyrus_middle_occipital_gyrus_r",
+    "node": "Lateral occipital gyrus (Middle occipital gyrus*).r",
+    "fmaId": "TA2:lateral_occipital_gyrus_middle_occipital_gyrus_r",
+    "namePtBr": "Lateral occipital gyrus Middle occipital gyrus* Direito",
+    "nameEn": "Lateral occipital gyrus Middle occipital gyrus* (right)",
+    "nameLatin": "Lateral occipital gyrus Middle occipital gyrus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lunate_sulcus_l",
+    "node": "Lunate sulcus.l",
+    "fmaId": "TA2:lunate_sulcus_l",
+    "namePtBr": "Lunate sulcus Esquerdo",
+    "nameEn": "Lunate sulcus (left)",
+    "nameLatin": "Lunate sulcus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:lunate_sulcus_r",
+    "node": "Lunate sulcus.r",
+    "fmaId": "TA2:lunate_sulcus_r",
+    "namePtBr": "Lunate sulcus Direito",
+    "nameEn": "Lunate sulcus (right)",
+    "nameLatin": "Lunate sulcus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:medial_occipitotemporal_gyrus_parahippocampal_l",
+    "node": "Medial occipitotemporal gyrus (Parahippocampal*).l",
+    "fmaId": "TA2:medial_occipitotemporal_gyrus_parahippocampal_l",
+    "namePtBr": "Medial occipitotemporal gyrus Parahippocampal* Esquerdo",
+    "nameEn": "Medial occipitotemporal gyrus Parahippocampal* (left)",
+    "nameLatin": "Medial occipitotemporal gyrus Parahippocampal*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:medial_occipitotemporal_gyrus_parahippocampal_r",
+    "node": "Medial occipitotemporal gyrus (Parahippocampal*).r",
+    "fmaId": "TA2:medial_occipitotemporal_gyrus_parahippocampal_r",
+    "namePtBr": "Medial occipitotemporal gyrus Parahippocampal* Direito",
+    "nameEn": "Medial occipitotemporal gyrus Parahippocampal* (right)",
+    "nameLatin": "Medial occipitotemporal gyrus Parahippocampal*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:occipitotemporal_sulcus_lateral_part_l",
+    "node": "Occipitotemporal sulcus (Lateral part*).l",
+    "fmaId": "TA2:occipitotemporal_sulcus_lateral_part_l",
+    "namePtBr": "Occipitotemporal sulcus Lateral part* Esquerdo",
+    "nameEn": "Occipitotemporal sulcus Lateral part* (left)",
+    "nameLatin": "Occipitotemporal sulcus Lateral part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:occipitotemporal_sulcus_lateral_part_r",
+    "node": "Occipitotemporal sulcus (Lateral part*).r",
+    "fmaId": "TA2:occipitotemporal_sulcus_lateral_part_r",
+    "namePtBr": "Occipitotemporal sulcus Lateral part* Direito",
+    "nameEn": "Occipitotemporal sulcus Lateral part* (right)",
+    "nameLatin": "Occipitotemporal sulcus Lateral part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_gyri_frontomarginal_gyrus_and_sulcus_l",
+    "node": "Orbital gyri (Frontomarginal gyrus and sulcus*).l",
+    "fmaId": "TA2:orbital_gyri_frontomarginal_gyrus_and_sulcus_l",
+    "namePtBr": "Orbital gyri Frontomarginal gyrus and sulcus* Esquerdo",
+    "nameEn": "Orbital gyri Frontomarginal gyrus and sulcus* (left)",
+    "nameLatin": "Orbital gyri Frontomarginal gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_gyri_frontomarginal_gyrus_and_sulcus_r",
+    "node": "Orbital gyri (Frontomarginal gyrus and sulcus*).r",
+    "fmaId": "TA2:orbital_gyri_frontomarginal_gyrus_and_sulcus_r",
+    "namePtBr": "Orbital gyri Frontomarginal gyrus and sulcus* Direito",
+    "nameEn": "Orbital gyri Frontomarginal gyrus and sulcus* (right)",
+    "nameLatin": "Orbital gyri Frontomarginal gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_part_of_inferior_frontal_gyrus_l",
+    "node": "Orbital part of  inferior frontal gyrus.l",
+    "fmaId": "TA2:orbital_part_of_inferior_frontal_gyrus_l",
+    "namePtBr": "Orbital part of  inferior frontal gyrus Esquerdo",
+    "nameEn": "Orbital part of  inferior frontal gyrus (left)",
+    "nameLatin": "Orbital part of  inferior frontal gyrus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_part_of_inferior_frontal_gyrus_r",
+    "node": "Orbital part of  inferior frontal gyrus.r",
+    "fmaId": "TA2:orbital_part_of_inferior_frontal_gyrus_r",
+    "namePtBr": "Orbital part of  inferior frontal gyrus Direito",
+    "nameEn": "Orbital part of  inferior frontal gyrus (right)",
+    "nameLatin": "Orbital part of  inferior frontal gyrus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_sulci_h_shaped_orbital_sulci_l",
+    "node": "Orbital sulci (H-shaped orbital sulci*).l",
+    "fmaId": "TA2:orbital_sulci_h_shaped_orbital_sulci_l",
+    "namePtBr": "Orbital sulci H-shaped orbital sulci* Esquerdo",
+    "nameEn": "Orbital sulci H-shaped orbital sulci* (left)",
+    "nameLatin": "Orbital sulci H-shaped orbital sulci*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_sulci_h_shaped_orbital_sulci_r",
+    "node": "Orbital sulci (H-shaped orbital sulci*).r",
+    "fmaId": "TA2:orbital_sulci_h_shaped_orbital_sulci_r",
+    "namePtBr": "Orbital sulci H-shaped orbital sulci* Direito",
+    "nameEn": "Orbital sulci H-shaped orbital sulci* (right)",
+    "nameLatin": "Orbital sulci H-shaped orbital sulci*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_sulci_lateral_orbital_sulcus_l",
+    "node": "Orbital sulci (Lateral Orbital sulcus*).l",
+    "fmaId": "TA2:orbital_sulci_lateral_orbital_sulcus_l",
+    "namePtBr": "Orbital sulci Lateral Orbital sulcus* Esquerdo",
+    "nameEn": "Orbital sulci Lateral Orbital sulcus* (left)",
+    "nameLatin": "Orbital sulci Lateral Orbital sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:orbital_sulci_lateral_orbital_sulcus_r",
+    "node": "Orbital sulci (Lateral Orbital sulcus*).r",
+    "fmaId": "TA2:orbital_sulci_lateral_orbital_sulcus_r",
+    "namePtBr": "Orbital sulci Lateral Orbital sulcus* Direito",
+    "nameEn": "Orbital sulci Lateral Orbital sulcus* (right)",
+    "nameLatin": "Orbital sulci Lateral Orbital sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:paracentral_gyrus_and_sulcus_l",
+    "node": "Paracentral gyrus and sulcus*.l",
+    "fmaId": "TA2:paracentral_gyrus_and_sulcus_l",
+    "namePtBr": "Paracentral gyrus and sulcus* Esquerdo",
+    "nameEn": "Paracentral gyrus and sulcus* (left)",
+    "nameLatin": "Paracentral gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:paracentral_gyrus_and_sulcus_r",
+    "node": "Paracentral gyrus and sulcus*.r",
+    "fmaId": "TA2:paracentral_gyrus_and_sulcus_r",
+    "namePtBr": "Paracentral gyrus and sulcus* Direito",
+    "nameEn": "Paracentral gyrus and sulcus* (right)",
+    "nameLatin": "Paracentral gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:precentral_sulcus_inferior_part_l",
+    "node": "Precentral sulcus (inferior part)*.l",
+    "fmaId": "TA2:precentral_sulcus_inferior_part_l",
+    "namePtBr": "Precentral sulcus inferior part* Esquerdo",
+    "nameEn": "Precentral sulcus inferior part* (left)",
+    "nameLatin": "Precentral sulcus inferior part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:precentral_sulcus_inferior_part_r",
+    "node": "Precentral sulcus (inferior part)*.r",
+    "fmaId": "TA2:precentral_sulcus_inferior_part_r",
+    "namePtBr": "Precentral sulcus inferior part* Direito",
+    "nameEn": "Precentral sulcus inferior part* (right)",
+    "nameLatin": "Precentral sulcus inferior part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:precentral_sulcus_superior_part_l",
+    "node": "Precentral sulcus (Superior part)*.l",
+    "fmaId": "TA2:precentral_sulcus_superior_part_l",
+    "namePtBr": "Precentral sulcus Superior part* Esquerdo",
+    "nameEn": "Precentral sulcus Superior part* (left)",
+    "nameLatin": "Precentral sulcus Superior part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:precentral_sulcus_superior_part_r",
+    "node": "Precentral sulcus (Superior part)*.r",
+    "fmaId": "TA2:precentral_sulcus_superior_part_r",
+    "namePtBr": "Precentral sulcus Superior part* Direito",
+    "nameEn": "Precentral sulcus Superior part* (right)",
+    "nameLatin": "Precentral sulcus Superior part*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:straight_gyrus_gyrus_rectus_l",
+    "node": "Straight gyrus (Gyrus rectus).l",
+    "fmaId": "TA2:straight_gyrus_gyrus_rectus_l",
+    "namePtBr": "Straight gyrus Gyrus rectus Esquerdo",
+    "nameEn": "Straight gyrus Gyrus rectus (left)",
+    "nameLatin": "Straight gyrus Gyrus rectus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:straight_gyrus_gyrus_rectus_r",
+    "node": "Straight gyrus (Gyrus rectus).r",
+    "fmaId": "TA2:straight_gyrus_gyrus_rectus_r",
+    "namePtBr": "Straight gyrus Gyrus rectus Direito",
+    "nameEn": "Straight gyrus Gyrus rectus (right)",
+    "nameLatin": "Straight gyrus Gyrus rectus",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:sulcus_interm_prim_jensen_l",
+    "node": "Sulcus interm_prim-Jensen.l",
+    "fmaId": "TA2:sulcus_interm_prim_jensen_l",
+    "namePtBr": "Sulcus interm_prim-Jensen Esquerdo",
+    "nameEn": "Sulcus interm_prim-Jensen (left)",
+    "nameLatin": "Sulcus interm_prim-Jensen",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:sulcus_interm_prim_jensen_r",
+    "node": "Sulcus interm_prim-Jensen.r",
+    "fmaId": "TA2:sulcus_interm_prim_jensen_r",
+    "namePtBr": "Sulcus interm_prim-Jensen Direito",
+    "nameEn": "Sulcus interm_prim-Jensen (right)",
+    "nameLatin": "Sulcus interm_prim-Jensen",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:superior_temporal_gyrus_lateral_part_l",
+    "node": "Superior temporal gyrus (Lateral part).l",
+    "fmaId": "TA2:superior_temporal_gyrus_lateral_part_l",
+    "namePtBr": "Superior temporal gyrus Lateral part Esquerdo",
+    "nameEn": "Superior temporal gyrus Lateral part (left)",
+    "nameLatin": "Superior temporal gyrus Lateral part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:superior_temporal_gyrus_lateral_part_r",
+    "node": "Superior temporal gyrus (Lateral part).r",
+    "fmaId": "TA2:superior_temporal_gyrus_lateral_part_r",
+    "namePtBr": "Superior temporal gyrus Lateral part Direito",
+    "nameEn": "Superior temporal gyrus Lateral part (right)",
+    "nameLatin": "Superior temporal gyrus Lateral part",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:transverse_frontopolar_gyrus_and_sulcus_l",
+    "node": "Transverse frontopolar gyrus and sulcus*.l",
+    "fmaId": "TA2:transverse_frontopolar_gyrus_and_sulcus_l",
+    "namePtBr": "Transverse frontopolar gyrus and sulcus* Esquerdo",
+    "nameEn": "Transverse frontopolar gyrus and sulcus* (left)",
+    "nameLatin": "Transverse frontopolar gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:transverse_frontopolar_gyrus_and_sulcus_r",
+    "node": "Transverse frontopolar gyrus and sulcus*.r",
+    "fmaId": "TA2:transverse_frontopolar_gyrus_and_sulcus_r",
+    "namePtBr": "Transverse frontopolar gyrus and sulcus* Direito",
+    "nameEn": "Transverse frontopolar gyrus and sulcus* (right)",
+    "nameLatin": "Transverse frontopolar gyrus and sulcus*",
+    "chapter": 4,
+    "system": "nervous",
+    "meshFile": "nervous_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    }
+  },
+  {
+    "id": "za:anteromedial_basal_segmental_bronchus_of_left_lung",
+    "node": "(Anteromedial basal segmental bronchus of left lung)",
+    "fmaId": "TA2:anteromedial_basal_segmental_bronchus_of_left_lung",
+    "namePtBr": "Anteromedial basal segmental bronchus of left lung",
+    "nameEn": "Anteromedial basal segmental bronchus of left lung",
+    "nameLatin": "Anteromedial basal segmental bronchus of left lung",
+    "chapter": 7,
+    "system": "respiratory",
+    "meshFile": "respiratory_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.1,
+      "z": 0.4
+    }
+  },
+  {
+    "id": "za:accessory_parotid_gland_l",
+    "node": "(Accessory parotid gland).l",
+    "fmaId": "TA2:accessory_parotid_gland_l",
+    "namePtBr": "Accessory parotid gland Esquerdo",
+    "nameEn": "Accessory parotid gland (left)",
+    "nameLatin": "Accessory parotid gland",
+    "chapter": 8,
+    "system": "digestive",
+    "meshFile": "digestive_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": -0.5,
+      "y": -0.2,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:accessory_parotid_gland_r",
+    "node": "(Accessory parotid gland).r",
+    "fmaId": "TA2:accessory_parotid_gland_r",
+    "namePtBr": "Accessory parotid gland Direito",
+    "nameEn": "Accessory parotid gland (right)",
+    "nameLatin": "Accessory parotid gland",
+    "chapter": 8,
+    "system": "digestive",
+    "meshFile": "digestive_male.glb",
+    "path": [],
+    "explosionVector": {
+      "x": 0.5,
+      "y": -0.2,
+      "z": 0.8
+    }
+  },
+  {
+    "id": "za:adenohypophysis",
+    "node": "Adenohypophysis",
+    "fmaId": "TA2:adenohypophysis",
+    "namePtBr": "Adenohypophysis",
+    "nameEn": "Adenohypophysis",
+    "nameLatin": "Adenohypophysis",
+    "chapter": 11,
+    "system": "endocrine",
+    "meshFile": "endocrine_male.glb",
+    "path": [
+      "Endocrine glands"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.2,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:neurohypophysis",
+    "node": "Neurohypophysis",
+    "fmaId": "TA2:neurohypophysis",
+    "namePtBr": "Neurohypophysis",
+    "nameEn": "Neurohypophysis",
+    "nameLatin": "Neurohypophysis",
+    "chapter": 11,
+    "system": "endocrine",
+    "meshFile": "endocrine_male.glb",
+    "path": [
+      "Endocrine glands"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.2,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:pineal_gland",
+    "node": "Pineal gland",
+    "fmaId": "TA2:pineal_gland",
+    "namePtBr": "Pineal gland",
+    "nameEn": "Pineal gland",
+    "nameLatin": "Glandula pinealis",
+    "chapter": 11,
+    "system": "endocrine",
+    "meshFile": "endocrine_male.glb",
+    "path": [
+      "Endocrine glands"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.2,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:suprarenal_gland_l",
+    "node": "Suprarenal gland.l",
+    "fmaId": "TA2:suprarenal_gland_l",
+    "namePtBr": "Suprarenal gland Esquerdo",
+    "nameEn": "Suprarenal gland (left)",
+    "nameLatin": "Glandula suprarenalis",
+    "chapter": 11,
+    "system": "endocrine",
+    "meshFile": "endocrine_male.glb",
+    "path": [
+      "Endocrine glands"
+    ],
+    "explosionVector": {
+      "x": -0.4,
+      "y": 0.2,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:suprarenal_gland_r",
+    "node": "Suprarenal gland.r",
+    "fmaId": "TA2:suprarenal_gland_r",
+    "namePtBr": "Suprarenal gland Direito",
+    "nameEn": "Suprarenal gland (right)",
+    "nameLatin": "Glandula suprarenalis",
+    "chapter": 11,
+    "system": "endocrine",
+    "meshFile": "endocrine_male.glb",
+    "path": [
+      "Endocrine glands"
+    ],
+    "explosionVector": {
+      "x": 0.4,
+      "y": 0.2,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:thyroid_gland",
+    "node": "Thyroid gland",
+    "fmaId": "TA2:thyroid_gland",
+    "namePtBr": "Thyroid gland",
+    "nameEn": "Thyroid gland",
+    "nameLatin": "Glandula thyreoidea",
+    "chapter": 11,
+    "system": "endocrine",
+    "meshFile": "endocrine_male.glb",
+    "path": [
+      "Endocrine glands"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": 0.2,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:corpus_cavernosum_of_penis",
+    "node": "Corpus cavernosum of penis",
+    "fmaId": "TA2:corpus_cavernosum_of_penis",
+    "namePtBr": "Corpus cavernosum of penis",
+    "nameEn": "Corpus cavernosum of penis",
+    "nameLatin": "Corpus cavernosum penis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:corpus_spongiosum_of_penis",
+    "node": "Corpus spongiosum of penis",
+    "fmaId": "TA2:corpus_spongiosum_of_penis",
+    "namePtBr": "Corpus spongiosum of penis",
+    "nameEn": "Corpus spongiosum of penis",
+    "nameLatin": "Corpus spongiosum penis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:ductus_deferens_l",
+    "node": "Ductus deferens.l",
+    "fmaId": "TA2:ductus_deferens_l",
+    "namePtBr": "Ductus deferens Esquerdo",
+    "nameEn": "Ductus deferens (left)",
+    "nameLatin": "Ductus deferens",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": -0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:ductus_deferens_r",
+    "node": "Ductus deferens.r",
+    "fmaId": "TA2:ductus_deferens_r",
+    "namePtBr": "Ductus deferens Direito",
+    "nameEn": "Ductus deferens (right)",
+    "nameLatin": "Ductus deferens",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:ejaculatory_duct_l",
+    "node": "Ejaculatory duct.l",
+    "fmaId": "TA2:ejaculatory_duct_l",
+    "namePtBr": "Ejaculatory duct Esquerdo",
+    "nameEn": "Ejaculatory duct (left)",
+    "nameLatin": "Ductus ejaculatorius",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": -0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:ejaculatory_duct_r",
+    "node": "Ejaculatory duct.r",
+    "fmaId": "TA2:ejaculatory_duct_r",
+    "namePtBr": "Ejaculatory duct Direito",
+    "nameEn": "Ejaculatory duct (right)",
+    "nameLatin": "Ductus ejaculatorius",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:epididymis_l",
+    "node": "Epididymis.l",
+    "fmaId": "TA2:epididymis_l",
+    "namePtBr": "Epididymis Esquerdo",
+    "nameEn": "Epididymis (left)",
+    "nameLatin": "Epididymis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": -0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:epididymis_r",
+    "node": "Epididymis.r",
+    "fmaId": "TA2:epididymis_r",
+    "namePtBr": "Epididymis Direito",
+    "nameEn": "Epididymis (right)",
+    "nameLatin": "Epididymis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:glans_penis",
+    "node": "Glans penis",
+    "fmaId": "TA2:glans_penis",
+    "namePtBr": "Glans penis",
+    "nameEn": "Glans penis",
+    "nameLatin": "Glans penis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:prostate",
+    "node": "Prostate",
+    "fmaId": "TA2:prostate",
+    "namePtBr": "Prostate",
+    "nameEn": "Prostate",
+    "nameLatin": "Prostata",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:seminal_gland_l",
+    "node": "Seminal gland.l",
+    "fmaId": "TA2:seminal_gland_l",
+    "namePtBr": "Seminal gland Esquerdo",
+    "nameEn": "Seminal gland (left)",
+    "nameLatin": "Glandula seminalis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": -0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:seminal_gland_r",
+    "node": "Seminal gland.r",
+    "fmaId": "TA2:seminal_gland_r",
+    "namePtBr": "Seminal gland Direito",
+    "nameEn": "Seminal gland (right)",
+    "nameLatin": "Glandula seminalis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:testis_l",
+    "node": "Testis.l",
+    "fmaId": "TA2:testis_l",
+    "namePtBr": "Testis Esquerdo",
+    "nameEn": "Testis (left)",
+    "nameLatin": "Testis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": -0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
+  },
+  {
+    "id": "za:testis_r",
+    "node": "Testis.r",
+    "fmaId": "TA2:testis_r",
+    "namePtBr": "Testis Direito",
+    "nameEn": "Testis (right)",
+    "nameLatin": "Testis",
+    "chapter": 10,
+    "system": "reproductive",
+    "meshFile": "reproductive_male.glb",
+    "path": [
+      "Genital systems"
+    ],
+    "explosionVector": {
+      "x": 0.4,
+      "y": -0.5,
+      "z": 0.6
+    }
   }
 ];
 

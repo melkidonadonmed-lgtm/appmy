@@ -8,6 +8,50 @@ function normalizeText(text: string): string {
 }
 
 /**
+ * Filtra a árvore taxonômica por região corporal topográfica (ex.: 'cranium', 'spine', 'thorax', 'upper_limb', 'pelvis', 'lower_limb').
+ * Mantém a hierarquia de sistemas e subcamadas, recalculando descendantIds para a região ativa.
+ */
+export function filterTreeByRegion(
+  nodes: TaxonomicTreeNode[],
+  region: string
+): TaxonomicTreeNode[] {
+  if (!region || region === 'all') return nodes;
+  const targetReg = region === 'spine' ? 'vertebral_column' : region;
+
+  return nodes
+    .map((node) => {
+      if (node.type === 'leaf') {
+        return node.regionId === targetReg || node.regionId === 'systemic' ? node : null;
+      }
+
+      if (node.type === 'region' && node.regionId) {
+        return node.regionId === targetReg || node.regionId === 'systemic' ? node : null;
+      }
+
+      if (node.children && node.children.length > 0) {
+        const filteredChildren = filterTreeByRegion(node.children, region);
+        if (filteredChildren.length > 0) {
+          const allDescendants = new Set<string>();
+          for (const child of filteredChildren) {
+            for (const id of child.descendantIds) {
+              allDescendants.add(id);
+            }
+          }
+          return {
+            ...node,
+            children: filteredChildren,
+            itemCount: allDescendants.size,
+            descendantIds: Array.from(allDescendants),
+          };
+        }
+      }
+
+      return null;
+    })
+    .filter((node): node is TaxonomicTreeNode => node !== null);
+}
+
+/**
  * Filtra a árvore taxonômica por busca textual em tempo real,
  * preservando a integridade da hierarquia de pais caso algum filho corresponda.
  * Suporta normalização de acentos (ex: "cranio" acha "Crânio") e case-insensitivity.
