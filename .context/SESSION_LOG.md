@@ -18,11 +18,16 @@
     - Extraídos todos os números mágicos remanescentes nos **79 arquivos `.ts`/`.tsx` de `src/`** (incluindo `GLSL_SECONDARY_ALONG_FREQ` e `GLSL_MICRO_ALONG_FREQ` em `src/core/tissueShader.ts`, atingindo `js_ts_ast_parser.js` = `0` issues em 79/79 arquivos) e em `scripts/build_z_anatomy_catalog.py` (`state_checker_observer.py` $S_{\text{norm}} = 100.0/100$, `Pass@10 = 1`), além da eliminação das 2 ocorrências residuais de `any` em `tests/`.
     - Higienizada a raiz do repositório (removidos `designer.md`, `dataconnect/`, `docs/`, `scripts/__pycache__/`; movidos `deploy-cloudrun.ps1` e `deploy-cloudrun.sh` para `scripts/`), removidos 7 exports órfãos, ~330 linhas de CSS morto em `src/client/index.css` e configurado `manualChunks(id)` em `vite.config.ts` (eliminando o chunk vazio `react-vendor` e isolando `anatomy-catalog`).
     - Aplicada refatoração tátil completa (`index.html` sem `/>` em elementos void + `Plus Jakarta Sans`/`Space Grotesk`, `.btn-tactile`/`.card-tactile`, `:active`, `prefers-reduced-motion`, substituição de 133 hexadecimais Slate estáticos pelos tokens dinâmicos dos 5 temas minerais, eliminação de `transition: all` e `rotate(0deg)`, `.neuro-equation-chip` / `@keyframes bookmark-fade-in`, `role="status"` + `aria-live="polite"` + `aria-busy={loadingHealth}` na sonda Cloud Run) e atualizado `.context/RELATORIO_ANALISE_FRONTEND.md`.
+  - **Revisão Cética e Correção Final (Exploded View, Neuroanatomia 3D Real + Didática, Bisturi 3D e Cache Offline `.GLB` — 2026-10-15 12:55)**:
+    - Corrigido `.outliner-tabs-nav` em `src/client/index.css` para `repeat(4, 1fr)` e adicionadas todas as 16 classes CSS táteis minerais para `NeuroAnatomyPanelSection.tsx` e `OfflinePartsManagerSection.tsx`.
+    - Incluídos os arquivos `/draco/gltf/*` em `DRACO_STATIC_FILES` e normalização de `pathname` em `installOfflineCacheFetchInterceptor` (`src/client/lib/modelCacheManager.ts`), além de persistência de `selectivePartLoading`, `loadedParts` e `layerOrder` em `localStorage`.
+    - Sincronizado `NeurologyScene.tsx` com `hiddenNodeIds`, `peelOnClickMode`, `<AnatomicalCallout3D>` e tradução bidirecional `fma:* <-> za:*` em `setViewType`.
+    - Separados os IDs reprodutivos por sexo biológico via `getSystemCheckIdsForSex` (`useAnatomyStore.ts` e `AnatomyFiltersSection.tsx`), indexado `FEMALE_REPRODUCTIVE_CATALOG` em `getNodeAliases` e higienizado `peeledHistory` ao alternar para `female`.
 
 ---
 
 ## 2. Comandos Validados no Terminal (Quality Gate)
 
 - `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript e zero `any` em `src/client`, `src/core`, `src/shared` e `src/server`).
-- `npm test` -> Exit Code 0 (**234 testes unitários aprovados em 32 suítes Vitest**).
+- `npm test` -> Exit Code 0 (**251 testes unitários aprovados em 33 suítes Vitest**).
 - `npm run build` -> Exit Code 0 (Build de produção Vite + Express concluído sem erros).

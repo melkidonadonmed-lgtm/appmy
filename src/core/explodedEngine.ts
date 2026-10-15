@@ -263,12 +263,24 @@ export function bindExplodedNode(
       ) {
         const [rawX, rawY, rawZ] = data.eixoExplosao;
         const alignedCatX =
-          laterality !== 0 && Math.abs(rawX) > 0.001
+          laterality !== 0
             ? laterality * Math.abs(rawX)
-            : rawX;
-        const catY =
-          data.sistema === 'nervous' && activeRegion !== 'cranium' ? rawY * 0.25 : rawY * 0.45;
-        const catZ = rawZ * 0.45;
+            : Math.abs(posX) > 0.015
+            ? Math.sign(posX) * Math.abs(rawX)
+            : 0;
+        const isGenericNervousFallback =
+          data.sistema === 'nervous' && Math.abs(rawX) < 0.001 && Math.abs(rawZ) < 0.001;
+        const catY = isGenericNervousFallback
+          ? posY > 1.45
+            ? (posY - 1.54) * 1.15
+            : (posY - 0.98) * 0.14
+          : data.sistema === 'nervous' && activeRegion !== 'cranium'
+          ? rawY * 0.25
+          : rawY * 0.45;
+        const catZ =
+          relZ < -0.015 && rawZ > 0 && data.sistema !== 'skeletal'
+            ? -Math.abs(rawZ) * 0.45
+            : rawZ * 0.45;
 
         dirX = dirX * 0.65 + alignedCatX * 0.35;
         dirY = dirY * 0.65 + catY * 0.35;

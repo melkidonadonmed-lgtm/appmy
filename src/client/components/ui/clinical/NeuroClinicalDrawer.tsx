@@ -51,18 +51,25 @@ export const NeuroClinicalDrawer: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [clinicalStudioOpen, setClinicalStudioOpen]);
 
+  const applyPreset = useAnatomyStore((s) => s.applyPreset);
+
   if (!clinicalStudioOpen) return null;
+
+  const activateRealNeuroGlb3D = () => {
+    setViewType('realistic');
+    applyPreset('neuroanatomy');
+  };
 
   const activateDidacticNeuro3D = () => {
     setViewType('exploded');
     setActiveSystem('nervous');
-    setExplosionProgress(35);
+    setExplosionProgress(0.35);
   };
 
   const activateDidacticSkull3D = () => {
     setViewType('exploded');
     setActiveSystem('skeletal');
-    setExplosionProgress(40);
+    setExplosionProgress(0.4);
   };
 
   return (
@@ -89,6 +96,15 @@ export const NeuroClinicalDrawer: React.FC = () => {
         <div className="neuro-drawer-header-actions">
           <button
             type="button"
+            onClick={activateRealNeuroGlb3D}
+            className="neuro-quick-scene-btn"
+            title="Ativar Encéfalo Real Z-Anatomy (.GLB) com Crânio Translúcido"
+          >
+            <Brain size={12} strokeWidth={1.5} aria-hidden="true" />
+            <span>Encéfalo Real (.GLB)</span>
+          </button>
+          <button
+            type="button"
             onClick={activateDidacticSkull3D}
             className="neuro-quick-scene-btn"
             title="Ativar Vista Didática 3D do Crânio Explodido"
@@ -103,7 +119,7 @@ export const NeuroClinicalDrawer: React.FC = () => {
             title="Ativar Vista Didática 3D do Encéfalo, Núcleos Profundos, Willis e Nervos Cranianos"
           >
             <Eye size={12} strokeWidth={1.5} aria-hidden="true" />
-            <span>Encéfalo Profundo 3D</span>
+            <span>Encéfalo Didático 3D</span>
           </button>
           <button
             type="button"

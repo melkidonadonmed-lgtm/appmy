@@ -305,20 +305,49 @@ export function AnatomicalAtlasScene({
   // O RealBodyAtlas gerencia com exclusividade os modelos médicos autênticos do Z-Anatomy.
   const showProcedural = !isRealistic;
 
-  const showSkeletal = showProcedural && (activeSystem === 'skeletal' || activeSystem === 'all');
-  const showMuscular = showProcedural && (activeSystem === 'muscular' || activeSystem === 'all') && layerPeelingLevel > 0;
-  const showCardiovascular = showProcedural && activeSystem === 'cardiovascular';
-  const showNervous = showProcedural && activeSystem === 'nervous';
-  const showRespiratory = showProcedural && activeSystem === 'respiratory';
-  const showDigestive = showProcedural && activeSystem === 'digestive';
-  const showLymphatic = showProcedural && activeSystem === 'lymphatic';
-  const showUrinary = showProcedural && activeSystem === 'urinary';
-  const showEndocrine = showProcedural && activeSystem === 'endocrine';
-  const showReproductive = showProcedural && activeSystem === 'reproductive';
-  const showSensory = showProcedural && activeSystem === 'sensory';
+  const storeActiveSystems = useAnatomyStore((s) => s.activeSystems);
+  const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
+
+  const isProceduralSysEnabled = (sys: ActiveAnatomicalSystem) => {
+    if (!showProcedural) return false;
+    if (activeSystem === sys) return true;
+    if (storeActiveSystems && !storeActiveSystems.has('all') && storeActiveSystems.has(sys)) {
+      return true;
+    }
+    return false;
+  };
+
+  const showSkeletal =
+    showProcedural &&
+    (activeSystem === 'skeletal' ||
+      activeSystem === 'all' ||
+      Boolean(storeActiveSystems && storeActiveSystems.has('skeletal')));
+  const showMuscular =
+    showProcedural &&
+    (activeSystem === 'muscular' || (activeSystem === 'all' && layerPeelingLevel > 0));
+  const showCardiovascular = isProceduralSysEnabled('cardiovascular');
+  const showNervous =
+    isProceduralSysEnabled('nervous') ||
+    (showProcedural && activeSystem === 'all' && activeRegion === 'cranium');
+  const showRespiratory = isProceduralSysEnabled('respiratory');
+  const showDigestive = isProceduralSysEnabled('digestive');
+  const showLymphatic = isProceduralSysEnabled('lymphatic');
+  const showUrinary = isProceduralSysEnabled('urinary');
+  const showEndocrine = isProceduralSysEnabled('endocrine');
+  const showReproductive = isProceduralSysEnabled('reproductive');
+  const showSensory = isProceduralSysEnabled('sensory');
   const showIntegumentary =
     showProcedural &&
     (activeSystem === 'integumentary' || (activeSystem === 'all' && layerPeelingLevel >= 3));
+
+  const handleDidacticNodeClick = (node: AnyAnatomicalNode, isSelected: boolean) => {
+    const storeState = useAnatomyStore.getState();
+    if (storeState.peelOnClickMode) {
+      storeState.peelNodeOnClick(node.id, node.namePtBr, [node.id, node.meshName]);
+      return;
+    }
+    onSelectNode(isSelected ? null : node);
+  };
 
   // Coleta de Lixo WebGL Determinística ao desmontar a cena
   useEffect(() => {
@@ -349,8 +378,11 @@ export function AnatomicalAtlasScene({
       ) : (
         showSkeletal && (
           CRANIUM_22_NODES.map((node) => {
+            if (hiddenNodeIds.has(node.id) || hiddenNodeIds.has(node.meshName)) {
+              return null;
+            }
             const isSelected = selectedNodeId === node.id;
-            const isGhost = Boolean(selectedNodeId && !isSelected && ghostMode);
+            const isGhost = Boolean(selectedNodeId && !isSelected && ghostMode) || showNervous;
             const isIsolatedHidden = Boolean(selectedNodeId && !isSelected && isolatedOnly);
             const isVisibleInDivision = activeDivision === 'all' || node.division === activeDivision;
 
@@ -364,7 +396,7 @@ export function AnatomicalAtlasScene({
                 isIsolatedHidden={isIsolatedHidden}
                 isVisibleInDivision={isVisibleInDivision}
                 isXRay={isXRay}
-                onSelect={() => onSelectNode(isSelected ? null : node)}
+                onSelect={() => handleDidacticNodeClick(node, isSelected)}
               />
             );
           })
@@ -374,6 +406,9 @@ export function AnatomicalAtlasScene({
       {/* 2. Músculos Mastigatórios e Mímica Facial (Miologia - Cap. 3) */}
       {showMuscular &&
         CRANIOFACIAL_MUSCLES.map((node) => {
+          if (hiddenNodeIds.has(node.id) || hiddenNodeIds.has(node.meshName)) {
+            return null;
+          }
           const isSelected = selectedNodeId === node.id;
           const isGhost = Boolean(selectedNodeId && !isSelected && ghostMode);
           const isIsolatedHidden = Boolean(selectedNodeId && !isSelected && isolatedOnly);
@@ -388,7 +423,7 @@ export function AnatomicalAtlasScene({
               isGhost={isGhost}
               isIsolatedHidden={isIsolatedHidden}
               isXRay={isXRay}
-              onSelect={() => onSelectNode(isSelected ? null : node)}
+              onSelect={() => handleDidacticNodeClick(node, isSelected)}
             />
           );
         })}

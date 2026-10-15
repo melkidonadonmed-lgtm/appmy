@@ -12,6 +12,7 @@ import {
   Activity,
   Sliders,
   Maximize2,
+  Undo2,
 } from 'lucide-react';
 import { DissectionState, DissectionVisualMode, MprPlaneType } from '../../../shared/types/dissection.ts';
 import { getAnatomicalLandmark } from '../../lib/dissection-planes.ts';
@@ -37,6 +38,12 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
   const showAll = useAnatomyStore((s) => s.showAll);
   const applyPreset = useAnatomyStore((s) => s.applyPreset);
   const setSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
+  const peelOnClickMode = useAnatomyStore((s) => s.peelOnClickMode);
+  const togglePeelOnClickMode = useAnatomyStore((s) => s.togglePeelOnClickMode);
+  const peeledHistory = useAnatomyStore((s) => s.peeledHistory);
+  const undoLastPeel = useAnatomyStore((s) => s.undoLastPeel);
+  const peelNextLayerInOrder = useAnatomyStore((s) => s.peelNextLayerInOrder);
+  const restorePreviousLayerInOrder = useAnatomyStore((s) => s.restorePreviousLayerInOrder);
 
   const explosionPct = Math.round(explosionProgress * 100);
   const depthPct = Math.round(((activeDepth - 1) / 5) * 100);
@@ -236,6 +243,48 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
           </div>
 
           <div className="dissection-actions-row">
+            <button
+              type="button"
+              className={`action-btn ${peelOnClickMode ? 'active' : ''}`}
+              onClick={togglePeelOnClickMode}
+              title="Modo Bisturi 3D: Quando ativo, clicar em qualquer estrutura no modelo 3D retira (oculta) essa camada para expor o interior (ou segure Alt+Clique)"
+            >
+              <Scissors size={13} strokeWidth={1.5} />
+              <span>Bisturi (Clique p/ Retirar): {peelOnClickMode ? 'ON' : 'OFF'}</span>
+            </button>
+
+            {peeledHistory.length > 0 && (
+              <button
+                type="button"
+                className="action-btn"
+                onClick={undoLastPeel}
+                title={`Desfazer a última peça retirada (${peeledHistory.length} no histórico)`}
+              >
+                <Undo2 size={13} strokeWidth={1.5} />
+                <span>Desfazer Peça ({peeledHistory.length})</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              className="action-btn"
+              onClick={peelNextLayerInOrder}
+              title="Retirar a próxima camada externa segundo a ordem configurada"
+            >
+              <Layers size={13} strokeWidth={1.5} />
+              <span>-1 Camada</span>
+            </button>
+
+            <button
+              type="button"
+              className="action-btn"
+              onClick={restorePreviousLayerInOrder}
+              title="Devolver a última camada de sistema ocultada"
+            >
+              <Layers size={13} strokeWidth={1.5} />
+              <span>+1 Camada</span>
+            </button>
+
             <button
               type="button"
               className={`action-btn ${ghostMode ? 'active' : ''}`}

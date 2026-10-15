@@ -29,10 +29,17 @@ import {
   VisibilityState,
 } from '../../../core/visibilityManager.ts';
 import { AnatomicalMeshUserData } from '../../../shared/types/anatomy.ts';
+import { installOfflineCacheFetchInterceptor } from '../../lib/modelCacheManager.ts';
 
 // Configuração do decodificador Draco local offline em public/draco/gltf/
 const DRACO_DECODER_PATH = '/draco/gltf/';
 const CRANIUM_FOCUS_OFFSET_Y = -4.6;
+const DEFAULT_MODEL_OFFSET: [number, number, number] = [0, 0, 0];
+const FEMALE_PELVIC_OFFSET: [number, number, number] = [0, 0.84, 0.03];
+
+if (typeof window !== 'undefined') {
+  installOfflineCacheFetchInterceptor();
+}
 
 export interface RealBodyAtlasProps {
   explosionProgress: number; // 0.0 a 1.0
@@ -350,7 +357,7 @@ function RealSystemModel({
   opacity = 1.0,
   isXRay = false,
   magnitude = 0.35,
-  modelOffset = [0, 0, 0],
+  modelOffset = DEFAULT_MODEL_OFFSET,
 }: {
   glbPath: string;
   systemName: string;
@@ -366,6 +373,7 @@ function RealSystemModel({
   magnitude?: number;
   modelOffset?: [number, number, number];
 }) {
+  const [offsetX, offsetY, offsetZ] = modelOffset;
   const { scene } = useGLTF(glbPath, DRACO_DECODER_PATH);
   const clonedScene = useMemo(() => {
     const clone = scene.clone(true);
@@ -528,7 +536,7 @@ function RealSystemModel({
     });
 
     return list;
-  }, [clonedScene, defaultColor, systemName, activeRegion, magnitude, modelOffset]);
+  }, [clonedScene, defaultColor, systemName, activeRegion, magnitude, offsetX, offsetY, offsetZ]);
 
   // Atualização em tempo real das cores, visibilidade por região, 6 camadas e blindagem de raycast
   useEffect(() => {
@@ -691,11 +699,11 @@ function RealSystemModel({
       getMeshAnatomicalCenter(mesh);
     // Subtrai modelOffset pois o <AnatomicalCallout3D> já é renderizado dentro de <group position={modelOffset}>
     return [
-      anatomicalCenter.x - modelOffset[0] + (targetMeshPos.x - initPos.x),
-      anatomicalCenter.y - modelOffset[1] + (targetMeshPos.y - initPos.y),
-      anatomicalCenter.z - modelOffset[2] + (targetMeshPos.z - initPos.z),
+      anatomicalCenter.x - offsetX + (targetMeshPos.x - initPos.x),
+      anatomicalCenter.y - offsetY + (targetMeshPos.y - initPos.y),
+      anatomicalCenter.z - offsetZ + (targetMeshPos.z - initPos.z),
     ];
-  }, [selectedMeshItem, explosionProgress, modelOffset, clickedLocalAnchor]);
+  }, [selectedMeshItem, explosionProgress, offsetX, offsetY, offsetZ, clickedLocalAnchor]);
 
   return (
     <group position={modelOffset}>
@@ -711,9 +719,43 @@ function RealSystemModel({
           setHoveredNode(null);
           setStoreHoveredNode(null);
         }}
-        onClick={(e: { stopPropagation: () => void; object: THREE.Object3D; point?: THREE.Vector3 }) => {
+        onClick={(e: {
+          stopPropagation: () => void;
+          object: THREE.Object3D;
+          point?: THREE.Vector3;
+          altKey?: boolean;
+        }) => {
           e.stopPropagation();
           const target = animNodes.find((d) => d.mesh === e.object);
+          const rawName = (e.object.userData?.name as string) || e.object.name;
+          const resolvedItem =
+            target?.item ||
+            Z_ANATOMY_BY_NODE[rawName] ||
+            Z_ANATOMY_BY_NODE[e.object.name] ||
+            Z_ANATOMY_BY_NODE[sanitizeNodeName(rawName)] ||
+            Z_ANATOMY_BY_NODE[sanitizeNodeName(e.object.name)] ||
+            null;
+
+          // Modo Bisturi 3D (Click-to-Peel) ou atalho Alt+Clique: retira imediatamente a estrutura clicada!
+          const storeState = useAnatomyStore.getState();
+          if (storeState.peelOnClickMode || e.altKey) {
+            const formatted = formatAnatomicalMeshName(rawName);
+            const fallbackId =
+              resolvedItem?.id ||
+              (e.object.userData?.id as string) ||
+              `za:${e.object.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+            const labelPt = resolvedItem?.namePtBr || formatted.namePtBr || e.object.name;
+            storeState.peelNodeOnClick(fallbackId, labelPt, [
+              e.object.name,
+              rawName,
+              sanitizeNodeName(rawName),
+              ...(resolvedItem ? [resolvedItem.id, resolvedItem.node] : []),
+            ]);
+            setHoveredNode(null);
+            setStoreHoveredNode(null);
+            return;
+          }
+
           if (target && e.point && e.object.parent) {
             const localPt = e.object.parent.worldToLocal(e.point.clone());
             const initPos =
@@ -731,14 +773,6 @@ function RealSystemModel({
             setClickedLocalAnchor(null);
           }
 
-          const rawName = (e.object.userData?.name as string) || e.object.name;
-          const resolvedItem =
-            target?.item ||
-            Z_ANATOMY_BY_NODE[rawName] ||
-            Z_ANATOMY_BY_NODE[e.object.name] ||
-            Z_ANATOMY_BY_NODE[sanitizeNodeName(rawName)] ||
-            Z_ANATOMY_BY_NODE[sanitizeNodeName(e.object.name)] ||
-            null;
           if (resolvedItem) {
             const node = toAnatomicalNode(resolvedItem);
             const nextVal = effectiveSelectedId === node.id ? null : node;
@@ -801,9 +835,9 @@ function RealSystemModel({
           }
           position={calloutAnchorPosition}
           worldPosition={[
-            calloutAnchorPosition[0] + modelOffset[0],
-            calloutAnchorPosition[1] + modelOffset[1],
-            calloutAnchorPosition[2] + modelOffset[2],
+            calloutAnchorPosition[0] + offsetX,
+            calloutAnchorPosition[1] + offsetY,
+            calloutAnchorPosition[2] + offsetZ,
           ]}
           onClose={() => {
             setClickedLocalAnchor(null);
@@ -835,6 +869,7 @@ export function RealBodyAtlas({
 }: RealBodyAtlasProps) {
   const groupRef = useRef<THREE.Group>(null);
   const storeModules = useAnatomyStore((s) => s.modules);
+  const storeExplosionProgress = useAnatomyStore((s) => s.explosionProgress);
   const storeSelectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
 
   // Sincroniza a seleção na aplicação quando o nó for clicado na árvore
@@ -847,7 +882,11 @@ export function RealBodyAtlas({
     }
   }, [storeSelectedNodeId, selectedNodeId, onSelectNode]);
 
-  const effectiveExplosion = explosionProgress > 0 ? explosionProgress : storeModules.explodedProgress;
+  const effectiveExplosion = Number.isFinite(storeExplosionProgress)
+    ? storeExplosionProgress
+    : explosionProgress > 0
+    ? explosionProgress
+    : storeModules.explodedProgress;
   const effectiveOpacity = Math.abs(realSkullOpacity - 1.0) > 1e-4 ? realSkullOpacity : storeModules.solidOpacity;
   const effectiveXRay = visualMode === 'xray' || storeModules.xRayMode;
 
@@ -865,15 +904,22 @@ export function RealBodyAtlas({
   const storeActiveSystems = useAnatomyStore((s) => s.activeSystems);
   const storeSystemOpacities = useAnatomyStore((s) => s.systemOpacities);
   const biologicalSex = useAnatomyStore((s) => s.biologicalSex);
+  const selectivePartLoading = useAnatomyStore((s) => s.selectivePartLoading);
+  const loadedParts = useAnatomyStore((s) => s.loadedParts);
 
   const isSysActive = (sys: ActiveAnatomicalSystem) => {
     const altSys = (sys === 'urinary' ? 'renal' : sys) as ActiveAnatomicalSystem;
     if (storeActiveSystems && storeActiveSystems.size > 0) {
-      return (
-        storeActiveSystems.has('all') ||
-        storeActiveSystems.has(sys) ||
-        storeActiveSystems.has(altSys)
-      );
+      if (storeActiveSystems.has(sys) || storeActiveSystems.has(altSys)) {
+        return true;
+      }
+      if (storeActiveSystems.has('all')) {
+        if (selectivePartLoading && loadedParts && loadedParts.size > 0) {
+          return loadedParts.has(sys) || loadedParts.has(altSys);
+        }
+        return true;
+      }
+      return false;
     }
     return activeSystem === sys || activeSystem === altSys || activeSystem === 'all';
   };
@@ -984,7 +1030,7 @@ export function RealBodyAtlas({
           opacity={integumentaryOpacity}
           isXRay={effectiveXRay}
           magnitude={0.42}
-          modelOffset={[0, 0.84, 0.03]}
+          modelOffset={FEMALE_PELVIC_OFFSET}
         />
       )}
 
@@ -1165,7 +1211,7 @@ export function RealBodyAtlas({
           opacity={reproductiveOpacity}
           isXRay={effectiveXRay}
           magnitude={0.28}
-          modelOffset={[0, 0.84, 0.03]}
+          modelOffset={FEMALE_PELVIC_OFFSET}
         />
       )}
       {showReproductive && biologicalSex !== 'female' && (

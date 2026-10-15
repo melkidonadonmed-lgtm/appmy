@@ -1,10 +1,11 @@
 import { AnatomicalNode, ClinicalReference } from '../types/anatomy.ts';
-import { Z_ANATOMY_CATALOG } from '../constants/zAnatomyCatalog.ts';
+import { Z_ANATOMY_CATALOG, Z_ANATOMY_BY_ID } from '../constants/zAnatomyCatalog.ts';
 import { CRANIUM_22_NODES } from '../constants/cranium.ts';
 import { ALL_NEUROLOGY_NODES } from '../constants/neurology.ts';
 import { CRANIAL_FORAMINA_14, CRANIAL_LANDMARKS_AND_FRACTURE_SIGNS } from '../constants/craniumStratigraphyForamina.ts';
 import { BRODMANN_CORTICAL_REGIONS_12, VASCULAR_SYNDROMES_AND_WILLIS } from '../constants/brainClinicalCatalog.ts';
 import { CRANIAL_NERVES_12 } from '../constants/cranialNervesCatalog.ts';
+import { resolveNeuroClinicalTargetToCatalogId } from './neuroTargetMapper.ts';
 
 function normalizeStr(s: string): string {
   return (s || '')
@@ -122,27 +123,54 @@ export function resolveRichClinicalData(
  */
 export function resolveBest3DTargetForCanonicalIds(
   targetNodeIds: string[],
-  viewType: 'realistic' | 'exploded'
+  viewType: 'realistic' | 'exploded' = 'realistic'
 ): { nodeId: string; node: AnatomicalNode; systemToActivate?: string; regionToActivate?: string } | null {
   if (!targetNodeIds || targetNodeIds.length === 0) return null;
 
   for (const targetId of targetNodeIds) {
     const canonical = CANONICAL_NODE_LOOKUP[targetId];
+
+    if (viewType === 'exploded' && canonical) {
+      const isNervous = canonical.chapter === 4;
+      return {
+        nodeId: canonical.id,
+        node: canonical,
+        systemToActivate: isNervous ? 'nervous' : 'skeletal',
+        regionToActivate: 'cranium',
+      };
+    }
+
+    // 1. Verifica mapeamento direto FMA -> Z-Anatomy .GLB (`za:*`)
+    const mappedZaId = resolveNeuroClinicalTargetToCatalogId(targetId);
+    const directZa = Z_ANATOMY_BY_ID[mappedZaId];
+    if (directZa) {
+      return {
+        nodeId: directZa.id,
+        node: {
+          ...(canonical || {
+            id: directZa.id,
+            namePtBr: directZa.namePtBr,
+            nameLatin: directZa.nameLatin,
+            chapter: directZa.chapter,
+            systemName: directZa.system,
+            meshName: directZa.node,
+            clinicalData: resolveRichClinicalData(directZa),
+          }),
+          id: directZa.id,
+          meshName: directZa.node,
+          explosionVector: directZa.explosionVector,
+        },
+        systemToActivate: directZa.system,
+        regionToActivate: 'cranium',
+      };
+    }
+
     if (!canonical) continue;
 
     const isNervous = canonical.chapter === 4;
     const systemToActivate = isNervous ? 'nervous' : 'skeletal';
 
-    if (viewType === 'exploded') {
-      return {
-        nodeId: canonical.id,
-        node: canonical,
-        systemToActivate,
-        regionToActivate: 'cranium',
-      };
-    }
-
-    // No modo realista (.GLB), busca a malha real equivalente no Z_ANATOMY_CATALOG
+    // 2. Fallback por palavras-chave no Z_ANATOMY_CATALOG
     const searchKeywords = [
       canonical.nameLatin.split('(')[0].trim(),
       canonical.namePtBr.split('(')[0].trim(),

@@ -107,7 +107,7 @@ export const CranialNervesTab: React.FC = () => {
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          focusClinicalTargetIds(nerve.targetNodeIds);
+                          focusClinicalTargetIds(nerve.targetNodeIds, { cranialNerveId: nerve.id });
                         }}
                         className="neuro-focus-3d-btn"
                         title={`Focar topografia do ${nerve.romanNumeral} no Atlas 3D`}
@@ -171,7 +171,7 @@ export const CranialNervesTab: React.FC = () => {
                     </div>
                     <button
                       type="button"
-                      onClick={() => focusClinicalTargetIds(nerve.targetNodeIds)}
+                      onClick={() => focusClinicalTargetIds(nerve.targetNodeIds, { cranialNerveId: nerve.id })}
                       className="neuro-focus-3d-btn"
                     >
                       <Focus size={12} strokeWidth={1.5} aria-hidden="true" />

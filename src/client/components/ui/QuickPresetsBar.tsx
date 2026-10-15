@@ -9,6 +9,9 @@ import {
   BookmarkPlus,
   Trash2,
   X,
+  Brain,
+  Scissors,
+  Undo2,
 } from 'lucide-react';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 import {
@@ -24,6 +27,11 @@ export const QuickPresetsBar: React.FC = () => {
   const activeSystem = useAnatomyStore((s) => s.activeSystem);
   const activeRegion = useAnatomyStore((s) => s.activeRegion);
   const solidOpacity = useAnatomyStore((s) => s.solidOpacity);
+  const sidebarTab = useAnatomyStore((s) => s.sidebarTab);
+  const peelOnClickMode = useAnatomyStore((s) => s.peelOnClickMode);
+  const togglePeelOnClickMode = useAnatomyStore((s) => s.togglePeelOnClickMode);
+  const peeledHistory = useAnatomyStore((s) => s.peeledHistory);
+  const undoLastPeel = useAnatomyStore((s) => s.undoLastPeel);
 
   const [showBookmarksModal, setShowBookmarksModal] = useState(false);
   const [bookmarks, setBookmarks] = useState<ClinicalBookmark[]>([]);
@@ -42,7 +50,9 @@ export const QuickPresetsBar: React.FC = () => {
       case 'skeletal':
         return activeSystem === 'skeletal' && activeRegion === 'all';
       case 'cranium':
-        return activeRegion === 'cranium';
+        return activeRegion === 'cranium' && activeSystem === 'skeletal';
+      case 'neuroanatomy':
+        return activeRegion === 'cranium' && activeSystem === 'nervous' || sidebarTab === 'neuro';
       case 'cardiorespiratory':
         return Math.abs(solidOpacity - 0.35) < 1e-4 && activeRegion === 'thorax';
       case 'visceral':
@@ -205,6 +215,17 @@ export const QuickPresetsBar: React.FC = () => {
 
           <button
             type="button"
+            onClick={() => applyPreset('neuroanatomy')}
+            className={`quick-preset-btn ${isPresetActive('neuroanatomy') ? 'active' : ''}`}
+            title="Foco em Neuroanatomia Clínica (Encéfalo Real .GLB, Nervos Cranianos I-XII e Crânio Translúcido)"
+            aria-label="Preset: Neuroanatomia e Encéfalo"
+          >
+            <Brain size={12} aria-hidden="true" />
+            <span>Neuro</span>
+          </button>
+
+          <button
+            type="button"
             onClick={() => applyPreset('cardiorespiratory')}
             className={`quick-preset-btn ${isPresetActive('cardiorespiratory') ? 'active' : ''}`}
             title="Foco no Coração, Pulmões e Tórax Translúcido"
@@ -226,6 +247,31 @@ export const QuickPresetsBar: React.FC = () => {
           </button>
 
           <div className="quick-presets-separator" aria-hidden="true" />
+
+          <button
+            type="button"
+            onClick={togglePeelOnClickMode}
+            aria-pressed={peelOnClickMode}
+            className={`quick-preset-btn ${peelOnClickMode ? 'active' : ''}`}
+            title="Modo Bisturi 3D: Quando ativo, clicar em qualquer estrutura no modelo 3D retira (oculta) essa camada para expor o interior"
+            aria-label="Modo Bisturi 3D: Retirar camada ao clicar"
+          >
+            <Scissors size={12} aria-hidden="true" />
+            <span>{peelOnClickMode ? 'Bisturi: ON' : 'Bisturi 3D'}</span>
+          </button>
+
+          {peeledHistory.length > 0 && (
+            <button
+              type="button"
+              onClick={undoLastPeel}
+              className="quick-preset-btn"
+              title={`Desfazer última camada retirada (${peeledHistory.length} no histórico)`}
+              aria-label="Desfazer última camada retirada"
+            >
+              <Undo2 size={12} aria-hidden="true" />
+              <span>Desfazer ({peeledHistory.length})</span>
+            </button>
+          )}
 
           <button
             type="button"

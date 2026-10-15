@@ -13,6 +13,9 @@ import {
   ChevronsUp,
   MoreHorizontal,
   Users,
+  Brain,
+  Scissors,
+  Undo2,
 } from 'lucide-react';
 import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../../../shared/constants/zAnatomyCatalog.ts';
 import { FEMALE_REPRODUCTIVE_CATALOG } from '../../../../shared/constants/femaleReproductiveCatalog.ts';
@@ -22,6 +25,7 @@ import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 import { ModuleLayersSection } from './ModuleLayersSection.tsx';
 import { AnatomyFiltersSection } from './AnatomyFiltersSection.tsx';
 import { AnatomyClinicalCard } from './AnatomyClinicalCard.tsx';
+import { NeuroAnatomyPanelSection } from './NeuroAnatomyPanelSection.tsx';
 import { TreeGroup } from './TreeGroup.tsx';
 import { GlobalSearchBox } from './GlobalSearchBox.tsx';
 import { AnyAnatomicalNode, AnatomicalRegion } from '../../canvas/AnatomicalAtlasScene.tsx';
@@ -79,6 +83,10 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
 
   const sidebarTab = useAnatomyStore((s) => s.sidebarTab);
   const setSidebarTab = useAnatomyStore((s) => s.setSidebarTab);
+  const peelOnClickMode = useAnatomyStore((s) => s.peelOnClickMode);
+  const togglePeelOnClickMode = useAnatomyStore((s) => s.togglePeelOnClickMode);
+  const peeledHistory = useAnatomyStore((s) => s.peeledHistory);
+  const undoLastPeel = useAnatomyStore((s) => s.undoLastPeel);
 
   // 1. Constrói a árvore canônica sincronizada com o sexo biológico (ordenada de fora para dentro)
   const fullTree = useMemo(
@@ -286,6 +294,21 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         <button
           type="button"
           role="tab"
+          aria-selected={sidebarTab === 'neuro'}
+          aria-controls="outliner-tab-neuro-panel"
+          id="tab-btn-neuro"
+          onClick={() => setSidebarTab('neuro')}
+          className={`outliner-tab-btn ${sidebarTab === 'neuro' ? 'active' : ''}`}
+          title="Painel de Neuroanatomia Clínica (Encéfalo Real .GLB, Nervos Cranianos I-XII, Polígono de Willis e Síndromes)"
+        >
+          <Brain size={13} aria-hidden="true" />
+          <span>Neuro</span>
+          <span className="outliner-tab-badge">I-XII</span>
+        </button>
+
+        <button
+          type="button"
+          role="tab"
           aria-selected={sidebarTab === 'details'}
           aria-controls="outliner-tab-details-panel"
           id="tab-btn-details"
@@ -316,18 +339,50 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
           {/* Barra Estratigráfica Unificada (De Fora para Dentro: Camadas 1 a 6 + Subcamadas Miofasciais) */}
           <div className="outliner-stratigraphic-bar">
             <div className="outliner-strat-row">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '0.25rem' }}>
                 <span className="outliner-strat-label">Dissecação (De Fora p/ Dentro):</span>
-                <button
-                  type="button"
-                  onClick={() => setShowSecondaryStrat((prev) => !prev)}
-                  aria-expanded={showSecondaryStrat}
-                  className="outliner-mini-btn"
-                  title="Revelação Progressiva: Alternar subcamadas miofasciais e filtro regional"
-                >
-                  <MoreHorizontal size={11} strokeWidth={1.5} aria-hidden="true" />
-                  <span>{showSecondaryStrat ? 'Ocultar Atalhos' : 'Miofascial & Região'}</span>
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <button
+                    type="button"
+                    onClick={togglePeelOnClickMode}
+                    aria-pressed={peelOnClickMode}
+                    className={`outliner-mini-btn ${peelOnClickMode ? 'active' : ''}`}
+                    style={
+                      peelOnClickMode
+                        ? {
+                            background: 'rgba(20, 184, 166, 0.22)',
+                            borderColor: 'rgba(20, 184, 166, 0.55)',
+                            color: '#5eead4',
+                          }
+                        : undefined
+                    }
+                    title="Modo Bisturi 3D: Quando ativo, clicar em qualquer estrutura no modelo 3D retira (oculta) essa camada para expor o interior"
+                  >
+                    <Scissors size={11} strokeWidth={1.5} aria-hidden="true" />
+                    <span>{peelOnClickMode ? 'Bisturi: ON' : 'Clicar p/ Retirar'}</span>
+                  </button>
+                  {peeledHistory.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={undoLastPeel}
+                      className="outliner-mini-btn"
+                      title={`Desfazer última camada retirada (${peeledHistory.length} no histórico)`}
+                    >
+                      <Undo2 size={11} strokeWidth={1.5} aria-hidden="true" />
+                      <span>({peeledHistory.length})</span>
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowSecondaryStrat((prev) => !prev)}
+                    aria-expanded={showSecondaryStrat}
+                    className="outliner-mini-btn"
+                    title="Revelação Progressiva: Alternar subcamadas miofasciais e filtro regional"
+                  >
+                    <MoreHorizontal size={11} strokeWidth={1.5} aria-hidden="true" />
+                    <span>{showSecondaryStrat ? 'Menos' : 'Mais'}</span>
+                  </button>
+                </div>
               </div>
               <div className="outliner-strat-pills" role="group" aria-label="Camadas cirúrgicas de fora para dentro">
                 {STRATIGRAPHIC_STEPS.map((step) => {
@@ -503,7 +558,20 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         </div>
       )}
 
-      {/* ABA 3: Ficha Clínica e Dossiê Anatômico */}
+      {/* ABA 3: Neuroanatomia Clínica & Nervos Cranianos */}
+      {sidebarTab === 'neuro' && (
+        <div
+          id="outliner-tab-neuro-panel"
+          role="tabpanel"
+          aria-labelledby="tab-btn-neuro"
+          className="outliner-tab-content scrollbar-thin"
+          style={{ padding: '0.5rem', overflowY: 'auto' }}
+        >
+          <NeuroAnatomyPanelSection />
+        </div>
+      )}
+
+      {/* ABA 4: Ficha Clínica e Dossiê Anatômico */}
       {sidebarTab === 'details' && (
         <div
           id="outliner-tab-details-panel"

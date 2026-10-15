@@ -12,19 +12,86 @@ import { FEMALE_REPRODUCTIVE_CATALOG } from '../../shared/constants/femaleReprod
 import { determineSurgicalLayer } from '../../core/visibilityManager.ts';
 import { stepExplosionProgressLinear } from '../../core/explodedEngine.ts';
 import { TwoFingerMode } from '../../core/navigationGestures.ts';
+import {
+  resolveNeuroClinicalTargetToCatalogId,
+  resolveNeuroClinicalTargetAliases,
+  resolveCatalogIdToDidacticId,
+  isIntracranialBrainTarget,
+} from '../../shared/utils/neuroTargetMapper.ts';
 
 export type BiologicalSex = 'male' | 'female';
+export type SidebarTabType = 'tree' | 'filters' | 'neuro' | 'details';
+export type PresetKeyType =
+  | 'all'
+  | 'skeletal'
+  | 'cranium'
+  | 'neuroanatomy'
+  | 'cardiorespiratory'
+  | 'visceral';
+
+export interface PeeledStepEntry {
+  ids: string[];
+  labelPt: string;
+}
+
+export const DEFAULT_LAYER_ORDER: ActiveAnatomicalSystem[] = [
+  'integumentary',
+  'muscular',
+  'skeletal',
+  'cardiovascular',
+  'nervous',
+  'lymphatic',
+  'respiratory',
+  'digestive',
+  'urinary',
+  'endocrine',
+  'reproductive',
+];
+
+const ANATOMY_PERF_STORAGE_KEY = 'appmy-anatomy-perf-v1';
+
+function savePerfPreferences(prefs: {
+  selectivePartLoading?: boolean;
+  loadedParts?: Set<ActiveAnatomicalSystem>;
+  layerOrder?: ActiveAnatomicalSystem[];
+}): void {
+  if (typeof window === 'undefined' || typeof window.localStorage === 'undefined') return;
+  try {
+    const raw = window.localStorage.getItem(ANATOMY_PERF_STORAGE_KEY);
+    const prev = raw ? JSON.parse(raw) : {};
+    const next = {
+      ...prev,
+      ...(prefs.selectivePartLoading !== undefined
+        ? { selectivePartLoading: prefs.selectivePartLoading }
+        : {}),
+      ...(prefs.loadedParts !== undefined
+        ? { loadedParts: Array.from(prefs.loadedParts) }
+        : {}),
+      ...(prefs.layerOrder !== undefined ? { layerOrder: prefs.layerOrder } : {}),
+    };
+    window.localStorage.setItem(ANATOMY_PERF_STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    // Ignora falha de escrita em ambiente restrito
+  }
+}
 
 function normalizeSystemId(sys: string): ActiveAnatomicalSystem {
   if (sys === 'renal') return 'urinary';
   return sys as ActiveAnatomicalSystem;
 }
 
+const COMBINED_BY_ID: Record<string, typeof Z_ANATOMY_CATALOG[number]> = {
+  ...Z_ANATOMY_BY_ID,
+};
+const COMBINED_BY_NODE: Record<string, typeof Z_ANATOMY_CATALOG[number]> = {
+  ...Z_ANATOMY_BY_NODE,
+};
+
 function getNodeAliases(id: string): string[] {
   const item =
-    Z_ANATOMY_BY_ID[id] ||
-    Z_ANATOMY_BY_NODE[id] ||
-    Z_ANATOMY_BY_NODE[sanitizeNodeName(id)];
+    COMBINED_BY_ID[id] ||
+    COMBINED_BY_NODE[id] ||
+    COMBINED_BY_NODE[sanitizeNodeName(id)];
   if (!item) return [id];
   return Array.from(new Set([item.id, item.node, sanitizeNodeName(item.node)]));
 }
@@ -42,6 +109,11 @@ export const LAYER_DESCENDANT_ALIASES: Record<number, string[]> = {
 export const ALL_CATALOG_ALIASES: string[] = [];
 
 for (const item of [...Z_ANATOMY_CATALOG, ...FEMALE_REPRODUCTIVE_CATALOG]) {
+  COMBINED_BY_ID[item.id] = item;
+  if (item.node) {
+    COMBINED_BY_NODE[item.node] = item;
+    COMBINED_BY_NODE[sanitizeNodeName(item.node)] = item;
+  }
   const normSys = normalizeSystemId(item.system);
   const rawSys = item.system;
   const aliases = [item.id, item.node, sanitizeNodeName(item.node)].filter(Boolean);
@@ -64,6 +136,25 @@ for (const item of [...Z_ANATOMY_CATALOG, ...FEMALE_REPRODUCTIVE_CATALOG]) {
   }
 
   ALL_CATALOG_ALIASES.push(...aliases);
+}
+
+/**
+ * Retorna os IDs canônicos `za:*` de um sistema filtrados pelo sexo biológico ativo.
+ * Evita que IDs masculinos ocultos (ou femininos ocultos) distorçam a detecção de visibilidade
+ * da camada Reprodutora quando `biologicalSex` é alternado ou desmarcado na Árvore TA2.
+ */
+export function getSystemCheckIdsForSex(sys: string, sex: BiologicalSex): string[] {
+  const normSys = normalizeSystemId(sys);
+  const aliases = SYSTEM_DESCENDANT_ALIASES[normSys] || [];
+  const canonicalIds = aliases.filter((id) => id.startsWith('za:'));
+  const baseIds = canonicalIds.length > 0 ? canonicalIds : aliases;
+  if (normSys === 'reproductive') {
+    const sexFiltered = baseIds.filter((id) =>
+      sex === 'female' ? id.startsWith('za:vh_f_') : !id.startsWith('za:vh_f_')
+    );
+    if (sexFiltered.length > 0) return sexFiltered;
+  }
+  return baseIds;
 }
 
 function buildHiddenSetForActiveSystems(activeSystems: Set<ActiveAnatomicalSystem>): Set<string> {
@@ -125,6 +216,29 @@ interface AnatomyStore {
   ghostMode: boolean;
   isolatedOnly: boolean;
 
+  // 2b. Bisturi 3D (Click-to-Peel) e Organização Personalizada de Camadas
+  peelOnClickMode: boolean;
+  peeledHistory: PeeledStepEntry[];
+  layerOrder: ActiveAnatomicalSystem[];
+  setPeelOnClickMode: (enabled: boolean) => void;
+  togglePeelOnClickMode: () => void;
+  peelNodeOnClick: (nodeIdOrIds: string | string[], labelPt?: string, extraAliases?: string[]) => void;
+  undoLastPeel: () => void;
+  clearPeeledHistory: () => void;
+  moveLayerOrder: (sys: ActiveAnatomicalSystem, direction: 'up' | 'down') => void;
+  resetLayerOrder: () => void;
+  peelNextLayerInOrder: () => void;
+  restorePreviousLayerInOrder: () => void;
+
+  // 2c. Gerenciador Offline de Partes .GLB & Modo Alta Performance (Anti-Queda de FPS)
+  selectivePartLoading: boolean;
+  loadedParts: Set<ActiveAnatomicalSystem>;
+  cachedParts: Set<ActiveAnatomicalSystem>;
+  setSelectivePartLoading: (enabled: boolean) => void;
+  toggleLoadedPart: (sys: ActiveAnatomicalSystem) => void;
+  setLoadedParts: (parts: ActiveAnatomicalSystem[]) => void;
+  markPartCached: (sys: ActiveAnatomicalSystem, cached?: boolean) => void;
+
   // 3. Multi-Seleção e Opacidades Granulares de Sistemas Anatômicos
   activeSystems: Set<ActiveAnatomicalSystem>;
   systemOpacities: Record<string, number>;
@@ -147,7 +261,7 @@ interface AnatomyStore {
   // 6. Layout da Interface, Navegação 3D e Estúdio Neuroclínico
   outlinerCollapsed: boolean;
   sidebarCollapsed: boolean;
-  sidebarTab: 'tree' | 'filters' | 'details';
+  sidebarTab: SidebarTabType;
   clinicalStudioOpen: boolean;
   clinicalStudioTab: 'foramina' | 'brain' | 'nerves' | 'neuroimaging' | 'cases';
   zenMode: boolean;
@@ -160,10 +274,13 @@ interface AnatomyStore {
     dollyScale: number;
     seq: number;
   } | null;
-  setSidebarTab: (tab: 'tree' | 'filters' | 'details') => void;
+  setSidebarTab: (tab: SidebarTabType) => void;
   setClinicalStudioOpen: (open: boolean) => void;
   setClinicalStudioTab: (tab: 'foramina' | 'brain' | 'nerves' | 'neuroimaging' | 'cases') => void;
-  focusClinicalTargetIds: (targetNodeIds: string[]) => void;
+  focusClinicalTargetIds: (
+    targetNodeIds: string[],
+    options?: { cranialNerveId?: string; forceDidactic?: boolean }
+  ) => void;
   setTwoFingerMode: (mode: TwoFingerMode) => void;
   nudgeCameraRig: (delta: {
     verticalPanDelta?: number;
@@ -208,7 +325,7 @@ interface AnatomyStore {
   restoreState: (snapshot: Partial<AnatomyStore> & { activeSystems?: ActiveAnatomicalSystem[] | Set<ActiveAnatomicalSystem> }) => void;
 
   // --- Presets Anatômicos Canônicos ---
-  applyPreset: (presetKey: 'all' | 'skeletal' | 'cranium' | 'cardiorespiratory' | 'visceral') => void;
+  applyPreset: (presetKey: PresetKeyType) => void;
 }
 
 const DEFAULT_SYSTEM_OPACITIES: Record<string, number> = {
@@ -237,6 +354,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   setBiologicalSex: (sex: BiologicalSex) =>
     set((state) => {
       const nextHidden = new Set(state.hiddenNodeIds);
+      let nextHistory = state.peeledHistory;
       if (sex === 'female') {
         // Ao ativar sexo Feminino, garante que a glândula mamária e o aparelho reprodutor feminino fiquem visíveis
         for (const alias of SYSTEM_DESCENDANT_ALIASES['integumentary'] || []) {
@@ -245,10 +363,14 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
         for (const alias of SYSTEM_DESCENDANT_ALIASES['reproductive'] || []) {
           nextHidden.delete(alias);
         }
+        nextHistory = state.peeledHistory.filter((entry) =>
+          entry.ids.some((id) => nextHidden.has(id))
+        );
       }
       return {
         biologicalSex: sex,
         hiddenNodeIds: nextHidden,
+        peeledHistory: nextHistory,
       };
     }),
   toggleBiologicalSex: () => {
@@ -266,6 +388,192 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   activeDepth: 1,
   ghostMode: false,
   isolatedOnly: false,
+
+  // Bisturi 3D (Click-to-Peel) & Ordem de Camadas
+  peelOnClickMode: false,
+  peeledHistory: [],
+  layerOrder: [...DEFAULT_LAYER_ORDER],
+  setPeelOnClickMode: (enabled: boolean) => set({ peelOnClickMode: enabled }),
+  togglePeelOnClickMode: () => set((state) => ({ peelOnClickMode: !state.peelOnClickMode })),
+  peelNodeOnClick: (nodeIdOrIds: string | string[], labelPt?: string, extraAliases?: string[]) => {
+    const rawList = Array.isArray(nodeIdOrIds) ? nodeIdOrIds : [nodeIdOrIds];
+    const primaryId = rawList[0];
+    if (!primaryId) return;
+    set((state) => {
+      const aliasSet = new Set<string>(extraAliases || []);
+      for (const id of rawList) {
+        if (typeof id === 'string' && id) {
+          for (const a of getNodeAliases(id)) {
+            aliasSet.add(a);
+          }
+        }
+      }
+      const aliases = Array.from(aliasSet);
+      const nextHidden = new Set(state.hiddenNodeIds);
+      for (const alias of aliases) {
+        nextHidden.add(alias);
+      }
+      const item = Z_ANATOMY_BY_ID[primaryId] || Z_ANATOMY_BY_NODE[primaryId];
+      const resolvedLabel = labelPt || item?.namePtBr || primaryId;
+      const nextHistory: PeeledStepEntry[] = [
+        ...state.peeledHistory,
+        { ids: aliases, labelPt: resolvedLabel },
+      ];
+      return {
+        hiddenNodeIds: nextHidden,
+        peeledHistory: nextHistory,
+        selectedNodeId: state.selectedNodeId === primaryId ? null : state.selectedNodeId,
+        isolatedOnly: false,
+      };
+    });
+  },
+  undoLastPeel: () => {
+    set((state) => {
+      if (state.peeledHistory.length === 0) return state;
+      const nextHistory = [...state.peeledHistory];
+      const lastEntry = nextHistory.pop()!;
+      const nextHidden = new Set(state.hiddenNodeIds);
+      for (const id of lastEntry.ids) {
+        nextHidden.delete(id);
+      }
+      return {
+        hiddenNodeIds: nextHidden,
+        peeledHistory: nextHistory,
+      };
+    });
+  },
+  clearPeeledHistory: () => {
+    set((state) => {
+      if (state.peeledHistory.length === 0) return state;
+      const nextHidden = new Set(state.hiddenNodeIds);
+      for (const entry of state.peeledHistory) {
+        for (const id of entry.ids) {
+          nextHidden.delete(id);
+        }
+      }
+      return {
+        hiddenNodeIds: nextHidden,
+        peeledHistory: [],
+      };
+    });
+  },
+  moveLayerOrder: (sys: ActiveAnatomicalSystem, direction: 'up' | 'down') => {
+    const normSys = normalizeSystemId(sys);
+    set((state) => {
+      const idx = state.layerOrder.indexOf(normSys);
+      if (idx === -1) return state;
+      const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+      if (targetIdx < 0 || targetIdx >= state.layerOrder.length) return state;
+      const nextOrder = [...state.layerOrder];
+      const [moved] = nextOrder.splice(idx, 1);
+      nextOrder.splice(targetIdx, 0, moved);
+      savePerfPreferences({ layerOrder: nextOrder });
+      return { layerOrder: nextOrder };
+    });
+  },
+  resetLayerOrder: () => {
+    const nextOrder = [...DEFAULT_LAYER_ORDER];
+    savePerfPreferences({ layerOrder: nextOrder });
+    set({ layerOrder: nextOrder });
+  },
+  peelNextLayerInOrder: () => {
+    const state = get();
+    for (const sys of state.layerOrder) {
+      if (sys === 'integumentary' && state.biologicalSex === 'male' && !state.activeSystems.has('integumentary')) {
+        continue;
+      }
+      const checkIds = getSystemCheckIdsForSex(sys, state.biologicalSex);
+      const isHidden =
+        (!state.activeSystems.has('all') && !state.activeSystems.has(sys)) ||
+        (checkIds.length > 0 && checkIds.every((id) => state.hiddenNodeIds.has(id)));
+      if (!isHidden) {
+        state.toggleSystemPeel(sys);
+        return;
+      }
+    }
+  },
+  restorePreviousLayerInOrder: () => {
+    const state = get();
+    const reversed = [...state.layerOrder].reverse();
+    for (const sys of reversed) {
+      if (sys === 'integumentary' && state.biologicalSex === 'male' && !state.activeSystems.has('integumentary')) {
+        continue;
+      }
+      const checkIds = getSystemCheckIdsForSex(sys, state.biologicalSex);
+      const isHidden =
+        (!state.activeSystems.has('all') && !state.activeSystems.has(sys)) ||
+        (checkIds.length > 0 && checkIds.every((id) => state.hiddenNodeIds.has(id)));
+      if (isHidden) {
+        state.toggleSystemPeel(sys);
+        return;
+      }
+    }
+  },
+
+  // Gerenciador Offline de Partes .GLB & Modo Alta Performance
+  selectivePartLoading: false,
+  loadedParts: new Set<ActiveAnatomicalSystem>(DEFAULT_LAYER_ORDER),
+  cachedParts: new Set<ActiveAnatomicalSystem>(),
+  setSelectivePartLoading: (enabled: boolean) =>
+    set((state) => {
+      if (enabled && state.loadedParts.size === DEFAULT_LAYER_ORDER.length && state.activeSystems.has('all')) {
+        // Ao ativar o Modo Alta Performance com tudo ligado, mantém inicialmente Esqueleto + Nervoso + Cardiovascular montados para alto FPS
+        const initialLoaded = new Set<ActiveAnatomicalSystem>(['skeletal', 'nervous', 'cardiovascular']);
+        savePerfPreferences({ selectivePartLoading: true, loadedParts: initialLoaded });
+        return {
+          selectivePartLoading: true,
+          loadedParts: initialLoaded,
+        };
+      }
+      if (!enabled) {
+        const allLoaded = new Set<ActiveAnatomicalSystem>(DEFAULT_LAYER_ORDER);
+        savePerfPreferences({ selectivePartLoading: false, loadedParts: allLoaded });
+        return {
+          selectivePartLoading: false,
+          loadedParts: allLoaded,
+        };
+      }
+      savePerfPreferences({ selectivePartLoading: enabled });
+      return { selectivePartLoading: enabled };
+    }),
+  toggleLoadedPart: (sys: ActiveAnatomicalSystem) => {
+    const normSys = normalizeSystemId(sys);
+    set((state) => {
+      const nextLoaded = new Set(state.loadedParts);
+      if (nextLoaded.has(normSys)) {
+        if (nextLoaded.size > 1) {
+          nextLoaded.delete(normSys);
+        }
+      } else {
+        nextLoaded.add(normSys);
+      }
+      savePerfPreferences({ selectivePartLoading: true, loadedParts: nextLoaded });
+      return {
+        selectivePartLoading: true,
+        loadedParts: nextLoaded,
+      };
+    });
+  },
+  setLoadedParts: (parts: ActiveAnatomicalSystem[]) => {
+    const nextLoaded = new Set(parts.map(normalizeSystemId));
+    savePerfPreferences({ selectivePartLoading: true, loadedParts: nextLoaded });
+    set({
+      loadedParts: nextLoaded,
+      selectivePartLoading: true,
+    });
+  },
+  markPartCached: (sys: ActiveAnatomicalSystem, cached = true) => {
+    const normSys = normalizeSystemId(sys);
+    set((state) => {
+      const nextCached = new Set(state.cachedParts);
+      if (cached) {
+        nextCached.add(normSys);
+      } else {
+        nextCached.delete(normSys);
+      }
+      return { cachedParts: nextCached };
+    });
+  },
 
   activeSystems: new Set<ActiveAnatomicalSystem>(['all']),
   systemOpacities: { ...DEFAULT_SYSTEM_OPACITIES },
@@ -296,45 +604,70 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   preZenSidebarCollapsed: false,
   twoFingerMode: 'pan-rotate',
   cameraGestureNudge: null,
-  setSidebarTab: (tab: 'tree' | 'filters' | 'details') => set({ sidebarTab: tab }),
+  setSidebarTab: (tab: SidebarTabType) => set({ sidebarTab: tab }),
   setClinicalStudioOpen: (open: boolean) => set({ clinicalStudioOpen: open }),
   setClinicalStudioTab: (tab: 'foramina' | 'brain' | 'nerves' | 'neuroimaging' | 'cases') =>
     set({ clinicalStudioTab: tab, clinicalStudioOpen: true }),
-  focusClinicalTargetIds: (targetNodeIds: string[]) => {
+  focusClinicalTargetIds: (
+    targetNodeIds: string[],
+    options?: { cranialNerveId?: string; forceDidactic?: boolean }
+  ) => {
     if (!targetNodeIds || targetNodeIds.length === 0) return;
     const primaryId = targetNodeIds[0];
-    const isNeuro =
-      primaryId.includes('lobus') ||
-      primaryId.includes('corpus_callosum') ||
-      primaryId.includes('fornix') ||
-      primaryId.includes('capsula') ||
-      primaryId.includes('nuclei') ||
-      primaryId.includes('thalamus') ||
-      primaryId.includes('hypothalamus') ||
-      primaryId.includes('pineal') ||
-      primaryId.includes('hippocampus') ||
-      primaryId.includes('meninges') ||
-      primaryId.includes('circulus') ||
-      primaryId.includes('nervi') ||
-      primaryId.includes('cerebellum') ||
-      primaryId.includes('mesencephalon') ||
-      primaryId.includes('pons') ||
-      primaryId.includes('medulla') ||
-      primaryId.includes('ventricul');
+    const isBrainOrNerve = isIntracranialBrainTarget(primaryId) || Boolean(options?.cranialNerveId);
 
     set((state) => {
+      const nextViewType = options?.forceDidactic ? 'exploded' : state.viewType;
+      const resolvedId =
+        nextViewType === 'realistic'
+          ? resolveNeuroClinicalTargetToCatalogId(primaryId, options?.cranialNerveId)
+          : primaryId;
+
       const nextSystems = new Set<ActiveAnatomicalSystem>(['skeletal', 'nervous']);
+      if (primaryId.includes('circulus') || primaryId.includes('artery') || primaryId.includes('sinus')) {
+        nextSystems.add('cardiovascular');
+      }
+      if (primaryId.includes('pineal') || primaryId.includes('hypothalamus') || primaryId.includes('pituitary')) {
+        nextSystems.add('endocrine');
+      }
+
+      const nextLoaded = new Set(state.loadedParts);
+      nextSystems.forEach((s) => nextLoaded.add(s));
+
+      // Garante que todos os aliases do alvo estejam visíveis na árvore
+      const nextHidden = buildHiddenSetForActiveSystems(nextSystems);
+      const targetAliases = resolveNeuroClinicalTargetAliases(targetNodeIds, options?.cranialNerveId);
+      for (const alias of targetAliases) {
+        for (const a of getNodeAliases(alias)) {
+          nextHidden.delete(a);
+        }
+      }
+
+      // No modo Real (.GLB), se o alvo for intracraniano/encefálico, deixa o crânio translúcido (28%)
+      // para que o encéfalo, ventrículos, tálamo e pares cranianos fiquem imediatamente visíveis por dentro!
+      const nextSkeletalOpacity = isBrainOrNerve ? 0.28 : 1.0;
+
       return {
-        viewType: isNeuro ? 'exploded' : state.viewType,
-        activeSystem: isNeuro ? 'nervous' : 'skeletal',
+        viewType: nextViewType,
+        activeSystem: isBrainOrNerve ? 'nervous' : 'skeletal',
         activeSystems: nextSystems,
+        loadedParts: nextLoaded,
+        hiddenNodeIds: nextHidden,
         activeRegion: 'cranium',
-        selectedNodeId: primaryId,
+        selectedNodeId: resolvedId,
         sidebarTab: 'details',
-        explosionProgress: state.explosionProgress < 0.25 ? 0.35 : state.explosionProgress,
+        solidOpacity: nextSkeletalOpacity,
+        systemOpacities: {
+          ...state.systemOpacities,
+          skeletal: nextSkeletalOpacity,
+          nervous: 1.0,
+          cardiovascular: 1.0,
+        },
+        explosionProgress: state.explosionProgress < 0.15 ? 0.25 : state.explosionProgress,
         modules: {
           ...state.modules,
-          explodedProgress: state.explosionProgress < 0.25 ? 0.35 : state.explosionProgress,
+          solidOpacity: nextSkeletalOpacity,
+          explodedProgress: state.explosionProgress < 0.15 ? 0.25 : state.explosionProgress,
         },
       };
     });
@@ -357,9 +690,11 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
     const normSys = normalizeSystemId(sys);
     set((state) => {
       const next = new Set(state.activeSystems);
+      const nextLoaded = new Set(state.loadedParts);
       if (next.has('all')) {
         next.clear();
         next.add(normSys);
+        nextLoaded.add(normSys);
       } else if (next.has(normSys) || next.has(sys)) {
         next.delete(normSys);
         next.delete(sys);
@@ -368,12 +703,14 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
         }
       } else {
         next.add(normSys);
+        nextLoaded.add(normSys);
       }
 
       const legacySys = next.has('all') ? 'all' : (Array.from(next)[0] as ActiveAnatomicalSystem);
       return {
         activeSystems: next,
         activeSystem: legacySys,
+        loadedParts: nextLoaded,
         hiddenNodeIds: buildHiddenSetForActiveSystems(next),
         activeDepth: 1,
         layerPeelingLevel: 0,
@@ -392,9 +729,9 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
       const aliases = SYSTEM_DESCENDANT_ALIASES[normSys] || [];
       const nextHidden = new Set(state.hiddenNodeIds);
       const nextActive = new Set(state.activeSystems);
+      const nextLoaded = new Set(state.loadedParts);
 
-      const canonicalIds = aliases.filter((id) => id.startsWith('za:'));
-      const checkIds = canonicalIds.length > 0 ? canonicalIds : aliases;
+      const checkIds = getSystemCheckIdsForSex(normSys, state.biologicalSex);
       const isCurrentlyHidden =
         (!nextActive.has('all') && !nextActive.has(normSys)) ||
         (checkIds.length > 0 && checkIds.every((id) => nextHidden.has(id)));
@@ -409,6 +746,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
         if (!nextActive.has('all')) {
           nextActive.add(normSys);
         }
+        nextLoaded.add(normSys);
         if (normSys === 'integumentary' && state.biologicalSex === 'male') {
           nextSex = 'female';
         }
@@ -422,6 +760,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
       return {
         biologicalSex: nextSex,
         activeSystems: nextActive,
+        loadedParts: nextLoaded,
         hiddenNodeIds: nextHidden,
         isolatedOnly: false,
       };
@@ -433,6 +772,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
       activeSystems: new Set<ActiveAnatomicalSystem>(['all']),
       activeSystem: 'all',
       hiddenNodeIds: new Set<string>(),
+      peeledHistory: [],
       activeDepth: 1,
       layerPeelingLevel: 0,
       isolatedOnly: false,
@@ -443,10 +783,13 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
     const normSys = normalizeSystemId(sys);
     set((state) => {
       const next = new Set(state.activeSystems);
+      const nextLoaded = new Set(state.loadedParts);
       next.delete('all');
       next.add(normSys);
+      nextLoaded.add(normSys);
       return {
         activeSystems: next,
+        loadedParts: nextLoaded,
         activeSystem: normSys,
         hiddenNodeIds: buildHiddenSetForActiveSystems(next),
       };
@@ -645,6 +988,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   showAll: () => {
     set({
       hiddenNodeIds: new Set<string>(),
+      peeledHistory: [],
       activeSystems: new Set<ActiveAnatomicalSystem>(['all']),
       activeSystem: 'all',
       activeDepth: 1,
@@ -674,7 +1018,20 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
     set({ cameraPositionTarget: pos }),
 
   // --- Ações Globais do Motor 3D ---
-  setViewType: (vt: 'realistic' | 'exploded') => set({ viewType: vt }),
+  setViewType: (vt: 'realistic' | 'exploded') =>
+    set((state) => {
+      let nextSelected = state.selectedNodeId;
+      if (nextSelected) {
+        nextSelected =
+          vt === 'realistic'
+            ? resolveNeuroClinicalTargetToCatalogId(nextSelected)
+            : resolveCatalogIdToDidacticId(nextSelected);
+      }
+      return {
+        viewType: vt,
+        selectedNodeId: nextSelected,
+      };
+    }),
 
   setExplosionProgress: (val: number) => {
     const clamped = Math.round(Math.max(0.0, Math.min(1.0, val)) * 1000) / 1000;
@@ -717,12 +1074,17 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   setActiveSystem: (sys: ActiveAnatomicalSystem) => {
     const normSys = sys === 'all' ? 'all' : normalizeSystemId(sys);
     const nextSystems = normSys === 'all' ? new Set<ActiveAnatomicalSystem>(['all']) : new Set<ActiveAnatomicalSystem>([normSys]);
-    set({
-      activeSystem: normSys,
-      activeSystems: nextSystems,
-      hiddenNodeIds: buildHiddenSetForActiveSystems(nextSystems),
-      activeDepth: 1,
-      layerPeelingLevel: 0,
+    set((state) => {
+      const nextLoaded = new Set(state.loadedParts);
+      if (normSys !== 'all') nextLoaded.add(normSys);
+      return {
+        activeSystem: normSys,
+        activeSystems: nextSystems,
+        loadedParts: nextLoaded,
+        hiddenNodeIds: buildHiddenSetForActiveSystems(nextSystems),
+        activeDepth: 1,
+        layerPeelingLevel: 0,
+      };
     });
   },
 
@@ -895,20 +1257,24 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   },
 
   // --- Presets Anatômicos Rápidos (Sincronizados com os Checkboxes da Árvore) ---
-  applyPreset: (presetKey: 'all' | 'skeletal' | 'cranium' | 'cardiorespiratory' | 'visceral') => {
+  applyPreset: (presetKey: PresetKeyType) => {
     set((state) => {
       switch (presetKey) {
         case 'skeletal': {
           const nextSys = new Set<ActiveAnatomicalSystem>(['skeletal']);
+          const nextLoaded = new Set(state.loadedParts);
+          nextLoaded.add('skeletal');
           return {
             activeSystem: 'skeletal',
             activeSystems: nextSys,
+            loadedParts: nextLoaded,
             activeRegion: 'all',
             solidOpacity: 1.0,
             xRayMode: false,
             isolatedOnly: false,
             activeDepth: 1,
             layerPeelingLevel: 0,
+            peeledHistory: [],
             hiddenNodeIds: buildHiddenSetForActiveSystems(nextSys),
             explosionProgress: 0.0,
             modules: { ...state.modules, solidOpacity: 1.0, explodedProgress: 0.0, xRayMode: false },
@@ -917,15 +1283,19 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
         }
         case 'cranium': {
           const nextSys = new Set<ActiveAnatomicalSystem>(['skeletal']);
+          const nextLoaded = new Set(state.loadedParts);
+          nextLoaded.add('skeletal');
           return {
             activeSystem: 'skeletal',
             activeSystems: nextSys,
+            loadedParts: nextLoaded,
             activeRegion: 'cranium',
             solidOpacity: 1.0,
             xRayMode: false,
             isolatedOnly: false,
             activeDepth: 1,
             layerPeelingLevel: 0,
+            peeledHistory: [],
             hiddenNodeIds: buildHiddenSetForActiveSystems(nextSys),
             cameraFocusTarget: [0, 1.45, 0],
             explosionProgress: 0.0,
@@ -933,17 +1303,51 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
             systemOpacities: { ...state.systemOpacities, skeletal: 1.0 },
           };
         }
+        case 'neuroanatomy': {
+          const nextSys = new Set<ActiveAnatomicalSystem>(['skeletal', 'nervous', 'cardiovascular', 'endocrine']);
+          const nextLoaded = new Set(state.loadedParts);
+          nextSys.forEach((s) => nextLoaded.add(s));
+          return {
+            activeSystem: 'nervous',
+            activeSystems: nextSys,
+            loadedParts: nextLoaded,
+            activeRegion: 'cranium',
+            sidebarTab: 'neuro',
+            outlinerCollapsed: false,
+            solidOpacity: 0.28,
+            xRayMode: false,
+            isolatedOnly: false,
+            activeDepth: 1,
+            layerPeelingLevel: 0,
+            peeledHistory: [],
+            hiddenNodeIds: buildHiddenSetForActiveSystems(nextSys),
+            cameraFocusTarget: [0, 1.45, 0],
+            explosionProgress: 0.0,
+            modules: { ...state.modules, solidOpacity: 0.28, explodedProgress: 0.0, xRayMode: false },
+            systemOpacities: {
+              ...state.systemOpacities,
+              skeletal: 0.28,
+              nervous: 1.0,
+              cardiovascular: 1.0,
+              endocrine: 1.0,
+            },
+          };
+        }
         case 'cardiorespiratory': {
           const nextSys = new Set<ActiveAnatomicalSystem>(['cardiovascular', 'respiratory', 'skeletal']);
+          const nextLoaded = new Set(state.loadedParts);
+          nextSys.forEach((s) => nextLoaded.add(s));
           return {
             activeSystem: 'all',
             activeSystems: nextSys,
+            loadedParts: nextLoaded,
             activeRegion: 'thorax',
             solidOpacity: 0.35,
             xRayMode: false,
             isolatedOnly: false,
             activeDepth: 1,
             layerPeelingLevel: 0,
+            peeledHistory: [],
             hiddenNodeIds: buildHiddenSetForActiveSystems(nextSys),
             cameraFocusTarget: [0, 0.4, 0],
             explosionProgress: 0.0,
@@ -958,15 +1362,19 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
         }
         case 'visceral': {
           const nextSys = new Set<ActiveAnatomicalSystem>(['digestive', 'urinary']);
+          const nextLoaded = new Set(state.loadedParts);
+          nextSys.forEach((s) => nextLoaded.add(s));
           return {
             activeSystem: 'digestive',
             activeSystems: nextSys,
+            loadedParts: nextLoaded,
             activeRegion: 'all',
             solidOpacity: 0.0,
             xRayMode: false,
             isolatedOnly: false,
             activeDepth: 1,
             layerPeelingLevel: 0,
+            peeledHistory: [],
             hiddenNodeIds: buildHiddenSetForActiveSystems(nextSys),
             cameraFocusTarget: [0, -0.2, 0],
             explosionProgress: 0.0,
@@ -985,6 +1393,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
             isolatedOnly: false,
             activeDepth: 1,
             layerPeelingLevel: 0,
+            peeledHistory: [],
             hiddenNodeIds: new Set(),
             explosionProgress: 0.0,
             cameraFocusTarget: [0, 0, 0],

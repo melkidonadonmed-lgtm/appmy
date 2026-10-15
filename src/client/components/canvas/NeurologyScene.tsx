@@ -2,6 +2,9 @@ import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { ALL_NEUROLOGY_NODES, NeurologyNode } from '../../../shared/constants/neurology.ts';
+import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
+import { resolveNeuroClinicalTargetAliases } from '../../../shared/utils/neuroTargetMapper.ts';
+import { AnatomicalCallout3D } from './AnatomicalCallout3D.tsx';
 
 interface NeurologySceneProps {
   explosionProgress: number;
@@ -20,8 +23,11 @@ interface BrainMeshItemProps {
   explosionProgress: number;
   isSelected: boolean;
   isGhost: boolean;
-  isIsolatedHidden: boolean;
+  isHidden: boolean;
+  peelOnClickMode: boolean;
   onSelect: () => void;
+  onPeel: () => void;
+  onOpenDetails: () => void;
 }
 
 function BrainMeshItem({
@@ -33,8 +39,11 @@ function BrainMeshItem({
   explosionProgress,
   isSelected,
   isGhost,
-  isIsolatedHidden,
+  isHidden,
+  peelOnClickMode,
   onSelect,
+  onPeel,
+  onOpenDetails,
 }: BrainMeshItemProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
@@ -58,45 +67,66 @@ function BrainMeshItem({
     );
   });
 
-  if (isIsolatedHidden) return null;
+  if (isHidden) return null;
 
   const baseColor = node.colorHex || '#a855f7';
   const isCSF = !!node.isCSF;
   const isMeninges = node.meshName === 'cranial_meninges';
   const opacity = isGhost ? 0.12 : isMeninges ? 0.28 : isCSF ? 0.7 : 0.96;
 
-  return (
-    <mesh
-      ref={meshRef}
-      rotation={rotation}
-      scale={scaleVec}
-      onClick={(e) => {
-        e.stopPropagation();
-        onSelect();
-      }}
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        setHovered(true);
-      }}
-      onPointerOut={() => setHovered(false)}
-      castShadow
-      receiveShadow
-    >
-      {geometryType === 'sphere' && <sphereGeometry args={[0.38, 32, 24]} />}
-      {geometryType === 'box' && <boxGeometry args={[0.5, 0.4, 0.5]} />}
-      {geometryType === 'cylinder' && <cylinderGeometry args={[0.18, 0.22, 0.45, 24]} />}
-      {geometryType === 'torus_arc' && <torusGeometry args={[0.32, 0.08, 16, 32, Math.PI * 1.2]} />}
+  const calloutWorldPos: [number, number, number] = [
+    basePosition.x + explosionOffset.x * explosionProgress,
+    basePosition.y + explosionOffset.y * explosionProgress,
+    basePosition.z + explosionOffset.z * explosionProgress,
+  ];
 
-      <meshStandardMaterial
-        color={isSelected ? '#38bdf8' : hovered ? '#ec4899' : baseColor}
-        roughness={isCSF ? 0.08 : 0.48}
-        metalness={isCSF ? 0.05 : 0.1}
-        transparent={isGhost || isCSF || isMeninges}
-        opacity={opacity}
-        emissive={isSelected ? '#0284c7' : hovered ? '#db2777' : isCSF ? '#0369a1' : '#000000'}
-        emissiveIntensity={isSelected ? 0.6 : hovered ? 0.4 : isCSF ? 0.35 : 0.0}
-      />
-    </mesh>
+  return (
+    <group>
+      <mesh
+        ref={meshRef}
+        rotation={rotation}
+        scale={scaleVec}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (peelOnClickMode || e.nativeEvent?.altKey) {
+            onPeel();
+            return;
+          }
+          onSelect();
+        }}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          setHovered(true);
+        }}
+        onPointerOut={() => setHovered(false)}
+        castShadow
+        receiveShadow
+      >
+        {geometryType === 'sphere' && <sphereGeometry args={[0.38, 32, 24]} />}
+        {geometryType === 'box' && <boxGeometry args={[0.5, 0.4, 0.5]} />}
+        {geometryType === 'cylinder' && <cylinderGeometry args={[0.18, 0.22, 0.45, 24]} />}
+        {geometryType === 'torus_arc' && <torusGeometry args={[0.32, 0.08, 16, 32, Math.PI * 1.2]} />}
+
+        <meshStandardMaterial
+          color={isSelected ? '#38bdf8' : hovered ? '#ec4899' : baseColor}
+          roughness={isCSF ? 0.08 : 0.48}
+          metalness={isCSF ? 0.05 : 0.1}
+          transparent={isGhost || isCSF || isMeninges}
+          opacity={opacity}
+          emissive={isSelected ? '#0284c7' : hovered ? '#db2777' : isCSF ? '#0369a1' : '#000000'}
+          emissiveIntensity={isSelected ? 0.6 : hovered ? 0.4 : isCSF ? 0.35 : 0.0}
+        />
+      </mesh>
+      {isSelected && (
+        <AnatomicalCallout3D
+          node={node}
+          position={calloutWorldPos}
+          worldPosition={calloutWorldPos}
+          onClose={onSelect}
+          onOpenDetailsTab={onOpenDetails}
+        />
+      )}
+    </group>
   );
 }
 
@@ -107,11 +137,24 @@ export function NeurologyScene({
   ghostMode,
   isolatedOnly,
 }: NeurologySceneProps) {
+  const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
+  const peelOnClickMode = useAnatomyStore((s) => s.peelOnClickMode);
+  const peelNodeOnClick = useAnatomyStore((s) => s.peelNodeOnClick);
+  const setSidebarTab = useAnatomyStore((s) => s.setSidebarTab);
+
   return (
     <group name="neurology_system_group">
       {ALL_NEUROLOGY_NODES.map((node) => {
-        const isSelected = selectedNodeId === node.id;
-        const isIsolatedHidden = isolatedOnly && !isSelected;
+        const mappedAliases = resolveNeuroClinicalTargetAliases(node.id);
+        const mappedZIds = mappedAliases.filter((id) => id.startsWith('za:'));
+        const isSelected =
+          selectedNodeId === node.id ||
+          (selectedNodeId !== null && mappedAliases.includes(selectedNodeId));
+        const isExplicitlyHidden =
+          hiddenNodeIds.has(node.id) ||
+          (Boolean(node.meshName) && hiddenNodeIds.has(node.meshName!)) ||
+          (mappedZIds.length > 0 && mappedZIds.every((id) => hiddenNodeIds.has(id)));
+        const isHidden = isExplicitlyHidden || (isolatedOnly && !isSelected);
         const isGhost = ghostMode && !isSelected;
 
         let basePos = new THREE.Vector3(0, 0.4, 0);
@@ -260,8 +303,17 @@ export function NeurologyScene({
             explosionProgress={explosionProgress}
             isSelected={isSelected}
             isGhost={isGhost}
-            isIsolatedHidden={isIsolatedHidden}
+            isHidden={isHidden}
+            peelOnClickMode={peelOnClickMode}
             onSelect={() => onSelectNode(isSelected ? null : node)}
+            onPeel={() =>
+              peelNodeOnClick(
+                mappedAliases,
+                node.namePtBr,
+                node.meshName ? [node.meshName] : undefined
+              )
+            }
+            onOpenDetails={() => setSidebarTab('details')}
           />
         );
       })}
