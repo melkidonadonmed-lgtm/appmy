@@ -46,7 +46,7 @@ function SmoothCameraController({
 }) {
   const { scene, camera, gl } = useThree();
   if (typeof window !== 'undefined') {
-    (window as any).__threeScene = scene;
+    (window as unknown as { __threeScene?: THREE.Scene }).__threeScene = scene;
   }
   const cameraFocusTarget = useAnatomyStore((s) => s.cameraFocusTarget);
   const cameraPositionTarget = useAnatomyStore((s) => s.cameraPositionTarget);
@@ -99,7 +99,8 @@ function SmoothCameraController({
         const t1 = e.touches[1];
         const currMetrics = computeTwoFingerMetrics(
           { x: t0.clientX, y: t0.clientY },
-          { x: t1.clientX, y: t1.clientY }
+          { x: t1.clientX, y: t1.clientY },
+          prevTouchMetrics?.lockedIntent || 'unlocked'
         );
         if (prevTouchMetrics) {
           const delta = computeTwoFingerTouchDelta(
@@ -108,6 +109,7 @@ function SmoothCameraController({
             dom.clientWidth || 800,
             dom.clientHeight || 600
           );
+          currMetrics.lockedIntent = delta.lockedIntent;
           applyNavigationDeltaToRig(camera, controlsRef.current.target, delta);
           controlsRef.current.update();
         }
@@ -119,6 +121,7 @@ function SmoothCameraController({
       if (e.touches.length < 2) {
         prevTouchMetrics = null;
         if (controlsRef.current) {
+          controlsRef.current.update();
           controlsRef.current.enabled = true;
         }
       }
@@ -137,7 +140,8 @@ function SmoothCameraController({
         e.deltaY,
         isPinchOrAltZoom,
         e.shiftKey,
-        mode
+        mode,
+        e.deltaMode
       );
       applyNavigationDeltaToRig(camera, controlsRef.current.target, delta);
       controlsRef.current.update();
@@ -181,10 +185,12 @@ function SmoothCameraController({
       frameCamera.position.x = THREE.MathUtils.lerp(frameCamera.position.x, px, 0.08);
       frameCamera.position.y = THREE.MathUtils.lerp(frameCamera.position.y, py, 0.08);
       frameCamera.position.z = THREE.MathUtils.lerp(frameCamera.position.z, pz, 0.08);
+      controlsRef.current?.update();
 
       const pDistSq = (frameCamera.position.x - px) ** 2 + (frameCamera.position.y - py) ** 2 + (frameCamera.position.z - pz) ** 2;
       if (pDistSq < 0.0001) {
         frameCamera.position.set(px, py, pz);
+        controlsRef.current?.update();
         setCameraPositionTarget(null);
       }
     }
@@ -222,7 +228,7 @@ export function SceneCanvas({
           localClippingEnabled: true,
         }}
         onCreated={({ gl, scene }) => {
-          (window as any).__threeScene = scene;
+          (window as unknown as { __threeScene?: THREE.Scene }).__threeScene = scene;
           const dom = gl.domElement;
           const handleContextLost = (event: Event) => {
             event.preventDefault();

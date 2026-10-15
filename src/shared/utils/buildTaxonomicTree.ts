@@ -1,6 +1,8 @@
 import { ZAnatomyItem, sanitizeNodeName } from '../constants/zAnatomyCatalog.ts';
+import { FEMALE_REPRODUCTIVE_CATALOG } from '../constants/femaleReproductiveCatalog.ts';
 import { TaxonomicTreeNode } from '../types/taxonomicTree.ts';
 import { SYSTEM_METADATA, REGION_METADATA } from '../constants/taxonomicMetadata.ts';
+import { determineSurgicalLayer } from '../../core/surgicalLayers.ts';
 
 export const MUSCULAR_SUBLAYER_METADATA: Record<
   string,
@@ -259,16 +261,49 @@ function createLeafNode(item: ZAnatomyItem, sysId: string, regId: string, depth:
 }
 
 /**
+ * Calcula pontuação de profundidade estratigráfica (De Fora Para Dentro / Superficial -> Profundo):
+ * Menor valor = mais externo/superficial (aparece no topo da pasta);
+ * Maior valor = mais interno/profundo (aparece no fundo da pasta).
+ */
+function getItemOutsideToInsideScore(item: ZAnatomyItem): number {
+  const surgicalLayer = determineSurgicalLayer(item.system, item.node, item.namePtBr);
+  const ev = item.explosionVector || { x: 0, y: 0, z: 0 };
+  const radialDistance = Math.hypot(ev.x, ev.z);
+  // Estruturas com maior raio de explosão são mais superficiais/periféricas -> menor score
+  return surgicalLayer * 10 - radialDistance;
+}
+
+function sortItemsOutsideToInside(items: ZAnatomyItem[]): ZAnatomyItem[] {
+  return [...items].sort((a, b) => {
+    const diff = getItemOutsideToInsideScore(a) - getItemOutsideToInsideScore(b);
+    if (Math.abs(diff) > 0.01) return diff;
+    return (a.namePtBr || a.node).localeCompare(b.namePtBr || b.node, 'pt-BR');
+  });
+}
+
+/**
  * Constrói a árvore hierárquica taxonômica completa em passagem única O(N),
  * ordenada estratigraficamente de fora para dentro (Camada 1 -> Camada 6) e
  * pré-computando a lista de descendantIds de cada nó intermediário para
  * alternâncias de visibilidade instantâneas em O(1).
  */
-export function buildTaxonomicTree(catalog: ZAnatomyItem[]): TaxonomicTreeNode[] {
+export function buildTaxonomicTree(
+  catalog: ZAnatomyItem[],
+  biologicalSex?: 'male' | 'female'
+): TaxonomicTreeNode[] {
+  // Quando biologicalSex === 'female', substitui os órgãos reprodutores masculinos pelos 36 órgãos reprodutores femininos (Útero, Ovários, Tubas, Vagina)
+  const effectiveCatalog =
+    biologicalSex === 'female'
+      ? [
+          ...catalog.filter((item) => item.system !== 'reproductive'),
+          ...FEMALE_REPRODUCTIVE_CATALOG,
+        ]
+      : catalog;
+
   // Buckets: systemId -> regionId -> subregionKey -> items[]
   const systemBuckets = new Map<string, Map<string, Map<string, ZAnatomyItem[]>>>();
 
-  for (const item of catalog) {
+  for (const item of effectiveCatalog) {
     const sysId = item.system || 'skeletal';
     const regId = detectRegion(item);
     const subKey = item.path && item.path.length > 0 ? item.path[0] : '__geral__';
@@ -350,7 +385,7 @@ export function buildTaxonomicTree(catalog: ZAnatomyItem[]): TaxonomicTreeNode[]
         const layerDescendants = new Set<string>();
 
         for (const regId of sortedRegs) {
-          const items = regInLayer.get(regId)!;
+          const items = sortItemsOutsideToInside(regInLayer.get(regId)!);
           const leafNodes = items.map((item) => createLeafNode(item, sysId, regId, 4));
           const regDescendants = new Set<string>();
 
@@ -405,7 +440,7 @@ export function buildTaxonomicTree(catalog: ZAnatomyItem[]): TaxonomicTreeNode[]
       continue;
     }
 
-    // Demais sistemas: Sistema -> Região Craniocaudal -> Sub-região -> Folhas
+    // Demais sistemas: Sistema -> Região Craniocaudal -> Sub-região (De Fora Para Dentro) -> Folhas (De Fora Para Dentro)
     const regionNodes: TaxonomicTreeNode[] = [];
     const sortedRegions = Array.from(regionMap.keys()).sort((a, b) => {
       const orderA = REGION_METADATA[a]?.order ?? 99;
@@ -415,10 +450,21 @@ export function buildTaxonomicTree(catalog: ZAnatomyItem[]): TaxonomicTreeNode[]
 
     for (const regId of sortedRegions) {
       const subMap = regionMap.get(regId)!;
+      const subEntries = Array.from(subMap.entries()).sort(([, itemsA], [, itemsB]) => {
+        const avgA =
+          itemsA.reduce((acc, it) => acc + getItemOutsideToInsideScore(it), 0) /
+          Math.max(1, itemsA.length);
+        const avgB =
+          itemsB.reduce((acc, it) => acc + getItemOutsideToInsideScore(it), 0) /
+          Math.max(1, itemsB.length);
+        return avgA - avgB;
+      });
+
       const subNodes: TaxonomicTreeNode[] = [];
       const regionDescendants = new Set<string>();
 
-      for (const [subKey, items] of subMap.entries()) {
+      for (const [subKey, rawItems] of subEntries) {
+        const items = sortItemsOutsideToInside(rawItems);
         const leafNodes: TaxonomicTreeNode[] = items.map((item) =>
           createLeafNode(item, sysId, regId, subKey === '__geral__' ? 3 : 4)
         );
@@ -468,9 +514,22 @@ export function buildTaxonomicTree(catalog: ZAnatomyItem[]): TaxonomicTreeNode[]
     }
 
     const sysMeta = SYSTEM_METADATA[sysId];
+    let systemLabelPt = sysMeta?.labelPt || sysId;
+    if (biologicalSex && sysId === 'reproductive') {
+      systemLabelPt =
+        biologicalSex === 'female'
+          ? 'Sistema Reprodutor Feminino (Útero & Ovários)'
+          : 'Sistema Reprodutor Masculino';
+    } else if (biologicalSex && sysId === 'integumentary') {
+      systemLabelPt =
+        biologicalSex === 'female'
+          ? 'Tegumento & Glândula Mamária (Feminino)'
+          : 'Tegumento & Glândula Mamária (Ativa Feminino)';
+    }
+
     tree.push({
       id: `sys_${sysId}`,
-      namePt: sysMeta?.labelPt || sysId,
+      namePt: systemLabelPt,
       nameTA2: sysMeta?.labelTA2,
       type: 'system',
       depth: 1,

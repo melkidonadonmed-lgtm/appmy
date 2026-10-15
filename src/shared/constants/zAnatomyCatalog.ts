@@ -52258,15 +52258,29 @@ export const Z_ANATOMY_CATALOG: ZAnatomyItem[] = [
   }
 ];
 
+import {
+  FEMALE_REPRODUCTIVE_CATALOG,
+  MALE_REPRODUCTIVE_TRANSLATIONS,
+} from './femaleReproductiveCatalog.ts';
+
+// Aplica traduções médicas em Português do Brasil aos 14 órgãos reprodutores masculinos do catálogo
+for (const item of Z_ANATOMY_CATALOG) {
+  const maleTrans = MALE_REPRODUCTIVE_TRANSLATIONS[item.id];
+  if (maleTrans) {
+    item.namePtBr = maleTrans.namePtBr;
+    item.path = [maleTrans.subFolderPt];
+  }
+}
+
 // Normalização de nomes de malha idêntica à do Three.js (THREE.PropertyBinding.sanitizeNodeName)
 export function sanitizeNodeName(name: string): string {
   if (!name) return '';
   return name.replace(/\s+/g, '_').replace(/[\.\:\/]/g, '');
 }
 
-// Índice de lookup O(1) por nome exato do nó GLTF e por nome sanitizado Three.js em runtime
+// Índice de lookup O(1) por nome exato do nó GLTF e por nome sanitizado Three.js em runtime (Masculino + Feminino)
 export const Z_ANATOMY_BY_NODE: Record<string, ZAnatomyItem> = {};
-for (const item of Z_ANATOMY_CATALOG) {
+for (const item of [...Z_ANATOMY_CATALOG, ...FEMALE_REPRODUCTIVE_CATALOG]) {
   Z_ANATOMY_BY_NODE[item.node] = item;
   const san = sanitizeNodeName(item.node);
   if (san) {
@@ -52274,12 +52288,13 @@ for (const item of Z_ANATOMY_CATALOG) {
   }
 }
 
-// Índice de lookup O(1) por ID único
+// Índice de lookup O(1) por ID único (incluindo os 36 órgãos reprodutores femininos)
 export const Z_ANATOMY_BY_ID: Record<string, ZAnatomyItem> = Object.fromEntries(
-  Z_ANATOMY_CATALOG.map((item) => [item.id, item])
+  [...Z_ANATOMY_CATALOG, ...FEMALE_REPRODUCTIVE_CATALOG].map((item) => [item.id, item])
 );
 
 // Lista exclusiva dos 335 ossos do esqueleto humano completo
 export const Z_ANATOMY_SKELETAL = Z_ANATOMY_CATALOG.filter(
   (item) => item.system === 'skeletal' || item.meshFile === 'skeletal_male.glb'
 );
+

@@ -204,6 +204,7 @@ function BoneMeshItem({
   }, [node.meshName]);
 
   // Animação e translação vetorial suave via Lerp
+  const targetVecRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
 
@@ -214,7 +215,7 @@ function BoneMeshItem({
     const targetY = basePosition.y + ev.y * explosionProgress * 1.7 * mult;
     const targetZ = basePosition.z + ev.z * explosionProgress * 1.7 * mult;
 
-    meshRef.current.position.lerp(new THREE.Vector3(targetX, targetY, targetZ), 0.16);
+    meshRef.current.position.lerp(targetVecRef.current.set(targetX, targetY, targetZ), 0.16);
 
     // Efeito sutil de rotação no hover
     if (hovered && !isSelected) {
@@ -511,5 +512,3 @@ export function AnatomicalAtlasScene({
   );
 }
 
-// Alias de retrocompatibilidade para garantir que nenhum import legado quebre
-export const ExplodedCraniumScene = AnatomicalAtlasScene;

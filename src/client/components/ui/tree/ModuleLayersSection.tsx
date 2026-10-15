@@ -190,9 +190,9 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
             >
               <button
                 onClick={() => setModuleState({ solidOpacity: 1.0, xRayMode: false })}
-                aria-pressed={modules.solidOpacity === 1.0 && !modules.xRayMode}
+                aria-pressed={Math.abs(modules.solidOpacity - 1.0) < 1e-4 && !modules.xRayMode}
                 className={`outliner-density-btn ${
-                  modules.solidOpacity === 1.0 && !modules.xRayMode ? 'active' : ''
+                  Math.abs(modules.solidOpacity - 1.0) < 1e-4 && !modules.xRayMode ? 'active' : ''
                 }`}
                 title="100% Sólido"
               >
@@ -200,9 +200,9 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
               </button>
               <button
                 onClick={() => setModuleState({ solidOpacity: 0.35, xRayMode: false })}
-                aria-pressed={modules.solidOpacity === 0.35 && !modules.xRayMode}
+                aria-pressed={Math.abs(modules.solidOpacity - 0.35) < 1e-4 && !modules.xRayMode}
                 className={`outliner-density-btn ${
-                  modules.solidOpacity === 0.35 && !modules.xRayMode ? 'active' : ''
+                  Math.abs(modules.solidOpacity - 0.35) < 1e-4 && !modules.xRayMode ? 'active' : ''
                 }`}
                 title="Translúcido (35%)"
               >

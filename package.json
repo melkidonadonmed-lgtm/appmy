@@ -12,7 +12,8 @@
     "build:server": "tsc -p tsconfig.server.json",
     "start": "node dist/server/index.js",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.server.json --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "deploy:cloudrun": "pwsh -File scripts/deploy-cloudrun.ps1"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

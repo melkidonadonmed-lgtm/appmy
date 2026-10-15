@@ -38,15 +38,15 @@ export const QuickPresetsBar: React.FC = () => {
   const isPresetActive = (key: string) => {
     switch (key) {
       case 'all':
-        return activeSystem === 'all' && activeRegion === 'all' && solidOpacity === 1.0;
+        return activeSystem === 'all' && activeRegion === 'all' && Math.abs(solidOpacity - 1.0) < 1e-4;
       case 'skeletal':
         return activeSystem === 'skeletal' && activeRegion === 'all';
       case 'cranium':
         return activeRegion === 'cranium';
       case 'cardiorespiratory':
-        return solidOpacity === 0.35 && activeRegion === 'thorax';
+        return Math.abs(solidOpacity - 0.35) < 1e-4 && activeRegion === 'thorax';
       case 'visceral':
-        return activeSystem === 'digestive' && solidOpacity === 0.0;
+        return activeSystem === 'digestive' && Math.abs(solidOpacity) < 1e-4;
       default:
         return false;
     }

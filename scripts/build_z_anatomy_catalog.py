@@ -197,11 +197,15 @@ def translate_name(name_en: str, system: str = "") -> str:
     return s
 
 
+GLB_HEADER_BYTES = 12
+GLB_CHUNK_HEADER_BYTES = 8
+
+
 def read_glb_mesh_nodes(glb_filename: str) -> list[str]:
     path = os.path.join(GLB_DIR, glb_filename)
     with open(path, "rb") as f:
-        f.read(12)
-        clen, _ = struct.unpack("<II", f.read(8))
+        f.read(GLB_HEADER_BYTES)
+        clen, _ = struct.unpack("<II", f.read(GLB_CHUNK_HEADER_BYTES))
         gltf = json.loads(f.read(clen).decode("utf-8"))
     return [n.get("name", "") for n in gltf.get("nodes", []) if "mesh" in n and n.get("name")]
 
@@ -257,6 +261,56 @@ def format_fallback_organ(node_name: str, system: str, mesh_file: str) -> dict:
     }
 
 
+EXPLOSION_VECTOR_PROFILES = {
+    "frontal": (0.0, 0.7, 1.2),
+    "parietal": (1.2, 0.8, 0.1),
+    "occipital": (0.0, 0.3, -1.2),
+    "temporal": (1.3, 0.1, -0.2),
+    "sphenoid": (0.0, 0.4, 0.2),
+    "ethmoid": (0.0, 0.5, 0.5),
+    "mandible": (0.0, -1.2, 0.8),
+    "maxilla": (0.6, -0.2, 0.9),
+    "zygomatic": (1.1, 0.0, 0.7),
+    "nasal": (0.2, 0.3, 1.1),
+    "tooth": (0.3, -0.6, 0.7),
+    "cranium_default": (0.5, 0.2, 0.5),
+    "cervical": (0.0, 0.6, -0.2),
+    "thoracic": (0.0, 0.1, -0.3),
+    "lumbar": (0.0, -0.3, -0.3),
+    "sacrum": (0.0, -0.6, -0.4),
+    "sternum": (0.0, 0.1, 1.3),
+    "rib": (1.1, 0.0, 0.6),
+    "costal_cartilage": (0.7, 0.0, 0.9),
+    "clavicle": (1.1, 0.4, 0.3),
+    "scapula": (1.2, 0.2, -0.7),
+    "humerus": (1.4, -0.1, 0.0),
+    "forearm": (1.6, -0.3, 0.1),
+    "hand": (1.8, -0.5, 0.1),
+    "hip_bone": (1.1, -0.2, -0.1),
+    "femur": (1.2, -0.4, 0.1),
+    "patella": (0.7, -0.5, 0.7),
+    "leg": (1.3, -0.6, 0.1),
+    "foot": (1.4, -0.8, 0.2),
+    "integumentary": (0.85, 0.15, 1.1),
+    "muscular": (0.95, 0.05, 0.65),
+    "respiratory": (0.8, 0.1, 0.4),
+    "cardiovascular": (0.2, -0.1, 0.8),
+    "lymphatic": (0.6, 0.05, 0.6),
+    "digestive": (0.5, -0.2, 0.8),
+    "nervous": (0.0, 0.8, 0.0),
+    "renal": (0.7, -0.2, -0.5),
+    "endocrine": (0.4, 0.2, 0.6),
+    "reproductive": (0.4, -0.5, 0.6),
+    "default": (0.5, 0.0, 0.5),
+}
+LYMPHATIC_CENTER_X = 0.15
+
+
+def _vec(profile_key: str, side_sign: float = 1.0) -> dict:
+    px, py, pz = EXPLOSION_VECTOR_PROFILES[profile_key]
+    return {"x": px * side_sign, "y": py, "z": pz}
+
+
 def compute_explosion_vector(organ: dict) -> dict:
     name = organ.get("name_en", "")
     node = organ.get("node", "")
@@ -264,94 +318,97 @@ def compute_explosion_vector(organ: dict) -> dict:
     name_lower = name.lower()
     is_left = ".l" in node.lower() or "(left)" in name_lower or node.lower().endswith("_l")
     is_right = ".r" in node.lower() or "(right)" in name_lower or node.lower().endswith("_r")
+    bilateral_sign = -1.0 if is_left else 1.0
+    trilateral_sign = -1.0 if is_left else (1.0 if is_right else 0.0)
 
     if "frontal bone" in name_lower:
-        return {"x": 0, "y": 0.7, "z": 1.2}
+        return _vec("frontal")
     if "parietal bone" in name_lower:
-        return {"x": -1.2 if is_left else 1.2, "y": 0.8, "z": 0.1}
+        return _vec("parietal", bilateral_sign)
     if "occipital bone" in name_lower:
-        return {"x": 0, "y": 0.3, "z": -1.2}
+        return _vec("occipital")
     if "temporal bone" in name_lower:
-        return {"x": -1.3 if is_left else 1.3, "y": 0.1, "z": -0.2}
+        return _vec("temporal", bilateral_sign)
     if "sphenoid bone" in name_lower:
-        return {"x": 0, "y": 0.4, "z": 0.2}
+        return _vec("sphenoid")
     if "ethmoid bone" in name_lower:
-        return {"x": 0, "y": 0.5, "z": 0.5}
+        return _vec("ethmoid")
     if "mandible" in name_lower:
-        return {"x": 0, "y": -1.2, "z": 0.8}
+        return _vec("mandible")
     if "maxilla" in name_lower:
-        return {"x": -0.6 if is_left else 0.6, "y": -0.2, "z": 0.9}
+        return _vec("maxilla", bilateral_sign)
     if "zygomatic" in name_lower:
-        return {"x": -1.1 if is_left else 1.1, "y": 0.0, "z": 0.7}
+        return _vec("zygomatic", bilateral_sign)
     if "nasal bone" in name_lower:
-        return {"x": -0.2 if is_left else 0.2, "y": 0.3, "z": 1.1}
+        return _vec("nasal", bilateral_sign)
     if any(k in name_lower for k in ["tooth", "incisor", "canine", "molar", "premolar"]):
-        return {"x": -0.3 if is_left else 0.3, "y": -0.6, "z": 0.7}
+        return _vec("tooth", bilateral_sign)
     if any(k in path_str for k in ["cranium", "extracranial"]):
-        return {"x": -0.5 if is_left else (0.5 if is_right else 0), "y": 0.2, "z": 0.5}
+        return _vec("cranium_default", trilateral_sign)
 
     if "cervical" in name_lower or "atlas" in name_lower or "axis" in name_lower:
-        return {"x": 0, "y": 0.6, "z": -0.2}
+        return _vec("cervical")
     if "thoracic vertebra" in name_lower:
-        return {"x": 0, "y": 0.1, "z": -0.3}
+        return _vec("thoracic")
     if "lumbar" in name_lower:
-        return {"x": 0, "y": -0.3, "z": -0.3}
+        return _vec("lumbar")
     if "sacrum" in name_lower or "coccyx" in name_lower:
-        return {"x": 0, "y": -0.6, "z": -0.4}
+        return _vec("sacrum")
 
     if "sternum" in name_lower or "xiphoid" in name_lower:
-        return {"x": 0, "y": 0.1, "z": 1.3}
+        return _vec("sternum")
     if "rib" in name_lower:
-        return {"x": -1.1 if is_left else 1.1, "y": 0, "z": 0.6}
+        return _vec("rib", bilateral_sign)
     if "cartilage" in name_lower and "costal" in name_lower:
-        return {"x": -0.7 if is_left else 0.7, "y": 0, "z": 0.9}
+        return _vec("costal_cartilage", bilateral_sign)
 
     if "clavicle" in name_lower:
-        return {"x": -1.1 if is_left else 1.1, "y": 0.4, "z": 0.3}
+        return _vec("clavicle", bilateral_sign)
     if "scapula" in name_lower:
-        return {"x": -1.2 if is_left else 1.2, "y": 0.2, "z": -0.7}
+        return _vec("scapula", bilateral_sign)
     if "humerus" in name_lower:
-        return {"x": -1.4 if is_left else 1.4, "y": -0.1, "z": 0}
+        return _vec("humerus", bilateral_sign)
     if "radius" in name_lower or "ulna" in name_lower:
-        return {"x": -1.6 if is_left else 1.6, "y": -0.3, "z": 0.1}
+        return _vec("forearm", bilateral_sign)
     if any(k in name_lower for k in ["carpal", "metacarpal", "phalanx", "trapezium", "capitate", "hamate", "scaphoid", "lunate", "triquetrum", "pisiform"]):
         if any(k in path_str for k in ["upper limb", "free upper limb"]):
-            return {"x": -1.8 if is_left else 1.8, "y": -0.5, "z": 0.1}
+            return _vec("hand", bilateral_sign)
 
     if "hip bone" in name_lower:
-        return {"x": -1.1 if is_left else 1.1, "y": -0.2, "z": -0.1}
+        return _vec("hip_bone", bilateral_sign)
     if "femur" in name_lower:
-        return {"x": -1.2 if is_left else 1.2, "y": -0.4, "z": 0.1}
+        return _vec("femur", bilateral_sign)
     if "patella" in name_lower:
-        return {"x": -0.7 if is_left else 0.7, "y": -0.5, "z": 0.7}
+        return _vec("patella", bilateral_sign)
     if "tibia" in name_lower or "fibula" in name_lower:
-        return {"x": -1.3 if is_left else 1.3, "y": -0.6, "z": 0.1}
+        return _vec("leg", bilateral_sign)
     if any(k in name_lower for k in ["calcaneus", "talus", "navicular", "cuneiform", "cuboid", "metatarsal", "sesamoid"]):
-        return {"x": -1.4 if is_left else 1.4, "y": -0.8, "z": 0.2}
+        return _vec("foot", bilateral_sign)
 
     sys = organ.get("system")
     if sys == "integumentary":
-        return {"x": -0.85 if is_left else (0.85 if is_right else 0), "y": 0.15, "z": 1.1}
+        return _vec("integumentary", trilateral_sign)
     if sys == "muscular":
-        return {"x": -0.95 if is_left else (0.95 if is_right else 0), "y": 0.05, "z": 0.65}
+        return _vec("muscular", trilateral_sign)
     if sys == "respiratory":
-        return {"x": -0.8 if is_left else (0.8 if is_right else 0), "y": 0.1, "z": 0.4}
+        return _vec("respiratory", trilateral_sign)
     if sys == "cardiovascular":
-        return {"x": 0.2, "y": -0.1, "z": 0.8}
+        return _vec("cardiovascular")
     if sys == "lymphatic":
-        return {"x": -0.6 if is_left else (0.6 if is_right else 0.15), "y": 0.05, "z": 0.6}
+        px, py, pz = EXPLOSION_VECTOR_PROFILES["lymphatic"]
+        return {"x": -px if is_left else (px if is_right else LYMPHATIC_CENTER_X), "y": py, "z": pz}
     if sys == "digestive":
-        return {"x": -0.5 if is_left else 0.5, "y": -0.2, "z": 0.8}
+        return _vec("digestive", bilateral_sign)
     if sys == "nervous":
-        return {"x": 0, "y": 0.8, "z": 0}
+        return _vec("nervous")
     if sys in ("renal", "urinary"):
-        return {"x": -0.7 if is_left else 0.7, "y": -0.2, "z": -0.5}
+        return _vec("renal", bilateral_sign)
     if sys == "endocrine":
-        return {"x": -0.4 if is_left else (0.4 if is_right else 0), "y": 0.2, "z": 0.6}
+        return _vec("endocrine", trilateral_sign)
     if sys == "reproductive":
-        return {"x": -0.4 if is_left else (0.4 if is_right else 0), "y": -0.5, "z": 0.6}
+        return _vec("reproductive", trilateral_sign)
 
-    return {"x": -0.5 if is_left else (0.5 if is_right else 0), "y": 0, "z": 0.5}
+    return _vec("default", trilateral_sign)
 
 
 def is_valid_mesh_for_system(sys_name: str, raw_name: str, manifest_item: dict | None) -> bool:

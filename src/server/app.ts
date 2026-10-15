@@ -58,7 +58,7 @@ export function createApp() {
   });
 
   // Middleware defensivo de captura de erros
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  app.use((err: Error & { status?: number }, _req: Request, res: Response, _next: NextFunction) => {
     console.error('[App Error Uncaught]:', err);
     res.status(err.status || 500).json({
       error: 'Internal Server Error',

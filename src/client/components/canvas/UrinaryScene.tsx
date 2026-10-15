@@ -44,14 +44,17 @@ function KidneyMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
   });
 
   if (isIsolatedHidden) return null;
@@ -109,14 +112,17 @@ function KidneyMedullaMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
   });
 
   if (isIsolatedHidden) return null;
@@ -190,10 +196,11 @@ function UreterTubeMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
-      new THREE.Vector3(
+      targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
@@ -255,14 +262,17 @@ function BladderMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
   });
 
   if (isIsolatedHidden) return null;
@@ -319,14 +329,17 @@ function BladderTrigoneMesh({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
   });
 
   if (isIsolatedHidden) return null;

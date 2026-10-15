@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { MprPlaneType, AnatomicalLandmark, PlaneVectorDef } from '../../shared/types/dissection.ts';
 
+const MIN_CLIP_OFFSET = -3.0;
+const MAX_CLIP_OFFSET = 3.0;
+
 /**
  * Catálogo canônico de Marcos Anatômicos de corte tomográfico (Terminologia Anatomica).
  */
@@ -21,7 +24,7 @@ export const SAGITTAL_LANDMARKS: AnatomicalLandmark[] = [
   },
   {
     offsetMin: 0.9,
-    offsetMax: 3.0,
+    offsetMax: MAX_CLIP_OFFSET,
     namePtBr: 'Plano Sagital Lateral Direito',
     nameLatin: 'Planum sagittale laterale dextrum',
     clinicalSignificance: 'Arco costal lateral direito, lobo temporal e parietal direito.',
@@ -34,7 +37,7 @@ export const SAGITTAL_LANDMARKS: AnatomicalLandmark[] = [
     clinicalSignificance: 'Ápice e ventrículo esquerdo do coração, estômago, rim esquerdo e brônquio esquerdo.',
   },
   {
-    offsetMin: -3.0,
+    offsetMin: MIN_CLIP_OFFSET,
     offsetMax: -0.9,
     namePtBr: 'Plano Sagital Lateral Esquerdo',
     nameLatin: 'Planum sagittale laterale sinistrum',
@@ -45,7 +48,7 @@ export const SAGITTAL_LANDMARKS: AnatomicalLandmark[] = [
 export const CORONAL_LANDMARKS: AnatomicalLandmark[] = [
   {
     offsetMin: 0.55,
-    offsetMax: 3.0,
+    offsetMax: MAX_CLIP_OFFSET,
     namePtBr: 'Plano Coronal Anterior (Facial / Ventral)',
     nameLatin: 'Planum coronale anterius',
     clinicalSignificance: 'Ossos nasais, maxila, mandíbula, esterno e parede toracoabdominal anterior.',
@@ -72,7 +75,7 @@ export const CORONAL_LANDMARKS: AnatomicalLandmark[] = [
     clinicalSignificance: 'Rins bilaterais, glândulas adrenais, aorta abdominal descendente e esôfago posterior.',
   },
   {
-    offsetMin: -3.0,
+    offsetMin: MIN_CLIP_OFFSET,
     offsetMax: -0.75,
     namePtBr: 'Plano Coronal Posterior (Dorsal)',
     nameLatin: 'Planum coronale posterius',
@@ -83,7 +86,7 @@ export const CORONAL_LANDMARKS: AnatomicalLandmark[] = [
 export const AXIAL_LANDMARKS: AnatomicalLandmark[] = [
   {
     offsetMin: 1.15,
-    offsetMax: 3.0,
+    offsetMax: MAX_CLIP_OFFSET,
     namePtBr: 'Plano Axial Craniano Superior (Cortical)',
     nameLatin: 'Planum axiale craniale superius',
     clinicalSignificance: 'Calvária craniana, foice do cérebro e sulcos corticais frontoparietais.',
@@ -117,7 +120,7 @@ export const AXIAL_LANDMARKS: AnatomicalLandmark[] = [
     clinicalSignificance: 'Nível vertebral L1, piloro gástrico, colo do pâncreas, hilos renais e artéria mesentérica superior.',
   },
   {
-    offsetMin: -3.0,
+    offsetMin: MIN_CLIP_OFFSET,
     offsetMax: -0.85,
     namePtBr: 'Plano Axial Pélvico Inferior',
     nameLatin: 'Planum axiale pelvicum inferius',
@@ -147,8 +150,8 @@ export function getAnatomicalLandmark(plane: MprPlaneType, offset: number): Anat
 
   return (
     list[0] || {
-      offsetMin: -3.0,
-      offsetMax: 3.0,
+      offsetMin: MIN_CLIP_OFFSET,
+      offsetMax: MAX_CLIP_OFFSET,
       namePtBr: 'Plano Anatômico Personalizado',
       nameLatin: 'Planum anatomicum',
       clinicalSignificance: 'Secção tomográfica customizada do volume 3D.',
@@ -198,7 +201,8 @@ export function getPlaneVectorDef(planeType: MprPlaneType, offset: number, inver
  */
 export function computeClippingPlane(planeType: MprPlaneType, offset: number, inverted: boolean): THREE.Plane {
   const def = getPlaneVectorDef(planeType, offset, inverted);
-  const normal = new THREE.Vector3(def.normal.x, def.normal.y, def.normal.z).normalize();
+  const normal = new THREE.Vector3(def.normal.x, def.normal.y, def.normal.z);
+  if (normal.lengthSq() > 1e-12) normal.normalize();
   return new THREE.Plane(normal, def.constant);
 }
 

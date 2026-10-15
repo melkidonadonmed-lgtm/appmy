@@ -1,7 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import { NEUROLOGY_NODES, NeurologyNode } from '../../../shared/constants/neurology.ts';
+import { ALL_NEUROLOGY_NODES, NeurologyNode } from '../../../shared/constants/neurology.ts';
 
 interface NeurologySceneProps {
   explosionProgress: number;
@@ -45,21 +45,25 @@ function BrainMeshItem({
     return new THREE.Vector3(vec.x * mult, vec.y * mult, vec.z * mult);
   }, [node]);
 
+  const targetPosRef = useRef(new THREE.Vector3());
   useFrame(() => {
     if (!meshRef.current) return;
-    const targetPos = new THREE.Vector3(
-      basePosition.x + explosionOffset.x * explosionProgress,
-      basePosition.y + explosionOffset.y * explosionProgress,
-      basePosition.z + explosionOffset.z * explosionProgress
+    meshRef.current.position.lerp(
+      targetPosRef.current.set(
+        basePosition.x + explosionOffset.x * explosionProgress,
+        basePosition.y + explosionOffset.y * explosionProgress,
+        basePosition.z + explosionOffset.z * explosionProgress
+      ),
+      0.15
     );
-    meshRef.current.position.lerp(targetPos, 0.15);
   });
 
   if (isIsolatedHidden) return null;
 
   const baseColor = node.colorHex || '#a855f7';
   const isCSF = !!node.isCSF;
-  const opacity = isGhost ? 0.12 : isCSF ? 0.7 : 0.96;
+  const isMeninges = node.meshName === 'cranial_meninges';
+  const opacity = isGhost ? 0.12 : isMeninges ? 0.28 : isCSF ? 0.7 : 0.96;
 
   return (
     <mesh
@@ -87,7 +91,7 @@ function BrainMeshItem({
         color={isSelected ? '#38bdf8' : hovered ? '#ec4899' : baseColor}
         roughness={isCSF ? 0.08 : 0.48}
         metalness={isCSF ? 0.05 : 0.1}
-        transparent={isGhost || isCSF}
+        transparent={isGhost || isCSF || isMeninges}
         opacity={opacity}
         emissive={isSelected ? '#0284c7' : hovered ? '#db2777' : isCSF ? '#0369a1' : '#000000'}
         emissiveIntensity={isSelected ? 0.6 : hovered ? 0.4 : isCSF ? 0.35 : 0.0}
@@ -105,7 +109,7 @@ export function NeurologyScene({
 }: NeurologySceneProps) {
   return (
     <group name="neurology_system_group">
-      {NEUROLOGY_NODES.map((node) => {
+      {ALL_NEUROLOGY_NODES.map((node) => {
         const isSelected = selectedNodeId === node.id;
         const isIsolatedHidden = isolatedOnly && !isSelected;
         const isGhost = ghostMode && !isSelected;
@@ -136,6 +140,74 @@ export function NeurologyScene({
             basePos = new THREE.Vector3(0, 0.5, -0.65);
             scale = [1.05, 0.85, 0.85];
             geomType = 'sphere';
+            break;
+          case 'lobe_insula':
+            basePos = new THREE.Vector3(0.28, 0.42, 0.14);
+            scale = [0.52, 0.48, 0.62];
+            geomType = 'sphere';
+            break;
+
+          // Estruturas Comissurais, Projeção e Subcorticais
+          case 'corpus_callosum':
+            basePos = new THREE.Vector3(0, 0.56, 0.04);
+            scale = [0.65, 0.85, 1.15];
+            geomType = 'torus_arc';
+            rotation = [0, Math.PI / 2, 0];
+            break;
+          case 'fornix_septum':
+            basePos = new THREE.Vector3(0, 0.46, 0.06);
+            scale = [0.45, 0.62, 0.75];
+            geomType = 'torus_arc';
+            rotation = [0, Math.PI / 2, 0];
+            break;
+          case 'internal_capsule':
+            basePos = new THREE.Vector3(0.2, 0.44, 0.05);
+            scale = [0.35, 0.75, 0.65];
+            geomType = 'box';
+            rotation = [0, 0, -0.22];
+            break;
+          case 'basal_ganglia':
+            basePos = new THREE.Vector3(0.24, 0.4, 0.08);
+            scale = [0.48, 0.45, 0.58];
+            geomType = 'sphere';
+            break;
+          case 'diencephalon_thalamus':
+            basePos = new THREE.Vector3(0.12, 0.38, -0.02);
+            scale = [0.46, 0.38, 0.52];
+            geomType = 'sphere';
+            break;
+          case 'diencephalon_hypothalamus':
+            basePos = new THREE.Vector3(0, 0.28, 0.12);
+            scale = [0.28, 0.26, 0.28];
+            geomType = 'sphere';
+            break;
+          case 'epithalamus_pineal':
+            basePos = new THREE.Vector3(0, 0.36, -0.18);
+            scale = [0.16, 0.16, 0.18];
+            geomType = 'sphere';
+            break;
+          case 'limbic_hippocampus_amygdala':
+            basePos = new THREE.Vector3(0.26, 0.26, 0.08);
+            scale = [0.45, 0.35, 0.65];
+            geomType = 'torus_arc';
+            rotation = [Math.PI / 3, 0, 0];
+            break;
+          case 'cranial_meninges':
+            basePos = new THREE.Vector3(0, 0.58, -0.05);
+            scale = [1.55, 1.35, 1.65];
+            geomType = 'sphere';
+            break;
+          case 'circle_of_willis':
+            basePos = new THREE.Vector3(0, 0.16, 0.12);
+            scale = [0.58, 0.22, 0.58];
+            geomType = 'torus_arc';
+            rotation = [Math.PI / 2, 0, 0];
+            break;
+          case 'cranial_nerves_root':
+            basePos = new THREE.Vector3(0, 0.04, 0.18);
+            scale = [0.65, 0.32, 0.55];
+            geomType = 'cylinder';
+            rotation = [Math.PI / 3, 0, 0];
             break;
 
           // Cerebelo
@@ -196,3 +268,4 @@ export function NeurologyScene({
     </group>
   );
 }
+

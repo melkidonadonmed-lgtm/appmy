@@ -15,6 +15,7 @@ import {
   Minimize2,
   Palette,
   MoveVertical,
+  Brain,
 } from 'lucide-react';
 import { SceneCanvas } from './components/canvas/SceneCanvas.tsx';
 import { DissectionToolbar } from './components/ui/DissectionToolbar.tsx';
@@ -22,12 +23,15 @@ import { TelemetryOverlay } from './components/telemetry/TelemetryOverlay.tsx';
 import { AnatomyTreePanel } from './components/ui/tree/AnatomyTreePanel.tsx';
 import { OrientationGizmo } from './components/canvas/OrientationGizmo.tsx';
 import { QuickPresetsBar } from './components/ui/QuickPresetsBar.tsx';
+import { NeuroClinicalDrawer } from './components/ui/clinical/NeuroClinicalDrawer.tsx';
 import { useAnatomicalHotkeys } from './hooks/useAnatomicalHotkeys.ts';
 import { useAnatomyStore } from './stores/useAnatomyStore.ts';
 import { SkullDivision, CRANIUM_22_NODES } from '../shared/constants/cranium.ts';
 import { CRANIOFACIAL_MUSCLES } from '../shared/constants/myology.ts';
+import { ALL_NEUROLOGY_NODES } from '../shared/constants/neurology.ts';
 import { AnyAnatomicalNode } from './components/canvas/AnatomicalAtlasScene.tsx';
 import { Z_ANATOMY_BY_ID, Z_ANATOMY_BY_NODE } from '../shared/constants/zAnatomyCatalog.ts';
+import { resolveRichClinicalData } from '../shared/utils/clinicalEnrichment.ts';
 import { isFirebaseConfigured } from './lib/firebase.ts';
 
 export type TactileThemeId =
@@ -97,6 +101,9 @@ export default function App() {
   const twoFingerMode = useAnatomyStore((s) => s.twoFingerMode);
   const setTwoFingerMode = useAnatomyStore((s) => s.setTwoFingerMode);
 
+  const clinicalStudioOpen = useAnatomyStore((s) => s.clinicalStudioOpen);
+  const setClinicalStudioOpen = useAnatomyStore((s) => s.setClinicalStudioOpen);
+
   const dissection = useAnatomyStore((s) => s.dissection);
   const setDissection = useAnatomyStore((s) => s.setDissection);
 
@@ -157,21 +164,25 @@ export default function App() {
         parentId: item.path.length > 0 ? item.path[item.path.length - 1] : undefined,
         colorHex: item.system === 'skeletal' ? '#f4ede2' : '#38bdf8',
         explosionVector: item.explosionVector,
-        clinicalData: {
-          origin: item.path.join(' > '),
-          insertion: `Estrutura integrante do ${item.system}`,
-          clinicalSignificance: `Peça anatômica real escaneada do catálogo médico Z-Anatomy (Terminologia Anatomica TA2: ${item.nameLatin}).`,
-        },
+        clinicalData: resolveRichClinicalData(item),
       } as AnyAnatomicalNode);
       return;
     }
 
-    // Suporte aos nós de crânio e miologia da vista explodida
+    // Suporte aos nós de crânio, miologia e neuroanatomia profunda da vista explodida
     const craniumNode = CRANIUM_22_NODES.find(
       (c) => c.id === storeSelectedNodeId || c.meshName === storeSelectedNodeId
     );
     if (craniumNode) {
       setSelectedNode(craniumNode);
+      return;
+    }
+
+    const neuroNode = ALL_NEUROLOGY_NODES.find(
+      (n) => n.id === storeSelectedNodeId || n.meshName === storeSelectedNodeId
+    );
+    if (neuroNode) {
+      setSelectedNode(neuroNode);
       return;
     }
 
@@ -275,6 +286,18 @@ export default function App() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.35rem' }}>
+            {activeMode === '3d-atlas' && (
+              <button
+                type="button"
+                className={`mode-btn ${clinicalStudioOpen ? 'active' : ''}`}
+                onClick={() => setClinicalStudioOpen(!clinicalStudioOpen)}
+                title="Estúdio Neuroclínico: 14 Forames, Brodmann, 12 Pares Cranianos, Calculadora ASPECTS e Simulador de Casos"
+              >
+                <Brain size={13} strokeWidth={1.5} aria-hidden="true" />
+                <span>Estúdio Neuroclínico</span>
+              </button>
+            )}
+
             <button
               className={`mode-btn ${zenMode ? 'active' : ''}`}
               onClick={toggleZenMode}
@@ -364,6 +387,9 @@ export default function App() {
               {/* Barra Inferior de Presets Anatômicos Canônicos Rápidos */}
               <QuickPresetsBar />
 
+              {/* Estúdio Neuroclínico Flutuante / Ancorado (14 Forames, Brodmann, NC I-XII, ASPECTS, Casos) */}
+              <NeuroClinicalDrawer />
+
               {/* Canvas 3D WebGL */}
               <SceneCanvas
                 viewType={viewType}
@@ -396,27 +422,27 @@ export default function App() {
                     Conexão entre o Google Cloud Run (Southamerica-East1 / US-Central1) e Firebase Hosting
                   </p>
                 </div>
-                <button className="btn btn-secondary" onClick={fetchHealth} disabled={loadingHealth}>
-                  <RefreshCw size={14} className={loadingHealth ? 'animate-spin' : ''} />
+                <button className="btn btn-secondary btn-tactile" onClick={fetchHealth} disabled={loadingHealth}>
+                  <RefreshCw size={14} strokeWidth={1.5} className={loadingHealth ? 'animate-spin' : ''} />
                   <span>Atualizar Sondas</span>
                 </button>
               </div>
 
               <div className="grid">
                 {/* Card Cloud Run */}
-                <div className="card">
+                <div className="card card-tactile">
                   <div className="card-title">
-                    <Server size={18} color="#38bdf8" />
+                    <Server size={18} strokeWidth={1.5} color="var(--accent)" />
                     <span>Backend API (Cloud Run)</span>
                   </div>
                   <p className="card-description">
                     Serviço Express em Node.js com contratos de saúde e rewrites via Firebase Hosting.
                   </p>
-                  <div className="code-box">
+                  <div className="code-box" role="status" aria-live="polite" aria-busy={loadingHealth}>
                     {loadingHealth ? (
                       <span>Carregando status...</span>
                     ) : healthError ? (
-                      <span style={{ color: 'var(--danger)' }}>Erro: {healthError}</span>
+                      <span style={{ color: 'var(--danger)' }} role="alert">Erro: {healthError}</span>
                     ) : health ? (
                       <div>
                         <div><strong>Status:</strong> {health.status.toUpperCase()}</div>
@@ -431,9 +457,9 @@ export default function App() {
                 </div>
 
                 {/* Card Firebase */}
-                <div className="card">
+                <div className="card card-tactile">
                   <div className="card-title">
-                    <Flame size={18} color="#f59e0b" />
+                    <Flame size={18} strokeWidth={1.5} color="#f59e0b" />
                     <span>Firebase Suite & Storage</span>
                   </div>
                   <p className="card-description">
@@ -443,12 +469,12 @@ export default function App() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
                       {isFirebaseConfigured ? (
                         <>
-                          <CheckCircle2 size={14} color="var(--success)" />
+                          <CheckCircle2 size={14} strokeWidth={1.5} color="var(--success)" />
                           <span style={{ color: 'var(--success)' }}>Credenciais Ativas (.env)</span>
                         </>
                       ) : (
                         <>
-                          <AlertCircle size={14} color="var(--warning)" />
+                          <AlertCircle size={14} strokeWidth={1.5} color="var(--warning)" />
                           <span style={{ color: 'var(--warning)' }}>Modo Offline / Emulador Local</span>
                         </>
                       )}
@@ -459,9 +485,9 @@ export default function App() {
                 </div>
 
                 {/* Card CI/CD */}
-                <div className="card">
+                <div className="card card-tactile">
                   <div className="card-title">
-                    <GitBranch size={18} color="#818cf8" />
+                    <GitBranch size={18} strokeWidth={1.5} color="#818cf8" />
                     <span>GitHub Actions CI/CD</span>
                   </div>
                   <p className="card-description">
@@ -472,7 +498,7 @@ export default function App() {
                     <div><strong>Container:</strong> Docker multi-stage Alpine</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-                    <ShieldCheck size={14} color="var(--success)" />
+                    <ShieldCheck size={14} strokeWidth={1.5} color="var(--success)" />
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                       Contrato de porta dinâmica <code>$PORT</code> ativo
                     </span>
@@ -482,8 +508,8 @@ export default function App() {
 
               {/* Botão de retorno rápido ao 3D */}
               <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-                <button className="btn" onClick={() => setActiveMode('3d-atlas')}>
-                  <RotateCcw size={14} />
+                <button className="btn btn-tactile" onClick={() => setActiveMode('3d-atlas')}>
+                  <RotateCcw size={14} strokeWidth={1.5} />
                   <span>Voltar para o Visualizador 3D</span>
                 </button>
               </div>

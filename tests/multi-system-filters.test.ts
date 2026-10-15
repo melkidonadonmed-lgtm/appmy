@@ -5,6 +5,7 @@ import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
 import { buildTaxonomicTree } from '../src/shared/utils/buildTaxonomicTree.ts';
 import { filterTaxonomicTree } from '../src/shared/utils/filterTaxonomicTree.ts';
 import { Z_ANATOMY_CATALOG } from '../src/shared/constants/zAnatomyCatalog.ts';
+import { ActiveAnatomicalSystem } from '../src/client/components/canvas/AnatomicalAtlasScene.tsx';
 
 describe('Suíte de Multi-Seleção de Sistemas e Sobreposição Anatômica Cruzada', () => {
   const fullTree = buildTaxonomicTree(Z_ANATOMY_CATALOG);
@@ -94,8 +95,8 @@ describe('Suíte de Multi-Seleção de Sistemas e Sobreposição Anatômica Cruz
       const activeSystems = useAnatomyStore.getState().activeSystems;
 
       const visible = fullTree.filter((node) => {
-        const rawSys = node.systemId || node.id.replace(/^sys_/, '');
-        return activeSystems.has(rawSys as any) || activeSystems.has(node.id as any);
+        const rawSys = (node.systemId || node.id.replace(/^sys_/, '')) as ActiveAnatomicalSystem;
+        return activeSystems.has(rawSys) || activeSystems.has(node.id as ActiveAnatomicalSystem);
       });
 
       const sysIds = visible.map((n) => n.id);

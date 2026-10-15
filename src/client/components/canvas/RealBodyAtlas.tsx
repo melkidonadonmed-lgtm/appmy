@@ -32,6 +32,7 @@ import { AnatomicalMeshUserData } from '../../../shared/types/anatomy.ts';
 
 // Configuração do decodificador Draco local offline em public/draco/gltf/
 const DRACO_DECODER_PATH = '/draco/gltf/';
+const CRANIUM_FOCUS_OFFSET_Y = -4.6;
 
 export interface RealBodyAtlasProps {
   explosionProgress: number; // 0.0 a 1.0
@@ -311,6 +312,8 @@ export function isNodeInRegion(
   }
 }
 
+import { resolveRichClinicalData } from '../../../shared/utils/clinicalEnrichment.ts';
+
 /**
  * Converte um item do catálogo Z-Anatomy para a interface canônica AnyAnatomicalNode
  */
@@ -326,11 +329,7 @@ function toAnatomicalNode(item: ZAnatomyItem): AnyAnatomicalNode {
     parentId: item.path.length > 0 ? item.path[item.path.length - 1] : undefined,
     colorHex: item.system === 'skeletal' ? '#f4ede2' : '#38bdf8',
     explosionVector: item.explosionVector,
-    clinicalData: {
-      origin: item.path.join(' > '),
-      insertion: `Estrutura integrante do ${item.system}`,
-      clinicalSignificance: `Peça anatômica real escaneada do catálogo médico Z-Anatomy / BodyParts3D (Terminologia Anatomica TA2: ${item.nameLatin}).`,
-    },
+    clinicalData: resolveRichClinicalData(item),
   } as AnyAnatomicalNode;
 }
 
@@ -541,7 +540,49 @@ function RealSystemModel({
       isolatedOnly,
     };
 
+    // Verifica se todos os itens catalogados deste sistema (ou subcamada miofascial) foram desmarcados na Árvore
+    const catalogNodes = animNodes.filter((d) => d.item !== null);
+    const isEntireSystemHiddenInTree =
+      catalogNodes.length > 0 &&
+      catalogNodes.every(
+        (d) =>
+          hiddenNodeIds.has(d.item!.id) ||
+          hiddenNodeIds.has(d.item!.node) ||
+          hiddenNodeIds.has(d.mesh.name)
+      );
+
+    const hiddenMuscularSublayers = new Set<string>();
+    if (systemName === 'muscular' && !isEntireSystemHiddenInTree) {
+      for (const tType of ['fascia', 'superficial_muscle', 'deep_muscle', 'bursa']) {
+        const subCatalog = catalogNodes.filter((d) => d.mesh.userData?.__tissueType === tType);
+        if (
+          subCatalog.length > 0 &&
+          subCatalog.every(
+            (d) =>
+              hiddenNodeIds.has(d.item!.id) ||
+              hiddenNodeIds.has(d.item!.node) ||
+              hiddenNodeIds.has(d.mesh.name)
+          )
+        ) {
+          hiddenMuscularSublayers.add(tType);
+        }
+      }
+    }
+
     animNodes.forEach(({ mesh, item, baseMaterial }) => {
+      // Se o sistema inteiro ou a subcamada muscular foi desmarcada na árvore, oculta também malhas residuais não catalogadas do GLB
+      if (!item) {
+        const meshTissueType = mesh.userData?.__tissueType as string | undefined;
+        if (
+          isEntireSystemHiddenInTree ||
+          (systemName === 'muscular' && meshTissueType && hiddenMuscularSublayers.has(meshTissueType))
+        ) {
+          mesh.visible = false;
+          mesh.raycast = () => {};
+          return;
+        }
+      }
+
       const isSelected =
         effectiveSelectedId === item?.id ||
         effectiveSelectedId === mesh.userData?.id ||
@@ -576,13 +617,20 @@ function RealSystemModel({
 
   // Array otimizado de nós vinculados para o loop da GPU
   const bindings = useMemo(() => animNodes.map((d) => d.binding), [animNodes]);
+  const lastAppliedProgressRef = useRef<number>(-1);
 
-  // Animação da Exploded View no loop Three.js useFrame com LERP linear responsivo e âncoras fixas
-  // (A magnitude já está incorporada em binding.maxDistance via bindExplodedNode)
+  useEffect(() => {
+    lastAppliedProgressRef.current = -1;
+  }, [bindings]);
+
+  // Animação da Exploded View no loop Three.js useFrame com avanço 100% linear e trava de inatividade (zero travamento em repouso)
   useFrame(() => {
     const storeProgress = useAnatomyStore.getState().explosionProgress;
     const liveProgress = Number.isFinite(storeProgress) ? storeProgress : explosionProgress;
-    applyExplodedStep(bindings, liveProgress, 0.32);
+    if (Math.abs(liveProgress - lastAppliedProgressRef.current) > 0.0005) {
+      applyExplodedStep(bindings, liveProgress, 1.0);
+      lastAppliedProgressRef.current = liveProgress;
+    }
   });
 
   // Localiza o item atualmente selecionado para renderizar o Pin 3D e guiar a câmera
@@ -800,7 +848,7 @@ export function RealBodyAtlas({
   }, [storeSelectedNodeId, selectedNodeId, onSelectNode]);
 
   const effectiveExplosion = explosionProgress > 0 ? explosionProgress : storeModules.explodedProgress;
-  const effectiveOpacity = realSkullOpacity !== 1.0 ? realSkullOpacity : storeModules.solidOpacity;
+  const effectiveOpacity = Math.abs(realSkullOpacity - 1.0) > 1e-4 ? realSkullOpacity : storeModules.solidOpacity;
   const effectiveXRay = visualMode === 'xray' || storeModules.xRayMode;
 
   // Coleta de Lixo WebGL Determinística ao desmontar
@@ -816,6 +864,7 @@ export function RealBodyAtlas({
   // Determina quais sistemas devem ser exibidos e suas respectivas opacidades individuais
   const storeActiveSystems = useAnatomyStore((s) => s.activeSystems);
   const storeSystemOpacities = useAnatomyStore((s) => s.systemOpacities);
+  const biologicalSex = useAnatomyStore((s) => s.biologicalSex);
 
   const isSysActive = (sys: ActiveAnatomicalSystem) => {
     const altSys = (sys === 'urinary' ? 'renal' : sys) as ActiveAnatomicalSystem;
@@ -836,7 +885,9 @@ export function RealBodyAtlas({
     return fallback;
   };
 
-  const showIntegumentary = isSysActive('integumentary');
+  const showIntegumentary =
+    isSysActive('integumentary') &&
+    (biologicalSex === 'female' || Boolean(storeActiveSystems && storeActiveSystems.has('integumentary')));
   const integumentaryOpacity = getSysOpacity('integumentary', 0.85);
 
   const showSkeletal = isSysActive('skeletal');
@@ -875,7 +926,7 @@ export function RealBodyAtlas({
   const { position, scale } = useMemo<{ position: [number, number, number]; scale: [number, number, number] }>(() => {
     if (activeRegion === 'cranium') {
       return {
-        position: [0, -4.6, 0],
+        position: [0, CRANIUM_FOCUS_OFFSET_Y, 0],
         scale: [3.1, 3.1, 3.1],
       };
     }
@@ -918,7 +969,7 @@ export function RealBodyAtlas({
 
   return (
     <group ref={groupRef} position={position} scale={scale}>
-      {/* 0. Sistema Tegumentar Real (Pele e Tecido Celular Subcutâneo) */}
+      {/* 0. Sistema Tegumentar e Mamário Real (Exclusivo do Modelo Feminino ou quando isolado) */}
       {showIntegumentary && (
         <RealSystemModel
           glbPath="/models/anatomy/integumentary_female.glb"
@@ -1099,12 +1150,29 @@ export function RealBodyAtlas({
         />
       )}
 
-      {/* 10. Sistema Reprodutor Real */}
-      {showReproductive && (
+      {/* 10. Sistema Reprodutor Real (Sincronizado por Sexo Biológico: Feminino vs Masculino) */}
+      {showReproductive && biologicalSex === 'female' && (
+        <RealSystemModel
+          glbPath="/models/anatomy/reproductive_female.glb"
+          systemName="reproductive"
+          defaultColor="#f43f5e" // Coral reprodutor feminino
+          explosionProgress={effectiveExplosion}
+          selectedNodeId={selectedNodeId}
+          onSelectNode={onSelectNode}
+          ghostMode={ghostMode}
+          isolatedOnly={isolatedOnly}
+          activeRegion={activeRegion}
+          opacity={reproductiveOpacity}
+          isXRay={effectiveXRay}
+          magnitude={0.28}
+          modelOffset={[0, 0.84, 0.03]}
+        />
+      )}
+      {showReproductive && biologicalSex !== 'female' && (
         <RealSystemModel
           glbPath="/models/anatomy/reproductive_male.glb"
           systemName="reproductive"
-          defaultColor="#f43f5e" // Coral reprodutor
+          defaultColor="#f43f5e" // Coral reprodutor masculino
           explosionProgress={effectiveExplosion}
           selectedNodeId={selectedNodeId}
           onSelectNode={onSelectNode}
@@ -1124,6 +1192,7 @@ export function RealBodyAtlas({
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   useGLTF.preload('/models/anatomy/skeletal_male.glb', DRACO_DECODER_PATH);
   useGLTF.preload('/models/anatomy/integumentary_female.glb', DRACO_DECODER_PATH);
+  useGLTF.preload('/models/anatomy/reproductive_female.glb', DRACO_DECODER_PATH);
 }
 
 

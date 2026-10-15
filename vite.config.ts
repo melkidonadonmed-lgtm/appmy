@@ -8,10 +8,35 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
-          'react-vendor': ['react', 'react-dom'],
-          'icons-vendor': ['lucide-react']
+        manualChunks(id) {
+          if (id.includes('src/shared/constants/') || id.includes('src\\shared\\constants\\')) {
+            return 'anatomy-catalog';
+          }
+          if (id.includes('node_modules/lucide-react') || id.includes('node_modules\\lucide-react')) {
+            return 'icons-vendor';
+          }
+          if (
+            id.includes('node_modules/@react-three') ||
+            id.includes('node_modules\\@react-three') ||
+            id.includes('node_modules/three-stdlib') ||
+            id.includes('node_modules\\three-stdlib')
+          ) {
+            return 'r3f-drei-vendor';
+          }
+          if (id.includes('node_modules/three') || id.includes('node_modules\\three')) {
+            return 'three-core';
+          }
+          if (
+            id.includes('node_modules/react') ||
+            id.includes('node_modules\\react') ||
+            id.includes('node_modules/scheduler') ||
+            id.includes('node_modules\\scheduler') ||
+            id.includes('node_modules/zustand') ||
+            id.includes('node_modules\\zustand')
+          ) {
+            return 'react-vendor';
+          }
+          return undefined;
         }
       }
     }
