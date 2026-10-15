@@ -11,6 +11,7 @@ import {
   Stethoscope,
   ChevronsDown,
   ChevronsUp,
+  MoreHorizontal,
 } from 'lucide-react';
 import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../../../shared/constants/zAnatomyCatalog.ts';
 import { buildTaxonomicTree } from '../../../../shared/utils/buildTaxonomicTree.ts';
@@ -57,6 +58,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
 }) => {
   const [search, setSearch] = useState('');
   const [expandAllSignal, setExpandAllSignal] = useState<boolean | null>(null);
+  const [showSecondaryStrat, setShowSecondaryStrat] = useState(true);
 
   const outlinerCollapsed = useAnatomyStore((s) => s.outlinerCollapsed);
   const toggleOutlinerCollapsed = useAnatomyStore((s) => s.toggleOutlinerCollapsed);
@@ -268,7 +270,19 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
           {/* Barra Estratigráfica Unificada (De Fora para Dentro: Camadas 1 a 6 + Subcamadas Miofasciais) */}
           <div className="outliner-stratigraphic-bar">
             <div className="outliner-strat-row">
-              <span className="outliner-strat-label">Dissecação (Camadas):</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                <span className="outliner-strat-label">Dissecação (Camadas):</span>
+                <button
+                  type="button"
+                  onClick={() => setShowSecondaryStrat((prev) => !prev)}
+                  aria-expanded={showSecondaryStrat}
+                  className="outliner-mini-btn"
+                  title="Revelação Progressiva: Alternar subcamadas miofasciais e filtro regional"
+                >
+                  <MoreHorizontal size={11} strokeWidth={1.5} aria-hidden="true" />
+                  <span>{showSecondaryStrat ? 'Menos Filtros' : 'Subcamadas & Região'}</span>
+                </button>
+              </div>
               <div className="outliner-strat-pills" role="group" aria-label="Camadas cirúrgicas de fora para dentro">
                 {STRATIGRAPHIC_STEPS.map((step) => {
                   const isActive = activeDepth === step.depth;
@@ -290,7 +304,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
             </div>
 
             {/* Subcamadas Miofasciais (Fáscia Translúcida vs. Músculos Estriados) */}
-            {muscularSubgroups.length > 0 && (
+            {showSecondaryStrat && muscularSubgroups.length > 0 && (
               <div className="outliner-strat-row">
                 <span className="outliner-strat-label">Miofascial:</span>
                 <div className="outliner-strat-pills" role="group" aria-label="Subcamadas de fáscia e músculos estriados">
@@ -338,22 +352,24 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
             )}
 
             {/* Filtro Topográfico Rápido de Região */}
-            <div className="outliner-strat-row">
-              <span className="outliner-strat-label">Região:</span>
-              <div className="outliner-strat-pills" role="group" aria-label="Filtro rápido de região corporal">
-                {QUICK_REGIONS.map((reg) => (
-                  <button
-                    key={reg.id}
-                    type="button"
-                    onClick={() => setActiveRegion(reg.id)}
-                    aria-pressed={activeRegion === reg.id}
-                    className={`outliner-strat-pill ${activeRegion === reg.id ? 'active' : ''}`}
-                  >
-                    {reg.label}
-                  </button>
-                ))}
+            {showSecondaryStrat && (
+              <div className="outliner-strat-row">
+                <span className="outliner-strat-label">Região:</span>
+                <div className="outliner-strat-pills" role="group" aria-label="Filtro rápido de região corporal">
+                  {QUICK_REGIONS.map((reg) => (
+                    <button
+                      key={reg.id}
+                      type="button"
+                      onClick={() => setActiveRegion(reg.id)}
+                      aria-pressed={activeRegion === reg.id}
+                      className={`outliner-strat-pill ${activeRegion === reg.id ? 'active' : ''}`}
+                    >
+                      {reg.label}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Barra de Ações Rápidas da Árvore */}

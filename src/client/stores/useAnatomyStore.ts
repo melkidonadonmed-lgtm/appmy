@@ -9,6 +9,8 @@ import {
   sanitizeNodeName,
 } from '../../shared/constants/zAnatomyCatalog.ts';
 import { determineSurgicalLayer } from '../../core/visibilityManager.ts';
+import { stepExplosionProgressLinear } from '../../core/explodedEngine.ts';
+import { TwoFingerMode } from '../../core/navigationGestures.ts';
 
 function normalizeSystemId(sys: string): ActiveAnatomicalSystem {
   if (sys === 'renal') return 'urinary';
@@ -135,14 +137,27 @@ interface AnatomyStore {
   // 5. Estado dos Módulos Funcionais (Sincronizado)
   modules: ActiveModulesState;
 
-  // 6. Layout da Interface
+  // 6. Layout da Interface e Navegação 3D
   outlinerCollapsed: boolean;
   sidebarCollapsed: boolean;
   sidebarTab: 'tree' | 'filters' | 'details';
   zenMode: boolean;
   preZenOutlinerCollapsed: boolean;
   preZenSidebarCollapsed: boolean;
+  twoFingerMode: TwoFingerMode;
+  cameraGestureNudge: {
+    verticalPanDelta: number;
+    azimuthRotateDelta: number;
+    dollyScale: number;
+    seq: number;
+  } | null;
   setSidebarTab: (tab: 'tree' | 'filters' | 'details') => void;
+  setTwoFingerMode: (mode: TwoFingerMode) => void;
+  nudgeCameraRig: (delta: {
+    verticalPanDelta?: number;
+    azimuthRotateDelta?: number;
+    dollyScale?: number;
+  }) => void;
 
   // --- Ações de Visibilidade ---
   toggleVisibility: (id: string) => void;
@@ -161,6 +176,7 @@ interface AnatomyStore {
   // --- Ações Globais do Motor 3D ---
   setViewType: (vt: 'realistic' | 'exploded') => void;
   setExplosionProgress: (val: number) => void;
+  stepExplosionProgress: (delta: number) => void;
   setSolidOpacity: (val: number) => void;
   setXRayMode: (val: boolean) => void;
   setActiveSystem: (sys: ActiveAnatomicalSystem) => void;
@@ -241,7 +257,21 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   zenMode: false,
   preZenOutlinerCollapsed: false,
   preZenSidebarCollapsed: false,
+  twoFingerMode: 'pan-rotate',
+  cameraGestureNudge: null,
   setSidebarTab: (tab: 'tree' | 'filters' | 'details') => set({ sidebarTab: tab }),
+  setTwoFingerMode: (mode: TwoFingerMode) => set({ twoFingerMode: mode }),
+  nudgeCameraRig: (delta) =>
+    set((state) => ({
+      cameraFocusTarget: null,
+      cameraPositionTarget: null,
+      cameraGestureNudge: {
+        verticalPanDelta: delta.verticalPanDelta ?? 0,
+        azimuthRotateDelta: delta.azimuthRotateDelta ?? 0,
+        dollyScale: delta.dollyScale ?? 1,
+        seq: (state.cameraGestureNudge?.seq ?? 0) + 1,
+      },
+    })),
 
   // --- Ações de Multi-Seleção e Opacidades (Sincronizadas com a Árvore TA2) ---
   toggleSystem: (sys: ActiveAnatomicalSystem) => {
@@ -522,11 +552,21 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   setViewType: (vt: 'realistic' | 'exploded') => set({ viewType: vt }),
 
   setExplosionProgress: (val: number) => {
-    const clamped = Math.max(0.0, Math.min(1.0, val));
+    const clamped = Math.round(Math.max(0.0, Math.min(1.0, val)) * 1000) / 1000;
     set((state) => ({
       explosionProgress: clamped,
       modules: { ...state.modules, explodedProgress: clamped },
     }));
+  },
+
+  stepExplosionProgress: (delta: number) => {
+    set((state) => {
+      const next = stepExplosionProgressLinear(state.explosionProgress, delta);
+      return {
+        explosionProgress: next,
+        modules: { ...state.modules, explodedProgress: next },
+      };
+    });
   },
 
   setSolidOpacity: (val: number) => {
@@ -613,7 +653,15 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   // --- Ações de Módulos e Layout ---
   setModuleState: (partial: Partial<ActiveModulesState>) => {
     set((state) => {
-      const nextModules = { ...state.modules, ...partial };
+      const nextExplodedProgress =
+        partial.explodedProgress !== undefined
+          ? Math.round(Math.max(0.0, Math.min(1.0, partial.explodedProgress)) * 1000) / 1000
+          : state.explosionProgress;
+      const nextModules = {
+        ...state.modules,
+        ...partial,
+        explodedProgress: nextExplodedProgress,
+      };
       const nextSolidOpacity =
         partial.solidOpacity !== undefined
           ? Math.max(0.0, Math.min(1.0, partial.solidOpacity))
@@ -636,20 +684,20 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
       }
       return {
         modules: nextModules,
-        explosionProgress:
-          partial.explodedProgress !== undefined
-            ? Math.max(0.0, Math.min(1.0, partial.explodedProgress))
-            : state.explosionProgress,
+        explosionProgress: nextExplodedProgress,
         solidOpacity: nextSolidOpacity,
         systemOpacities:
           partial.solidOpacity !== undefined
             ? { ...state.systemOpacities, skeletal: nextSolidOpacity }
             : state.systemOpacities,
         xRayMode: nextXRay,
-        dissection: {
-          ...state.dissection,
-          visualMode: nextVisualMode,
-        },
+        dissection:
+          nextVisualMode !== state.dissection.visualMode
+            ? {
+                ...state.dissection,
+                visualMode: nextVisualMode,
+              }
+            : state.dissection,
       };
     });
   },

@@ -1,26 +1,27 @@
 # CHECKPOINT DA SESSÃO (NÍVEL 3)
 
-**Data/Hora**: 2026-10-14 21:02 (UTC-4)  
+**Data/Hora**: 2026-10-14 21:55 (UTC-4)  
 **Operador**: Antigravity  
 
 ---
 
 ## 1. Resumo das Entregas Realizadas
 
-- **Unificação Completa entre Árvore TA2 e Filtros por Camada Estratigráfica (`scripts/build_z_anatomy_catalog.py`, `zAnatomyCatalog.ts`, `buildTaxonomicTree.ts`, `filterTaxonomicTree.ts`, `useAnatomyStore.ts`, `AnatomyTreePanel.tsx`, `TreeGroup.tsx`)**:
-  - **Catálogo expandido para 100% dos 11 sistemas (`2.562` peças)**: Incluídas todas as malhas válidas de `integumentary_female.glb` (16), `muscular_male.glb` (683, já filtrando os 705 decalques `.ol/.or/.el/.er`), `lymphatic_male.glb` (163), `reproductive_male.glb` (14) e `endocrine_male.glb` (6), além dos sistemas já existentes (`skeletal`: 335, `cardiovascular`: 676, `nervous`: 582, `digestive`: 44, `respiratory`: 35, `renal`: 8).
-  - **Fim do conflito Árvore vs. Filtro**: Desmarcar todas as camadas na árvore agora oculta **100% das malhas** (incluindo musculatura, fáscia e pele). Os grupos da árvore permanecem visíveis quando desmarcados (com indicador visual e contador `0/N`) para que o próprio grupo da árvore funcione como o filtro de sistema/camada, em sincronia bidirecional com `activeSystems`, `activeDepth` (camadas cirúrgicas 1 a 6) e `activeRegion`.
-  - **Barra Estratigráfica Integrada**: Adicionada no topo da aba `Árvore TA2` para dissecação imediata de fora para dentro (`1. Pele` → `2. Fáscia/Sup` → `3. Músc. Prof` → `4. Ossos` → `5. Neurovasc` → `6. Vísceras`), atalhos de subcamadas miofasciais e filtro topográfico por região.
-- **Visibilidade Independente de Fáscia e Estrias Musculares em GPU (`visibilityManager.ts`, `RealBodyAtlas.tsx`, `buildTaxonomicTree.ts`)**:
-  - **4 Subcamadas Miofasciais na Árvore**: `Fáscias, Aponeuroses & Retináculos` (88), `Músculos Superficiais (Estriados)` (152), `Músculos Profundos (Estriados)` (319) e `Bolsas Sinoviais & Bainhas Tendíneas` (124).
-  - **Fáscia Translúcida Perolada**: Fáscias (`Fascia lata`, `Deltoid fascia`, `Brachial fascia`, `Crural fascia`, `Pectoral fascia`, `Investing abdominal fascia`, etc.) deixaram de ser opacas/vermelhas e passaram a ser renderizadas como membranas colágenas branco-peroladas translúcidas (`#e2e8f0`, `opacityFactor: 0.42`, `depthWrite: false`), permitindo visualizar a fáscia e os músculos estriados subjacentes ao mesmo tempo.
-  - **Estrias Musculares Procedurais (`applyAnatomicalTissueShader`)**: Shader `onBeforeCompile` em GLSL que projeta estrias longitudinais de miofibrilas e septos de perimísio ao longo do eixo principal de cada ventre muscular, com diferenciação cromática entre fascículos vizinhos (`getMuscleFascicleColor`).
+- **Exploded View Estritamente Linear de 0% a 100% (`src/core/explodedEngine.ts`, `RealBodyAtlas.tsx`, `SceneCanvas.tsx`, `DissectionToolbar.tsx`, `ModuleLayersSection.tsx`)**:
+  - Corrigido o cálculo em `bindExplodedNode` para itens reais do catálogo (`__isCatalogItem: true`), preservando a proporcionalidade radial e o escalonamento estratigráfico por camada cirúrgica (`layerFactor` de `1.32` na Camada 1 até `0.78` na Camada 6) sem achatamento por normalização unitária.
+  - Removido o teletransporte descontínuo em `applyExplodedStep` quando `progress === 0` e vinculado `<Center cacheKey={viewType}>` para impedir que o wrapper recalcule o centro da cena durante a explosão.
+  - Adicionados botões de passo linear (`-10%`, `+10%`) via `stepExplosionProgressLinear`, pílulas de salto (`0%`, `25%`, `50%`, `75%`, `100%`) e barra de preenchimento `--slider-pct`.
+- **Navegação 3D com 2 Dedos (`src/core/navigationGestures.ts`, `SceneCanvas.tsx`, `OrientationGizmo.tsx`)**:
+  - Implementado controlador determinístico para Touchscreen e Trackpad/Touchpad: segurar/deslizar com 2 dedos para cima e para baixo eleva a câmera no eixo craniocaudal Y (`verticalPanDelta`), deslizar na horizontal ou rotacionar os 2 dedos gira em 360° (`azimuthRotateDelta`) e pinça aplica zoom (`dollyScale`).
+  - Adicionados controles táteis de elevação (`Subir`, `Descer`) e rotação (`Girar E`, `Girar D`) + alternador de modo no `OrientationGizmo` e `TopNav`.
+- **Alinhamento de Menus com as Preferências de Frontend na Memória (`App.tsx`, `AnatomyTreePanel.tsx`, `src/client/index.css`)**:
+  - Aplicada física de luz zenital (`--surface-active`, `inset 0 1px 0`), poços rebaixados (`--shadow-well`), revelação progressiva na barra estratigráfica e os 5 Temas Táteis persistidos em `localStorage`.
 
 ---
 
 ## 2. Comandos Validados no Terminal (Quality Gate)
 
 - `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript no cliente e no servidor).
-- `npm test` -> Exit Code 0 (213 testes unitários aprovados em 30 suítes Vitest).
+- `npm test` -> Exit Code 0 (215 testes unitários aprovados em 30 suítes Vitest).
 - `npm run build` -> Exit Code 0 (Build de produção Vite + Express concluído sem erros).
 

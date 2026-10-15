@@ -185,7 +185,8 @@ export function bindExplodedNode(
       targetOffset.set(0, deltaY * maxDist, 0);
     } else if (
       data.eixoExplosao &&
-      (data.eixoExplosao[0] !== 0 || data.eixoExplosao[1] !== 0 || data.eixoExplosao[2] !== 0)
+      (data.eixoExplosao[0] !== 0 || data.eixoExplosao[1] !== 0 || data.eixoExplosao[2] !== 0) &&
+      !(data as Record<string, unknown>).__isCatalogItem
     ) {
       const [rawX, rawY, rawZ] = data.eixoExplosao;
       const maxDist = data.distanciaMaxima ?? 1.0;
@@ -198,11 +199,9 @@ export function bindExplodedNode(
           alignedX = laterality * Math.abs(rawX);
         }
       } else if (laterality !== 0 && Math.abs(rawX) <= 0.001 && data.sistema === 'nervous') {
-        // Estruturas nervosas bilaterais com vetor genérico (0, 0.8, 0) recebem abertura radial homolateral suave
         alignedX = laterality * Math.max(0.28, Math.abs(effectiveCenter.x) * 2.4);
       }
 
-      // Atenua vetores verticais puros do sistema nervoso no modo corpo inteiro para evitar nuvem sobre o crânio
       const adjustedY =
         data.sistema === 'nervous' && activeRegion !== 'cranium'
           ? rawY * 0.35
@@ -214,8 +213,8 @@ export function bindExplodedNode(
 
       targetOffset.set(alignedX, adjustedY, adjustedZ).normalize().multiplyScalar(maxDist);
     } else {
-      // Dispersão radial contínua e estratificada a partir do eixo axial vertebral (X=0, Z=-0.02),
-      // sem degraus abruptos no joelho (Y=0.45) ou no plano coronal (Z=±0.01).
+      // Dispersão radial contínua, proporcional e estratificada a partir do eixo axial vertebral (X=0, Z=-0.02),
+      // combinada ao vetor anatômico do catálogo sem achatamento por normalização unitária.
       const posX = effectiveCenter.x;
       const posY = effectiveCenter.y;
       const posZ = effectiveCenter.z;
@@ -223,9 +222,9 @@ export function bindExplodedNode(
       const radialX = Math.abs(posX);
       let dirX = 0;
       if (laterality !== 0) {
-        dirX = laterality * (radialX * 1.85 + 0.22);
+        dirX = laterality * (radialX * 1.95 + 0.20);
       } else if (radialX > 0.008) {
-        dirX = Math.sign(posX) * (radialX * 1.85 + 0.22);
+        dirX = Math.sign(posX) * (radialX * 1.95 + 0.20);
       }
 
       // Gradiente vertical suave: evita separar a perna da coxa ou projetar a cabeça excessivamente
@@ -237,22 +236,51 @@ export function bindExplodedNode(
       } else if (posY > 1.48) {
         dirY = (posY - 1.48) * 0.75 + 0.06;
       } else if (posY > 0.001) {
-        dirY = (posY - 0.98) * 0.12;
+        dirY = (posY - 0.98) * 0.14;
       }
 
       // Gradiente anteroposterior contínuo relativo à coluna (Z = -0.02), sem salto brusco em Z = 0
       const relZ = posZ + 0.02;
-      const dirZ =
+      let dirZ =
         Math.abs(posZ) > 0.005
           ? relZ * 1.45 + Math.sign(relZ) * 0.08
           : laterality === 0
           ? 0.18
           : 0.06;
 
-      // Estratificação por camada cirúrgica: camadas superficiais abrem levemente mais que as profundas
+      // Se a peça do catálogo possui vetor direcional específico, combina proporcionalmente sem normalizar para 1.0
+      if (
+        data.eixoExplosao &&
+        (data.eixoExplosao[0] !== 0 || data.eixoExplosao[1] !== 0 || data.eixoExplosao[2] !== 0)
+      ) {
+        const [rawX, rawY, rawZ] = data.eixoExplosao;
+        const alignedCatX =
+          laterality !== 0 && Math.abs(rawX) > 0.001
+            ? laterality * Math.abs(rawX)
+            : rawX;
+        const catY =
+          data.sistema === 'nervous' && activeRegion !== 'cranium' ? rawY * 0.25 : rawY * 0.45;
+        const catZ = rawZ * 0.45;
+
+        dirX = dirX * 0.65 + alignedCatX * 0.35;
+        dirY = dirY * 0.65 + catY * 0.35;
+        dirZ = dirZ * 0.65 + catZ * 0.35;
+      }
+
+      // Estratificação linear por camada cirúrgica (1 = Pele mais externa -> 6 = Vísceras internas)
       const layer = data.camadaProfundidade ?? 3;
       const layerFactor =
-        layer === 1 ? 1.22 : layer === 2 ? 1.12 : layer === 3 ? 1.02 : layer === 4 ? 0.95 : 0.85;
+        layer === 1
+          ? 1.32
+          : layer === 2
+          ? 1.18
+          : layer === 3
+          ? 1.04
+          : layer === 4
+          ? 0.94
+          : layer === 5
+          ? 0.86
+          : 0.78;
       const regionFactor = activeRegion === 'cranium' ? 1.35 : 1.0;
       const mult = (data.distanciaMaxima ?? 1.0) * layerFactor * regionFactor;
 
@@ -269,16 +297,27 @@ export function bindExplodedNode(
 }
 
 /**
+ * Normaliza e avança a porcentagem de Exploded View de forma estritamente linear em passos de 1% (0.01),
+ * eliminando resíduos de ponto flutuante IEEE-754.
+ */
+export function stepExplosionProgressLinear(currentProgress: number, deltaProgress: number): number {
+  const next = Math.round((currentProgress + deltaProgress) * 100) / 100;
+  return Math.max(0, Math.min(1, next));
+}
+
+/**
  * Aplica o passo de interpolação linear (LERP) a todas as malhas vinculadas.
- * Garante que peças com isAnchor: true permaneçam absolutamente imóveis.
- * Quando o progresso for 0.0, restaura de forma atômica e exata a posição anatômica.
+ * Garante que peças com isAnchor: true permaneçam absolutamente imóveis e que
+ * cada 1% de avanço no progresso produza deslocamento espacial estritamente linear,
+ * sem salto abrupto ao retornar a 0%.
  */
 export function applyExplodedStep(
   bindings: ExplodedNodeBinding[],
   progress: number, // 0.0 (montado) a 1.0 (explodido)
-  lerpFactor = 0.16
+  lerpFactor = 0.28
 ): void {
   const clampedProgress = Math.max(0, Math.min(1, progress));
+  const effectiveLerp = Math.max(0.01, Math.min(1, lerpFactor));
 
   for (let i = 0; i < bindings.length; i++) {
     const b = bindings[i];
@@ -289,30 +328,31 @@ export function applyExplodedStep(
       continue;
     }
 
-    if (clampedProgress === 0) {
-      if (!b.mesh.position.equals(b.originalPosition)) {
-        b.mesh.position.copy(b.originalPosition);
-      }
-      continue;
-    }
-
     const targetX = b.originalPosition.x + b.targetOffset.x * clampedProgress;
     const targetY = b.originalPosition.y + b.targetOffset.y * clampedProgress;
     const targetZ = b.originalPosition.z + b.targetOffset.z * clampedProgress;
 
-    if (!b.mesh.visible) {
+    if (!b.mesh.visible || effectiveLerp >= 1) {
       b.mesh.position.set(targetX, targetY, targetZ);
       continue;
     }
 
-    b.mesh.position.x = THREE.MathUtils.lerp(b.mesh.position.x, targetX, lerpFactor);
-    b.mesh.position.y = THREE.MathUtils.lerp(b.mesh.position.y, targetY, lerpFactor);
-    b.mesh.position.z = THREE.MathUtils.lerp(b.mesh.position.z, targetZ, lerpFactor);
+    const dx = targetX - b.mesh.position.x;
+    const dy = targetY - b.mesh.position.y;
+    const dz = targetZ - b.mesh.position.z;
+    if (dx * dx + dy * dy + dz * dz < 1e-7) {
+      b.mesh.position.set(targetX, targetY, targetZ);
+      continue;
+    }
+
+    b.mesh.position.x = THREE.MathUtils.lerp(b.mesh.position.x, targetX, effectiveLerp);
+    b.mesh.position.y = THREE.MathUtils.lerp(b.mesh.position.y, targetY, effectiveLerp);
+    b.mesh.position.z = THREE.MathUtils.lerp(b.mesh.position.z, targetZ, effectiveLerp);
   }
 }
 
 /**
- * Calcula a posição final exata no espaço 3D para um nó (sem LERP, avaliação pontual)
+ * Calcula a posição final exata no espaço 3D para um nó (sem LERP, avaliação linear pontual)
  */
 export function evaluateExplodedPosition(
   binding: ExplodedNodeBinding,
