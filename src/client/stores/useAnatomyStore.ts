@@ -87,6 +87,35 @@ const COMBINED_BY_NODE: Record<string, typeof Z_ANATOMY_CATALOG[number]> = {
   ...Z_ANATOMY_BY_NODE,
 };
 
+const MESH_WORLD_CENTERS = new Map<string, [number, number, number]>();
+
+export function registerMeshWorldCenter(
+  id: string,
+  center: [number, number, number]
+): void {
+  if (!id) return;
+  MESH_WORLD_CENTERS.set(id, center);
+}
+
+export function getMeshWorldCenter(id: string): [number, number, number] | null {
+  if (!id) return null;
+  const direct = MESH_WORLD_CENTERS.get(id);
+  if (direct) return direct;
+  const item =
+    COMBINED_BY_ID[id] ||
+    COMBINED_BY_NODE[id] ||
+    COMBINED_BY_NODE[sanitizeNodeName(id)];
+  if (item) {
+    return (
+      MESH_WORLD_CENTERS.get(item.id) ||
+      MESH_WORLD_CENTERS.get(item.node) ||
+      MESH_WORLD_CENTERS.get(sanitizeNodeName(item.node)) ||
+      null
+    );
+  }
+  return null;
+}
+
 function getNodeAliases(id: string): string[] {
   const item =
     COMBINED_BY_ID[id] ||
@@ -299,6 +328,7 @@ interface AnatomyStore {
   // --- Ações de Foco e Seleção ---
   setHoveredNode: (id: string | null) => void;
   setSelectedNode: (id: string | null) => void;
+  selectAndFocusNode: (id: string) => void;
   setCameraFocusTarget: (target: [number, number, number] | null) => void;
   setCameraPositionTarget: (pos: [number, number, number] | null) => void;
 
@@ -602,7 +632,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   zenMode: false,
   preZenOutlinerCollapsed: false,
   preZenSidebarCollapsed: false,
-  twoFingerMode: 'pan-rotate',
+  twoFingerMode: 'zoom',
   cameraGestureNudge: null,
   setSidebarTab: (tab: SidebarTabType) => set({ sidebarTab: tab }),
   setClinicalStudioOpen: (open: boolean) => set({ clinicalStudioOpen: open }),
@@ -1010,6 +1040,53 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   setHoveredNode: (id: string | null) => set({ hoveredNodeId: id }),
 
   setSelectedNode: (id: string | null) => set({ selectedNodeId: id }),
+
+  selectAndFocusNode: (id: string) =>
+    set((state) => {
+      if (!id) return { selectedNodeId: null };
+      const aliases = getNodeAliases(id);
+      const nextHidden = new Set(state.hiddenNodeIds);
+      for (const a of aliases) {
+        nextHidden.delete(a);
+      }
+
+      const item =
+        COMBINED_BY_ID[id] ||
+        COMBINED_BY_NODE[id] ||
+        COMBINED_BY_NODE[sanitizeNodeName(id)];
+
+      const nextActiveSystems = new Set(state.activeSystems);
+      const nextLoaded = new Set(state.loadedParts);
+      let nextDepth = state.activeDepth;
+      let nextSex = state.biologicalSex;
+
+      if (item) {
+        const normSys = normalizeSystemId(item.system);
+        if (!nextActiveSystems.has('all') && !nextActiveSystems.has(normSys)) {
+          nextActiveSystems.add(normSys);
+        }
+        nextLoaded.add(normSys);
+        if (normSys === 'integumentary' && state.biologicalSex === 'male') {
+          nextSex = 'female';
+        }
+        const layer = determineSurgicalLayer(item.system, item.node, item.namePtBr);
+        if (layer < nextDepth) {
+          nextDepth = layer;
+        }
+      }
+
+      const cachedCenter = getMeshWorldCenter(id);
+
+      return {
+        selectedNodeId: id,
+        hiddenNodeIds: nextHidden,
+        activeSystems: nextActiveSystems,
+        loadedParts: nextLoaded,
+        activeDepth: nextDepth,
+        biologicalSex: nextSex,
+        ...(cachedCenter ? { cameraFocusTarget: cachedCenter } : {}),
+      };
+    }),
 
   setCameraFocusTarget: (target: [number, number, number] | null) =>
     set({ cameraFocusTarget: target }),

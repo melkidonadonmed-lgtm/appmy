@@ -267,17 +267,6 @@ export default function App() {
       <main className="main-viewport">
         <div className="atlas-workspace">
           <AnatomyTreePanel
-            onToggleMpr={() =>
-              setDissection((prev) => {
-                const nextIsMpr = prev.visualMode !== 'mpr';
-                return {
-                  ...prev,
-                  visualMode: nextIsMpr ? 'mpr' : 'solid',
-                  showHelper: nextIsMpr ? true : prev.showHelper,
-                };
-              })
-            }
-            mprActive={dissection.visualMode === 'mpr'}
             selectedNode={selectedNode}
             onSelectNode={(node) => {
               setSelectedNode(node);

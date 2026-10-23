@@ -36,8 +36,32 @@ export interface VisibilityState {
   isolatedOnly: boolean;
 }
 
+const SCRATCH_NATURAL_COLOR = new THREE.Color();
+const SELECTED_TINT_COLOR = new THREE.Color('#38bdf8');
+const SELECTED_EMISSIVE_COLOR = new THREE.Color('#0ea5e9');
+const GHOST_BASE_COLOR = new THREE.Color('#64748b');
+const ZERO_EMISSIVE_COLOR = new THREE.Color('#000000');
+
+const GROUP_ISOLATION_THRESHOLD = 500;
+const MIN_VISIBLE_OPACITY = 0.001;
+const SKELETAL_DEFAULT_ROUGHNESS = 0.54;
+const SOFT_TISSUE_DEFAULT_ROUGHNESS = 0.42;
+const SELECTED_LERP_FACTOR = 0.24;
+const SELECTED_EMISSIVE_INTENSITY = 0.16;
+const SELECTED_ROUGHNESS = 0.34;
+const GHOST_ROUGHNESS = 0.72;
+const GHOST_OPACITY = 0.1;
+const CONTEXT_LERP_FACTOR = 0.18;
+const CONTEXT_ROUGHNESS = 0.68;
+const CONTEXT_MAX_OPACITY = 0.72;
+const OPAQUE_THRESHOLD = 0.99;
+const DEPTH_WRITE_OPACITY_THRESHOLD = 0.85;
+
+const NOOP_RAYCAST = () => {};
+
 /**
  * Atualiza deterministicamente a visibilidade, materiais e blindagem de raycast de uma malha
+ * com zero alocações de objetos temporários no loop.
  */
 export function updateMeshVisibility(
   mesh: THREE.Mesh,
@@ -68,12 +92,11 @@ export function updateMeshVisibility(
     (data.id ? state.hiddenIds.has(data.id) : false);
 
   // 3. Regra de Isolamento (Modo Solo Individual ou de Grupo)
-  // Corrige bug em que ocultar manualmente poucos itens (hiddenIds.size > 0) impedia o isolamento da peça selecionada.
   const isSelected =
     state.selectedId === id ||
     state.selectedId === mesh.name ||
     (data.id ? state.selectedId === data.id : false);
-  const isGroupIsolationActive = state.hiddenIds.size > 500;
+  const isGroupIsolationActive = state.hiddenIds.size > GROUP_ISOLATION_THRESHOLD;
   const isIsolatedHidden =
     state.isolatedOnly &&
     !isSelected &&
@@ -85,66 +108,66 @@ export function updateMeshVisibility(
     isDepthVisible &&
     !isManuallyHidden &&
     !isIsolatedHidden &&
-    (isSelected || baseOpacity > 0.001);
+    (isSelected || baseOpacity > MIN_VISIBLE_OPACITY);
   mesh.visible = visible;
 
   // 4. Blindagem Ativa do Raycaster na GPU:
-  // Se invisível OU se for um objeto secundário em Ghosting (transparência 10%),
-  // anula imediatamente o método raycast para que o clique nunca seja interceptado acidentalmente.
   const isGhost = state.ghostMode && state.selectedId !== null && !isSelected;
 
   if (!visible || isGhost) {
-    mesh.raycast = () => {};
+    mesh.raycast = NOOP_RAYCAST;
   } else {
     mesh.raycast = THREE.Mesh.prototype.raycast;
   }
 
   if (!visible) return false;
 
-  // 5. Aplicação de Shading e Destaque Visual (Preservação de Relevo Anatômico + Toque Translúcido Contextual)
+  // 5. Aplicação de Shading e Destaque Visual (Zero-Allocation)
   const isContextAttenuated = !state.ghostMode && state.selectedId !== null && !isSelected;
   const effectiveColor = data.__tissueColor || defaultColor;
   const tissueOpacityFactor = data.__tissueOpacityFactor ?? 1.0;
   const effectiveBaseOpacity = Math.max(0.0, Math.min(1.0, baseOpacity * tissueOpacityFactor));
   const defaultRoughness =
-    data.__tissueRoughness ?? (data.sistema === 'skeletal' ? 0.54 : 0.42);
+    data.__tissueRoughness ??
+    (data.sistema === 'skeletal' ? SKELETAL_DEFAULT_ROUGHNESS : SOFT_TISSUE_DEFAULT_ROUGHNESS);
 
   if (isSelected) {
-    const naturalColor = new THREE.Color(effectiveColor);
-    naturalColor.lerp(new THREE.Color('#38bdf8'), 0.24);
-    baseMaterial.color.copy(naturalColor);
-    baseMaterial.emissive.set('#0ea5e9');
-    baseMaterial.emissiveIntensity = 0.16;
-    baseMaterial.roughness = 0.34;
+    SCRATCH_NATURAL_COLOR.set(effectiveColor).lerp(SELECTED_TINT_COLOR, SELECTED_LERP_FACTOR);
+    baseMaterial.color.copy(SCRATCH_NATURAL_COLOR);
+    baseMaterial.emissive.copy(SELECTED_EMISSIVE_COLOR);
+    baseMaterial.emissiveIntensity = SELECTED_EMISSIVE_INTENSITY;
+    baseMaterial.roughness = SELECTED_ROUGHNESS;
     baseMaterial.opacity = 1.0;
     baseMaterial.transparent = false;
     baseMaterial.depthWrite = true;
   } else if (isGhost) {
-    baseMaterial.color.set('#64748b');
-    baseMaterial.emissive.set('#000000');
+    baseMaterial.color.copy(GHOST_BASE_COLOR);
+    baseMaterial.emissive.copy(ZERO_EMISSIVE_COLOR);
     baseMaterial.emissiveIntensity = 0;
-    baseMaterial.roughness = 0.72;
-    baseMaterial.opacity = 0.10;
+    baseMaterial.roughness = GHOST_ROUGHNESS;
+    baseMaterial.opacity = GHOST_OPACITY;
     baseMaterial.transparent = true;
     baseMaterial.depthWrite = false;
   } else if (isContextAttenuated) {
-    const softenedColor = new THREE.Color(effectiveColor);
-    softenedColor.lerp(new THREE.Color('#64748b'), 0.18);
-    baseMaterial.color.copy(softenedColor);
-    baseMaterial.emissive.set('#000000');
+    SCRATCH_NATURAL_COLOR.set(effectiveColor).lerp(GHOST_BASE_COLOR, CONTEXT_LERP_FACTOR);
+    baseMaterial.color.copy(SCRATCH_NATURAL_COLOR);
+    baseMaterial.emissive.copy(ZERO_EMISSIVE_COLOR);
     baseMaterial.emissiveIntensity = 0;
-    baseMaterial.roughness = 0.68;
-    baseMaterial.opacity = Math.min(effectiveBaseOpacity, 0.72);
+    baseMaterial.roughness = CONTEXT_ROUGHNESS;
+    baseMaterial.opacity = Math.min(effectiveBaseOpacity, CONTEXT_MAX_OPACITY);
     baseMaterial.transparent = true;
-    baseMaterial.depthWrite = effectiveBaseOpacity >= 0.99;
+    baseMaterial.depthWrite = effectiveBaseOpacity >= OPAQUE_THRESHOLD;
   } else {
     baseMaterial.color.set(effectiveColor);
-    baseMaterial.emissive.set('#000000');
+    baseMaterial.emissive.copy(ZERO_EMISSIVE_COLOR);
     baseMaterial.emissiveIntensity = 0;
     baseMaterial.roughness = defaultRoughness;
     baseMaterial.opacity = effectiveBaseOpacity;
-    baseMaterial.transparent = effectiveBaseOpacity < 0.99;
-    baseMaterial.depthWrite = data.__tissueType === 'fascia' ? false : effectiveBaseOpacity >= 0.85;
+    baseMaterial.transparent = effectiveBaseOpacity < OPAQUE_THRESHOLD;
+    baseMaterial.depthWrite =
+      data.__tissueType === 'fascia'
+        ? false
+        : effectiveBaseOpacity >= DEPTH_WRITE_OPACITY_THRESHOLD;
   }
 
   return true;

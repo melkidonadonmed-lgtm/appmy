@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Z_ANATOMY_CATALOG } from '../src/shared/constants/zAnatomyCatalog.ts';
-import { buildTaxonomicTree } from '../src/shared/utils/buildTaxonomicTree.ts';
+import { buildTaxonomicTree, detectRegion } from '../src/shared/utils/buildTaxonomicTree.ts';
 import { filterTaxonomicTree } from '../src/shared/utils/filterTaxonomicTree.ts';
-import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
+import { useAnatomyStore, registerMeshWorldCenter } from '../src/client/stores/useAnatomyStore.ts';
+import { isNodeInRegion } from '../src/client/components/canvas/RealBodyAtlas.tsx';
 
 describe('Taxonomic Tree & State Management Suite', () => {
   const tree = buildTaxonomicTree(Z_ANATOMY_CATALOG);
@@ -187,6 +188,58 @@ describe('Taxonomic Tree & State Management Suite', () => {
       // O sistema muscular raiz fica 'indeterminate' (parcialmente visível) e continua ativo
       expect(state.getGroupCheckboxState(muscNode.descendantIds)).toBe('indeterminate');
       expect(state.isSystemActive('muscular')).toBe(true);
+    });
+
+    it('deve classificar 100% dos 2.562 nós anatômicos em regiões específicas (zero nós em systemic) e separar falanges do pé vs mão', () => {
+      const systemicItems = Z_ANATOMY_CATALOG.filter((item) => detectRegion(item) === 'systemic');
+      expect(systemicItems.length).toBe(0);
+
+      const footPhalanx = Z_ANATOMY_CATALOG.find((i) =>
+        i.nameEn.toLowerCase().includes('phalanx') && i.nameEn.toLowerCase().includes('foot')
+      )!;
+      expect(footPhalanx).toBeDefined();
+      expect(detectRegion(footPhalanx)).toBe('lower_limb');
+      expect(isNodeInRegion(footPhalanx, footPhalanx.node, 'lower_limb')).toBe(true);
+      expect(isNodeInRegion(footPhalanx, footPhalanx.node, 'upper_limb')).toBe(false);
+
+      const gastrocnemiusHead = Z_ANATOMY_CATALOG.find((i) =>
+        i.nameEn.toLowerCase().includes('gastrocnemius')
+      )!;
+      expect(gastrocnemiusHead).toBeDefined();
+      expect(detectRegion(gastrocnemiusHead)).toBe('lower_limb');
+      expect(isNodeInRegion(gastrocnemiusHead, gastrocnemiusHead.node, 'cranium')).toBe(false);
+    });
+
+    it('deve higienizar nomes corrompidos (?x.l / ????????) e suportar busca multi-token não contígua', () => {
+      let hasCorruptedLabel = false;
+      function scanTree(nodes: typeof tree) {
+        for (const n of nodes) {
+          if (n.namePt.includes('???') || /^\?x/i.test(n.namePt)) {
+            hasCorruptedLabel = true;
+          }
+          if (n.children) scanTree(n.children);
+        }
+      }
+      scanTree(tree);
+      expect(hasCorruptedLabel).toBe(false);
+
+      const multiTokenResults = filterTaxonomicTree(tree, 'falange pe direito');
+      expect(multiTokenResults.length).toBeGreaterThan(0);
+    });
+
+    it('deve reexibir, ativar sistema e focar câmera via selectAndFocusNode', () => {
+      const sampleItem = Z_ANATOMY_CATALOG.find((i) => i.system === 'skeletal')!;
+      registerMeshWorldCenter(sampleItem.id, [0.12, 1.42, 0.05]);
+
+      const store = useAnatomyStore.getState();
+      store.toggleVisibility(sampleItem.id);
+      expect(useAnatomyStore.getState().hiddenNodeIds.has(sampleItem.id)).toBe(true);
+
+      store.selectAndFocusNode(sampleItem.id);
+      const nextState = useAnatomyStore.getState();
+      expect(nextState.selectedNodeId).toBe(sampleItem.id);
+      expect(nextState.hiddenNodeIds.has(sampleItem.id)).toBe(false);
+      expect(nextState.cameraFocusTarget).toEqual([0.12, 1.42, 0.05]);
     });
   });
 });

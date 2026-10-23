@@ -118,28 +118,44 @@ export function getMeshLaterality(mesh: THREE.Mesh, effectiveCenterX = 0): -1 | 
 /**
  * Calcula o centro anatômico real de uma malha, suportando tanto malhas com
  * translação no nó (mesh.position) quanto malhas com vértices em espaço de mundo (position = 0,0,0).
+ * Faz cache do centro geométrico local em userData.__cachedLocalCenter para evitar recomputação.
  */
 export function getMeshAnatomicalCenter(mesh: THREE.Mesh): THREE.Vector3 {
   const basePos =
     (mesh.userData?.initialPosition as THREE.Vector3 | undefined)?.clone() ??
     mesh.position.clone();
   const offsetArr = mesh.userData?.modelOffset as [number, number, number] | undefined;
-  const modelOffset = offsetArr
-    ? new THREE.Vector3(offsetArr[0], offsetArr[1], offsetArr[2])
-    : new THREE.Vector3(0, 0, 0);
+  const offsetX = offsetArr ? offsetArr[0] : 0;
+  const offsetY = offsetArr ? offsetArr[1] : 0;
+  const offsetZ = offsetArr ? offsetArr[2] : 0;
 
   if (mesh.geometry && mesh.geometry.attributes?.position) {
-    if (!mesh.geometry.boundingBox) {
-      mesh.geometry.computeBoundingBox();
+    let cachedLocal = mesh.userData?.__cachedLocalCenter as THREE.Vector3 | undefined;
+    if (!cachedLocal) {
+      if (!mesh.geometry.boundingBox) {
+        mesh.geometry.computeBoundingBox();
+      }
+      if (mesh.geometry.boundingBox && !mesh.geometry.boundingBox.isEmpty()) {
+        cachedLocal = new THREE.Vector3();
+        mesh.geometry.boundingBox.getCenter(cachedLocal);
+        if (mesh.userData) {
+          mesh.userData.__cachedLocalCenter = cachedLocal;
+        }
+      }
     }
-    if (mesh.geometry.boundingBox && !mesh.geometry.boundingBox.isEmpty()) {
-      const boxCenter = new THREE.Vector3();
-      mesh.geometry.boundingBox.getCenter(boxCenter);
+    if (cachedLocal) {
+      const boxCenter = cachedLocal.clone();
       boxCenter.multiply(mesh.scale).applyQuaternion(mesh.quaternion);
-      return boxCenter.add(basePos).add(modelOffset);
+      boxCenter.x += basePos.x + offsetX;
+      boxCenter.y += basePos.y + offsetY;
+      boxCenter.z += basePos.z + offsetZ;
+      return boxCenter;
     }
   }
-  return basePos.add(modelOffset);
+  basePos.x += offsetX;
+  basePos.y += offsetY;
+  basePos.z += offsetZ;
+  return basePos;
 }
 
 /**

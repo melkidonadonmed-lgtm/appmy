@@ -13,7 +13,10 @@ import { detectRegion } from '../../../shared/utils/buildTaxonomicTree.ts';
 import { AnyAnatomicalNode, GeneralAnatomicalNode, AnatomicalRegion, ActiveAnatomicalSystem } from './AnatomicalAtlasScene.tsx';
 import { DissectionVisualMode } from '../../../shared/types/dissection.ts';
 import { disposeHierarchy, logWebGLGarbageCollection } from '../../lib/webgl-gc.ts';
-import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
+import {
+   useAnatomyStore,
+  registerMeshWorldCenter,
+} from '../../stores/useAnatomyStore.ts';
 import {
   bindExplodedNode,
   applyExplodedStep,
@@ -193,8 +196,9 @@ export function isNodeInRegion(
 
   if (item) {
     const detected = detectRegion(item);
-    if (region === 'spine' && detected === 'vertebral_column') return true;
-    if (region === detected) return true;
+    if (detected !== 'systemic') {
+      return region === 'spine' ? detected === 'vertebral_column' : region === detected;
+    }
   }
 
   const pathStr = (item?.path || []).join(' ').toLowerCase();
@@ -261,6 +265,9 @@ export function isNodeInRegion(
         : false;
 
     case 'upper_limb':
+      if (nameLower.includes('foot') || nameLower.includes('toe') || nameLower.includes('hallux')) {
+        return false;
+      }
       if (
         pathStr.includes('upper limb') ||
         pathStr.includes('pectoral') ||
@@ -340,9 +347,159 @@ function toAnatomicalNode(item: ZAnatomyItem): AnyAnatomicalNode {
   } as AnyAnatomicalNode;
 }
 
+interface PreparedMeshEntry {
+  mesh: THREE.Mesh;
+  item: ZAnatomyItem | null;
+  baseMaterial: THREE.MeshStandardMaterial;
+}
+
+interface PreparedSystemCacheEntry {
+  sourceScene: THREE.Object3D;
+  clonedScene: THREE.Object3D;
+  entries: PreparedMeshEntry[];
+}
+
+const PREPARED_SYSTEM_CACHE = new Map<string, PreparedSystemCacheEntry>();
+const HOVER_SCRATCH_COLOR = new THREE.Color();
+const HOVER_TINT_COLOR = new THREE.Color('#38bdf8');
+const HOVER_EMISSIVE_COLOR = new THREE.Color('#0284c7');
+
+function getOrCreatePreparedSystem(
+  glbPath: string,
+  systemName: string,
+  defaultColor: string,
+  sourceScene: THREE.Object3D
+): PreparedSystemCacheEntry {
+  const cacheKey = `${glbPath}::${systemName}::${defaultColor}`;
+  const cached = PREPARED_SYSTEM_CACHE.get(cacheKey);
+  if (cached && cached.sourceScene === sourceScene) {
+    return cached;
+  }
+
+  const clonedScene = sourceScene.clone(true);
+  const entries: PreparedMeshEntry[] = [];
+
+  clonedScene.traverse((child) => {
+    if (!(child as THREE.Mesh).isMesh) return;
+    const mesh = child as THREE.Mesh;
+    const rawName = (mesh.userData?.name as string) || mesh.name;
+    const item =
+      Z_ANATOMY_BY_NODE[rawName] ||
+      Z_ANATOMY_BY_NODE[mesh.name] ||
+      Z_ANATOMY_BY_NODE[sanitizeNodeName(rawName)] ||
+      Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] ||
+      null;
+
+    if (isDuplicateCrossSystemMesh(systemName, rawName, item)) {
+      mesh.visible = false;
+      mesh.raycast = () => {};
+      return;
+    }
+
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    if (!mesh.userData) mesh.userData = {};
+    if (!mesh.userData.initialPosition) {
+      mesh.userData.initialPosition = mesh.position.clone();
+    }
+
+    const formatted = formatAnatomicalMeshName(rawName);
+    const nomePtResolved = item?.namePtBr || formatted.namePtBr;
+    const layer = determineSurgicalLayer(systemName, rawName, nomePtResolved);
+    const fallbackId = item?.id || `za:${mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+
+    const muscularProfile =
+      systemName === 'muscular'
+        ? getMuscularTissueProfile(rawName, nomePtResolved, defaultColor)
+        : null;
+
+    mesh.userData = {
+      ...mesh.userData,
+      id: fallbackId,
+      nomePt: nomePtResolved,
+      nomeLatin: item?.nameLatin || formatted.nameLatin,
+      sistema: systemName,
+      camadaProfundidade: layer,
+      eixoExplosao: item?.explosionVector
+        ? [item.explosionVector.x, item.explosionVector.y, item.explosionVector.z]
+        : undefined,
+      isAnchor: false,
+      __isCatalogItem: Boolean(item),
+      ...(muscularProfile
+        ? {
+            __tissueType: muscularProfile.tissueType,
+            __tissueColor: muscularProfile.colorHex,
+            __tissueOpacityFactor: muscularProfile.opacityFactor,
+            __tissueRoughness: muscularProfile.roughness,
+          }
+        : {}),
+    } as AnatomicalMeshUserData & {
+      __isCatalogItem?: boolean;
+      __tissueType?: string;
+      __tissueColor?: string;
+      __tissueOpacityFactor?: number;
+      __tissueRoughness?: number;
+    };
+
+    const mat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(muscularProfile ? muscularProfile.colorHex : defaultColor),
+      roughness: muscularProfile
+        ? muscularProfile.roughness
+        : systemName === 'skeletal'
+        ? 0.54
+        : 0.42,
+      metalness: muscularProfile ? muscularProfile.metalness : 0.04,
+      side: THREE.DoubleSide,
+    });
+
+    if (muscularProfile && mesh.geometry) {
+      if (!mesh.geometry.boundingBox) {
+        mesh.geometry.computeBoundingBox();
+      }
+      const bbox = mesh.geometry.boundingBox;
+      let fiberAxis: [number, number, number] = [0, 1, 0];
+      let fiberSpan: [number, number] = [-0.1, 0.1];
+      if (bbox && !bbox.isEmpty()) {
+        const dx = bbox.max.x - bbox.min.x;
+        const dy = bbox.max.y - bbox.min.y;
+        const dz = bbox.max.z - bbox.min.z;
+        if (dx >= dy && dx >= dz) {
+          fiberAxis = [1, 0, 0];
+          fiberSpan = [bbox.min.x, bbox.max.x];
+        } else if (dz >= dx && dz >= dy) {
+          fiberAxis = [0, 0, 1];
+          fiberSpan = [bbox.min.z, bbox.max.z];
+        } else {
+          fiberAxis = [0, 1, 0];
+          fiberSpan = [bbox.min.y, bbox.max.y];
+        }
+      }
+      applyAnatomicalTissueShader(mat, muscularProfile.tissueType, fiberAxis, fiberSpan);
+    }
+
+    mesh.userData.__customMat = true;
+    mesh.material = mat;
+
+    entries.push({
+      mesh,
+      item,
+      baseMaterial: mat,
+    });
+  });
+
+  const prepared: PreparedSystemCacheEntry = {
+    sourceScene,
+    clonedScene,
+    entries,
+  };
+  PREPARED_SYSTEM_CACHE.set(cacheKey, prepared);
+  return prepared;
+}
+
 /**
  * Subcomponente de Sistema Anatômico Real que carrega o modelo GLB,
- * vincula os materiais e computa a animação de explosão
+ * vincula os materiais em cache e computa a animação de explosão sem realocação de shaders
  */
 function RealSystemModel({
   glbPath,
@@ -375,18 +532,11 @@ function RealSystemModel({
 }) {
   const [offsetX, offsetY, offsetZ] = modelOffset;
   const { scene } = useGLTF(glbPath, DRACO_DECODER_PATH);
-  const clonedScene = useMemo(() => {
-    const clone = scene.clone(true);
-    clone.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        if (!child.userData) child.userData = {};
-        if (!child.userData.initialPosition) {
-          child.userData.initialPosition = child.position.clone();
-        }
-      }
-    });
-    return clone;
-  }, [scene]);
+  const preparedSystem = useMemo(
+    () => getOrCreatePreparedSystem(glbPath, systemName, defaultColor, scene),
+    [glbPath, systemName, defaultColor, scene]
+  );
+  const clonedScene = preparedSystem.clonedScene;
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
@@ -406,139 +556,45 @@ function RealSystemModel({
     basePoint: [number, number, number];
   } | null>(null);
 
-  // Mapeia todas as malhas, elimina duplicatas entre GLBs, hidrata userData preservando initialPosition e vincula âncoras
+  // Vincula deslocamentos de Exploded View por região reutilizando malhas e materiais pré-compilados
   const animNodes = useMemo(() => {
     const list: MeshAnimData[] = [];
 
-    clonedScene.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        const rawName = (mesh.userData?.name as string) || mesh.name;
-        const item =
-          Z_ANATOMY_BY_NODE[rawName] ||
-          Z_ANATOMY_BY_NODE[mesh.name] ||
-          Z_ANATOMY_BY_NODE[sanitizeNodeName(rawName)] ||
-          Z_ANATOMY_BY_NODE[sanitizeNodeName(mesh.name)] ||
-          null;
+    for (let i = 0; i < preparedSystem.entries.length; i++) {
+      const { mesh, item, baseMaterial } = preparedSystem.entries[i];
 
-        // Descarta malhas duplicadas ou decalques ósseos (.ol/.or/.el/.er) que geram fragmentos flutuantes
-        if (isDuplicateCrossSystemMesh(systemName, rawName, item)) {
-          mesh.visible = false;
-          mesh.raycast = () => {};
-          return;
-        }
-
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-
-        // Restaura a posição original imutável antes de re-vincular para evitar drift cumulativo na Exploded View
-        if (mesh.userData?.initialPosition) {
-          mesh.position.copy(mesh.userData.initialPosition as THREE.Vector3);
-        } else {
-          mesh.userData = { ...mesh.userData, initialPosition: mesh.position.clone() };
-        }
-
-        const formatted = formatAnatomicalMeshName(rawName);
-        const nomePtResolved = item?.namePtBr || formatted.namePtBr;
-        const layer = determineSurgicalLayer(systemName, rawName, nomePtResolved);
-        const fallbackId = item?.id || `za:${mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
-
-        const muscularProfile =
-          systemName === 'muscular'
-            ? getMuscularTissueProfile(rawName, nomePtResolved, defaultColor)
-            : null;
-
-        mesh.userData = {
-          ...mesh.userData,
-          id: fallbackId,
-          nomePt: nomePtResolved,
-          nomeLatin: item?.nameLatin || formatted.nameLatin,
-          sistema: systemName,
-          regiao: activeRegion,
-          camadaProfundidade: layer,
-          eixoExplosao: item?.explosionVector
-            ? [item.explosionVector.x, item.explosionVector.y, item.explosionVector.z]
-            : undefined,
-          distanciaMaxima: magnitude,
-          isAnchor: false,
-          modelOffset,
-          __isCatalogItem: Boolean(item),
-          ...(muscularProfile
-            ? {
-                __tissueType: muscularProfile.tissueType,
-                __tissueColor: muscularProfile.colorHex,
-                __tissueOpacityFactor: muscularProfile.opacityFactor,
-                __tissueRoughness: muscularProfile.roughness,
-              }
-            : {}),
-        } as AnatomicalMeshUserData & {
-          modelOffset?: [number, number, number];
-          __isCatalogItem?: boolean;
-          __tissueType?: string;
-          __tissueColor?: string;
-          __tissueOpacityFactor?: number;
-          __tissueRoughness?: number;
-        };
-
-        const existingMat = mesh.material as THREE.MeshStandardMaterial | undefined;
-        let mat: THREE.MeshStandardMaterial;
-        if (existingMat && existingMat.isMeshStandardMaterial && mesh.userData.__customMat) {
-          mat = existingMat;
-        } else {
-          mat = new THREE.MeshStandardMaterial({
-            color: new THREE.Color(muscularProfile ? muscularProfile.colorHex : defaultColor),
-            roughness: muscularProfile
-              ? muscularProfile.roughness
-              : systemName === 'skeletal'
-              ? 0.54
-              : 0.42,
-            metalness: muscularProfile ? muscularProfile.metalness : 0.04,
-            side: THREE.DoubleSide,
-          });
-
-          if (muscularProfile && mesh.geometry) {
-            if (!mesh.geometry.boundingBox) {
-              mesh.geometry.computeBoundingBox();
-            }
-            const bbox = mesh.geometry.boundingBox;
-            let fiberAxis: [number, number, number] = [0, 1, 0];
-            let fiberSpan: [number, number] = [-0.1, 0.1];
-            if (bbox && !bbox.isEmpty()) {
-              const dx = bbox.max.x - bbox.min.x;
-              const dy = bbox.max.y - bbox.min.y;
-              const dz = bbox.max.z - bbox.min.z;
-              if (dx >= dy && dx >= dz) {
-                fiberAxis = [1, 0, 0];
-                fiberSpan = [bbox.min.x, bbox.max.x];
-              } else if (dz >= dx && dz >= dy) {
-                fiberAxis = [0, 0, 1];
-                fiberSpan = [bbox.min.z, bbox.max.z];
-              } else {
-                fiberAxis = [0, 1, 0];
-                fiberSpan = [bbox.min.y, bbox.max.y];
-              }
-            }
-            applyAnatomicalTissueShader(mat, muscularProfile.tissueType, fiberAxis, fiberSpan);
-          }
-        }
-        mesh.userData.__customMat = true;
-        mesh.material = mat;
-
-        const binding = bindExplodedNode(mesh, activeRegion);
-
-        list.push({
-          mesh,
-          binding,
-          item,
-          baseMaterial: mat,
-        });
+      if (mesh.userData?.initialPosition) {
+        mesh.position.copy(mesh.userData.initialPosition as THREE.Vector3);
       }
-    });
+
+      mesh.userData.regiao = activeRegion;
+      mesh.userData.distanciaMaxima = magnitude;
+      mesh.userData.modelOffset = modelOffset;
+
+      const binding = bindExplodedNode(mesh, activeRegion);
+      const center = mesh.userData.anatomicalCenter as THREE.Vector3 | undefined;
+      if (center) {
+        const coords: [number, number, number] = [center.x, center.y, center.z];
+        if (item?.id) registerMeshWorldCenter(item.id, coords);
+        if (item?.node) registerMeshWorldCenter(item.node, coords);
+        if (mesh.userData.id) registerMeshWorldCenter(mesh.userData.id as string, coords);
+        registerMeshWorldCenter(mesh.name, coords);
+      }
+
+      list.push({
+        mesh,
+        binding,
+        item,
+        baseMaterial,
+      });
+    }
 
     return list;
-  }, [clonedScene, defaultColor, systemName, activeRegion, magnitude, offsetX, offsetY, offsetZ]);
+  }, [preparedSystem, activeRegion, magnitude, offsetX, offsetY, offsetZ]);
 
-  // Atualização em tempo real das cores, visibilidade por região, 6 camadas e blindagem de raycast
+  const prevHoveredEntryRef = useRef<MeshAnimData | null>(null);
+
+  // Atualização determinística de visibilidade por região, 6 camadas e seleção (desacoplada do hover O(1))
   useEffect(() => {
     const visibilityState: VisibilityState = {
       hiddenIds: hiddenNodeIds,
@@ -548,7 +604,6 @@ function RealSystemModel({
       isolatedOnly,
     };
 
-    // Verifica se todos os itens catalogados deste sistema (ou subcamada miofascial) foram desmarcados na Árvore
     const catalogNodes = animNodes.filter((d) => d.item !== null);
     const isEntireSystemHiddenInTree =
       catalogNodes.length > 0 &&
@@ -577,8 +632,8 @@ function RealSystemModel({
       }
     }
 
-    animNodes.forEach(({ mesh, item, baseMaterial }) => {
-      // Se o sistema inteiro ou a subcamada muscular foi desmarcada na árvore, oculta também malhas residuais não catalogadas do GLB
+    for (let i = 0; i < animNodes.length; i++) {
+      const { mesh, item, baseMaterial } = animNodes[i];
       if (!item) {
         const meshTissueType = mesh.userData?.__tissueType as string | undefined;
         if (
@@ -587,41 +642,99 @@ function RealSystemModel({
         ) {
           mesh.visible = false;
           mesh.raycast = () => {};
-          return;
+          continue;
         }
       }
 
-      const isSelected =
-        effectiveSelectedId === item?.id ||
-        effectiveSelectedId === mesh.userData?.id ||
-        effectiveSelectedId === mesh.name;
-      const isHovered =
-        effectiveHovered === mesh.name ||
-        effectiveHovered === mesh.userData?.id ||
-        Boolean(item?.id && effectiveHovered === item.id);
-
-      // Filtragem por região aplicada a todos os sistemas ativos (usando metadados + coordenadas 3D)
       const isRegionVisible = isNodeInRegion(item, mesh.name, activeRegion, mesh);
-
       if (!isRegionVisible) {
         mesh.visible = false;
         mesh.raycast = () => {};
-        return;
+        continue;
       }
 
-      // Máquina de estados determinística de visibilidade e blindagem de raycast
-      updateMeshVisibility(mesh, visibilityState, baseMaterial, defaultColor, isXRay ? 0.22 : opacity);
+      updateMeshVisibility(
+        mesh,
+        visibilityState,
+        baseMaterial,
+        defaultColor,
+        isXRay ? 0.22 : opacity
+      );
+    }
+    prevHoveredEntryRef.current = null;
+  }, [
+    animNodes,
+    effectiveSelectedId,
+    ghostMode,
+    isolatedOnly,
+    activeRegion,
+    systemName,
+    opacity,
+    isXRay,
+    defaultColor,
+    hiddenNodeIds,
+    storeActiveDepth,
+  ]);
 
-      // Destaque de Hover suave (sem branqueamento estourado)
-      if (mesh.visible && !isSelected && isHovered) {
-        const baseHex = (mesh.userData?.__tissueColor as string) || defaultColor;
-        const hoverColor = new THREE.Color(baseHex).lerp(new THREE.Color('#38bdf8'), 0.2);
-        baseMaterial.color.copy(hoverColor);
-        baseMaterial.emissive.set('#0284c7');
-        baseMaterial.emissiveIntensity = 0.14;
-      }
-    });
-  }, [animNodes, effectiveSelectedId, effectiveHovered, ghostMode, isolatedOnly, activeRegion, systemName, opacity, isXRay, defaultColor, hiddenNodeIds, storeActiveDepth]);
+  // Atualização O(1) dedicada exclusivamente ao destaque de Hover (restaura 1 malha anterior + ilumina 1 malha atual)
+  useEffect(() => {
+    const visibilityState: VisibilityState = {
+      hiddenIds: hiddenNodeIds,
+      selectedId: effectiveSelectedId,
+      activeDepth: storeActiveDepth,
+      ghostMode,
+      isolatedOnly,
+    };
+
+    const prev = prevHoveredEntryRef.current;
+    if (prev && prev.mesh.visible) {
+      updateMeshVisibility(
+        prev.mesh,
+        visibilityState,
+        prev.baseMaterial,
+        defaultColor,
+        isXRay ? 0.22 : opacity
+      );
+    }
+    prevHoveredEntryRef.current = null;
+
+    if (!effectiveHovered) return;
+
+    const target = animNodes.find(
+      (d) =>
+        d.mesh.name === effectiveHovered ||
+        d.mesh.userData?.id === effectiveHovered ||
+        (d.item?.id && d.item.id === effectiveHovered) ||
+        (d.item?.node && d.item.node === effectiveHovered)
+    );
+
+    if (!target || !target.mesh.visible) return;
+
+    const isSelected =
+      effectiveSelectedId === target.item?.id ||
+      effectiveSelectedId === target.mesh.userData?.id ||
+      effectiveSelectedId === target.mesh.name;
+
+    if (!isSelected) {
+      const baseHex = (target.mesh.userData?.__tissueColor as string) || defaultColor;
+      HOVER_SCRATCH_COLOR.set(baseHex).lerp(HOVER_TINT_COLOR, 0.2);
+      target.baseMaterial.color.copy(HOVER_SCRATCH_COLOR);
+      target.baseMaterial.emissive.copy(HOVER_EMISSIVE_COLOR);
+      target.baseMaterial.emissiveIntensity = 0.14;
+      prevHoveredEntryRef.current = target;
+    }
+  }, [
+    effectiveHovered,
+    animNodes,
+    effectiveSelectedId,
+    hiddenNodeIds,
+    storeActiveDepth,
+    ghostMode,
+    isolatedOnly,
+    defaultColor,
+    isXRay,
+    opacity,
+  ]);
 
   // Array otimizado de nós vinculados para o loop da GPU
   const bindings = useMemo(() => animNodes.map((d) => d.binding), [animNodes]);
@@ -709,23 +822,45 @@ function RealSystemModel({
     <group position={modelOffset}>
       <primitive
         object={clonedScene}
-        onPointerOver={(e: { stopPropagation: () => void; object: THREE.Object3D }) => {
+        onPointerOver={(e: {
+          stopPropagation: () => void;
+          object: THREE.Object3D;
+          nativeEvent?: PointerEvent | MouseEvent;
+        }) => {
           e.stopPropagation();
-          setHoveredNode(e.object.name);
-          setStoreHoveredNode(e.object.name);
+          // Não dispara hover durante arraste orbital/pan da câmera (botões do mouse pressionados)
+          if (e.nativeEvent && typeof e.nativeEvent.buttons === 'number' && e.nativeEvent.buttons > 0) {
+            return;
+          }
+          const nextName = e.object.name;
+          if (hoveredNode !== nextName) {
+            setHoveredNode(nextName);
+          }
+          if (useAnatomyStore.getState().hoveredNodeId !== nextName) {
+            setStoreHoveredNode(nextName);
+          }
         }}
         onPointerOut={(e: { stopPropagation: () => void }) => {
           e.stopPropagation();
-          setHoveredNode(null);
-          setStoreHoveredNode(null);
+          if (hoveredNode !== null) {
+            setHoveredNode(null);
+          }
+          if (useAnatomyStore.getState().hoveredNodeId !== null) {
+            setStoreHoveredNode(null);
+          }
         }}
         onClick={(e: {
           stopPropagation: () => void;
           object: THREE.Object3D;
           point?: THREE.Vector3;
           altKey?: boolean;
+          delta?: number;
         }) => {
           e.stopPropagation();
+          // Ignora cliques gerados ao soltar o mouse após arrastar/girar a câmera (> 5px)
+          if (typeof e.delta === 'number' && e.delta > 5) {
+            return;
+          }
           const target = animNodes.find((d) => d.mesh === e.object);
           const rawName = (e.object.userData?.name as string) || e.object.name;
           const resolvedItem =
@@ -893,6 +1028,7 @@ export function RealBodyAtlas({
   // Coleta de Lixo WebGL Determinística ao desmontar
   useEffect(() => {
     return () => {
+      PREPARED_SYSTEM_CACHE.clear();
       if (groupRef.current) {
         const report = disposeHierarchy(groupRef.current);
         logWebGLGarbageCollection('RealBodyAtlas', report);

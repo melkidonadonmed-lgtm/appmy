@@ -1,6 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   RotateCcw,
+  Eye,
   EyeOff,
   PanelLeftClose,
   PanelLeftOpen,
@@ -13,6 +14,8 @@ import {
   ChevronsUp,
   Users,
   Brain,
+  Focus,
+  X,
 } from 'lucide-react';
 import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../../../shared/constants/zAnatomyCatalog.ts';
 import { FEMALE_REPRODUCTIVE_CATALOG } from '../../../../shared/constants/femaleReproductiveCatalog.ts';
@@ -27,8 +30,6 @@ import { GlobalSearchBox } from './GlobalSearchBox.tsx';
 import { AnyAnatomicalNode } from '../../canvas/AnatomicalAtlasScene.tsx';
 
 interface AnatomyTreePanelProps {
-  onToggleMpr?: () => void;
-  mprActive?: boolean;
   selectedNode?: AnyAnatomicalNode | null;
   onSelectNode?: (node: AnyAnatomicalNode | null) => void;
 }
@@ -49,6 +50,10 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   const activeRegion = useAnatomyStore((s) => s.activeRegion);
   const biologicalSex = useAnatomyStore((s) => s.biologicalSex);
   const setBiologicalSex = useAnatomyStore((s) => s.setBiologicalSex);
+  const selectAndFocusNode = useAnatomyStore((s) => s.selectAndFocusNode);
+  const setSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
+  const toggleVisibility = useAnatomyStore((s) => s.toggleVisibility);
+  const isolateNode = useAnatomyStore((s) => s.isolateNode);
 
   const sidebarTab = useAnatomyStore((s) => s.sidebarTab);
   const setSidebarTab = useAnatomyStore((s) => s.setSidebarTab);
@@ -103,12 +108,6 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   }, [hiddenNodeIds, activeCatalogForCount]);
   const visibleStructuresCount = Math.max(0, totalStructures - hiddenCount);
 
-  useEffect(() => {
-    if (selectedNode) {
-      setSidebarTab('details');
-    }
-  }, [selectedNode, setSidebarTab]);
-
   if (outlinerCollapsed) {
     return (
       <button
@@ -126,6 +125,10 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
   const activeSystemsCount = activeSystems.has('all')
     ? 'Todos'
     : `${activeSystems.size}`;
+
+  const isSelectedNodeHidden = selectedNode
+    ? hiddenNodeIds.has(selectedNode.id)
+    : false;
 
   return (
     <aside className="outliner-panel" aria-label="Navegador Anatômico (Outliner)">
@@ -174,8 +177,8 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         <GlobalSearchBox
           onSearchChange={(val) => setSearch(val)}
           onSelectStructure={(node) => {
+            selectAndFocusNode(node.id);
             onSelectNode?.(node);
-            setSidebarTab('details');
           }}
         />
       </div>
@@ -273,74 +276,73 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         </button>
       </nav>
 
-      {/* ABA 1: Árvore Taxonômica Direta (Sem Barras Intermediárias Redundantes) */}
-      {sidebarTab === 'tree' && (
-        <div
-          id="outliner-tab-tree-panel"
-          role="tabpanel"
-          aria-labelledby="tab-btn-tree"
-          className="outliner-tab-content"
-        >
-          <div className="outliner-tree-actions-bar">
-            <span className="outliner-tree-count-text">
-              Camadas (1ª Ext → 11ª Int)
-            </span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <button
-                type="button"
-                onClick={() => setExpandAllSignal(true)}
-                title="Expandir todas as pastas"
-                className="outliner-mini-btn"
-              >
-                <ChevronsDown size={11} aria-hidden="true" />
-                <span>Abrir</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setExpandAllSignal(false)}
-                title="Recolher todas as pastas"
-                className="outliner-mini-btn"
-              >
-                <ChevronsUp size={11} aria-hidden="true" />
-                <span>Fechar</span>
-              </button>
-            </div>
-          </div>
-
-          <div
-            className="outliner-tree-viewport scrollbar-thin"
-            role="tree"
-            aria-label="Árvore Taxonômica Z-Anatomy TA2"
-          >
-            {visibleTree.length > 0 ? (
-              visibleTree.map((sysNode, idx) => (
-                <TreeGroup
-                  key={sysNode.id}
-                  node={sysNode}
-                  allCatalogIds={allCatalogIds}
-                  initialExpanded={expandAllSignal ?? undefined}
-                  isSearchActive={Boolean(search.trim())}
-                  layerOrderIndex={idx + 1}
-                />
-              ))
-            ) : (
-              <div className="outliner-empty-state">
-                <Sparkles size={22} className="outliner-empty-icon" aria-hidden="true" />
-                <p>Nenhuma estrutura corresponde a &quot;{search}&quot;</p>
-                <button
-                  type="button"
-                  onClick={() => setSearch('')}
-                  className="outliner-empty-clear-btn"
-                >
-                  Limpar busca
-                </button>
-              </div>
-            )}
+      {/* ABA 1: Árvore Taxonômica Persistente (mantida no DOM para preservar pastas abertas e rolagem) */}
+      <div
+        id="outliner-tab-tree-panel"
+        role="tabpanel"
+        aria-labelledby="tab-btn-tree"
+        className="outliner-tab-content"
+        style={{ display: sidebarTab === 'tree' ? 'flex' : 'none' }}
+      >
+        <div className="outliner-tree-actions-bar">
+          <span className="outliner-tree-count-text">
+            Camadas (1ª Ext → 11ª Int)
+          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <button
+              type="button"
+              onClick={() => setExpandAllSignal(true)}
+              title="Expandir todas as pastas"
+              className="outliner-mini-btn"
+            >
+              <ChevronsDown size={11} aria-hidden="true" />
+              <span>Abrir</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setExpandAllSignal(false)}
+              title="Recolher todas as pastas"
+              className="outliner-mini-btn"
+            >
+              <ChevronsUp size={11} aria-hidden="true" />
+              <span>Fechar</span>
+            </button>
           </div>
         </div>
-      )}
 
-      {/* ABA 2: Camadas & Regiões */}
+        <div
+          className="outliner-tree-viewport scrollbar-thin"
+          role="tree"
+          aria-label="Árvore Taxonômica Z-Anatomy TA2"
+        >
+          {visibleTree.length > 0 ? (
+            visibleTree.map((sysNode, idx) => (
+              <TreeGroup
+                key={sysNode.id}
+                node={sysNode}
+                allCatalogIds={allCatalogIds}
+                initialExpanded={expandAllSignal ?? undefined}
+                isSearchActive={Boolean(search.trim())}
+                layerOrderIndex={idx + 1}
+              />
+            ))
+          ) : (
+            <div className="outliner-empty-state">
+              <Sparkles size={22} className="outliner-empty-icon" aria-hidden="true" />
+              <p>Nenhuma estrutura corresponde a &quot;{search}&quot;</p>
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                className="outliner-empty-clear-btn"
+              >
+                Limpar busca
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ABA 2: Camadas, Dissecação & Regiões */}
       {sidebarTab === 'filters' && (
         <div
           id="outliner-tab-filters-panel"
@@ -379,6 +381,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
             <AnatomyClinicalCard
               selectedNode={selectedNode}
               onClose={() => {
+                setSelectedNode(null);
                 onSelectNode?.(null);
                 setSidebarTab('tree');
               }}
@@ -391,7 +394,7 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
               </div>
               <h3 className="outliner-details-empty-title">Nenhuma Peça Selecionada</h3>
               <p className="outliner-details-empty-desc">
-                Clique em qualquer estrutura no modelo 3D ou use a busca acima para ver sua ficha anatômica e clínica.
+                Clique em qualquer estrutura no modelo 3D ou na árvore de sistemas para ver sua ficha anatômica e clínica.
               </p>
               <button
                 type="button"
@@ -403,6 +406,72 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Barra Rápida da Peça Selecionada (exibida nas abas Sistemas/Camadas sem interromper a navegação) */}
+      {selectedNode && sidebarTab !== 'details' && (
+        <div className="outliner-quick-selected-bar" role="region" aria-label="Ações rápidas da estrutura selecionada">
+          <div className="outliner-quick-selected-info">
+            <span className="outliner-quick-selected-name" title={selectedNode.namePtBr}>
+              {selectedNode.namePtBr}
+            </span>
+            {selectedNode.nameLatin && (
+              <span className="outliner-quick-selected-latin">{selectedNode.nameLatin}</span>
+            )}
+          </div>
+          <div className="outliner-quick-selected-actions">
+            <button
+              type="button"
+              onClick={() => selectAndFocusNode(selectedNode.id)}
+              className="outliner-mini-btn"
+              title="Centralizar câmera 3D nesta peça"
+            >
+              <Focus size={11} aria-hidden="true" />
+              <span>Focar</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => isolateNode(selectedNode.id, allCatalogIds)}
+              className="outliner-mini-btn"
+              title="Isolar apenas esta peça"
+            >
+              <span>Isolar</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => toggleVisibility(selectedNode.id)}
+              className="outliner-mini-btn"
+              title={isSelectedNodeHidden ? 'Exibir peça' : 'Ocultar peça'}
+            >
+              {isSelectedNodeHidden ? (
+                <Eye size={11} aria-hidden="true" />
+              ) : (
+                <EyeOff size={11} aria-hidden="true" />
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => setSidebarTab('details')}
+              className="outliner-mini-btn active"
+              title="Abrir ficha clínica completa"
+            >
+              <Stethoscope size={11} aria-hidden="true" />
+              <span>Ficha</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedNode(null);
+                onSelectNode?.(null);
+              }}
+              className="outliner-mini-btn"
+              title="Limpar seleção"
+              aria-label="Limpar seleção"
+            >
+              <X size={11} aria-hidden="true" />
+            </button>
+          </div>
         </div>
       )}
 

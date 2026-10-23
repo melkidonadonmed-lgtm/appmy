@@ -134,7 +134,10 @@ function SmoothCameraController({
       e.stopPropagation();
 
       const mode = useAnatomyStore.getState().twoFingerMode;
-      const isPinchOrAltZoom = e.ctrlKey || e.metaKey || e.altKey;
+      // Roda física de mouse vertical (deltaX zero, sem Shift) ou modo 'zoom' aplica zoom direto
+      const isPhysicalMouseWheel =
+        Math.abs(e.deltaX) < 0.5 && !e.shiftKey && (e.deltaMode === 1 || Math.abs(e.deltaY) >= 40);
+      const isPinchOrAltZoom = e.ctrlKey || e.metaKey || e.altKey || isPhysicalMouseWheel;
       const delta = computeTrackpadTwoFingerDelta(
         e.deltaX,
         e.deltaY,
@@ -167,9 +170,9 @@ function SmoothCameraController({
       const [tx, ty, tz] = cameraFocusTarget;
       const targetVec = controlsRef.current.target;
 
-      targetVec.x = THREE.MathUtils.lerp(targetVec.x, tx, 0.08);
-      targetVec.y = THREE.MathUtils.lerp(targetVec.y, ty, 0.08);
-      targetVec.z = THREE.MathUtils.lerp(targetVec.z, tz, 0.08);
+      targetVec.x = THREE.MathUtils.lerp(targetVec.x, tx, 0.16);
+      targetVec.y = THREE.MathUtils.lerp(targetVec.y, ty, 0.16);
+      targetVec.z = THREE.MathUtils.lerp(targetVec.z, tz, 0.16);
 
       controlsRef.current.update();
 
@@ -182,9 +185,9 @@ function SmoothCameraController({
 
     if (cameraPositionTarget) {
       const [px, py, pz] = cameraPositionTarget;
-      frameCamera.position.x = THREE.MathUtils.lerp(frameCamera.position.x, px, 0.08);
-      frameCamera.position.y = THREE.MathUtils.lerp(frameCamera.position.y, py, 0.08);
-      frameCamera.position.z = THREE.MathUtils.lerp(frameCamera.position.z, pz, 0.08);
+      frameCamera.position.x = THREE.MathUtils.lerp(frameCamera.position.x, px, 0.16);
+      frameCamera.position.y = THREE.MathUtils.lerp(frameCamera.position.y, py, 0.16);
+      frameCamera.position.z = THREE.MathUtils.lerp(frameCamera.position.z, pz, 0.16);
       controlsRef.current?.update();
 
       const pDistSq = (frameCamera.position.x - px) ** 2 + (frameCamera.position.y - py) ** 2 + (frameCamera.position.z - pz) ** 2;

@@ -1229,7 +1229,7 @@ code, pre {
   padding-left: 0.125rem;
 }
 
-/* Folhas (Peças Anatômicas) */
+/* Folhas (Peças Anatômicas) com content-visibility (modern-web-guidance) para listas de 2.500+ nós */
 .outliner-item-row {
   display: flex;
   align-items: center;
@@ -1241,6 +1241,103 @@ code, pre {
   transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
   font-size: 0.75rem;
   min-height: 28px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 30px;
+}
+
+/* Barra de Ação Rápida de Peça Selecionada no rodapé da Árvore */
+.outliner-quick-selected-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-well);
+  flex-shrink: 0;
+}
+
+.outliner-quick-selected-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.outliner-quick-selected-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outliner-quick-selected-latin {
+  font-size: 0.625rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outliner-quick-selected-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.outliner-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.45rem;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.outliner-quick-btn:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.outliner-quick-btn.active {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.layer-order-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-well);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.layer-order-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.layer-order-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .outliner-item-row:hover {
