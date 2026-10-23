@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { REPRODUCTIVE_NODES, ReproductiveNode } from '../../../shared/constants/reproductive.ts';
 
 interface ReproductiveSceneProps {
@@ -41,16 +42,14 @@ function ProstateMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -118,16 +117,14 @@ function VasDeferensMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -184,16 +181,14 @@ function TestisMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -253,16 +248,14 @@ function UterusMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -331,16 +324,14 @@ function FallopianTubesMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -397,16 +388,14 @@ function OvaryMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;

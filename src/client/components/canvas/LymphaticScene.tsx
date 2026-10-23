@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { LYMPHATIC_NODES, LymphaticNode } from '../../../shared/constants/lymphatic.ts';
 
 interface LymphaticSceneProps {
@@ -45,16 +46,14 @@ function LymphaticDuctMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -117,7 +116,7 @@ function LymphNodeClusterMesh({
 
   const targetPosRef = useRef(new THREE.Vector3());
   const SENTINEL_PULSE_FREQ = 3.0;
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!meshRef.current) return;
 
     // Se for o linfonodo sentinela (Virchow), pulsa sutilmente com brilho de vigilância imune
@@ -131,9 +130,7 @@ function LymphNodeClusterMesh({
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
     meshRef.current.scale.set(
       scaleVec[0] * pulseScale,
       scaleVec[1] * pulseScale,
@@ -195,16 +192,14 @@ function CisternaChyliMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;

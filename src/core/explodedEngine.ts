@@ -13,6 +13,25 @@ const NON_AXIAL_STRUCTURE_REGEX =
 
 const RADIAL_TANH_GAIN = 12.0;
 const ANTEROPOSTERIOR_TANH_GAIN = 10.0;
+const CRANIAL_SOFT_RAMP_EPS = 0.0016;
+const MIDLINE_Z_VARIANCE = 0.0008;
+export const DEFAULT_DAMPING_DECAY_RATE = 10.46; // Equivalente a alpha = 0.16 em 60Hz
+const MAX_FRAME_DELTA_SECONDS = 0.1;
+
+/**
+ * Calcula o fator de interpolação exponencial invariante à taxa de quadros (FPS Independence):
+ * alpha(dt) = 1 - exp(-lambda * min(dt, 0.1))
+ */
+export function computeFrameIndependentLerpAlpha(
+  deltaSeconds: number,
+  decayRate = DEFAULT_DAMPING_DECAY_RATE
+): number {
+  const safeDt = Math.max(
+    0.0001,
+    Math.min(MAX_FRAME_DELTA_SECONDS, Number.isFinite(deltaSeconds) ? deltaSeconds : 1 / 60)
+  );
+  return 1 - Math.exp(-decayRate * safeDt);
+}
 
 /**
  * Identifica se uma estrutura deve permanecer como âncora fixa central estática
@@ -122,8 +141,7 @@ export function getMeshLaterality(mesh: THREE.Mesh, effectiveCenterX = 0): -1 | 
  */
 export function getMeshAnatomicalCenter(mesh: THREE.Mesh): THREE.Vector3 {
   const basePos =
-    (mesh.userData?.initialPosition as THREE.Vector3 | undefined)?.clone() ??
-    mesh.position.clone();
+    (mesh.userData?.initialPosition as THREE.Vector3 | undefined) ?? mesh.position;
   const offsetArr = mesh.userData?.modelOffset as [number, number, number] | undefined;
   const offsetX = offsetArr ? offsetArr[0] : 0;
   const offsetY = offsetArr ? offsetArr[1] : 0;
@@ -152,10 +170,7 @@ export function getMeshAnatomicalCenter(mesh: THREE.Mesh): THREE.Vector3 {
       return boxCenter;
     }
   }
-  basePos.x += offsetX;
-  basePos.y += offsetY;
-  basePos.z += offsetZ;
-  return basePos;
+  return new THREE.Vector3(basePos.x + offsetX, basePos.y + offsetY, basePos.z + offsetZ);
 }
 
 /**
@@ -253,7 +268,7 @@ export function bindExplodedNode(
         dirX = Math.sign(posX) * smoothXMag;
       }
 
-      // Gradiente vertical contínuo C1 (sem degrau abrupto em Y = 1.48m)
+      // Gradiente vertical contínuo C1 via rampa hiperbólica diferenciável
       let dirY = 0;
       if (activeRegion === 'spine') {
         dirY = (posY - 0.95) * 1.4;
@@ -261,16 +276,18 @@ export function bindExplodedNode(
         dirY = (posY - 1.54) * 1.35;
       } else {
         const baseVertical = (posY - 0.98) * 0.14;
-        const cranialSmoothLift = posY > 1.38 ? (posY - 1.38) * 0.62 : 0;
+        const dyCran = posY - 1.38;
+        const cranialSmoothLift =
+          0.31 * (dyCran + Math.sqrt(dyCran * dyCran + CRANIAL_SOFT_RAMP_EPS));
         dirY = baseVertical + cranialSmoothLift;
       }
 
-      // Gradiente anteroposterior contínuo via tanh relativo à coluna (Z = -0.02), zero salto em Z = -0.02
+      // Gradiente anteroposterior C1 contínuo relativo à coluna (Z = -0.02) com bias gaussiano mediano sem salto
       const relZ = posZ + 0.02;
-      let dirZ = relZ * 1.45 + Math.tanh(relZ * ANTEROPOSTERIOR_TANH_GAIN) * 0.08;
-      if (Math.abs(dirZ) < 0.04 && laterality === 0) {
-        dirZ = 0.12;
-      }
+      const rawDirZ = relZ * 1.45 + Math.tanh(relZ * ANTEROPOSTERIOR_TANH_GAIN) * 0.08;
+      const midlineBias =
+        laterality === 0 ? 0.12 * Math.exp(-(relZ * relZ) / MIDLINE_Z_VARIANCE) : 0;
+      let dirZ = rawDirZ + midlineBias;
 
       // Se a peça do catálogo possui vetor direcional específico, combina proporcionalmente sem normalizar para 1.0
       if (

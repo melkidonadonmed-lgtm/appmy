@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { ENDOCRINE_NODES, EndocrineNode } from '../../../shared/constants/endocrine.ts';
 
 interface EndocrineSceneProps {
@@ -41,16 +42,14 @@ function PituitaryMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -109,16 +108,14 @@ function ThyroidGlandMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return;
     groupRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -199,16 +196,14 @@ function ParathyroidGlandsMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return;
     groupRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -276,16 +271,14 @@ function AdrenalGlandMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;

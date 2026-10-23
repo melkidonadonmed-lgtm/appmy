@@ -185,11 +185,13 @@ export function applyAnatomicalTissueShader(
       '#include <normal_fragment_maps>',
       `#include <normal_fragment_maps>
       if (uTissueMode == 1) {
-        float across = dot(vAnatLocalPos, uCrossU) * 1.15 + dot(vAnatLocalPos, uCrossV) * 0.85;
         float along = dot(vAnatLocalPos, uFiberAxis);
-        float ridgeDeriv = cos(across * ${GLSL_PRIMARY_BUNDLE_FREQ}) * 0.55 + cos(across * ${GLSL_SECONDARY_BUNDLE_FREQ} + along * ${GLSL_SECONDARY_ALONG_FREQ}) * 0.45;
-        vec3 tangentPerturb = normalize(uCrossU + uCrossV) * (ridgeDeriv * 0.16);
-        normal = normalize(normal + tangentPerturb);
+        float across1 = dot(vAnatLocalPos, uCrossU);
+        float across2 = dot(vAnatLocalPos, uCrossV);
+        float fiberCoord = across1 * 1.15 + across2 * 0.85 + along * 0.08;
+        float ridgeDeriv = cos(fiberCoord * ${GLSL_PRIMARY_BUNDLE_FREQ}) * 0.55 + cos(fiberCoord * ${GLSL_SECONDARY_BUNDLE_FREQ} + along * ${GLSL_SECONDARY_ALONG_FREQ}) * 0.45;
+        vec3 gradDir = normalize(uCrossU * 1.15 + uCrossV * 0.85);
+        normal = normalize(normal + gradDir * (ridgeDeriv * 0.16));
       }`
     );
   };

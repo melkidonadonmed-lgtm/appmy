@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { Html } from '@react-three/drei';
 import { MuscleAnatomicalNode } from '../../../shared/constants/myology.ts';
 
@@ -96,7 +97,7 @@ export function MuscleMeshItem({
 
   // Animação com Lerp
   const targetVecRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
 
     const mult = node.explosionMagnitudeMultiplier || 1.0;
@@ -106,12 +107,12 @@ export function MuscleMeshItem({
     const targetY = basePosition.y + ev.y * explosionProgress * 1.8 * mult;
     const targetZ = basePosition.z + ev.z * explosionProgress * 1.8 * mult;
 
-    meshRef.current.position.lerp(targetVecRef.current.set(targetX, targetY, targetZ), 0.16);
+    meshRef.current.position.lerp(targetVecRef.current.set(targetX, targetY, targetZ), computeFrameIndependentLerpAlpha(delta));
 
     if (hovered && !isSelected) {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, baseRotation.y + 0.15, 0.1);
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, baseRotation.y + 0.15, computeFrameIndependentLerpAlpha(delta, 6.32));
     } else {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, baseRotation.y, 0.1);
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, baseRotation.y, computeFrameIndependentLerpAlpha(delta, 6.32));
     }
   });
 

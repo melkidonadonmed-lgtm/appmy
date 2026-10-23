@@ -16,6 +16,7 @@ import {
   computeTrackpadTwoFingerDelta,
   applyNavigationDeltaToRig,
 } from '../../../core/navigationGestures.ts';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 
 interface SceneCanvasProps {
   viewType: 'exploded' | 'realistic';
@@ -165,14 +166,15 @@ function SmoothCameraController({
     };
   }, [gl, camera, controlsRef]);
 
-  useFrame(({ camera: frameCamera }) => {
+  useFrame(({ camera: frameCamera }, delta) => {
+    const dampAlpha = computeFrameIndependentLerpAlpha(delta);
     if (controlsRef.current && cameraFocusTarget) {
       const [tx, ty, tz] = cameraFocusTarget;
       const targetVec = controlsRef.current.target;
 
-      targetVec.x = THREE.MathUtils.lerp(targetVec.x, tx, 0.16);
-      targetVec.y = THREE.MathUtils.lerp(targetVec.y, ty, 0.16);
-      targetVec.z = THREE.MathUtils.lerp(targetVec.z, tz, 0.16);
+      targetVec.x = THREE.MathUtils.lerp(targetVec.x, tx, dampAlpha);
+      targetVec.y = THREE.MathUtils.lerp(targetVec.y, ty, dampAlpha);
+      targetVec.z = THREE.MathUtils.lerp(targetVec.z, tz, dampAlpha);
 
       controlsRef.current.update();
 
@@ -185,9 +187,9 @@ function SmoothCameraController({
 
     if (cameraPositionTarget) {
       const [px, py, pz] = cameraPositionTarget;
-      frameCamera.position.x = THREE.MathUtils.lerp(frameCamera.position.x, px, 0.16);
-      frameCamera.position.y = THREE.MathUtils.lerp(frameCamera.position.y, py, 0.16);
-      frameCamera.position.z = THREE.MathUtils.lerp(frameCamera.position.z, pz, 0.16);
+      frameCamera.position.x = THREE.MathUtils.lerp(frameCamera.position.x, px, dampAlpha);
+      frameCamera.position.y = THREE.MathUtils.lerp(frameCamera.position.y, py, dampAlpha);
+      frameCamera.position.z = THREE.MathUtils.lerp(frameCamera.position.z, pz, dampAlpha);
       controlsRef.current?.update();
 
       const pDistSq = (frameCamera.position.x - px) ** 2 + (frameCamera.position.y - py) ** 2 + (frameCamera.position.z - pz) ** 2;

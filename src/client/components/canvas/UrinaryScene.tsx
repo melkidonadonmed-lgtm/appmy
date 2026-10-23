@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { URINARY_NODES, UrinaryNode } from '../../../shared/constants/urinary.ts';
 
 interface UrinarySceneProps {
@@ -45,16 +46,14 @@ function KidneyMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -113,16 +112,14 @@ function KidneyMedullaMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -197,16 +194,14 @@ function UreterTubeMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -263,16 +258,14 @@ function BladderMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -330,16 +323,14 @@ function BladderTrigoneMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;

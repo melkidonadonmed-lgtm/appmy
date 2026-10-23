@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { CRANIUM_22_NODES, SkullAnatomicalNode, SkullDivision } from '../../../shared/constants/cranium.ts';
 import { CRANIOFACIAL_MUSCLES, MuscleAnatomicalNode } from '../../../shared/constants/myology.ts';
 import { CardiovascularNode } from '../../../shared/constants/cardiovascular.ts';
@@ -205,7 +206,7 @@ function BoneMeshItem({
 
   // Animação e translação vetorial suave via Lerp
   const targetVecRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
 
     const mult = node.explosionMagnitudeMultiplier || 1.0;
@@ -215,13 +216,13 @@ function BoneMeshItem({
     const targetY = basePosition.y + ev.y * explosionProgress * 1.7 * mult;
     const targetZ = basePosition.z + ev.z * explosionProgress * 1.7 * mult;
 
-    meshRef.current.position.lerp(targetVecRef.current.set(targetX, targetY, targetZ), 0.16);
+    meshRef.current.position.lerp(targetVecRef.current.set(targetX, targetY, targetZ), computeFrameIndependentLerpAlpha(delta));
 
     // Efeito sutil de rotação no hover
     if (hovered && !isSelected) {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, 0.12, 0.1);
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, 0.12, computeFrameIndependentLerpAlpha(delta, 6.32));
     } else {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, 0, 0.1);
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, 0, computeFrameIndependentLerpAlpha(delta, 6.32));
     }
   });
 

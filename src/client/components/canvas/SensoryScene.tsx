@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { Html } from '@react-three/drei';
 import { SENSORY_NODES, SensoryNode } from '../../../shared/constants/sensory.ts';
 
@@ -141,7 +142,7 @@ function SensoryItem({
 
   // Translação vetorial suave de explosão
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     const mult = node.explosionMagnitudeMultiplier || 1.0;
     const ev = node.explosionVector || { x: 0, y: 1, z: 0 };
@@ -150,7 +151,7 @@ function SensoryItem({
     const targetY = basePosition.y + ev.y * explosionProgress * 1.5 * mult;
     const targetZ = basePosition.z + ev.z * explosionProgress * 1.5 * mult;
 
-    meshRef.current.position.lerp(targetPosRef.current.set(targetX, targetY, targetZ), 0.16);
+    meshRef.current.position.lerp(targetPosRef.current.set(targetX, targetY, targetZ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;

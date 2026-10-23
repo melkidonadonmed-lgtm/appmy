@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { RESPIRATORY_NODES, RespiratoryNode } from '../../../shared/constants/respiratory.ts';
 
 interface RespiratorySceneProps {
@@ -50,16 +51,14 @@ function TracheaTubeMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -133,16 +132,14 @@ function BronchusTubeMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -202,7 +199,7 @@ function LungLobeMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!meshRef.current) return;
 
     // Movimento respiratório orgânico suave (~14 incursões ventilatórias/min)
@@ -215,9 +212,7 @@ function LungLobeMesh({
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.12
-    );
+      ), computeFrameIndependentLerpAlpha(delta, 7.67));
     meshRef.current.scale.set(
       scaleVec[0] * breathFactor,
       scaleVec[1] * breathFactor,
@@ -277,16 +272,14 @@ function LarynxComplexMesh({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return;
     groupRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         0.58 + explosionOffset.y * explosionProgress,
         0.12 + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;

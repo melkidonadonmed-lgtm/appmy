@@ -36,3 +36,14 @@
 - `npm run typecheck` -> Exit Code 0 (Zero erros TypeScript e zero `any` em `src/client`, `src/core`, `src/shared` e `src/server`).
 - `npm test` -> Exit Code 0 (**256 testes unitários aprovados em 33 suítes Vitest**).
 - `npm run build` -> Exit Code 0 (Build de produção Vite + Express concluído sem erros).
+
+---
+
+## Sessão: 2026-10-23 (Auditoria Matemática e Física 3D — Invariância Temporal FPS, Continuidade C1 e Gradiente de Normais)
+
+### Delta de Alterações
+- **src/core/explodedEngine.ts**: Adicionado computeFrameIndependentLerpAlpha(deltaSeconds, decayRate = 10.46), rampa hiperbólica C-infinito no plano cervical (y = 1.38 m), viés gaussiano contínuo na linha média sagital e remoção de .clone() redundante em getMeshAnatomicalCenter.
+- **src/core/tissueShader.ts**: Unificada a fase iberCoord e alinhado o gradiente tangente normalizado gradDir = normalize(uCrossU * 1.15 + uCrossV * 0.85). 
+- **src/client/components/canvas/DissectionPlaneHelper.tsx**: Memoizadas PlaneGeometry e EdgesGeometry com .dispose() explícito em useEffect.
+- **12 Cenas 3D + CardiovascularScene.tsx**: Substituído .lerp de passo fixo por computeFrameIndependentLerpAlpha(delta) e calibrado HEARTBEAT_RAD_PER_SEC = 0.6 * Math.PI (72.0 BPM exatos em sin^12).
+- **	ests/audit-fixes-and-sex-sync.test.ts**: **257 testes passando em 33 suítes Vitest**.

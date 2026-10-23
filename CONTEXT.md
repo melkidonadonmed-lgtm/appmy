@@ -13,9 +13,9 @@ Este arquivo consolida o ponto de entrada canônico de contexto na raiz do repos
 
 ## Resumo Executivo do Estado Atual
 
-1. **Domínio**: Atlas 3D educacional do corpo humano baseado no catálogo Z-Anatomy / BodyParts3D (CC BY-SA 4.0) com 335 ossos reais desarticulados, sistemas viscerais/musculares `.glb`, sincronização de sexo biológico (`male` / `female`), Exploded View Homolateral contínua, Dissecção Tomográfica Multiplanar (MPR) e Estúdio Neuroclínico Integrado.
+1. **Domínio**: Atlas 3D educacional do corpo humano baseado no catálogo Z-Anatomy / BodyParts3D (CC BY-SA 4.0) com 335 ossos reais desarticulados, sistemas viscerais/musculares `.glb`, sincronização de sexo biológico (`male` / `female`), Exploded View Homolateral contínua ($C^1$ / $C^\infty$) independente de FPS (`computeFrameIndependentLerpAlpha`), Dissecção Tomográfica Multiplanar (MPR) e Estúdio Neuroclínico Integrado.
 2. **Qualidade de Código, Física 3D e Testes**:
-   - **AST 3D Physics Audit (`code-quality-audit-3d-physics`)**: `100.0/100` (`0 ALLOC_IN_LOOP`, `0 UNCHECKED_NORMALIZE`, `0 STRICT_FLOAT_COMPARE`, `0 HARDCODED_MAGIC_NUMBER`, `0 any`).
+   - **AST 3D Physics Audit (`code-quality-audit-3d-physics`)**: `100.0/100` (`0 ALLOC_IN_LOOP`, `0 UNCHECKED_NORMALIZE`, `0 STRICT_FLOAT_COMPARE`, `0 HARDCODED_MAGIC_NUMBER`, `0 any`, amortecimento exponencial invariante a 60Hz/120Hz/144Hz, rampa hiperbólica $C^\infty$ e viés gaussiano sagital em `explodedEngine.ts`, gradiente de normal alinhado em fase em `tissueShader.ts`, pulsação cardíaca calibrada em $72.0\text{ BPM}$).
    - **Auditoria de Sistema (`auditoria-projetos-sistema`)**: `100.0/100` (Raiz higienizada, zero arquivos duplicados ou código órfão, contratos UI `Topologia 3+1` validados).
-   - **Test Quality Audit (`test-quality-auditor`)**: `100.0/100` (Nível 4 — **234 testes passando em 32 suítes Vitest**).
+   - **Test Quality Audit (`test-quality-auditor`)**: `100.0/100` (Nível 4 — **257 testes passando em 33 suítes Vitest**).
    - **Build & Typecheck**: `npm run typecheck` (`ExitCode 0`) e `npm run build` (`ExitCode 0`).

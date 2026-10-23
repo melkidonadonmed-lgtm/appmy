@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { CARDIOVASCULAR_NODES, CardiovascularNode } from '../../../shared/constants/cardiovascular.ts';
 
 interface CardiovascularSceneProps {
@@ -49,16 +50,14 @@ function VesselTube({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         explosionOffset.x * explosionProgress,
         explosionOffset.y * explosionProgress,
         explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isIsolatedHidden) return null;
@@ -130,9 +129,9 @@ function HeartChamber({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  const HEARTBEAT_RAD_PER_SEC = 4.2;
+  const HEARTBEAT_RAD_PER_SEC = 0.6 * Math.PI; // Exatos 72.0 BPM para sin^12(t)
   // Simulação fisiológica do batimento cardíaco (Sístole/Diástole)
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     if (!meshRef.current) return;
     const t = clock.getElapsedTime() * HEARTBEAT_RAD_PER_SEC; // ~72 BPM
     // Onda de pulso bifásica (contração rápida + relaxamento)
@@ -143,9 +142,7 @@ function HeartChamber({
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
 
     // Pulso miocárdico sutil se o nó não estiver isolado de forma estática
     const currentScale = 1 + beat;

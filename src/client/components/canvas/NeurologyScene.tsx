@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { ALL_NEUROLOGY_NODES, NeurologyNode } from '../../../shared/constants/neurology.ts';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 import { resolveNeuroClinicalTargetAliases } from '../../../shared/utils/neuroTargetMapper.ts';
@@ -55,16 +56,14 @@ function BrainMeshItem({
   }, [node]);
 
   const targetPosRef = useRef(new THREE.Vector3());
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!meshRef.current) return;
     meshRef.current.position.lerp(
       targetPosRef.current.set(
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ),
-      0.15
-    );
+      ), computeFrameIndependentLerpAlpha(delta));
   });
 
   if (isHidden) return null;

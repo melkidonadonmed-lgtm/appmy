@@ -9,6 +9,7 @@ import { buildTaxonomicTree } from '../src/shared/utils/buildTaxonomicTree.ts';
 import {
   bindExplodedNode,
   applyExplodedStep,
+  computeFrameIndependentLerpAlpha,
 } from '../src/core/explodedEngine.ts';
 import {
   computeTwoFingerMetrics,
@@ -276,6 +277,34 @@ describe('Auditoria Matemática, Sincronização de Sexo Biológico e Navegaçã
       expect(appContent).toContain('role="status"');
       expect(appContent).toContain('aria-live="polite"');
       expect(appContent).toContain('aria-busy={loadingHealth}');
+    });
+    it('deve garantir invariância de taxa de quadros (FPS Independence 60Hz vs 120Hz) e continuidade C1 no plano mediano', () => {
+      // 1. FPS Independence: 0.5s em 60Hz (30 passos) vs 0.5s em 120Hz (60 passos)
+      let x60 = 0;
+      const alpha60 = computeFrameIndependentLerpAlpha(1 / 60);
+      for (let i = 0; i < 30; i++) {
+        x60 = THREE.MathUtils.lerp(x60, 10.0, alpha60);
+      }
+
+      let x120 = 0;
+      const alpha120 = computeFrameIndependentLerpAlpha(1 / 120);
+      for (let i = 0; i < 60; i++) {
+        x120 = THREE.MathUtils.lerp(x120, 10.0, alpha120);
+      }
+
+      expect(Math.abs(x60 - x120)).toBeLessThan(1e-6);
+
+      // 2. Continuidade C1 em dirZ para estruturas medianas próximas a relZ = -0.018m
+      const meshA = new THREE.Mesh();
+      meshA.name = 'Sternum_body';
+      meshA.position.set(0, 1.25, -0.038);
+      const meshB = new THREE.Mesh();
+      meshB.name = 'Sternum_body';
+      meshB.position.set(0, 1.25, -0.037);
+
+      const bindA = bindExplodedNode(meshA, 'all');
+      const bindB = bindExplodedNode(meshB, 'all');
+      expect(Math.abs(bindA.targetOffset.z - bindB.targetOffset.z)).toBeLessThan(0.015);
     });
   });
 });

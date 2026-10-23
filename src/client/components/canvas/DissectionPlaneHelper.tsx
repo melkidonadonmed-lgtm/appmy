@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { MprPlaneType } from '../../../shared/types/dissection.ts';
 
@@ -8,7 +8,22 @@ interface DissectionPlaneHelperProps {
   visible: boolean;
 }
 
+const HELPER_PLANE_SIZE = 3.2;
+
 export function DissectionPlaneHelper({ planeType, offset, visible }: DissectionPlaneHelperProps) {
+  const { planeGeom, edgesGeom } = useMemo(() => {
+    const plane = new THREE.PlaneGeometry(HELPER_PLANE_SIZE, HELPER_PLANE_SIZE);
+    const edges = new THREE.EdgesGeometry(plane);
+    return { planeGeom: plane, edgesGeom: edges };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      planeGeom.dispose();
+      edgesGeom.dispose();
+    };
+  }, [planeGeom, edgesGeom]);
+
   const { position, rotation, colorHex } = useMemo(() => {
     switch (planeType) {
       case 'sagittal':
@@ -37,8 +52,7 @@ export function DissectionPlaneHelper({ planeType, offset, visible }: Dissection
   return (
     <group position={position} rotation={rotation}>
       {/* Lâmina Semitransparente do Corte Tomográfico */}
-      <mesh>
-        <planeGeometry args={[3.2, 3.2]} />
+      <mesh geometry={planeGeom}>
         <meshBasicMaterial
           color={colorHex}
           transparent
@@ -51,7 +65,7 @@ export function DissectionPlaneHelper({ planeType, offset, visible }: Dissection
 
       {/* Grade Sutil de Calibração Milimétrica */}
       <gridHelper
-        args={[3.2, 16, colorHex, colorHex]}
+        args={[HELPER_PLANE_SIZE, 16, colorHex, colorHex]}
         rotation={[Math.PI / 2, 0, 0]}
       >
         <meshBasicMaterial
@@ -64,8 +78,7 @@ export function DissectionPlaneHelper({ planeType, offset, visible }: Dissection
       </gridHelper>
 
       {/* Contorno Externo Nítido do Plano */}
-      <lineSegments>
-        <edgesGeometry args={[new THREE.PlaneGeometry(3.2, 3.2)]} />
+      <lineSegments geometry={edgesGeom}>
         <lineBasicMaterial
           color={colorHex}
           transparent
