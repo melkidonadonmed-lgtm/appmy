@@ -1,6 +1,7 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
-import { computeClippingPlane } from '../../lib/dissection-planes.ts';
+import { getPlaneVectorDef } from '../../lib/dissection-planes.ts';
 import { DissectionPlaneHelper } from './DissectionPlaneHelper.tsx';
 import { DissectionState } from '../../../shared/types/dissection.ts';
 
@@ -9,37 +10,48 @@ interface DissectionControllerProps {
 }
 
 export function DissectionController({ dissection }: DissectionControllerProps) {
-  const { gl } = useThree();
+  const { gl, invalidate } = useThree();
+  const planeRef = useRef<THREE.Plane>(new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0));
+  const planesArrayRef = useRef<THREE.Plane[]>([planeRef.current]);
 
-  // Habilita recorte local no WebGLRenderer
+  // Atualiza os coeficientes do plano em memória (Zero-Allocation) no mesmo ciclo da renderização
+  const isMprActive = dissection.visualMode === 'mpr';
+  if (isMprActive) {
+    const def = getPlaneVectorDef(dissection.activePlane, dissection.offset, dissection.inverted);
+    planeRef.current.normal.set(def.normal.x, def.normal.y, def.normal.z);
+    planeRef.current.constant = def.constant;
+  }
+
+  // Habilita recorte local no WebGLRenderer e limpa apenas no unmount real
   useEffect(() => {
     gl.localClippingEnabled = true;
-  }, [gl]);
-
-  // Calcula o plano de corte ativo com base na matemática tomográfica
-  const clippingPlane = useMemo(() => {
-    if (dissection.visualMode !== 'mpr') return null;
-    return computeClippingPlane(dissection.activePlane, dissection.offset, dissection.inverted);
-  }, [dissection.visualMode, dissection.activePlane, dissection.offset, dissection.inverted]);
-
-  // Aplica os planos de corte globais ao renderer Three.js
-  useEffect(() => {
-    if (clippingPlane) {
-      gl.clippingPlanes = [clippingPlane];
-    } else {
-      gl.clippingPlanes = [];
-    }
     return () => {
       gl.clippingPlanes = [];
     };
-  }, [gl, clippingPlane]);
+  }, [gl]);
+
+  // Sincroniza gl.clippingPlanes antes da pintura do frame (useLayoutEffect) sem zerar o array entre ticks do slider
+  useLayoutEffect(() => {
+    if (isMprActive) {
+      const def = getPlaneVectorDef(dissection.activePlane, dissection.offset, dissection.inverted);
+      planeRef.current.normal.set(def.normal.x, def.normal.y, def.normal.z);
+      planeRef.current.constant = def.constant;
+      if (gl.clippingPlanes !== planesArrayRef.current) {
+        gl.clippingPlanes = planesArrayRef.current;
+      }
+    } else if (gl.clippingPlanes.length > 0) {
+      gl.clippingPlanes = [];
+    }
+    invalidate();
+  }, [gl, invalidate, isMprActive, dissection.activePlane, dissection.offset, dissection.inverted]);
 
   return (
     <>
-      {dissection.visualMode === 'mpr' && (
+      {isMprActive && (
         <DissectionPlaneHelper
           planeType={dissection.activePlane}
           offset={dissection.offset}
+          inverted={dissection.inverted}
           visible={dissection.showHelper}
         />
       )}

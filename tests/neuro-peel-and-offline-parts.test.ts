@@ -422,4 +422,46 @@ describe('Offline Parts Manager & Selective GPU Part Loading for High FPS', () =
 
     expect(useAnatomyStore.getState().modules.telemetryVisible).toBe(false);
   });
+
+  it('assigns distinct neuroanatomical area colors and sulcal shaders for brain lobes and subcortical nuclei', async () => {
+    const { getNervousTissueProfile, applyAnatomicalTissueShader } = await import(
+      '../src/core/visibilityManager.ts'
+    );
+
+    const frontalSup = getNervousTissueProfile('Superior frontal gyrus.l', 'Giro Frontal Superior');
+    const frontalMid = getNervousTissueProfile('Middle frontal gyrus.l', 'Giro Frontal Médio');
+    const parietal = getNervousTissueProfile('Postcentral gyrus.l', 'Giro Pós-Central');
+    const temporal = getNervousTissueProfile('Superior temporal gyrus.l', 'Giro Temporal Superior');
+    const occipital = getNervousTissueProfile('Cuneus.l', 'Cúneo');
+    const caudate = getNervousTissueProfile('Caudate nucleus.l', 'Núcleo Caudado');
+    const thalamus = getNervousTissueProfile('Thalamus.l', 'Tálamo');
+    const cerebellum = getNervousTissueProfile('Cerebellar hemisphere.l', 'Hemisfério Cerebelar');
+    const ventricles = getNervousTissueProfile('Lateral ventricle.l', 'Ventrículo Lateral');
+    const dura = getNervousTissueProfile('Falx cerebri', 'Foice do Cérebro');
+
+    expect(frontalSup.area).toBe('frontal');
+    expect(frontalSup.baseAreaHex).toBe('#8b5cf6');
+    // Giros adjacentes do mesmo lobo têm tons distintos para separação visual imediata
+    expect(frontalSup.colorHex).not.toBe(frontalMid.colorHex);
+
+    expect(parietal.area).toBe('parietal');
+    expect(parietal.baseAreaHex).toBe('#06b6d4');
+    expect(temporal.area).toBe('temporal');
+    expect(temporal.baseAreaHex).toBe('#10b981');
+    expect(occipital.area).toBe('occipital');
+    expect(occipital.baseAreaHex).toBe('#f59e0b');
+    expect(caudate.area).toBe('basal_ganglia');
+    expect(caudate.baseAreaHex).toBe('#f43f5e');
+    expect(thalamus.area).toBe('diencephalon');
+    expect(thalamus.baseAreaHex).toBe('#fb923c');
+    expect(cerebellum.area).toBe('cerebellum');
+    expect(cerebellum.shaderMode).toBe('cerebellar');
+    expect(ventricles.area).toBe('ventricles');
+    expect(dura.area).toBe('meninges');
+    expect(dura.opacityFactor).toBeCloseTo(0.38, 2);
+
+    const mat = new THREE.MeshStandardMaterial();
+    applyAnatomicalTissueShader(mat, frontalSup.shaderMode);
+    expect(mat.customProgramCacheKey()).toContain('anat_tissue_cortical');
+  });
 });

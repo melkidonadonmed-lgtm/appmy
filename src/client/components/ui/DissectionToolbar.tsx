@@ -263,16 +263,34 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
           <div className="dissection-control-row">
             <div className="slider-header">
               <span className="control-label">Posição do Corte:</span>
-              <span className="slider-value">
-                {dissection.offset >= 0 ? `+${dissection.offset.toFixed(2)}` : dissection.offset.toFixed(2)} cm
-              </span>
+              <div className="slider-step-controls">
+                <button
+                  type="button"
+                  className="slider-step-btn"
+                  onClick={() => handleOffsetChange(Math.max(-2.2, Number((dissection.offset - 0.05).toFixed(2))))}
+                  title="Recuar corte em 0.05 cm"
+                >
+                  -0.05
+                </button>
+                <span className="slider-value">
+                  {dissection.offset >= 0 ? `+${dissection.offset.toFixed(2)}` : dissection.offset.toFixed(2)} cm
+                </span>
+                <button
+                  type="button"
+                  className="slider-step-btn"
+                  onClick={() => handleOffsetChange(Math.min(2.2, Number((dissection.offset + 0.05).toFixed(2))))}
+                  title="Avançar corte em 0.05 cm"
+                >
+                  +0.05
+                </button>
+              </div>
             </div>
             <div className="slider-track-wrap">
               <input
                 type="range"
                 min="-2.2"
                 max="2.2"
-                step="0.05"
+                step="0.01"
                 value={dissection.offset}
                 onChange={(e) => handleOffsetChange(parseFloat(e.target.value))}
                 className="range-slider"

@@ -11,8 +11,13 @@ import {
 } from './surgicalLayers.ts';
 import {
   getMuscleFascicleColor,
+  getCorticalGyrusColor,
   getMuscularTissueProfile,
+  getNervousTissueProfile,
   applyAnatomicalTissueShader,
+  type AnatomicalShaderTissueType,
+  type NervousFunctionalArea,
+  type NervousTissueProfile,
 } from './tissueShader.ts';
 
 export {
@@ -23,9 +28,14 @@ export {
   isSuperficialMuscle,
   determineSurgicalLayer,
   getMuscleFascicleColor,
+  getCorticalGyrusColor,
   getMuscularTissueProfile,
+  getNervousTissueProfile,
   applyAnatomicalTissueShader,
   type MuscularTissueType,
+  type AnatomicalShaderTissueType,
+  type NervousFunctionalArea,
+  type NervousTissueProfile,
 };
 
 export interface VisibilityState {
@@ -46,12 +56,12 @@ const GROUP_ISOLATION_THRESHOLD = 500;
 const MIN_VISIBLE_OPACITY = 0.001;
 const SKELETAL_DEFAULT_ROUGHNESS = 0.54;
 const SOFT_TISSUE_DEFAULT_ROUGHNESS = 0.42;
-const SELECTED_LERP_FACTOR = 0.24;
-const SELECTED_EMISSIVE_INTENSITY = 0.16;
-const SELECTED_ROUGHNESS = 0.34;
+const SELECTED_LERP_FACTOR = 0.34;
+const SELECTED_EMISSIVE_INTENSITY = 0.24;
+const SELECTED_ROUGHNESS = 0.32;
 const GHOST_ROUGHNESS = 0.72;
 const GHOST_OPACITY = 0.1;
-const CONTEXT_LERP_FACTOR = 0.18;
+const CONTEXT_LERP_FACTOR = 0.22;
 const CONTEXT_ROUGHNESS = 0.68;
 const CONTEXT_MAX_OPACITY = 0.72;
 const OPAQUE_THRESHOLD = 0.99;

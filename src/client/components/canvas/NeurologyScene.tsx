@@ -1,10 +1,11 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
 import { ALL_NEUROLOGY_NODES, NeurologyNode } from '../../../shared/constants/neurology.ts';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 import { resolveNeuroClinicalTargetAliases } from '../../../shared/utils/neuroTargetMapper.ts';
+import { applyAnatomicalTissueShader, getNervousTissueProfile } from '../../../core/visibilityManager.ts';
 import { AnatomicalCallout3D } from './AnatomicalCallout3D.tsx';
 
 interface NeurologySceneProps {
@@ -47,7 +48,19 @@ function BrainMeshItem({
   onOpenDetails,
 }: BrainMeshItemProps) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const matRef = useRef<THREE.MeshStandardMaterial>(null);
   const [hovered, setHovered] = useState(false);
+
+  const nervousProfile = useMemo(
+    () => getNervousTissueProfile(node.meshName || node.id, node.namePtBr, node.colorHex),
+    [node.meshName, node.id, node.namePtBr, node.colorHex]
+  );
+
+  useEffect(() => {
+    if (matRef.current) {
+      applyAnatomicalTissueShader(matRef.current, nervousProfile.shaderMode);
+    }
+  }, [nervousProfile.shaderMode]);
 
   const explosionOffset = useMemo(() => {
     const vec = node.explosionVector || { x: 0, y: 0, z: 0 };
@@ -63,15 +76,17 @@ function BrainMeshItem({
         basePosition.x + explosionOffset.x * explosionProgress,
         basePosition.y + explosionOffset.y * explosionProgress,
         basePosition.z + explosionOffset.z * explosionProgress
-      ), computeFrameIndependentLerpAlpha(delta));
+      ),
+      computeFrameIndependentLerpAlpha(delta)
+    );
   });
 
   if (isHidden) return null;
 
-  const baseColor = node.colorHex || '#a855f7';
+  const baseColor = node.colorHex || nervousProfile.colorHex || '#a855f7';
   const isCSF = !!node.isCSF;
   const isMeninges = node.meshName === 'cranial_meninges';
-  const opacity = isGhost ? 0.12 : isMeninges ? 0.28 : isCSF ? 0.7 : 0.96;
+  const opacity = isGhost ? 0.12 : isMeninges ? 0.34 : isCSF ? 0.78 : 0.98;
 
   const calloutWorldPos: [number, number, number] = [
     basePosition.x + explosionOffset.x * explosionProgress,
@@ -96,8 +111,15 @@ function BrainMeshItem({
         onPointerOver={(e) => {
           e.stopPropagation();
           setHovered(true);
+          useAnatomyStore.getState().setHoveredNode(node.id);
         }}
-        onPointerOut={() => setHovered(false)}
+        onPointerOut={(e) => {
+          e.stopPropagation();
+          setHovered(false);
+          if (useAnatomyStore.getState().hoveredNodeId === node.id) {
+            useAnatomyStore.getState().setHoveredNode(null);
+          }
+        }}
         castShadow
         receiveShadow
       >
@@ -107,13 +129,15 @@ function BrainMeshItem({
         {geometryType === 'torus_arc' && <torusGeometry args={[0.32, 0.08, 16, 32, Math.PI * 1.2]} />}
 
         <meshStandardMaterial
-          color={isSelected ? '#38bdf8' : hovered ? '#ec4899' : baseColor}
-          roughness={isCSF ? 0.08 : 0.48}
-          metalness={isCSF ? 0.05 : 0.1}
+          ref={matRef}
+          color={isSelected ? '#38bdf8' : hovered ? '#f472b6' : baseColor}
+          roughness={isCSF ? 0.14 : nervousProfile.roughness}
+          metalness={isCSF ? 0.08 : nervousProfile.metalness}
           transparent={isGhost || isCSF || isMeninges}
           opacity={opacity}
+          side={THREE.DoubleSide}
           emissive={isSelected ? '#0284c7' : hovered ? '#db2777' : isCSF ? '#0369a1' : '#000000'}
-          emissiveIntensity={isSelected ? 0.6 : hovered ? 0.4 : isCSF ? 0.35 : 0.0}
+          emissiveIntensity={isSelected ? 0.55 : hovered ? 0.38 : isCSF ? 0.28 : 0.0}
         />
       </mesh>
       {isSelected && (
@@ -319,4 +343,3 @@ export function NeurologyScene({
     </group>
   );
 }
-

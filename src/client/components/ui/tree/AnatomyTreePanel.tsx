@@ -239,7 +239,9 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
         >
           <SlidersHorizontal size={13} aria-hidden="true" />
           <span>Camadas</span>
-          <span className="outliner-tab-badge highlight">{activeSystemsCount}</span>
+          {activeSystemsCount !== 'Todos' && (
+            <span className="outliner-tab-badge highlight">{activeSystemsCount}</span>
+          )}
         </button>
 
         <button

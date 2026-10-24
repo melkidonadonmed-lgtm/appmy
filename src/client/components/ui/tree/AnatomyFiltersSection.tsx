@@ -210,25 +210,7 @@ export const AnatomyFiltersSection: React.FC = () => {
               <span className="outliner-filter-section-label" style={{ marginBottom: 0 }}>
                 Camadas ({visibleSystemsCount}/{layerOrder.length})
               </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                <button
-                  type="button"
-                  onClick={peelNextLayerInOrder}
-                  className="outliner-mini-btn"
-                  title="Retirar a próxima camada externa"
-                >
-                  <Layers size={10} strokeWidth={1.5} aria-hidden="true" />
-                  <span>-1 Camada</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={restorePreviousLayerInOrder}
-                  className="outliner-mini-btn"
-                  title="Devolver a última camada retirada"
-                >
-                  <RotateCcw size={10} strokeWidth={1.5} aria-hidden="true" />
-                  <span>+1</span>
-                </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                 <button
                   type="button"
                   onClick={resetLayerOrder}
@@ -250,18 +232,44 @@ export const AnatomyFiltersSection: React.FC = () => {
               </div>
             </div>
 
-            <div style={{ marginBottom: '0.35rem' }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                gap: '0.35rem',
+                marginBottom: '0.45rem',
+              }}
+            >
+              <button
+                type="button"
+                onClick={peelNextLayerInOrder}
+                className="outliner-mini-btn"
+                style={{ justifyContent: 'center', padding: '0.35rem 0.25rem' }}
+                title="Retirar a próxima camada externa"
+              >
+                <Layers size={11} strokeWidth={1.5} aria-hidden="true" />
+                <span>-1 Camada</span>
+              </button>
+              <button
+                type="button"
+                onClick={restorePreviousLayerInOrder}
+                className="outliner-mini-btn"
+                style={{ justifyContent: 'center', padding: '0.35rem 0.25rem' }}
+                title="Devolver a última camada retirada"
+              >
+                <RotateCcw size={11} strokeWidth={1.5} aria-hidden="true" />
+                <span>+1 Camada</span>
+              </button>
               <button
                 type="button"
                 onClick={setAllSystems}
                 aria-pressed={isSystemVisibleOnCanvas('all')}
-                className={`outliner-filter-btn ${isSystemVisibleOnCanvas('all') ? 'active' : ''}`}
-                style={{ width: '100%', justifyContent: 'center' }}
+                className={`outliner-mini-btn ${isSystemVisibleOnCanvas('all') ? 'active' : ''}`}
+                style={{ justifyContent: 'center', padding: '0.35rem 0.25rem' }}
+                title="Mostrar todas as 11 camadas anatômicas"
               >
-                <span>Mostrar Todas as Camadas</span>
-                {isSystemVisibleOnCanvas('all') && (
-                  <Check size={10} strokeWidth={1.5} style={{ marginLeft: 'auto' }} aria-hidden="true" />
-                )}
+                <Check size={11} strokeWidth={1.5} aria-hidden="true" />
+                <span>Todas</span>
               </button>
             </div>
 

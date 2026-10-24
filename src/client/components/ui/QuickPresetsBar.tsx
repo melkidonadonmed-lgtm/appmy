@@ -6,6 +6,7 @@ import {
   X,
 } from 'lucide-react';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
+import { getHoveredStructureMeta } from '../canvas/RealBodyAtlas.tsx';
 import {
   loadBookmarks,
   saveBookmark,
@@ -18,6 +19,9 @@ export const QuickPresetsBar: React.FC = () => {
   const [showBookmarksModal, setShowBookmarksModal] = useState(false);
   const [bookmarks, setBookmarks] = useState<ClinicalBookmark[]>([]);
   const [bookmarkName, setBookmarkName] = useState('');
+  const hoveredNodeId = useAnatomyStore((s) => s.hoveredNodeId);
+  const peelOnClickMode = useAnatomyStore((s) => s.peelOnClickMode);
+  const hoveredMeta = getHoveredStructureMeta(hoveredNodeId);
 
   useEffect(() => {
     if (showBookmarksModal) {
@@ -141,6 +145,24 @@ export const QuickPresetsBar: React.FC = () => {
               ))
             )}
           </div>
+        </div>
+      )}
+
+      {hoveredMeta && (
+        <div className="hovered-structure-pill" role="status" aria-live="polite">
+          <span
+            className="hovered-structure-dot"
+            style={{ backgroundColor: hoveredMeta.colorHex }}
+            aria-hidden="true"
+          />
+          <div className="hovered-structure-texts">
+            <span className="hovered-structure-pt">{hoveredMeta.namePtBr}</span>
+            <span className="hovered-structure-latin">{hoveredMeta.nameLatin}</span>
+          </div>
+          <span className="hovered-structure-area">{hoveredMeta.areaLabelPt}</span>
+          <span className="hovered-structure-hint">
+            {peelOnClickMode ? 'Clique para retirar' : 'Clique para inspecionar'}
+          </span>
         </div>
       )}
 

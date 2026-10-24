@@ -7,6 +7,8 @@ import { AnyAnatomicalNode } from './AnatomicalAtlasScene.tsx';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 import { Z_ANATOMY_CATALOG } from '../../../shared/constants/zAnatomyCatalog.ts';
 
+const DreiHtml = Html;
+
 export interface AnatomicalCallout3DProps {
   node: AnyAnatomicalNode;
   position: [number, number, number];
@@ -85,7 +87,7 @@ export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
   };
 
   return (
-    <Html
+    <DreiHtml
       position={position}
       style={{
         pointerEvents: 'none',
@@ -99,27 +101,27 @@ export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
         {/* 2. Linha Guia Vetorial SVG (Leader Line) Deslocando o Card para fora da silhueta */}
         <svg
           className={`callout-svg-line side-${calloutSide}`}
-          width="136"
-          height="54"
-          viewBox="0 0 136 54"
+          viewBox="0 0 24 24"
+          preserveAspectRatio="none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d={
               calloutSide === 'left'
-                ? 'M 136 54 L 96 16 L 4 16'
-                : 'M 0 54 L 40 16 L 132 16'
+                ? 'M 24 24 L 17 7 L 1 7'
+                : 'M 0 24 L 7 7 L 23 7'
             }
             stroke="url(#lineGradient)"
-            strokeWidth="1.8"
-            strokeDasharray="3 3"
+            strokeWidth="1.5"
+            strokeDasharray="2 2"
+            vectorEffect="non-scaling-stroke"
             className="callout-path-anim"
           />
           <circle
-            cx={calloutSide === 'left' ? '4' : '132'}
-            cy="16"
-            r="3"
+            cx={calloutSide === 'left' ? '1' : '23'}
+            cy="7"
+            r="1.1"
             fill="#38bdf8"
           />
           <defs>
@@ -203,6 +205,6 @@ export const AnatomicalCallout3D: React.FC<AnatomicalCallout3DProps> = ({
           </div>
         </div>
       </div>
-    </Html>
+    </DreiHtml>
   );
 };

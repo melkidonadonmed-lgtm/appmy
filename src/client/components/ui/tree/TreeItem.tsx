@@ -4,7 +4,7 @@ import { TaxonomicTreeNode } from '../../../../shared/types/taxonomicTree.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 
 const MIN_ITEM_PADDING_PX = 8;
-const INDENT_PER_DEPTH_PX = 12;
+const INDENT_PER_DEPTH_PX = 0;
 const EYE_ICON_SIZE = 13;
 const ISOLATE_ICON_SIZE = 12;
 

@@ -13,7 +13,7 @@ import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 import { TreeItem } from './TreeItem.tsx';
 
 const BASE_GROUP_PADDING_PX = 8;
-const GROUP_INDENT_STEP_PX = 14;
+const GROUP_INDENT_STEP_PX = 0;
 const CHEVRON_ICON_SIZE = 14;
 const CHECK_ICON_SIZE = 11;
 const CHECK_STROKE_WIDTH = 3;
@@ -31,7 +31,7 @@ interface TreeGroupProps {
 }
 
 const OUTSIDE_TO_INSIDE_BADGES: Record<string, string> = {
-  sys_integumentary: '1ª EXT',
+  sys_integumentary: '1ª',
   sys_muscular: '2ª',
   sys_skeletal: '3ª',
   sys_cardiovascular: '4ª',
@@ -41,11 +41,11 @@ const OUTSIDE_TO_INSIDE_BADGES: Record<string, string> = {
   sys_digestive: '8ª',
   sys_renal: '9ª',
   sys_endocrine: '10ª',
-  sys_reproductive: '11ª INT',
-  sub_muscular_fascia: '2.1 EXT',
+  sys_reproductive: '11ª',
+  sub_muscular_fascia: '2.1',
   sub_muscular_superficial: '2.2',
   sub_muscular_deep: '2.3',
-  sub_muscular_bursae: '2.4 INT',
+  sub_muscular_bursae: '2.4',
 };
 
 export const TreeGroup: React.FC<TreeGroupProps> = React.memo(
@@ -275,6 +275,7 @@ export const TreeGroup: React.FC<TreeGroupProps> = React.memo(
                   ? 'depth-2'
                   : 'depth-3'
               } ${isUnchecked ? 'is-hidden-group' : ''}`}
+              title={node.namePt}
             >
               {node.namePt}
             </span>

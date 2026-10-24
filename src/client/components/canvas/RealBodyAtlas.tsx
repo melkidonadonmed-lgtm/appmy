@@ -28,11 +28,64 @@ import {
   updateMeshVisibility,
   determineSurgicalLayer,
   getMuscularTissueProfile,
+  getNervousTissueProfile,
   applyAnatomicalTissueShader,
   VisibilityState,
 } from '../../../core/visibilityManager.ts';
 import { AnatomicalMeshUserData } from '../../../shared/types/anatomy.ts';
+import { ALL_NEUROLOGY_NODES } from '../../../shared/constants/neurology.ts';
 import { installOfflineCacheFetchInterceptor } from '../../lib/modelCacheManager.ts';
+
+export interface HoveredStructureMeta {
+  namePtBr: string;
+  nameLatin: string;
+  areaLabelPt: string;
+  colorHex: string;
+  systemName: string;
+}
+
+const HOVERED_MESH_META_BY_KEY = new Map<string, HoveredStructureMeta>();
+
+export function getHoveredStructureMeta(nodeKey: string | null): HoveredStructureMeta | null {
+  if (!nodeKey) return null;
+  const cached = HOVERED_MESH_META_BY_KEY.get(nodeKey);
+  if (cached) return cached;
+  const neuroNode = ALL_NEUROLOGY_NODES.find((n) => n.id === nodeKey || n.meshName === nodeKey);
+  if (neuroNode) {
+    const prof = getNervousTissueProfile(neuroNode.meshName || neuroNode.id, neuroNode.namePtBr, neuroNode.colorHex);
+    return {
+      namePtBr: neuroNode.namePtBr,
+      nameLatin: neuroNode.nameLatin,
+      areaLabelPt: prof.areaLabelPt,
+      colorHex: neuroNode.colorHex || prof.baseAreaHex,
+      systemName: 'nervous',
+    };
+  }
+  const item =
+    Z_ANATOMY_BY_ID[nodeKey] ||
+    Z_ANATOMY_BY_NODE[nodeKey] ||
+    Z_ANATOMY_BY_NODE[sanitizeNodeName(nodeKey)];
+  if (item) {
+    const isNervous = item.system === 'nervous';
+    const nervousProf = isNervous ? getNervousTissueProfile(item.node, item.namePtBr) : null;
+    return {
+      namePtBr: item.namePtBr,
+      nameLatin: item.nameLatin,
+      areaLabelPt: nervousProf ? nervousProf.areaLabelPt : item.path?.[0] || item.system,
+      colorHex: nervousProf ? nervousProf.baseAreaHex : '#38bdf8',
+      systemName: item.system,
+    };
+  }
+  const formatted = formatAnatomicalMeshName(nodeKey);
+  const nervousProf = getNervousTissueProfile(nodeKey, formatted.namePtBr);
+  return {
+    namePtBr: formatted.namePtBr,
+    nameLatin: formatted.nameLatin,
+    areaLabelPt: nervousProf.areaLabelPt,
+    colorHex: nervousProf.baseAreaHex,
+    systemName: 'nervous',
+  };
+}
 
 // Configuração do decodificador Draco local offline em public/draco/gltf/
 const DRACO_DECODER_PATH = '/draco/gltf/';
@@ -406,6 +459,7 @@ function getOrCreatePreparedSystem(
 
     const formatted = formatAnatomicalMeshName(rawName);
     const nomePtResolved = item?.namePtBr || formatted.namePtBr;
+    const nomeLatinResolved = item?.nameLatin || formatted.nameLatin;
     const layer = determineSurgicalLayer(systemName, rawName, nomePtResolved);
     const fallbackId = item?.id || `za:${mesh.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
 
@@ -413,12 +467,59 @@ function getOrCreatePreparedSystem(
       systemName === 'muscular'
         ? getMuscularTissueProfile(rawName, nomePtResolved, defaultColor)
         : null;
+    const nervousProfile =
+      systemName === 'nervous'
+        ? getNervousTissueProfile(rawName, nomePtResolved, defaultColor)
+        : null;
+
+    const resolvedTissueColor = muscularProfile
+      ? muscularProfile.colorHex
+      : nervousProfile
+        ? nervousProfile.colorHex
+        : defaultColor;
+    const resolvedOpacityFactor = muscularProfile
+      ? muscularProfile.opacityFactor
+      : nervousProfile
+        ? nervousProfile.opacityFactor
+        : 1.0;
+    const resolvedRoughness = muscularProfile
+      ? muscularProfile.roughness
+      : nervousProfile
+        ? nervousProfile.roughness
+        : systemName === 'skeletal'
+          ? 0.54
+          : 0.42;
+    const resolvedMetalness = muscularProfile
+      ? muscularProfile.metalness
+      : nervousProfile
+        ? nervousProfile.metalness
+        : 0.04;
+
+    const metaEntry: HoveredStructureMeta = {
+      namePtBr: nomePtResolved,
+      nameLatin: nomeLatinResolved,
+      areaLabelPt: nervousProfile
+        ? nervousProfile.areaLabelPt
+        : muscularProfile
+          ? muscularProfile.tissueType === 'fascia'
+            ? 'Fáscia / Aponeurose'
+            : muscularProfile.tissueType === 'tendon'
+              ? 'Tendão / Ligamento'
+              : 'Ventre Muscular Estriado'
+          : item?.path?.[0] || systemName,
+      colorHex: nervousProfile ? nervousProfile.baseAreaHex : resolvedTissueColor,
+      systemName,
+    };
+    HOVERED_MESH_META_BY_KEY.set(mesh.name, metaEntry);
+    HOVERED_MESH_META_BY_KEY.set(fallbackId, metaEntry);
+    if (item?.id) HOVERED_MESH_META_BY_KEY.set(item.id, metaEntry);
+    if (item?.node) HOVERED_MESH_META_BY_KEY.set(item.node, metaEntry);
 
     mesh.userData = {
       ...mesh.userData,
       id: fallbackId,
       nomePt: nomePtResolved,
-      nomeLatin: item?.nameLatin || formatted.nameLatin,
+      nomeLatin: nomeLatinResolved,
       sistema: systemName,
       camadaProfundidade: layer,
       eixoExplosao: item?.explosionVector
@@ -426,34 +527,32 @@ function getOrCreatePreparedSystem(
         : undefined,
       isAnchor: false,
       __isCatalogItem: Boolean(item),
-      ...(muscularProfile
-        ? {
-            __tissueType: muscularProfile.tissueType,
-            __tissueColor: muscularProfile.colorHex,
-            __tissueOpacityFactor: muscularProfile.opacityFactor,
-            __tissueRoughness: muscularProfile.roughness,
-          }
-        : {}),
+      __tissueType: muscularProfile
+        ? muscularProfile.tissueType
+        : nervousProfile
+          ? nervousProfile.shaderMode
+          : undefined,
+      __tissueColor: resolvedTissueColor,
+      __tissueOpacityFactor: resolvedOpacityFactor,
+      __tissueRoughness: resolvedRoughness,
+      __nervousAreaLabel: nervousProfile?.areaLabelPt,
     } as AnatomicalMeshUserData & {
       __isCatalogItem?: boolean;
       __tissueType?: string;
       __tissueColor?: string;
       __tissueOpacityFactor?: number;
       __tissueRoughness?: number;
+      __nervousAreaLabel?: string;
     };
 
     const mat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color(muscularProfile ? muscularProfile.colorHex : defaultColor),
-      roughness: muscularProfile
-        ? muscularProfile.roughness
-        : systemName === 'skeletal'
-        ? 0.54
-        : 0.42,
-      metalness: muscularProfile ? muscularProfile.metalness : 0.04,
+      color: new THREE.Color(resolvedTissueColor),
+      roughness: resolvedRoughness,
+      metalness: resolvedMetalness,
       side: THREE.DoubleSide,
     });
 
-    if (muscularProfile && mesh.geometry) {
+    if (mesh.geometry) {
       if (!mesh.geometry.boundingBox) {
         mesh.geometry.computeBoundingBox();
       }
@@ -475,7 +574,12 @@ function getOrCreatePreparedSystem(
           fiberSpan = [bbox.min.y, bbox.max.y];
         }
       }
-      applyAnatomicalTissueShader(mat, muscularProfile.tissueType, fiberAxis, fiberSpan);
+      const shaderMode = muscularProfile
+        ? muscularProfile.tissueType
+        : nervousProfile
+          ? nervousProfile.shaderMode
+          : 'bursa';
+      applyAnatomicalTissueShader(mat, shaderMode, fiberAxis, fiberSpan);
     }
 
     mesh.userData.__customMat = true;
@@ -717,10 +821,10 @@ function RealSystemModel({
 
     if (!isSelected) {
       const baseHex = (target.mesh.userData?.__tissueColor as string) || defaultColor;
-      HOVER_SCRATCH_COLOR.set(baseHex).lerp(HOVER_TINT_COLOR, 0.2);
+      HOVER_SCRATCH_COLOR.set(baseHex).lerp(HOVER_TINT_COLOR, 0.38);
       target.baseMaterial.color.copy(HOVER_SCRATCH_COLOR);
       target.baseMaterial.emissive.copy(HOVER_EMISSIVE_COLOR);
-      target.baseMaterial.emissiveIntensity = 0.14;
+      target.baseMaterial.emissiveIntensity = 0.28;
       prevHoveredEntryRef.current = target;
     }
   }, [
@@ -915,22 +1019,33 @@ function RealSystemModel({
             onSelectNode(nextVal);
           } else if (e.object.name) {
             const formatted = formatAnatomicalMeshName(rawName);
+            const nervousAreaLabel =
+              (e.object.userData?.__nervousAreaLabel as string | undefined) ||
+              (systemName === 'nervous'
+                ? getNervousTissueProfile(rawName, formatted.namePtBr, defaultColor).areaLabelPt
+                : undefined);
             const fallbackNode: GeneralAnatomicalNode = {
               id: (e.object.userData?.id as string) || `za:${e.object.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
               namePtBr: formatted.namePtBr,
               nameLatin: formatted.nameLatin,
-              chapter: systemName === 'muscular' ? 3 : 2,
+              chapter: systemName === 'nervous' ? 8 : systemName === 'muscular' ? 3 : 2,
               systemName:
-                systemName === 'muscular'
+                systemName === 'nervous'
+                  ? `Sistema Nervoso — ${nervousAreaLabel || 'Neuroanatomia'}`
+                  : systemName === 'muscular'
                   ? 'Sistema Muscular (Miologia)'
                   : systemName === 'integumentary'
                   ? 'Sistema Tegumentar'
                   : systemName,
               meshName: e.object.name,
               clinicalData: {
-                origin: `Estrutura integrante do ${systemName}`,
+                origin: nervousAreaLabel
+                  ? `Divisão Neurofuncional: ${nervousAreaLabel}`
+                  : `Estrutura integrante do ${systemName}`,
                 insertion: 'Plano anatômico dissecado',
-                clinicalSignificance: `Módulo anatômico Z-Anatomy: ${formatted.namePtBr}.`,
+                clinicalSignificance: nervousAreaLabel
+                  ? `Estrutura neuroanatômica (${nervousAreaLabel}): ${formatted.namePtBr} (${formatted.nameLatin}).`
+                  : `Módulo anatômico Z-Anatomy: ${formatted.namePtBr}.`,
               },
             };
             const nextVal = effectiveSelectedId === fallbackNode.id ? null : fallbackNode;

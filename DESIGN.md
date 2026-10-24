@@ -127,30 +127,60 @@ O shell da aplicação opera em tela cheia fixa (`100vw x 100vh`, `overflow: hid
    - **Ações Secundárias Discretas**: **Restaurar** (reseta câmera e dissecção), **Tela Cheia** (Zen Mode `Z`) e seletor compacto de **Tema** (5 temas minerais).
 
 ### 5.2. Painel Lateral Esquerdo Unificado ([`AnatomyTreePanel.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyTreePanel.tsx#L1-L300))
-* Topo fixo com **Busca Global (`Ctrl+K`)**, alternador de dimorfismo **Masculino / Feminino** e barra de **4 abas WAI-ARIA (`role="tablist"`)**:
-  1. **TA2**: Árvore hierárquica oficial limpa com checkboxes *tri-state*, contadores de peças visíveis e ações de foco/isolamento no hover (sem barras de filtros repetidas acima das pastas).
-  2. **Camadas** ([`AnatomyFiltersSection.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyFiltersSection.tsx#L1-L290)): Filtro de região esquelética e lista enxuta das 11 camadas anatômicas com toggle de visibilidade e slider individual de opacidade (sem ícones decorativos, sem setas de reordenação manual e sem controles de cache/GPU expostos).
-  3. **Neuro** ([`NeuroAnatomyPanelSection.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/NeuroAnatomyPanelSection.tsx)): Subcamadas neuroanatômicas reais (Encéfalo, Ventrículos/LCR, Drenagem Venosa, Polígono de Willis, Pares Cranianos e Tratos).
-  4. **Clínica** ([`AnatomyClinicalCard.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyClinicalCard.tsx)): Dossiê bilíngue PT-BR / Latim TA2, código FMA, ações rápidas (`Focar`, `Isolar`, `Ocultar`) e notas clínicas.
+* Topo fixo com **Busca Global (`Ctrl+K`)**, alternador de dimorfismo **Masculino / Feminino** e barra de **4 abas WAI-ARIA (`role="tablist"`)** com distribuição equitativa (`grid-template-columns: repeat(4, 1fr)`):
+  1. **Sistemas (TA2)**: Árvore hierárquica oficial limpa com indentação única por nível (`.outliner-group-children` `margin-left: 0.5rem; padding-left: 0.25rem`, sem indentação cumulativa duplicada em `TreeGroup`/`TreeItem`), selos compactos (`1ª` a `11ª`), checkboxes *tri-state*, contadores de peças visíveis e ações de foco/isolamento no hover.
+  2. **Camadas** ([`AnatomyFiltersSection.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyFiltersSection.tsx#L1-L290)): Filtro de região esquelética, barra tripla de dissecção rápida (`-1 Camada`, `+1 Camada`, `Todas`) e lista das 11 camadas anatômicas com toggle de visibilidade e pílulas de opacidade.
+  3. **Neuro** ([`NeuroAnatomyPanelSection.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/NeuroAnatomyPanelSection.tsx)): Craniotomia rápida, **Mapa Cromático Funcional por Área Encefálica** clicável (10 áreas funcionais), subcamadas neuroanatômicas reais com faixa lateral colorida (`4px solid`) sincronizada ao hover 3D e 12 pares cranianos.
+  4. **Ficha** ([`AnatomyClinicalCard.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyClinicalCard.tsx)): Dossiê bilíngue PT-BR / Latim TA2, código FMA, ações rápidas (`Focar`, `Isolar`, `Ocultar`) e notas clínicas.
 
-### 5.3. Viewport 3D Desimpedido e Controles Flutuantes Mínimos
-* **Barra Superior de Dissecção ([`DissectionToolbar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/DissectionToolbar.tsx#L67-L267))**: Inicia recolhida exibindo apenas os modos **Sólido**, **Raio-X**, **Corte MPR** e **Bisturi 3D** (+ `Desfazer` quando há peças ocultas). Os sliders de *Exploded View* e *Profundidade Cirúrgica (1/6 a 6/6)* aparecem apenas ao expandir o painel.
-* **Enquadramento Rápido ([`OrientationGizmo.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/canvas/OrientationGizmo.tsx#L1-L31))**: Pílula única discreta **`Enquadrar 3D`** no canto inferior esquerdo do canvas (substituindo a grade antiga de 12 botões de rotação/visão posterior).
-* **Marcadores Clínicos ([`QuickPresetsBar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/QuickPresetsBar.tsx#L1-L150))**: Botão único **`Marcadores`** no canto inferior direito para salvar e restaurar estados cirúrgicos em `localStorage`.
+### 5.3. Viewport 3D Desimpedido, HUD de Hover e Controles Flutuantes
+* **Barra Superior de Dissecção ([`DissectionToolbar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/DissectionToolbar.tsx#L67-L267))**: Inicia recolhida exibindo apenas os modos **Sólido**, **Raio-X**, **Corte MPR** e **Bisturi 3D** (+ `Desfazer` quando há peças ocultas). No modo **Corte MPR**, oferece passo fino de `0.01 cm` e botões de ajuste de precisão (`-0.05` / `+0.05 cm`).
+* **HUD Flutuante de Identificação no Hover (`.hovered-structure-pill` em [`QuickPresetsBar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/QuickPresetsBar.tsx))**: Exibe em tempo real a cor da área funcional, o nome em português, o termo em latim e a divisão funcional da estrutura sob o cursor antes do clique.
+* **Enquadramento Rápido ([`OrientationGizmo.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/canvas/OrientationGizmo.tsx#L1-L31))**: Pílula única discreta **`Enquadrar 3D`** no canto inferior esquerdo do canvas.
+* **Marcadores Clínicos ([`QuickPresetsBar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/QuickPresetsBar.tsx#L1-L150))**: Botão **`Marcadores`** no canto inferior para salvar e restaurar estados cirúrgicos em `localStorage`.
 
 ---
 
-## 6. Diretrizes 3D, Ergonomia & Checklist de Qualidade
+## 6. Diretrizes 3D, Mapa Cromático Encefálico & Corte MPR
 
-### 6.1. Materiais PBR, Exploded View e Corte MPR
+### 6.1. Materiais PBR, Mapa Cromático Encefálico (`tissueShader.ts`) e Corte MPR
 * **Osteologia PBR**: `MeshStandardMaterial` em marfim `#f4ede2`, `roughness: 0.45–0.60`, `metalness: 0.00–0.05`.
-* **Viscerologia e Vascular PBR**: `roughness: 0.25–0.42`, deduplicação automática entre arquivos `.glb` (`isDuplicateCrossSystemMesh`) para impedir *Z-fighting*.
-* **Bússola Axial de Visão Explodida (`explodedEngine.ts`)**: Preservação homolateral estrita (`.l` expande para `+X`, `.r` para `-X`, sem jamais cruzar o plano sagital mediano).
-* **Corte Tomográfico MPR**: Planos Sagital, Coronal e Axial com deslocamento contínuo em centímetros e identificação automática do marco anatômico (`mprLandmarks.ts`).
+* **Mapa Cromático Encefálico por Área/Lobo (`getNervousTissueProfile` & `getCorticalGyrusColor`)**:
+  - **Lobo Frontal (Motor/Executivo)**: `#8b5cf6` (Violeta Cortical) com diferenciação cromática determinística por giro.
+  - **Lobo Parietal (Somatossensorial)**: `#06b6d4` (Ciano Cortical).
+  - **Lobo Temporal (Auditivo/Memória)**: `#10b981` (Esmeralda Cortical).
+  - **Lobo Occipital (Visual V1)**: `#f59e0b` (Âmbar Cortical).
+  - **Sistema Límbico & Ínsula**: `#14b8a6` (Turquesa Límbico).
+  - **Substância Branca & Comissuras**: `#cbd5e1` (Marfim Mielínico).
+  - **Núcleos da Base**: `#f43f5e` (Carmim Extrapiramidal).
+  - **Diencéfalo (Tálamo & Hipotálamo)**: `#fb923c` (Laranja Talâmico).
+  - **Cerebelo**: `#d97706` (Terracota Folha Cerebelar com shader `uTissueMode == 5`).
+  - **Tronco Encefálico**: Mesencéfalo `#ec4899`, Ponte `#a855f7`, Bulbo `#6366f1`.
+  - **Sistema Ventricular & LCR**: `#38bdf8` (`opacityFactor: 0.84`).
+  - **Meninges & Foice/Tentório**: `#94a3b8` (`opacityFactor: 0.38`).
+* **Relevo Sulcal e Parede Interna MPR (`applyAnatomicalTissueShader`)**:
+  - O modo cortical (`uTissueMode == 4`) aplica oclusão nos sulcos (`sulcusShadow = diffuseColor.rgb * 0.54`), iluminação nas coroas girais e contorno Fresnel para delimitar claramente onde clicar.
+  - Quando seccionado pelo plano MPR, faces internas (`!gl_FrontFacing`) recebem atenuação `diffuseColor.rgb *= 0.72` para percepção imediata de cavidade e espessura.
+* **Moldura Tomográfica MPR Anti-Tremor ([`DissectionController.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/canvas/DissectionController.tsx) & [`DissectionPlaneHelper.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/canvas/DissectionPlaneHelper.tsx))**:
+  - Atualização síncrona em memória (`useLayoutEffect` + `useRef<THREE.Plane>`) sem recriar arrays entre ticks do slider.
+  - Janela central 100% vazada (`ShapeGeometry` com furo central), `raycast` desativado (`noopRaycast`) e recuo `Z_FIGHT_EPSILON = 0.004` + `polygonOffset` para zero cintilação (*Z-fighting*) e visibilidade total da estrutura seccionada.
 
-### 6.2. Atalhos de Teclado e Acessibilidade (WCAG 2.1 AAA)
+---
+
+## 7. States, Motion & Anti-Patterns
+
+* **Transições Zero-Reflow (GPU)**: Exclusivamente `transform` e `opacity` (`cubic-bezier(0.16, 1, 0.3, 1)`), proibindo animar `width`, `height`, `top` ou `left`.
+* **Anti-Padrões Proibidos**:
+  - Proibido usar cores cobalto neon (`#0066FF`, `#2563EB`, `#3B82F6`) ou emojis em rótulos clínicos.
+  - Proibido alocar `new THREE.Vector3`, `Matrix4` ou `Color` dentro de `useFrame`.
+  - Proibido aplicar indentação cumulativa duplicada em árvores recursivas.
+
+---
+
+## 8. Implementation Checklist (Atalhos & Acessibilidade WCAG 2.1 AAA)
+
 * **`Z`**: Alterna Modo Tela Cheia (*Zen Mode*).
 * **`F` / `I` / `H`**: Foca (`F`), Isola (`I`) ou Oculta (`H`) a peça anatômica selecionada.
 * **`R`**: Restaura câmera, opacidade e planos de dissecção ao padrão inicial.
 * **`Esc`**: Desseleciona a peça ativa e fecha popovers abertos.
-* **Acessibilidade**: Contraste mínimo de `7:1` em textos clínicos, suporte completo a teclado (`tabIndex={0}`, `Enter`/`Space`), `prefers-reduced-motion: reduce` respeitado e região viva `.sr-only` (`role="status" aria-live="polite"`) para status assíncrono.
+* **Acessibilidade**: Contraste mínimo de `4.5:1` em botões de ação (`#0369a1` com `#ffffff`, CR `6.3:1`) e `7:1` em textos clínicos, suporte completo a teclado (`tabIndex={0}`, `Enter`/`Space`), `prefers-reduced-motion: reduce` respeitado e região viva `.sr-only` (`role="status" aria-live="polite"`) para status assíncrono.

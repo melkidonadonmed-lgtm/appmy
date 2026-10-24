@@ -14,6 +14,20 @@ import { ALL_NEUROLOGY_NODES, NeurologyNode } from '../../../../shared/constants
 import { CRANIAL_NERVES_12 } from '../../../../shared/constants/cranialNervesCatalog.ts';
 import { useAnatomyStore } from '../../../stores/useAnatomyStore.ts';
 import { resolveNeuroClinicalTargetToCatalogId } from '../../../../shared/utils/neuroTargetMapper.ts';
+import { getNervousTissueProfile } from '../../../../core/visibilityManager.ts';
+
+const BRAIN_AREA_COLOR_LEGEND = [
+  { label: 'Frontal', color: '#8b5cf6', query: 'frontal' },
+  { label: 'Parietal', color: '#06b6d4', query: 'parietal' },
+  { label: 'Temporal', color: '#10b981', query: 'temporal' },
+  { label: 'Occipital', color: '#f59e0b', query: 'occipital' },
+  { label: 'Límbico/Ínsula', color: '#14b8a6', query: 'hipocampo' },
+  { label: 'Núcleos Base', color: '#f43f5e', query: 'nucleos' },
+  { label: 'Tálamo/Dienc.', color: '#fb923c', query: 'talamo' },
+  { label: 'Cerebelo', color: '#d97706', query: 'cerebelo' },
+  { label: 'Tronco', color: '#ec4899', query: 'ponte' },
+  { label: 'Ventrículos', color: '#38bdf8', query: 'ventricul' },
+];
 
 type NeuroCategoryFilter =
   | 'all'
@@ -42,6 +56,8 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const selectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
+  const hoveredNodeId = useAnatomyStore((s) => s.hoveredNodeId);
+  const setHoveredNode = useAnatomyStore((s) => s.setHoveredNode);
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
   const focusClinicalTargetIds = useAnatomyStore((s) => s.focusClinicalTargetIds);
   const setClinicalStudioOpen = useAnatomyStore((s) => s.setClinicalStudioOpen);
@@ -239,6 +255,29 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
             );
           })}
         </div>
+
+        {/* Mapa Cromático Funcional do Encéfalo 3D */}
+        <div className="neuro-color-legend" aria-label="Legenda de cores por área encefálica">
+          {BRAIN_AREA_COLOR_LEGEND.map((area) => {
+            const isAreaFiltered = searchQuery.toLowerCase() === area.query;
+            return (
+              <button
+                key={area.label}
+                type="button"
+                className={`neuro-legend-chip ${isAreaFiltered ? 'active' : ''}`}
+                onClick={() => setSearchQuery(isAreaFiltered ? '' : area.query)}
+                title={`Filtrar estruturas da área: ${area.label}`}
+              >
+                <span
+                  className="neuro-legend-dot"
+                  style={{ backgroundColor: area.color }}
+                  aria-hidden="true"
+                />
+                <span>{area.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* 3. Lista Interativa de Estruturas Encefálicas com Foco 3D e Função */}
@@ -257,14 +296,30 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
               const resolvedZaId = resolveNeuroClinicalTargetToCatalogId(node.id);
               const isSelected =
                 selectedNodeId === node.id || selectedNodeId === resolvedZaId;
+              const isHovered =
+                hoveredNodeId === node.id || hoveredNodeId === resolvedZaId;
               const isHidden =
                 hiddenNodeIds.has(node.id) || hiddenNodeIds.has(resolvedZaId);
+              const areaProfile = getNervousTissueProfile(
+                node.meshName || node.id,
+                node.namePtBr,
+                node.colorHex
+              );
+              const areaColor = node.colorHex || areaProfile.baseAreaHex;
 
               return (
                 <div
                   key={node.id}
-                  className={`layer-peel-item ${isSelected ? 'active-layer' : ''}`}
-                  style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.35rem', padding: '0.55rem' }}
+                  className={`layer-peel-item ${isSelected || isHovered ? 'active-layer' : ''}`}
+                  onMouseEnter={() => setHoveredNode(resolvedZaId || node.id)}
+                  onMouseLeave={() => setHoveredNode(null)}
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'stretch',
+                    gap: '0.35rem',
+                    padding: '0.55rem',
+                    borderLeft: `4px solid ${areaColor}`,
+                  }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.4rem' }}>
                     <button
@@ -281,13 +336,19 @@ export const NeuroAnatomyPanelSection: React.FC = () => {
                         cursor: 'pointer',
                         color: 'var(--text-primary)',
                         flex: 1,
+                        minWidth: 0,
                       }}
                     >
-                      <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>
-                        {node.namePtBr}
+                      <span style={{ fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <span
+                          className="neuro-legend-dot"
+                          style={{ backgroundColor: areaColor }}
+                          aria-hidden="true"
+                        />
+                        <span>{node.namePtBr}</span>
                       </span>
                       <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
-                        {node.nameLatin} {node.corticalBrodmannArea ? `• ${node.corticalBrodmannArea}` : ''}
+                        {node.nameLatin} {node.corticalBrodmannArea ? `• ${node.corticalBrodmannArea}` : `• ${areaProfile.areaLabelPt}`}
                       </span>
                     </button>
 

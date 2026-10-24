@@ -47,3 +47,18 @@
 - **src/client/components/canvas/DissectionPlaneHelper.tsx**: Memoizadas PlaneGeometry e EdgesGeometry com .dispose() explícito em useEffect.
 - **12 Cenas 3D + CardiovascularScene.tsx**: Substituído .lerp de passo fixo por computeFrameIndependentLerpAlpha(delta) e calibrado HEARTBEAT_RAD_PER_SEC = 0.6 * Math.PI (72.0 BPM exatos em sin^12).
 - **	ests/audit-fixes-and-sex-sync.test.ts**: **257 testes passando em 33 suítes Vitest**.
+
+---
+
+## Sessão: 2026-10-23 (Auditoria UI/UX, Mapa Cromático Encefálico, Corte MPR Anti-Tremor, Sidebar e Higiene da Raiz)
+
+### Delta de Alterações
+- **Higienização da Raiz**: Removidos `.gemini/`, `scripts/__pycache__/` e `CLAUDE.md` redundante; atualizado `.gitignore`.
+- **Corte Tomográfico MPR Sem Tremor/Z-Fighting (`DissectionController.tsx`, `DissectionPlaneHelper.tsx`, `DissectionToolbar.tsx`, `tissueShader.ts`)**:
+  - Sincronização de `gl.clippingPlanes` em memória via `useLayoutEffect` e `useRef<THREE.Plane>` (Zero-Allocation) sem zerar o array entre ticks do slider, eliminando a defasagem de 1 frame entre o plano de corte e a guia 3D.
+  - Substituída a lâmina cheia e a grade central do `DissectionPlaneHelper` por uma **Moldura Tomográfica Cirúrgica Vazada** (`ShapeGeometry` com janela central 100% livre), `raycast` desativado (`noopRaycast`), recuo `Z_FIGHT_EPSILON = 0.004` e `polygonOffset`, além de sombreamento automático de parede interna (`!gl_FrontFacing`) no fragment shader e ajuste fino de `0.01 cm` (`-0.05` / `+0.05`) na `DissectionToolbar`.
+- **Mapa Cromático Encefálico por Área/Lobo, Sombras Sulcais e HUD de Hover (`tissueShader.ts`, `RealBodyAtlas.tsx`, `NeurologyScene.tsx`, `NeuroAnatomyPanelSection.tsx`, `QuickPresetsBar.tsx`)**:
+  - Criados `getNervousTissueProfile` e `getCorticalGyrusColor` classificando as malhas de `nervous_male.glb` em 16 divisões neurofuncionais (Frontal `#8b5cf6`, Parietal `#06b6d4`, Temporal `#10b981`, Occipital `#f59e0b`, Límbico/Ínsula `#14b8a6`, Substância Branca `#cbd5e1`, Núcleos da Base `#f43f5e`, Diencéfalo/Tálamo `#fb923c`, Cerebelo `#d97706`, Mesencéfalo `#ec4899`, Ponte `#a855f7`, Bulbo `#6366f1`, Ventrículos/LCR `#38bdf8`, Meninges `#94a3b8`, Medula `#fde047`, Pares Cranianos `#facc15`) com variação cromática determinística por giro e shader sulcal/foliar (`uTissueMode == 4` e `5`).
+  - Adicionados o **Mapa Cromático Funcional** na aba `Neuro` e o **HUD Flutuante de Hover 3D (`.hovered-structure-pill`)** exibindo nome em PT-BR, latim e área funcional sob o cursor antes do clique.
+- **Ergonomia da Barra Lateral Esquerda e Auditoria UI/UX (`TreeGroup.tsx`, `TreeItem.tsx`, `AnatomyTreePanel.tsx`, `AnatomyFiltersSection.tsx`, `AnatomicalCallout3D.tsx`, `index.css`, `DESIGN.md`)**:
+  - Eliminada a dupla/tripla indentação cumulativa nas pastas e itens da árvore (`GROUP_INDENT_STEP_PX = 0`, `INDENT_PER_DEPTH_PX = 0`, delegando o recuo exclusivamente a `.outliner-group-children`), reorganizados os cabeçalhos da aba `Camadas` e `Abas` e atingido **Score 97.8/100 (`A+ | PASS`)** no `ui_ux_frontend_auditor.py` e **100/100 (`0 issues`)** no `js_ts_ast_parser.js`.
