@@ -661,24 +661,31 @@ function createLeafNode(item: ZAnatomyItem, sysId: string, regId: string, depth:
   };
 }
 
+const PT_BR_COLLATOR = new Intl.Collator('pt-BR', { usage: 'sort', sensitivity: 'base' });
+const ITEM_SCORE_CACHE = new WeakMap<ZAnatomyItem, number>();
+
 /**
  * Calcula pontuação de profundidade estratigráfica (De Fora Para Dentro / Superficial -> Profundo):
  * Menor valor = mais externo/superficial (aparece no topo da pasta);
  * Maior valor = mais interno/profundo (aparece no fundo da pasta).
  */
 function getItemOutsideToInsideScore(item: ZAnatomyItem): number {
+  const cached = ITEM_SCORE_CACHE.get(item);
+  if (cached !== undefined) return cached;
   const surgicalLayer = determineSurgicalLayer(item.system, item.node, item.namePtBr);
   const ev = item.explosionVector || { x: 0, y: 0, z: 0 };
   const radialDistance = Math.hypot(ev.x, ev.z);
   // Estruturas com maior raio de explosão são mais superficiais/periféricas -> menor score
-  return surgicalLayer * LAYER_SCORE_MULTIPLIER - radialDistance;
+  const score = surgicalLayer * LAYER_SCORE_MULTIPLIER - radialDistance;
+  ITEM_SCORE_CACHE.set(item, score);
+  return score;
 }
 
 function sortItemsOutsideToInside(items: ZAnatomyItem[]): ZAnatomyItem[] {
   return [...items].sort((a, b) => {
     const diff = getItemOutsideToInsideScore(a) - getItemOutsideToInsideScore(b);
     if (Math.abs(diff) > SCORE_EPSILON) return diff;
-    return (a.namePtBr || a.node).localeCompare(b.namePtBr || b.node, 'pt-BR');
+    return PT_BR_COLLATOR.compare(a.namePtBr || a.node, b.namePtBr || b.node);
   });
 }
 

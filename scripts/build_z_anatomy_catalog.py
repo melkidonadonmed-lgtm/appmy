@@ -217,8 +217,42 @@ def make_organ_id(raw_name: str) -> str:
     return clean
 
 
+CORRUPTED_NODE_FALLBACKS: dict[str, tuple[str, str, str, str]] = {
+    "????????": (
+        "ramus_vascularis_accessorius",
+        "Accessory Vascular Branch",
+        "Ramo Vascular Acessório",
+        "Ramus vascularis accessorius",
+    ),
+    "?x.l": (
+        "x_l",
+        "Perforating Vascular Branch (left)",
+        "Ramo Vascular Perforante (Esquerdo)",
+        "Ramus vascularis perforans sinister",
+    ),
+    "?x.r": (
+        "x_r",
+        "Perforating Vascular Branch (right)",
+        "Ramo Vascular Perforante (Direito)",
+        "Ramus vascularis perforans dexter",
+    ),
+}
+
+
 def format_fallback_organ(node_name: str, system: str, mesh_file: str) -> dict:
     raw = node_name.strip()
+    if raw in CORRUPTED_NODE_FALLBACKS:
+        organ_id, name_en, name_pt, ta2_latin = CORRUPTED_NODE_FALLBACKS[raw]
+        return {
+            "organ_id": organ_id,
+            "node": raw,
+            "name_en": name_en,
+            "name_pt": name_pt,
+            "ta2_latin": ta2_latin,
+            "system": system,
+            "mesh_file": mesh_file,
+            "path": [],
+        }
     vhf_match = re.match(r"^(vh_f_[a-z_]+?)_([lr])$", raw, re.I)
     if vhf_match:
         base_key = vhf_match.group(1).lower()

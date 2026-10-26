@@ -26,7 +26,7 @@ interface DissectionToolbarProps {
 }
 
 export function DissectionToolbar({ dissection, onChange }: DissectionToolbarProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const explosionProgress = useAnatomyStore((s) => s.explosionProgress);
   const setExplosionProgress = useAnatomyStore((s) => s.setExplosionProgress);
@@ -175,16 +175,16 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                 </span>
                 <div className="slider-step-controls">
                   <span className="slider-value">{explosionPct}%</span>
-                  {explosionPct > 0 && (
-                    <button
-                      type="button"
-                      className="slider-step-btn"
-                      onClick={() => setExplosionProgress(0)}
-                      title="Zerar Exploded View"
-                    >
-                      0%
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    className="slider-step-btn"
+                    onClick={() => setExplosionProgress(0)}
+                    disabled={explosionPct === 0}
+                    style={{ opacity: explosionPct > 0 ? 1 : 0.4 }}
+                    title="Zerar Exploded View"
+                  >
+                    0%
+                  </button>
                 </div>
               </div>
               <div className="slider-track-wrap">
@@ -194,6 +194,8 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                   max="1"
                   step="0.01"
                   value={explosionProgress}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onMouseDown={(e) => e.stopPropagation()}
                   onChange={(e) => setExplosionProgress(parseFloat(e.target.value))}
                   aria-label="Controle de Exploded View"
                   className="range-slider"
@@ -206,9 +208,12 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
               <div className="slider-header">
                 <span className="control-label">
                   <Sliders size={11} strokeWidth={1.5} aria-hidden="true" />
-                  <span>Profundidade ({activeDepth}/6):</span>
+                  <span>Camada ({activeDepth}/6):</span>
                 </span>
-                <span className="slider-value">
+                <span
+                  className="slider-value"
+                  title={SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
+                >
                   {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
                 </span>
               </div>
@@ -219,6 +224,8 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                   max="6"
                   step="1"
                   value={activeDepth}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onMouseDown={(e) => e.stopPropagation()}
                   onChange={(e) => setActiveDepth(parseInt(e.target.value, 10))}
                   aria-label="Camada cirúrgica de 1 a 6"
                   className="range-slider"
@@ -292,6 +299,8 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
                 max="2.2"
                 step="0.01"
                 value={dissection.offset}
+                onPointerDown={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
                 onChange={(e) => handleOffsetChange(parseFloat(e.target.value))}
                 className="range-slider"
                 aria-label="Profundidade do corte MPR"

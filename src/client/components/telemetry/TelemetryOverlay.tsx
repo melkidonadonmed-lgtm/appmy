@@ -1,38 +1,31 @@
-import React, { useEffect } from 'react';
-import { useThree, useFrame } from '@react-three/fiber';
+import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { Activity, Cpu, Layers } from 'lucide-react';
 import { useAnatomyStore } from '../../stores/useAnatomyStore.ts';
 
+const TELEMETRY_SAMPLE_WINDOW_MS = 500;
+const MS_PER_SECOND = 1000;
+
 export function TelemetryCollector({ onUpdate }: { onUpdate: (data: { fps: number; triangles: number; drawCalls: number }) => void }) {
-  const { gl } = useThree();
+  const frameCountRef = useRef(0);
+  const lastTimeRef = useRef(performance.now());
 
-  useEffect(() => {
-    let frameCount = 0;
-    let lastTime = performance.now();
-    let animId: number;
-
-    const loop = () => {
-      frameCount++;
-      const now = performance.now();
-      if (now - lastTime >= 500) {
-        const fps = Math.round((frameCount * 1000) / (now - lastTime));
-        const info = gl.info;
-        onUpdate({
-          fps,
-          triangles: info.render.triangles,
-          drawCalls: info.render.calls,
-        });
-        frameCount = 0;
-        lastTime = now;
-      }
-      animId = requestAnimationFrame(loop);
-    };
-
-    animId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animId);
-  }, [gl, onUpdate]);
-
-  useFrame(() => {});
+  useFrame(({ gl }) => {
+    frameCountRef.current += 1;
+    const now = performance.now();
+    const elapsed = now - lastTimeRef.current;
+    if (elapsed >= TELEMETRY_SAMPLE_WINDOW_MS) {
+      const fps = Math.round((frameCountRef.current * MS_PER_SECOND) / elapsed);
+      const info = gl.info;
+      onUpdate({
+        fps,
+        triangles: info.render.triangles,
+        drawCalls: info.render.calls,
+      });
+      frameCountRef.current = 0;
+      lastTimeRef.current = now;
+    }
+  });
 
   return null;
 }

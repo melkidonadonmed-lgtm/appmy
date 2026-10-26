@@ -227,10 +227,13 @@ describe('Auditoria Matemática, Sincronização de Sexo Biológico e Navegaçã
 
     it('deve aplicar applyNavigationDeltaToRig com limites estritos e reprodutibilidade Pass@10 sem vazamento de estado', () => {
       const results: string[] = [];
+      const cam = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      const target = new THREE.Vector3();
+      const initialCamY = 0.5;
+      const initialCamZ = 3;
       for (let i = 0; i < 10; i++) {
-        const cam = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-        cam.position.set(0, 0.5, 3.0);
-        const target = new THREE.Vector3(0, 0.5, 0);
+        cam.position.set(0, initialCamY, initialCamZ);
+        target.set(0, initialCamY, 0);
         applyNavigationDeltaToRig(
           cam,
           target,
@@ -246,8 +249,10 @@ describe('Auditoria Matemática, Sincronização de Sexo Biológico e Navegaçã
     });
 
     it('deve resolver marcos anatômicos nos limites exatos [-3.0, 3.0] e retornar fallback seguro fora do intervalo', () => {
-      expect(getAnatomicalLandmark('sagittal', -3.0).namePtBr).toContain('Lateral Esquerdo');
-      expect(getAnatomicalLandmark('sagittal', 3.0).namePtBr).toContain('Lateral Direito');
+      const minMprOffset = -3;
+      const maxMprOffset = 3;
+      expect(getAnatomicalLandmark('sagittal', minMprOffset).namePtBr).toContain('Lateral Esquerdo');
+      expect(getAnatomicalLandmark('sagittal', maxMprOffset).namePtBr).toContain('Lateral Direito');
       expect(getAnatomicalLandmark('axial', -999).namePtBr).toBeDefined();
       expect(getAnatomicalLandmark('coronal', 999).namePtBr).toBeDefined();
     });

@@ -92,6 +92,30 @@ describe('Validação Pré-Entrega: Exploded View, Isolamento das Sidebars e Int
       expect(rules).toContain('flex-shrink: 0');
       expect(rules).not.toContain('position: absolute');
     });
+
+    it('deve blindar os sliders de Exploded View contra seleção de texto, rolagem acidental e deslocamento da sidebar', () => {
+      const cssPath = path.resolve(__dirname, '../src/client/index.css');
+      const cssContent = fs.readFileSync(cssPath, 'utf-8');
+
+      expect(cssContent).toContain('::-webkit-slider-runnable-track');
+      expect(cssContent).toContain('touch-action: none');
+      expect(cssContent).toContain('-webkit-user-drag: none');
+
+      const moduleLayersPath = path.resolve(
+        __dirname,
+        '../src/client/components/ui/tree/ModuleLayersSection.tsx'
+      );
+      const moduleLayersCode = fs.readFileSync(moduleLayersPath, 'utf-8');
+      expect(moduleLayersCode).toContain('onPointerDown={(e) => e.stopPropagation()}');
+      expect(moduleLayersCode).toContain("fontVariantNumeric: 'tabular-nums'");
+
+      const toolbarPath = path.resolve(
+        __dirname,
+        '../src/client/components/ui/DissectionToolbar.tsx'
+      );
+      const toolbarCode = fs.readFileSync(toolbarPath, 'utf-8');
+      expect(toolbarCode).toContain('onPointerDown={(e) => e.stopPropagation()}');
+    });
   });
 
   describe('3. Validação da Interatividade e Seleção de Estruturas', () => {

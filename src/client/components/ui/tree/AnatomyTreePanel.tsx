@@ -34,7 +34,7 @@ interface AnatomyTreePanelProps {
   onSelectNode?: (node: AnyAnatomicalNode | null) => void;
 }
 
-export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
+export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = React.memo(({
   selectedNode,
   onSelectNode,
 }) => {
@@ -483,4 +483,4 @@ export const AnatomyTreePanel: React.FC<AnatomyTreePanelProps> = ({
       </div>
     </aside>
   );
-};
+});

@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
@@ -41,6 +41,12 @@ function VesselTube({
     const curve = new THREE.CatmullRomCurve3(points);
     return new THREE.TubeGeometry(curve, 32, radius, 12, false);
   }, [points, radius]);
+
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+    };
+  }, [geometry]);
 
   // Vetor de explosão
   const explosionOffset = useMemo(() => {

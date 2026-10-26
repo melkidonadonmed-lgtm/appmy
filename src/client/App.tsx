@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Layers,
   RotateCcw,
@@ -102,6 +102,14 @@ export default function App() {
   const [selectedNode, setSelectedNode] = useState<AnyAnatomicalNode | null>(null);
   const [telemetry, setTelemetry] = useState({ fps: 60, triangles: 0, drawCalls: 0 });
   const [loadingHealth] = useState(false);
+
+  const handleSelectNode = useCallback(
+    (node: AnyAnatomicalNode | null) => {
+      setSelectedNode(node);
+      setStoreSelectedNode(node?.id || null);
+    },
+    [setStoreSelectedNode]
+  );
 
   const isPresetActive = (key: PresetKeyType): boolean => {
     switch (key) {
@@ -268,10 +276,7 @@ export default function App() {
         <div className="atlas-workspace">
           <AnatomyTreePanel
             selectedNode={selectedNode}
-            onSelectNode={(node) => {
-              setSelectedNode(node);
-              setStoreSelectedNode(node?.id || null);
-            }}
+            onSelectNode={handleSelectNode}
           />
 
           <div className="viewport-center-area">
@@ -310,10 +315,7 @@ export default function App() {
               realSkullOpacity={solidOpacity}
               explosionProgress={explosionProgress}
               selectedNode={selectedNode}
-              onSelectNode={(node) => {
-                setSelectedNode(node);
-                setStoreSelectedNode(node?.id || null);
-              }}
+              onSelectNode={handleSelectNode}
               ghostMode={ghostMode}
               isolatedOnly={isolatedOnly}
               activeDivision={activeDivision}

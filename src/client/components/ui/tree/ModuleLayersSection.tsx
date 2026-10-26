@@ -22,10 +22,19 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
   mprActive = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const { modules, setModuleState, activeDepth, setActiveDepth, stepExplosionProgress } = useAnatomyStore();
+  const explodedProgress = useAnatomyStore((s) => s.explosionProgress);
+  const mprEnabled = useAnatomyStore((s) => s.modules.mprEnabled);
+  const solidOpacity = useAnatomyStore((s) => s.modules.solidOpacity);
+  const xRayMode = useAnatomyStore((s) => s.modules.xRayMode);
+  const telemetryVisible = useAnatomyStore((s) => s.modules.telemetryVisible);
+  const setModuleState = useAnatomyStore((s) => s.setModuleState);
+  const activeDepth = useAnatomyStore((s) => s.activeDepth);
+  const setActiveDepth = useAnatomyStore((s) => s.setActiveDepth);
+  const stepExplosionProgress = useAnatomyStore((s) => s.stepExplosionProgress);
 
-  const explodedPct = Math.round(modules.explodedProgress * 100);
+  const explodedPct = Math.round(explodedProgress * 100);
   const depthPct = Math.round(((activeDepth - 1) / 5) * 100);
+  const currentDepthMeta = SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1];
 
   return (
     <div className="outliner-modules-card">
@@ -65,26 +74,26 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
             <button
               onClick={() => {
                 if (onToggleMpr) onToggleMpr();
-                setModuleState({ mprEnabled: !modules.mprEnabled });
+                setModuleState({ mprEnabled: !mprEnabled });
               }}
-              aria-pressed={mprActive || modules.mprEnabled}
+              aria-pressed={mprActive || mprEnabled}
               aria-label="Alternar corte tomográfico MPR"
               className={`outliner-module-badge-btn ${
-                mprActive || modules.mprEnabled ? 'active-emerald' : ''
+                mprActive || mprEnabled ? 'active-emerald' : ''
               }`}
             >
-              {mprActive || modules.mprEnabled ? 'Ativo' : 'Inativo'}
+              {mprActive || mprEnabled ? 'Ativo' : 'Inativo'}
             </button>
           </div>
 
           {/* Módulo 2: Exploded View 3D Linear */}
           <div className="outliner-slider-container">
             <div className="outliner-slider-header">
-              <span className="outliner-module-label">
+              <span className="outliner-module-label" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
                 <Layers size={13} strokeWidth={1.5} style={{ color: 'var(--accent)' }} aria-hidden="true" />
                 <span>Exploded View (GPU)</span>
               </span>
-              <div className="slider-step-controls">
+              <div className="slider-step-controls" style={{ flexShrink: 0 }}>
                 <button
                   type="button"
                   className="slider-step-btn"
@@ -93,7 +102,18 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
                 >
                   -10%
                 </button>
-                <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', fontWeight: 600 }}>
+                <span
+                  style={{
+                    fontSize: '0.6875rem',
+                    fontFamily: 'var(--font-mono)',
+                    color: 'var(--text-primary)',
+                    fontWeight: 600,
+                    fontVariantNumeric: 'tabular-nums',
+                    minWidth: '3.8ch',
+                    textAlign: 'center',
+                    display: 'inline-block',
+                  }}
+                >
                   {explodedPct}%
                 </span>
                 <button
@@ -111,7 +131,9 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
               min="0"
               max="1"
               step="0.01"
-              value={modules.explodedProgress}
+              value={explodedProgress}
+              onPointerDown={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
               onChange={(e) =>
                 setModuleState({ explodedProgress: parseFloat(e.target.value) })
               }
@@ -143,12 +165,26 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
           {/* Módulo 3: Planos Cirúrgicos de Dissecação (1 a 6) */}
           <div className="outliner-slider-container">
             <div className="outliner-slider-header">
-              <span className="outliner-module-label">
+              <span className="outliner-module-label" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
                 <Sliders size={13} strokeWidth={1.5} style={{ color: 'var(--text-secondary)' }} aria-hidden="true" />
-                <span>Dissecação (Camadas 1 a 6)</span>
+                <span>Dissecação (1–6)</span>
               </span>
-              <span style={{ fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', fontWeight: 600 }}>
-                {activeDepth}/6: {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
+              <span
+                style={{
+                  fontSize: '0.6875rem',
+                  fontFamily: 'var(--font-mono)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 600,
+                  fontVariantNumeric: 'tabular-nums',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  maxWidth: '155px',
+                  textAlign: 'right',
+                }}
+                title={`${activeDepth}/6: ${currentDepthMeta?.labelPt}`}
+              >
+                {activeDepth}/6 • {currentDepthMeta?.labelPt}
               </span>
             </div>
             <input
@@ -157,23 +193,35 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
               max="6"
               step="1"
               value={activeDepth}
+              onPointerDown={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
               onChange={(e) => setActiveDepth(parseInt(e.target.value, 10))}
               aria-label="Plano cirúrgico de dissecação anatômica de 1 a 6"
               aria-valuenow={activeDepth}
               aria-valuemin={1}
               aria-valuemax={6}
-              aria-valuetext={SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelPt}
+              aria-valuetext={currentDepthMeta?.labelPt}
               className="outliner-range-input"
               style={{ '--slider-pct': `${depthPct}%` } as React.CSSProperties}
             />
-            <div style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', marginTop: '0.2rem', lineHeight: '1.25' }}>
+            <div
+              style={{
+                fontSize: '0.6875rem',
+                color: 'var(--text-muted)',
+                marginTop: '0.15rem',
+                lineHeight: '1.3',
+                height: '1.8rem',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}
+            >
               <span style={{ color: 'var(--text-secondary)', fontWeight: 500, fontStyle: 'italic' }}>
-                {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.labelLatin}
+                {currentDepthMeta?.labelLatin}
               </span>
               {' — '}
-              <span>
-                {SURGICAL_LAYERS[(activeDepth as SurgicalLayerDepth) || 1]?.desc}
-              </span>
+              <span>{currentDepthMeta?.desc}</span>
             </div>
           </div>
 
@@ -190,9 +238,9 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
             >
               <button
                 onClick={() => setModuleState({ solidOpacity: 1.0, xRayMode: false })}
-                aria-pressed={Math.abs(modules.solidOpacity - 1.0) < 1e-4 && !modules.xRayMode}
+                aria-pressed={Math.abs(solidOpacity - 1.0) < 1e-4 && !xRayMode}
                 className={`outliner-density-btn ${
-                  Math.abs(modules.solidOpacity - 1.0) < 1e-4 && !modules.xRayMode ? 'active' : ''
+                  Math.abs(solidOpacity - 1.0) < 1e-4 && !xRayMode ? 'active' : ''
                 }`}
                 title="100% Sólido"
               >
@@ -200,19 +248,19 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
               </button>
               <button
                 onClick={() => setModuleState({ solidOpacity: 0.35, xRayMode: false })}
-                aria-pressed={Math.abs(modules.solidOpacity - 0.35) < 1e-4 && !modules.xRayMode}
+                aria-pressed={Math.abs(solidOpacity - 0.35) < 1e-4 && !xRayMode}
                 className={`outliner-density-btn ${
-                  Math.abs(modules.solidOpacity - 0.35) < 1e-4 && !modules.xRayMode ? 'active' : ''
+                  Math.abs(solidOpacity - 0.35) < 1e-4 && !xRayMode ? 'active' : ''
                 }`}
                 title="Translúcido (35%)"
               >
                 35%
               </button>
               <button
-                onClick={() => setModuleState({ xRayMode: !modules.xRayMode })}
-                aria-pressed={modules.xRayMode}
+                onClick={() => setModuleState({ xRayMode: !xRayMode })}
+                aria-pressed={xRayMode}
                 className={`outliner-density-btn ${
-                  modules.xRayMode ? 'active' : ''
+                  xRayMode ? 'active' : ''
                 }`}
                 title="Modo Raio-X"
               >
@@ -229,15 +277,15 @@ export const ModuleLayersSection: React.FC<ModuleLayersSectionProps> = ({
             </span>
             <button
               onClick={() =>
-                setModuleState({ telemetryVisible: !modules.telemetryVisible })
+                setModuleState({ telemetryVisible: !telemetryVisible })
               }
-              aria-pressed={modules.telemetryVisible}
+              aria-pressed={telemetryVisible}
               aria-label="Alternar exibição do painel de telemetria FPS e draw calls"
               className={`outliner-module-badge-btn ${
-                modules.telemetryVisible ? 'active-purple' : ''
+                telemetryVisible ? 'active-purple' : ''
               }`}
             >
-              {modules.telemetryVisible ? 'Visível' : 'Oculto'}
+              {telemetryVisible ? 'Visível' : 'Oculto'}
             </button>
           </div>
         </div>

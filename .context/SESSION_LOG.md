@@ -62,3 +62,37 @@
   - Adicionados o **Mapa Cromático Funcional** na aba `Neuro` e o **HUD Flutuante de Hover 3D (`.hovered-structure-pill`)** exibindo nome em PT-BR, latim e área funcional sob o cursor antes do clique.
 - **Ergonomia da Barra Lateral Esquerda e Auditoria UI/UX (`TreeGroup.tsx`, `TreeItem.tsx`, `AnatomyTreePanel.tsx`, `AnatomyFiltersSection.tsx`, `AnatomicalCallout3D.tsx`, `index.css`, `DESIGN.md`)**:
   - Eliminada a dupla/tripla indentação cumulativa nas pastas e itens da árvore (`GROUP_INDENT_STEP_PX = 0`, `INDENT_PER_DEPTH_PX = 0`, delegando o recuo exclusivamente a `.outliner-group-children`), reorganizados os cabeçalhos da aba `Camadas` e `Abas` e atingido **Score 97.8/100 (`A+ | PASS`)** no `ui_ux_frontend_auditor.py` e **100/100 (`0 issues`)** no `js_ts_ast_parser.js`.
+
+
+---
+
+## Sessão: 2026-10-24 (Correção do Arraste dos Sliders de Exploded View / Dissecação e Blindagem Anti-Deslocamento da Sidebar)
+
+### Delta de Alterações
+- **`src/client/index.css`**:
+  - Expandida a área de captura vertical de `.range-slider` e `.outliner-range-input` de `6px` para `24px`, movendo a trilha visual de `6px` para `::-webkit-slider-runnable-track` e `::-moz-range-track` e centralizando o thumb tátil de `16px` (`margin-top: -6px`).
+  - Adicionado `touch-action: none`, `user-select: none`, `-webkit-user-select: none` e `-webkit-user-drag: none` nos sliders, `.slider-track-wrap`, `.slider-header`, `.dissection-toolbar` e `.top-nav`, impedindo seleção/arraste de letras ou rolagem acidental da sidebar.
+  - Adicionado `min-width: 0` em `.dissection-control-row` e largura estável `width: min(490px, calc(100vw - 2rem))` em `.dissection-toolbar`.
+- **`src/client/components/ui/tree/ModuleLayersSection.tsx` & `AnatomyFiltersSection.tsx`**:
+  - Movido `<ModuleLayersSection />` para o topo da aba `Camadas` (`AnatomyFiltersSection.tsx`) para acesso imediato sem rolagem até o rodapé.
+  - Substituída a assinatura global de `useAnatomyStore()` por seletores atômicos e `React.memo` em `AnatomyFiltersSection` e `AnatomyTreePanel` (+ `useCallback` em `App.tsx`).
+  - Fixadas as larguras numéricas (`minWidth: '3.8ch'`, `tabular-nums`), truncamento em linha única no cabeçalho `Dissecação (1–6)` e altura fixa (`height: '1.8rem'`, `WebkitLineClamp: 2`) na descrição da camada, eliminando 100% do salto vertical de `13px` no `scrollHeight` da sidebar.
+- **`src/client/components/ui/DissectionToolbar.tsx`**:
+  - Iniciada expandida por padrão (`useState(true)`), mantido o botão `0%` sempre montado (`disabled={explosionPct === 0}`) para evitar pulo de layout ao sair de `0%`, e isolada a propagação de eventos (`onPointerDown` / `onMouseDown`).
+- **Validação**: `0.0px` de deslocamento medido via `chrome-devtools-mcp` em todas as faixas (`0%..100%` e `1/6..6/6`); `npm run typecheck`, `npm test` (**259 testes passando em 33 suítes**) e `npm run build` com exit code `0`.
+
+
+---
+
+## Sessão: 2026-10-25 (Auditoria `code-quality-audit-3d-physics`, Agentes de Cálculo/Física e Eficiência dos 2.562 Nós)
+
+### Delta de Alterações
+- **Agentes de Física 3D e Cálculo (`franklin-skills` + `adk-go-mcp`)**:
+  - Executado DAG `franklin_execute_dag("physics")` (`run-plan_17759dff-063cf34a`, `5/5` ondas concluídas com `100.0/100`), roteamento cognitivo `MATH_PHYSICS_3D` (`agent_physics_3d`), pipeline determinístico `agy_deterministic_calc_suite` (`tr-1792968522928158600`, `4/4` spans OTel `OK`) e `multi_source_snapshot` SQLite WAL (`3 ms`).
+- **Correções Aplicadas (`ERR-001` a `ERR-006`)**:
+  - `tests/audit-fixes-and-sex-sync.test.ts`: Reutilizadas instâncias de `THREE.PerspectiveCamera` e `THREE.Vector3` fora do laço `Pass@10` e extraídas constantes `minMprOffset` / `maxMprOffset`, elevando `tests/` de `92.5` para **`100.0 / 100`** no `state_checker_observer.py`.
+  - `src/client/components/telemetry/TelemetryOverlay.tsx`: Removido `requestAnimationFrame` manual redundante e consolidada a amostragem de FPS/DrawCalls no `useFrame` do `@react-three/fiber` com `useRef`.
+  - `src/client/components/canvas/CardiovascularScene.tsx`, `AnatomicalAtlasScene.tsx` e `MuscleMeshItem.tsx`: Adicionado `useEffect(() => () => geometry.dispose(), [geometry])` para liberação imediata de VRAM ao desmontar malhas procedurais isoladas.
+  - `src/shared/utils/buildTaxonomicTree.ts`: Adicionados `PT_BR_COLLATOR = new Intl.Collator('pt-BR')` e `ITEM_SCORE_CACHE = new WeakMap()` em `sortItemsOutsideToInside` / `getItemOutsideToInsideScore`.
+  - `src/shared/constants/zAnatomyCatalog.ts`: Sanitizados na fonte os 3 nós `????????` (`za:ramus_vascularis_accessorius`), `?x.l` e `?x.r` (`0` nós corrompidos em todo o catálogo).
+- **Validação**: `state_checker_observer.py` = `100.0 / 100` em `src/`, `scripts/` e `tests/`; `npm run typecheck`, `npm test` (**259 testes passando em 33 suítes**) e `npm run build` com exit code `0`.

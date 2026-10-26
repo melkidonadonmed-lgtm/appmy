@@ -121,7 +121,7 @@ const REGIONS: Array<{ id: AnatomicalRegion; label: string }> = [
   { id: 'lower_limb', label: 'Membros Inf.' },
 ];
 
-export const AnatomyFiltersSection: React.FC = () => {
+export const AnatomyFiltersSection: React.FC = React.memo(() => {
   const [showLayerFunctions, setShowLayerFunctions] = useState(false);
   const [showOfflineManager, setShowOfflineManager] = useState(false);
 
@@ -164,9 +164,12 @@ export const AnatomyFiltersSection: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+      {/* 1. Controles de Dissecação por Planos Cirúrgicos (1 a 6), Exploded View, MPR e Densidade no topo */}
+      <ModuleLayersSection />
+
       <div className="outliner-modules-card">
         <div className="outliner-modules-body" style={{ paddingTop: '0.45rem' }}>
-          {/* 1. Região Corporal */}
+          {/* 2. Região Corporal */}
           <div style={{ marginBottom: '0.65rem' }}>
             <div className="outliner-filter-section-label accent">
               <MapPin size={11} strokeWidth={1.5} aria-hidden="true" />
@@ -416,9 +419,6 @@ export const AnatomyFiltersSection: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. Controles de Dissecação por Planos Cirúrgicos (1 a 6), Exploded View, MPR e Densidade */}
-      <ModuleLayersSection />
-
       {/* 4. Gerenciador de Partes na GPU & Cache Offline (.GLB) */}
       <div className="outliner-modules-card">
         <button
@@ -445,4 +445,4 @@ export const AnatomyFiltersSection: React.FC = () => {
       </div>
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { computeFrameIndependentLerpAlpha } from '../../../core/explodedEngine.ts';
@@ -94,6 +94,12 @@ export function MuscleMeshItem({
         return new THREE.BoxGeometry(0.2, 0.2, 0.2);
     }
   }, [node.meshName]);
+
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+    };
+  }, [geometry]);
 
   // Animação com Lerp
   const targetVecRef = useRef(new THREE.Vector3());

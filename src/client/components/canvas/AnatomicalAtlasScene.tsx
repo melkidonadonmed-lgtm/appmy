@@ -204,6 +204,12 @@ function BoneMeshItem({
     }
   }, [node.meshName]);
 
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+    };
+  }, [geometry]);
+
   // Animação e translação vetorial suave via Lerp
   const targetVecRef = useRef(new THREE.Vector3());
   useFrame((_, delta) => {
