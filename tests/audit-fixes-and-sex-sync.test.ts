@@ -2,7 +2,11 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as THREE from 'three';
-import { useAnatomyStore } from '../src/client/stores/useAnatomyStore.ts';
+import {
+   useAnatomyStore,
+   registerMeshWorldCenter,
+   getMeshWorldRadius,
+} from '../src/client/stores/useAnatomyStore.ts';
 import { Z_ANATOMY_CATALOG, Z_ANATOMY_BY_ID } from '../src/shared/constants/zAnatomyCatalog.ts';
 import { FEMALE_REPRODUCTIVE_CATALOG } from '../src/shared/constants/femaleReproductiveCatalog.ts';
 import { buildTaxonomicTree } from '../src/shared/utils/buildTaxonomicTree.ts';
@@ -16,6 +20,7 @@ import {
   computeTwoFingerTouchDelta,
   computeTrackpadTwoFingerDelta,
   applyNavigationDeltaToRig,
+  computeAnatomicalCameraView,
 } from '../src/core/navigationGestures.ts';
 import { getAnatomicalLandmark } from '../src/client/lib/dissection-planes.ts';
 import {
@@ -310,6 +315,38 @@ describe('Auditoria Matemática, Sincronização de Sexo Biológico e Navegaçã
       const bindA = bindExplodedNode(meshA, 'all');
       const bindB = bindExplodedNode(meshB, 'all');
       expect(Math.abs(bindA.targetOffset.z - bindB.targetOffset.z)).toBeLessThan(0.015);
+    });
+
+    it('deve suportar modos de interação do boneco 3D (Girar vs Mover), vistas anatômicas canônicas, Shift+Scroll e Zoom-to-Fit', () => {
+      // 1. Shift + Scroll em modo zoom deve realizar pan vertical craniocaudal (verticalPanDelta != 0)
+      const shiftScrollDelta = computeTrackpadTwoFingerDelta(0, -100, false, true, 'zoom', 0);
+      expect(shiftScrollDelta.dollyScale).toBe(1);
+      expect(shiftScrollDelta.verticalPanDelta).toBeGreaterThan(0);
+
+      // 2. Vistas anatômicas canônicas (front, back, left, right, top, reset)
+      const frontView = computeAnatomicalCameraView('front', [0, 0.2, 0], 2.5);
+      expect(frontView.position[2]).toBeCloseTo(2.5, 4);
+      const backView = computeAnatomicalCameraView('back', [0, 0.2, 0], 2.5);
+      expect(backView.position[2]).toBeCloseTo(-2.5, 4);
+      const rightView = computeAnatomicalCameraView('right', [0, 0.2, 0], 2.5);
+      expect(rightView.position[0]).toBeCloseTo(-2.5, 4);
+      const leftView = computeAnatomicalCameraView('left', [0, 0.2, 0], 2.5);
+      expect(leftView.position[0]).toBeCloseTo(2.5, 4);
+      const topView = computeAnatomicalCameraView('top', [0, 0.2, 0], 2.0);
+      expect(topView.position[1]).toBeGreaterThan(2.0);
+
+      // 3. Alternância Girar vs Mover e Zoom-to-Fit (focusCameraOnNode) na store
+      expect(useAnatomyStore.getState().cameraInteractionMode).toBe('rotate');
+      useAnatomyStore.getState().toggleCameraInteractionMode();
+      expect(useAnatomyStore.getState().cameraInteractionMode).toBe('pan');
+      useAnatomyStore.getState().setCameraInteractionMode('rotate');
+      expect(useAnatomyStore.getState().cameraInteractionMode).toBe('rotate');
+
+      registerMeshWorldCenter('za:femur_l', [0.15, -0.45, 0.02], 0.22);
+      expect(getMeshWorldRadius('za:femur_l')).toBeCloseTo(0.22, 4);
+      useAnatomyStore.getState().focusCameraOnNode('za:femur_l', true);
+      expect(useAnatomyStore.getState().cameraFocusTarget).toEqual([0.15, -0.45, 0.02]);
+      expect(useAnatomyStore.getState().selectedNodeId).toBe('za:femur_l');
     });
   });
 });

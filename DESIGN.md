@@ -134,10 +134,23 @@ O shell da aplicação opera em tela cheia fixa (`100vw x 100vh`, `overflow: hid
   4. **Ficha** ([`AnatomyClinicalCard.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/tree/AnatomyClinicalCard.tsx)): Dossiê bilíngue PT-BR / Latim TA2, código FMA, ações rápidas (`Focar`, `Isolar`, `Ocultar`) e notas clínicas.
 
 ### 5.3. Viewport 3D Desimpedido, HUD de Hover e Controles Flutuantes
-* **Barra Superior de Dissecção ([`DissectionToolbar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/DissectionToolbar.tsx#L67-L267))**: Inicia recolhida exibindo apenas os modos **Sólido**, **Raio-X**, **Corte MPR** e **Bisturi 3D** (+ `Desfazer` quando há peças ocultas). No modo **Corte MPR**, oferece passo fino de `0.01 cm` e botões de ajuste de precisão (`-0.05` / `+0.05 cm`).
+* **Barra Superior de Dissecção e Modos de Visualização ([`DissectionToolbar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/DissectionToolbar.tsx))**: Reúne os modos **Sólido**, **Raio-X**, **Corte MPR**, **Fantasma** (*Ghost Context* a `10%` de opacidade, atalho `G`), **Isolar / Sair Solo** (atalho `I`) e **Bisturi 3D** (*Click-to-Peel* ou `Alt + Clique`, com botão `Desfazer`). Os sliders de **Exploded View** e **Camada Cirúrgica (1–6)** operam tanto no modo **Sólido** quanto no modo **Raio-X**. No modo **Corte MPR**, oferece passo fino de `0.01 cm` e botões de ajuste de precisão (`-0.05` / `+0.05 cm`).
 * **HUD Flutuante de Identificação no Hover (`.hovered-structure-pill` em [`QuickPresetsBar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/QuickPresetsBar.tsx))**: Exibe em tempo real a cor da área funcional, o nome em português, o termo em latim e a divisão funcional da estrutura sob o cursor antes do clique.
-* **Enquadramento Rápido ([`OrientationGizmo.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/canvas/OrientationGizmo.tsx#L1-L31))**: Pílula única discreta **`Enquadrar 3D`** no canto inferior esquerdo do canvas.
+* **Dock Tátil de Navegação e Movimentação do Boneco 3D ([`OrientationGizmo.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/canvas/OrientationGizmo.tsx))**:
+  - **Alternador de Interação (`Girar` vs. `Mover`)**: Comuta o botão esquerdo do mouse (e 1 dedo no touch) entre rotação orbital (`rotate`) e translação livre do corpo (`pan`), permitindo subir da pelve ao crânio sem depender do botão direito.
+  - **Elevação Craniocaudal e Zoom Direto**: Botões táteis `↑` (Subir), `↓` (Descer), `+` (Zoom In) e `-` (Zoom Out).
+  - **Vistas Anatômicas Canônicas de 1 Clique**: `Frente`, `Dorso`, `Dir.`, `Esq.`, `Topo` e **`Enquadrar 3D`**, além de guia interativo (`?`).
 * **Marcadores Clínicos ([`QuickPresetsBar.tsx`](file:///C:/Users/melki/dev/repos/appmy/src/client/components/ui/QuickPresetsBar.tsx#L1-L150))**: Botão **`Marcadores`** no canto inferior para salvar e restaurar estados cirúrgicos em `localStorage`.
+
+### 5.4. Arquitetura dos Nós e Ciclo de Ativação em $O(1)$ (`Catálogo -> Árvore -> Store -> GPU`)
+1. **Tripla Indexação de Aliases (`2.620` Estruturas)**:
+   - Cada estrutura possui 3 chaves sinônimas indexadas em `COMBINED_BY_ID`, `COMBINED_BY_NODE` e `SYSTEM_DESCENDANT_ALIASES`: `item.id` (`za:*`), `item.node` (nome GLTF bruto) e `sanitizeNodeName(item.node)` (nome sanitizado pelo `THREE.GLTFLoader`).
+2. **5 Canais de Ativação**:
+   - **Canal 1 — Clique / Duplo-Clique 3D (`RealBodyAtlas.tsx`)**: Clique simples seleciona a malha via lookup hash `animNodeByKey.get(name)` em $O(1)$, ancora o `<AnatomicalCallout3D>` no ponto exato da superfície e centraliza a mira; **Duplo-Clique** dispara `focusCameraOnNode(id, true)`, aproximando a câmera na distância proporcional ao raio da peça (`__boundingRadius`). Com `peelOnClickMode` ou `Alt + Clique`, retira imediatamente a peça (`peelNodeOnClick`).
+   - **Canal 2 — Árvore Taxonômica TA2 (`TreeItem.tsx` / `TreeGroup.tsx`)**: Clique na linha executa `selectAndFocusNode(node.id)` (desoculta automaticamente a peça, ativa seu sistema e centraliza a câmera); duplo-clique aproxima o zoom na peça; botão `Olho` ou checkbox *tri-state* executa `toggleGroupVisibility` com seletor booleano $O(1)$.
+   - **Canal 3 — Busca Global Multi-Token (`GlobalSearchBox.tsx`, `Ctrl+K`)**: Localiza estruturas em PT-BR, Latim TA2 e Inglês, expande automaticamente os ramos pais na árvore (`hasSelectedDescendant`) e rola suavemente até o nó.
+   - **Canal 4 — Descascar Camadas (`AnatomyFiltersSection.tsx`)**: Aciona `toggleSystemPeel` de fora para dentro (`1ª EXT → 11ª INT`) mantendo as vísceras internas visíveis, e oculta `clonedScene.visible = false` quando um sistema inteiro está oculto para zerar o custo de Raycasting.
+   - **Canal 5 — Mapeador Neuroclínico (`neuroTargetMapper.ts`)**: Converte alvos funcionais (`fma:*`, `cn_*`) para malhas reais `za:*` com translucidez automática do crânio (`0.28`).
 
 ---
 
@@ -180,7 +193,18 @@ O shell da aplicação opera em tela cheia fixa (`100vw x 100vh`, `overflow: hid
 ## 8. Implementation Checklist (Atalhos & Acessibilidade WCAG 2.1 AAA)
 
 * **`Z`**: Alterna Modo Tela Cheia (*Zen Mode*).
-* **`F` / `I` / `H`**: Foca (`F`), Isola (`I`) ou Oculta (`H`) a peça anatômica selecionada.
+* **`F` / `I` / `H` / `G`**: Foca e aproxima (`F`), Isola (`I`), Oculta (`H`) a peça anatômica selecionada ou alterna o Contexto Fantasma (`G`).
 * **`R`**: Restaura câmera, opacidade e planos de dissecção ao padrão inicial.
 * **`Esc`**: Desseleciona a peça ativa e fecha popovers abertos.
 * **Acessibilidade**: Contraste mínimo de `4.5:1` em botões de ação (`#0369a1` com `#ffffff`, CR `6.3:1`) e `7:1` em textos clínicos, suporte completo a teclado (`tabIndex={0}`, `Enter`/`Space`), `prefers-reduced-motion: reduce` respeitado e região viva `.sr-only` (`role="status" aria-live="polite"`) para status assíncrono.
+
+---
+
+## 9. Matriz de Decisão Rápida (Desafios de UI/UX 3D vs. Soluções Canônicas)
+
+| Desafio / Sintoma | Solução Canônica Implementada |
+| :--- | :--- |
+| **Latência ao mover o mouse sobre 2.600+ malhas 3D** | Seletor de hover filtrado por `systemName`, throttle de `16ms` no `onPointerOver`, mapa hash `animNodeByKey` $O(1)$ e `clonedScene.visible = false` em sistemas ocultos. |
+| **Travamento ao selecionar peça na Árvore ou no 3D** | Substituição de `new THREE.Box3().setFromObject(mesh)` (varredura de vértices) por transformação $O(1)$ `mesh.localToWorld(anatomicalCenter)` com `__boundingRadius` pré-computado. |
+| **Dificuldade para subir/descer pelo corpo no notebook/touch** | Modo **Mover (`Pan`)** com 1 clique no `OrientationGizmo`, botões `↑`/`↓`, `Shift + Scroll` para elevação craniocaudal e vistas diretas (`Frente`, `Dorso`, `Dir.`, `Esq.`, `Topo`). |
+| **Enxergar órgãos profundos sem perder referência espacial** | Modo **Fantasma (`G`)** na `DissectionToolbar` (contexto vizinho em `10%` com raycast bloqueado) + **Bisturi 3D (`Alt + Clique`)** com histórico de `Desfazer`. |

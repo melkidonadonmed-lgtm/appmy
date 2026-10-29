@@ -13,6 +13,7 @@ import {
   Sliders,
   Maximize2,
   Undo2,
+  Focus,
 } from 'lucide-react';
 import { DissectionState, DissectionVisualMode, MprPlaneType } from '../../../shared/types/dissection.ts';
 import { getAnatomicalLandmark } from '../../lib/dissection-planes.ts';
@@ -36,6 +37,12 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
   const togglePeelOnClickMode = useAnatomyStore((s) => s.togglePeelOnClickMode);
   const peeledHistory = useAnatomyStore((s) => s.peeledHistory);
   const undoLastPeel = useAnatomyStore((s) => s.undoLastPeel);
+  const ghostMode = useAnatomyStore((s) => s.ghostMode);
+  const toggleGhostMode = useAnatomyStore((s) => s.toggleGhostMode);
+  const isolatedOnly = useAnatomyStore((s) => s.isolatedOnly);
+  const selectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
+  const isolateNode = useAnatomyStore((s) => s.isolateNode);
+  const showAll = useAnatomyStore((s) => s.showAll);
 
   const explosionPct = Math.round(explosionProgress * 100);
   const depthPct = Math.round(((activeDepth - 1) / 5) * 100);
@@ -119,6 +126,34 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
             <Scissors size={13} strokeWidth={1.5} aria-hidden="true" />
             <span>Corte MPR</span>
           </button>
+          <button
+            type="button"
+            className={`mode-btn ${ghostMode ? 'active' : ''}`}
+            onClick={toggleGhostMode}
+            aria-pressed={ghostMode}
+            title="Contexto Fantasma (Tecla G): Mantém estruturas ao redor em 10% de opacidade para enxergar a peça selecionada em profundidade"
+          >
+            <Eye size={13} strokeWidth={1.5} aria-hidden="true" />
+            <span>Fantasma</span>
+          </button>
+          {(selectedNodeId || isolatedOnly) && (
+            <button
+              type="button"
+              className={`mode-btn ${isolatedOnly ? 'active' : ''}`}
+              onClick={() => {
+                if (isolatedOnly) {
+                  showAll();
+                } else if (selectedNodeId) {
+                  isolateNode(selectedNodeId, []);
+                }
+              }}
+              aria-pressed={isolatedOnly}
+              title="Modo Isolado / Solo (Tecla I): Exibe apenas a estrutura selecionada ou restaura todas"
+            >
+              <Focus size={13} strokeWidth={1.5} aria-hidden="true" />
+              <span>{isolatedOnly ? 'Sair Solo' : 'Isolar'}</span>
+            </button>
+          )}
         </div>
 
         {/* Bisturi 3D Direto (Click-to-Peel) + Desfazer */}
@@ -163,8 +198,8 @@ export function DissectionToolbar({ dissection, onChange }: DissectionToolbarPro
         </button>
       </div>
 
-      {/* Sliders Limpos de Exploded View e Camadas no Modo Sólido */}
-      {isExpanded && dissection.visualMode === 'solid' && (
+      {/* Sliders Limpos de Exploded View e Camadas nos Modos Sólido e Raio-X */}
+      {isExpanded && dissection.visualMode !== 'mpr' && (
         <div className="dissection-body">
           <div className="dissection-quick-grid">
             <div className="dissection-control-row">

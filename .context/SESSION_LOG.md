@@ -96,3 +96,19 @@
   - `src/shared/utils/buildTaxonomicTree.ts`: Adicionados `PT_BR_COLLATOR = new Intl.Collator('pt-BR')` e `ITEM_SCORE_CACHE = new WeakMap()` em `sortItemsOutsideToInside` / `getItemOutsideToInsideScore`.
   - `src/shared/constants/zAnatomyCatalog.ts`: Sanitizados na fonte os 3 nós `????????` (`za:ramus_vascularis_accessorius`), `?x.l` e `?x.r` (`0` nós corrompidos em todo o catálogo).
 - **Validação**: `state_checker_observer.py` = `100.0 / 100` em `src/`, `scripts/` e `tests/`; `npm run typecheck`, `npm test` (**259 testes passando em 33 suítes**) e `npm run build` com exit code `0`.
+
+---
+
+## Sessão: 2026-10-29 (`/design-md` + `/plan-uiux` — Análise de Nós à Ativação $O(1)$, Latência Zero, Modos de Visualização e Navegação do Boneco 3D)
+
+### Delta de Alterações
+- **`DESIGN.md` (v8.0.0)**: Documentada a Arquitetura de Ativação de Nós em $O(1)$ (Seção 5.4), o Dock de Navegação do Boneco 3D (`Girar` vs. `Mover`, vistas anatômicas canônicas e Duplo Clique Zoom-to-Fit) e a Matriz de Decisão Rápida (Seção 9).
+- **`src/client/components/canvas/RealBodyAtlas.tsx` & `src/client/components/ui/tree/TreeItem.tsx`**:
+  - Substituídos os `.find()` lineares por `animNodeByKey: Map<string, MeshAnimData>` ($O(1)$), eliminado `new THREE.Box3().setFromObject(mesh)` na seleção em favor de `mesh.localToWorld(localCenter.clone())` + `__boundingRadius` pré-computado, filtrado `effectiveHovered` por `systemName` (evitando re-renderizar os 10 sistemas a cada hover), adicionado throttle de `16ms` no `onPointerOver`, curto-circuito `clonedScene.visible = false` quando todo o sistema está oculto e `onDoubleClick` para `focusCameraOnNode(id, true)` (Zoom-to-Fit).
+- **`src/core/navigationGestures.ts`, `src/client/stores/useAnatomyStore.ts`, `src/client/components/canvas/SceneCanvas.tsx` & `OrientationGizmo.tsx`**:
+  - Adicionados `CameraInteractionMode` (`'rotate' | 'pan'`), `AnatomicalCameraPreset` (`'front' | 'back' | 'left' | 'right' | 'top' | 'bottom' | 'reset'`) e `computeAnatomicalCameraView`.
+  - Corrigido `computeTrackpadTwoFingerDelta` para que `Shift + Scroll` em modo `'zoom'` realize pan vertical craniocaudal.
+  - Evoluído `OrientationGizmo.tsx` para um Dock de Navegação do Boneco 3D com alternador `Girar` / `Mover`, elevação craniocaudal (`↑`/`↓`), zoom (`+`/`-`), vistas anatômicas em 1 clique (`Frente`, `Dorso`, `Dir.`, `Esq.`, `Topo`), `Enquadrar 3D` e guia rápido de gestos (`?`).
+- **`src/client/components/ui/DissectionToolbar.tsx` & `src/client/hooks/useAnatomicalHotkeys.ts`**:
+  - Adicionados botões diretos `Fantasma` (`ghostMode`, tecla `G`) e `Isolar` / `Sair Solo` (`isolatedOnly`, tecla `I`) na barra flutuante e habilitados os sliders de `Exploded View` e `Camadas (1–6)` tanto no modo `Sólido` quanto no `Raio-X`.
+- **Validação**: `npm run typecheck`, `npm test` (**260 testes passando em 33 suítes Vitest**) e `npm run build` com exit code `0`.

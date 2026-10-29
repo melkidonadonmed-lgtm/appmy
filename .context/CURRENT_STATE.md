@@ -43,8 +43,17 @@
     - Sanitização na fonte (`Z_ANATOMY_CATALOG`) dos 3 nós vasculares corrompidos (`????????` -> `za:ramus_vascularis_accessorius`, `?x.l`, `?x.r`), zerando rótulos com `?` tanto na árvore TA2 quanto no Canvas 3D.
     - Unificação do coletor de telemetria FPS/VRAM dentro do `useFrame` do `@react-three/fiber` (removido `requestAnimationFrame` duplicado) e descarte explícito `geometry.dispose()` em `VesselTube`, `BoneMeshItem` e `MuscleMeshItem`.
     - Escore Normalizado Global **$S_{\text{norm}} = 100.00 / 100$** em `src/`, `scripts/` e `tests/` (`0` alertas em `state_checker_observer.py`).
+- **Arquitetura de Ativação de Nós $O(1)$, Eliminação de Latência 3D/Árvore, Modos de Visualização e Dock de Navegação do Boneco 3D (2026-10-29)**:
+  - `src/client/components/canvas/RealBodyAtlas.tsx` e `src/client/components/ui/tree/TreeItem.tsx`:
+    - Substituição das buscas lineares $O(N)$ (`animNodes.find(...)`) por mapa indexado $O(1)$ `animNodeByKey: Map<string, MeshAnimData>` em `PreparedSystemEntry`.
+    - Pré-cálculo de `__boundingRadius` na preparação única do sistema e substituição de `new THREE.Box3().setFromObject(mesh)` (que percorria vértices na thread principal a cada clique) por `mesh.localToWorld(localCenter.clone())` em $O(1)$.
+    - Filtro de `effectiveHovered` por `systemName` (`HOVERED_MESH_META_BY_KEY.get(h)?.systemName === systemName`) + remoção do estado local redundante `hoveredNode` + throttle de `16ms` no `onPointerOver` e curto-circuito `clonedScene.visible = false` para sistemas ocultos, reduzindo re-renderizações de hover de 10 sistemas para 1.
+    - Seletor `isHidden` puramente $O(1)$ em `TreeItem.tsx` e `onDoubleClick` tanto nas folhas da árvore quanto nas malhas 3D para `focusCameraOnNode(id, true)` (Zoom-to-Fit proporcional ao raio da peça).
+  - `src/core/navigationGestures.ts`, `src/client/stores/useAnatomyStore.ts`, `src/client/components/canvas/SceneCanvas.tsx`, `src/client/components/canvas/OrientationGizmo.tsx` e `src/client/components/ui/DissectionToolbar.tsx`:
+    - Alternância explícita **`Girar` (`rotate`) vs. `Mover` (`pan`, arrastar o corpo 3D com 1 dedo ou botão esquerdo)** sincronizada com `OrbitControls`, `Shift + Scroll` para elevação craniocaudal no modo `'zoom'`, e vistas anatômicas canônicas em 1 clique (`Frente`, `Dorso`, `Dir.`, `Esq.`, `Topo`, `Enquadrar 3D`) via `computeAnatomicalCameraView`.
+    - Controles diretos de visualização **`Fantasma` (`ghostMode`, tecla `G`)** e **`Isolar` / `Sair Solo` (`isolatedOnly`, tecla `I`)** na `DissectionToolbar`, com sliders de `Exploded View` e `Camadas (1–6)` disponíveis tanto no modo `Sólido` quanto no modo `Raio-X`.
 - **Quality Gates Convalidados**:
-  - **259 testes unitários aprovados em 33 suítes Vitest** (`ExitCode 0`).
+  - **260 testes unitários aprovados em 33 suítes Vitest** (`ExitCode 0`).
   - `npm run typecheck` com zero erros (`ExitCode 0`, incluindo `src/core` no `tsconfig.json`).
   - `npm run build` aprovado gerando bundles de produção do Vite e Express sem chunks vazios (`ExitCode 0`).
 

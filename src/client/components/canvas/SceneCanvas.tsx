@@ -220,9 +220,11 @@ export function SceneCanvas({
   onTelemetryUpdate,
 }: SceneCanvasProps) {
   const controlsRef = useRef<OrbitControlsImpl>(null);
+  const cameraInteractionMode = useAnatomyStore((s) => s.cameraInteractionMode);
+  const isPanPrimary = cameraInteractionMode === 'pan';
 
   return (
-    <div className="canvas-wrapper">
+    <div className={`canvas-wrapper ${isPanPrimary ? 'mode-pan-active' : 'mode-rotate-active'}`}>
       <Canvas
         camera={{ position: [2.5, 2.2, 4.5], fov: 42 }}
         dpr={[1, 2]}
@@ -308,6 +310,15 @@ export function SceneCanvas({
           minDistance={0.35}
           maxDistance={12}
           maxPolarAngle={Math.PI}
+          mouseButtons={{
+            LEFT: isPanPrimary ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE,
+            MIDDLE: THREE.MOUSE.DOLLY,
+            RIGHT: isPanPrimary ? THREE.MOUSE.ROTATE : THREE.MOUSE.PAN,
+          }}
+          touches={{
+            ONE: isPanPrimary ? THREE.TOUCH.PAN : THREE.TOUCH.ROTATE,
+            TWO: THREE.TOUCH.DOLLY_PAN,
+          }}
           onStart={() => {
             const st = useAnatomyStore.getState();
             if (st.cameraFocusTarget) st.setCameraFocusTarget(null);

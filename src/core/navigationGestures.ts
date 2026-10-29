@@ -3,6 +3,15 @@ import * as THREE from 'three';
 export type TwoFingerNavigationMode = 'pan-rotate' | 'zoom';
 export type TwoFingerMode = TwoFingerNavigationMode;
 export type TwoFingerGestureIntent = 'unlocked' | 'pan' | 'rotate' | 'pinch';
+export type CameraInteractionMode = 'rotate' | 'pan';
+export type AnatomicalCameraPreset =
+  | 'front'
+  | 'back'
+  | 'left'
+  | 'right'
+  | 'top'
+  | 'bottom'
+  | 'reset';
 
 export interface TouchPoint2D {
   x: number;
@@ -38,6 +47,38 @@ const DEFAULT_BOUNDS: Required<NavigationRigBounds> = {
   minDistance: 0.35,
   maxDistance: 12.0,
 };
+
+/**
+ * Calcula posição e alvo de câmera para vistas anatômicas ortogonais/perspectivas padrão.
+ */
+export function computeAnatomicalCameraView(
+  preset: AnatomicalCameraPreset,
+  currentTarget: [number, number, number] = [0, 0, 0],
+  distance = 4.2
+): { position: [number, number, number]; target: [number, number, number] } {
+  const safeDist = THREE.MathUtils.clamp(distance, DEFAULT_BOUNDS.minDistance, DEFAULT_BOUNDS.maxDistance);
+  const [tx, ty, tz] = preset === 'reset' ? [0, 0, 0] : currentTarget;
+
+  switch (preset) {
+    case 'front':
+      return { position: [tx, ty + 0.15, tz + safeDist], target: [tx, ty, tz] };
+    case 'back':
+      return { position: [tx, ty + 0.15, tz - safeDist], target: [tx, ty, tz] };
+    case 'right':
+      // Lado Direito Anatômico do paciente (-X no referencial Z-Anatomy)
+      return { position: [tx - safeDist, ty + 0.1, tz], target: [tx, ty, tz] };
+    case 'left':
+      // Lado Esquerdo Anatômico do paciente (+X no referencial Z-Anatomy)
+      return { position: [tx + safeDist, ty + 0.1, tz], target: [tx, ty, tz] };
+    case 'top':
+      return { position: [tx, ty + safeDist, tz + 0.25], target: [tx, ty, tz] };
+    case 'bottom':
+      return { position: [tx, ty - safeDist, tz + 0.25], target: [tx, ty, tz] };
+    case 'reset':
+    default:
+      return { position: [2.5, 2.2, 4.5], target: [0, 0, 0] };
+  }
+}
 
 /**
  * Extrai ponto médio, distância (pinça) e ângulo de torção entre 2 dedos na tela.
@@ -144,6 +185,17 @@ export function computeTrackpadTwoFingerDelta(
   const normX = deltaX * modeMultiplier;
   const normY = deltaY * modeMultiplier;
 
+  // Se o usuário segura Shift com roda vertical (deltaX ~ 0) no modo zoom, eleva/desce o corpo no eixo Y
+  if (mode === 'zoom' && shiftKey && !ctrlKey && Math.abs(normX) < 0.5) {
+    const verticalPanDelta = THREE.MathUtils.clamp(-normY * 0.0032, -0.22, 0.22);
+    return {
+      verticalPanDelta,
+      azimuthRotateDelta: 0,
+      dollyScale: 1.0,
+      lockedIntent: 'pan',
+    };
+  }
+
   if (ctrlKey || mode === 'zoom') {
     const clampedY = THREE.MathUtils.clamp(normY, -120, 120);
     const dollyScale = Math.pow(1.0022, clampedY);
@@ -159,7 +211,7 @@ export function computeTrackpadTwoFingerDelta(
     };
   }
 
-  // Modo 'pan-rotate' com isolamento do eixo dominante quando um eixo supera o outro em >2.2x
+  // Modo 'pan-rotate' com isolamento do eixo dominante quando um eixo supera o outro em >2.4x
   const effectiveHoriz = shiftKey && Math.abs(normX) < 0.5 ? normY : normX;
   const effectiveVert = shiftKey && Math.abs(normX) < 0.5 ? 0 : normY;
 

@@ -11,7 +11,12 @@ import {
 import { FEMALE_REPRODUCTIVE_CATALOG } from '../../shared/constants/femaleReproductiveCatalog.ts';
 import { determineSurgicalLayer } from '../../core/visibilityManager.ts';
 import { stepExplosionProgressLinear } from '../../core/explodedEngine.ts';
-import { TwoFingerMode } from '../../core/navigationGestures.ts';
+import {
+  TwoFingerMode,
+  CameraInteractionMode,
+  AnatomicalCameraPreset,
+  computeAnatomicalCameraView,
+} from '../../core/navigationGestures.ts';
 import {
   resolveNeuroClinicalTargetToCatalogId,
   resolveNeuroClinicalTargetAliases,
@@ -88,13 +93,18 @@ const COMBINED_BY_NODE: Record<string, typeof Z_ANATOMY_CATALOG[number]> = {
 };
 
 const MESH_WORLD_CENTERS = new Map<string, [number, number, number]>();
+const MESH_WORLD_RADII = new Map<string, number>();
 
 export function registerMeshWorldCenter(
   id: string,
-  center: [number, number, number]
+  center: [number, number, number],
+  radius?: number
 ): void {
   if (!id) return;
   MESH_WORLD_CENTERS.set(id, center);
+  if (typeof radius === 'number' && Number.isFinite(radius) && radius > 0) {
+    MESH_WORLD_RADII.set(id, radius);
+  }
 }
 
 export function getMeshWorldCenter(id: string): [number, number, number] | null {
@@ -114,6 +124,25 @@ export function getMeshWorldCenter(id: string): [number, number, number] | null 
     );
   }
   return null;
+}
+
+export function getMeshWorldRadius(id: string): number {
+  if (!id) return 0.35;
+  const direct = MESH_WORLD_RADII.get(id);
+  if (direct) return direct;
+  const item =
+    COMBINED_BY_ID[id] ||
+    COMBINED_BY_NODE[id] ||
+    COMBINED_BY_NODE[sanitizeNodeName(id)];
+  if (item) {
+    return (
+      MESH_WORLD_RADII.get(item.id) ||
+      MESH_WORLD_RADII.get(item.node) ||
+      MESH_WORLD_RADII.get(sanitizeNodeName(item.node)) ||
+      0.35
+    );
+  }
+  return 0.35;
 }
 
 function getNodeAliases(id: string): string[] {
@@ -297,6 +326,7 @@ interface AnatomyStore {
   preZenOutlinerCollapsed: boolean;
   preZenSidebarCollapsed: boolean;
   twoFingerMode: TwoFingerMode;
+  cameraInteractionMode: CameraInteractionMode;
   cameraGestureNudge: {
     verticalPanDelta: number;
     azimuthRotateDelta: number;
@@ -311,6 +341,10 @@ interface AnatomyStore {
     options?: { cranialNerveId?: string; forceDidactic?: boolean }
   ) => void;
   setTwoFingerMode: (mode: TwoFingerMode) => void;
+  setCameraInteractionMode: (mode: CameraInteractionMode) => void;
+  toggleCameraInteractionMode: () => void;
+  setCameraPresetView: (preset: AnatomicalCameraPreset, distance?: number) => void;
+  focusCameraOnNode: (id: string, zoomIn?: boolean) => void;
   nudgeCameraRig: (delta: {
     verticalPanDelta?: number;
     azimuthRotateDelta?: number;
@@ -633,6 +667,7 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
   preZenOutlinerCollapsed: false,
   preZenSidebarCollapsed: false,
   twoFingerMode: 'zoom',
+  cameraInteractionMode: 'rotate',
   cameraGestureNudge: null,
   setSidebarTab: (tab: SidebarTabType) => set({ sidebarTab: tab }),
   setClinicalStudioOpen: (open: boolean) => set({ clinicalStudioOpen: open }),
@@ -703,6 +738,45 @@ export const useAnatomyStore = create<AnatomyStore>((set, get) => ({
     });
   },
   setTwoFingerMode: (mode: TwoFingerMode) => set({ twoFingerMode: mode }),
+  setCameraInteractionMode: (mode: CameraInteractionMode) => set({ cameraInteractionMode: mode }),
+  toggleCameraInteractionMode: () =>
+    set((state) => ({
+      cameraInteractionMode: state.cameraInteractionMode === 'rotate' ? 'pan' : 'rotate',
+    })),
+  setCameraPresetView: (preset: AnatomicalCameraPreset, distance = 4.2) =>
+    set((state) => {
+      const currentTarget = state.cameraFocusTarget || [0, 0, 0];
+      const view = computeAnatomicalCameraView(preset, currentTarget, distance);
+      return {
+        cameraFocusTarget: view.target,
+        cameraPositionTarget: view.position,
+      };
+    }),
+  focusCameraOnNode: (id: string, zoomIn = true) =>
+    set((state) => {
+      if (!id) return state;
+      const center = getMeshWorldCenter(id) ||
+        (typeof window !== 'undefined'
+          ? (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] })
+              .__selectedMeshWorldCenter || null
+          : null);
+      if (!center) return state;
+      const radius = getMeshWorldRadius(id);
+      const optimalDist = Math.max(0.65, Math.min(2.8, radius * 3.4));
+      return {
+        selectedNodeId: id,
+        cameraFocusTarget: [center[0], center[1], center[2]],
+        ...(zoomIn
+          ? {
+              cameraPositionTarget: [
+                center[0] + (center[0] >= 0 ? 0.35 : -0.35),
+                center[1] + 0.18,
+                center[2] + optimalDist,
+              ],
+            }
+          : {}),
+      };
+    }),
   nudgeCameraRig: (delta) =>
     set((state) => ({
       cameraFocusTarget: null,

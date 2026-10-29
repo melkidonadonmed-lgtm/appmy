@@ -6,7 +6,8 @@ import { Z_ANATOMY_CATALOG, sanitizeNodeName } from '../../shared/constants/zAna
  * Hook global de atalhos de teclado clínicos para o visualizador 3D:
  * - 'H': Alternar visibilidade (Hide / Show) da peça selecionada
  * - 'I': Alternar isolamento da peça selecionada
- * - 'F': Focar / Centralizar câmera na peça selecionada
+ * - 'F': Focar / Centralizar e aproximar câmera na peça selecionada
+ * - 'G': Alternar Contexto Fantasma (Ghost Mode 10% nas vizinhas)
  * - 'Z': Alternar Modo Foco Cirúrgico (Zen Mode 100% Viewport)
  * - 'Escape': Limpar seleção ativa
  * - 'R': Resetar câmera para posição anatômica frontal padrão
@@ -19,6 +20,8 @@ export function useAnatomicalHotkeys() {
   const showAll = useAnatomyStore((s) => s.showAll);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
   const toggleZenMode = useAnatomyStore((s) => s.toggleZenMode);
+  const toggleGhostMode = useAnatomyStore((s) => s.toggleGhostMode);
+  const focusCameraOnNode = useAnatomyStore((s) => s.focusCameraOnNode);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -68,10 +71,12 @@ export function useAnatomicalHotkeys() {
             e.preventDefault();
             const worldCenter =
               typeof window !== 'undefined'
-                ? (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] }).__selectedMeshWorldCenter
+                ? (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] })
+                    .__selectedMeshWorldCenter
                 : undefined;
             if (worldCenter) {
               setCameraFocusTarget([worldCenter[0], worldCenter[1], worldCenter[2]]);
+              focusCameraOnNode(selectedNodeId, true);
               break;
             }
             // Fallback para ambientes de teste sem WebGL
@@ -86,6 +91,12 @@ export function useAnatomicalHotkeys() {
               ]);
             }
           }
+          break;
+        }
+
+        case 'g': {
+          e.preventDefault();
+          toggleGhostMode();
           break;
         }
 
@@ -123,5 +134,7 @@ export function useAnatomicalHotkeys() {
     showAll,
     setCameraFocusTarget,
     toggleZenMode,
+    toggleGhostMode,
+    focusCameraOnNode,
   ]);
 }

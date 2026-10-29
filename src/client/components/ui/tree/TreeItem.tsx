@@ -18,15 +18,12 @@ export const TreeItem: React.FC<TreeItemProps> = React.memo(({ node, allCatalogI
   const clickedFromTreeRef = useRef<boolean>(false);
 
   // Seletores granulares booleanos O(1): evitam re-renderizar as 1.620 folhas a cada movimento do mouse
-  const isHidden = useAnatomyStore((s) => {
-    if (s.hiddenNodeIds.size === 0) return false;
-    if (s.hiddenNodeIds.has(node.id)) return true;
-    if (node.meshName && s.hiddenNodeIds.has(node.meshName)) return true;
-    for (let i = 0; i < node.descendantIds.length; i++) {
-      if (s.hiddenNodeIds.has(node.descendantIds[i])) return true;
-    }
-    return false;
-  });
+  const isHidden = useAnatomyStore(
+    (s) =>
+      s.hiddenNodeIds.size > 0 &&
+      (s.hiddenNodeIds.has(node.id) ||
+        (typeof node.meshName === 'string' && s.hiddenNodeIds.has(node.meshName)))
+  );
 
   const isHovered = useAnatomyStore(
     (s) =>
@@ -45,6 +42,7 @@ export const TreeItem: React.FC<TreeItemProps> = React.memo(({ node, allCatalogI
   const toggleGroupVisibility = useAnatomyStore((s) => s.toggleGroupVisibility);
   const setHoveredNode = useAnatomyStore((s) => s.setHoveredNode);
   const selectAndFocusNode = useAnatomyStore((s) => s.selectAndFocusNode);
+  const focusCameraOnNode = useAnatomyStore((s) => s.focusCameraOnNode);
   const isolateNode = useAnatomyStore((s) => s.isolateNode);
 
   // Rolagem suave apenas quando selecionado externamente (ex.: clique no modelo 3D ou busca), sem pular no hover
@@ -63,6 +61,12 @@ export const TreeItem: React.FC<TreeItemProps> = React.memo(({ node, allCatalogI
     selectAndFocusNode(node.id);
   };
 
+  const handleDoubleClick = () => {
+    clickedFromTreeRef.current = true;
+    selectAndFocusNode(node.id);
+    focusCameraOnNode(node.id, true);
+  };
+
   return (
     <div
       ref={itemRef}
@@ -78,6 +82,8 @@ export const TreeItem: React.FC<TreeItemProps> = React.memo(({ node, allCatalogI
       onMouseEnter={() => setHoveredNode(node.meshName || node.id)}
       onMouseLeave={() => setHoveredNode(null)}
       onClick={handleSelect}
+      onDoubleClick={handleDoubleClick}
+      title="Clique para selecionar | Duplo-clique para aproximar câmera 3D"
       className={`outliner-item-row ${isSelected ? 'selected' : ''} ${
         isHovered ? 'hovered' : ''
       }`}

@@ -563,6 +563,7 @@ function getOrCreatePreparedSystem(
         const dx = bbox.max.x - bbox.min.x;
         const dy = bbox.max.y - bbox.min.y;
         const dz = bbox.max.z - bbox.min.z;
+        mesh.userData.__boundingRadius = Math.max(0.06, Math.hypot(dx, dy, dz) * 0.5);
         if (dx >= dy && dx >= dz) {
           fiberAxis = [1, 0, 0];
           fiberSpan = [bbox.min.x, bbox.max.x];
@@ -641,17 +642,22 @@ function RealSystemModel({
     [glbPath, systemName, defaultColor, scene]
   );
   const clonedScene = preparedSystem.clonedScene;
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const lastHoverTimeRef = useRef<number>(0);
 
   const hiddenNodeIds = useAnatomyStore((s) => s.hiddenNodeIds);
-  const storeHoveredNode = useAnatomyStore((s) => s.hoveredNodeId);
+  // Seletor O(1) filtrado pelo sistema atual: impede que os outros 9 sistemas re-renderizem ao mover o mouse
+  const effectiveHovered = useAnatomyStore((s) => {
+    const h = s.hoveredNodeId;
+    if (!h) return null;
+    const meta = HOVERED_MESH_META_BY_KEY.get(h);
+    return !meta || meta.systemName === systemName ? h : null;
+  });
   const storeSelectedNodeId = useAnatomyStore((s) => s.selectedNodeId);
   const setStoreHoveredNode = useAnatomyStore((s) => s.setHoveredNode);
   const setStoreSelectedNode = useAnatomyStore((s) => s.setSelectedNode);
   const setCameraFocusTarget = useAnatomyStore((s) => s.setCameraFocusTarget);
 
   const effectiveSelectedId = selectedNodeId || storeSelectedNodeId;
-  const effectiveHovered = storeHoveredNode || hoveredNode;
 
   const storeActiveDepth = useAnatomyStore((s) => s.activeDepth);
 
@@ -677,12 +683,13 @@ function RealSystemModel({
 
       const binding = bindExplodedNode(mesh, activeRegion);
       const center = mesh.userData.anatomicalCenter as THREE.Vector3 | undefined;
+      const radius = (mesh.userData.__boundingRadius as number | undefined) || 0.25;
       if (center) {
         const coords: [number, number, number] = [center.x, center.y, center.z];
-        if (item?.id) registerMeshWorldCenter(item.id, coords);
-        if (item?.node) registerMeshWorldCenter(item.node, coords);
-        if (mesh.userData.id) registerMeshWorldCenter(mesh.userData.id as string, coords);
-        registerMeshWorldCenter(mesh.name, coords);
+        if (item?.id) registerMeshWorldCenter(item.id, coords, radius);
+        if (item?.node) registerMeshWorldCenter(item.node, coords, radius);
+        if (mesh.userData.id) registerMeshWorldCenter(mesh.userData.id as string, coords, radius);
+        registerMeshWorldCenter(mesh.name, coords, radius);
       }
 
       list.push({
@@ -695,6 +702,26 @@ function RealSystemModel({
 
     return list;
   }, [preparedSystem, activeRegion, magnitude, offsetX, offsetY, offsetZ]);
+
+  // Índice hash O(1) por nome de malha e ID canônico para eliminar buscas lineares animNodes.find()
+  const animNodeByKey = useMemo(() => {
+    const map = new Map<string, MeshAnimData>();
+    for (let i = 0; i < animNodes.length; i++) {
+      const entry = animNodes[i];
+      map.set(entry.mesh.name, entry);
+      if (entry.mesh.userData?.id) {
+        map.set(entry.mesh.userData.id as string, entry);
+      }
+      if (entry.item?.id) {
+        map.set(entry.item.id, entry);
+      }
+      if (entry.item?.node) {
+        map.set(entry.item.node, entry);
+        map.set(sanitizeNodeName(entry.item.node), entry);
+      }
+    }
+    return map;
+  }, [animNodes]);
 
   const prevHoveredEntryRef = useRef<MeshAnimData | null>(null);
 
@@ -717,6 +744,16 @@ function RealSystemModel({
           hiddenNodeIds.has(d.item!.node) ||
           hiddenNodeIds.has(d.mesh.name)
       );
+
+    // Atalho de cena inteira O(1): quando o sistema inteiro está oculto e não contém a peça selecionada,
+    // oculta o grupo raiz para poupar o Raycaster e o pipeline WebGL
+    const hasSelectedInThisSystem = Boolean(effectiveSelectedId && animNodeByKey.has(effectiveSelectedId));
+    if (isEntireSystemHiddenInTree && !hasSelectedInThisSystem) {
+      clonedScene.visible = false;
+      prevHoveredEntryRef.current = null;
+      return;
+    }
+    clonedScene.visible = true;
 
     const hiddenMuscularSublayers = new Set<string>();
     if (systemName === 'muscular' && !isEntireSystemHiddenInTree) {
@@ -804,13 +841,7 @@ function RealSystemModel({
 
     if (!effectiveHovered) return;
 
-    const target = animNodes.find(
-      (d) =>
-        d.mesh.name === effectiveHovered ||
-        d.mesh.userData?.id === effectiveHovered ||
-        (d.item?.id && d.item.id === effectiveHovered) ||
-        (d.item?.node && d.item.node === effectiveHovered)
-    );
+    const target = animNodeByKey.get(effectiveHovered);
 
     if (!target || !target.mesh.visible) return;
 
@@ -858,34 +889,30 @@ function RealSystemModel({
     }
   });
 
-  // Localiza o item atualmente selecionado para renderizar o Pin 3D e guiar a câmera
+  // Localiza o item atualmente selecionado em O(1) para renderizar o Pin 3D e guiar a câmera
   const selectedMeshItem = useMemo(() => {
     if (!effectiveSelectedId) return null;
-    return (
-      animNodes.find(
-        (d) =>
-          d.item?.id === effectiveSelectedId ||
-          d.mesh.userData?.id === effectiveSelectedId ||
-          d.mesh.name === effectiveSelectedId
-      ) || null
-    );
-  }, [effectiveSelectedId, animNodes]);
+    return animNodeByKey.get(effectiveSelectedId) || null;
+  }, [effectiveSelectedId, animNodeByKey]);
 
-  // Centralização suave de câmera ao selecionar a peça
+  // Centralização suave de câmera O(1) ao selecionar a peça (sem varredura de vértices Box3.setFromObject)
   useEffect(() => {
     if (selectedMeshItem && selectedMeshItem.mesh.visible) {
-      selectedMeshItem.mesh.updateWorldMatrix(true, false);
-      const box = new THREE.Box3().setFromObject(selectedMeshItem.mesh);
-      if (!box.isEmpty()) {
-        const center = box.getCenter(new THREE.Vector3());
-        setCameraFocusTarget([center.x, center.y, center.z]);
-        if (typeof window !== 'undefined') {
-          (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] }).__selectedMeshWorldCenter = [
-            center.x,
-            center.y,
-            center.z,
-          ];
-        }
+      const mesh = selectedMeshItem.mesh;
+      mesh.updateWorldMatrix(true, false);
+      const localCenter =
+        (mesh.userData?.anatomicalCenter as THREE.Vector3 | undefined) ||
+        getMeshAnatomicalCenter(mesh);
+      const worldPoint = mesh.localToWorld(localCenter.clone());
+      const worldCoords: [number, number, number] = [worldPoint.x, worldPoint.y, worldPoint.z];
+      const radius = (mesh.userData?.__boundingRadius as number | undefined) || 0.25;
+      if (selectedMeshItem.item?.id) registerMeshWorldCenter(selectedMeshItem.item.id, worldCoords, radius);
+      if (mesh.userData?.id) registerMeshWorldCenter(mesh.userData.id as string, worldCoords, radius);
+      registerMeshWorldCenter(mesh.name, worldCoords, radius);
+      setCameraFocusTarget(worldCoords);
+      if (typeof window !== 'undefined') {
+        (window as unknown as { __selectedMeshWorldCenter?: [number, number, number] }).__selectedMeshWorldCenter =
+          worldCoords;
       }
     }
   }, [selectedMeshItem, setCameraFocusTarget]);
@@ -937,20 +964,34 @@ function RealSystemModel({
             return;
           }
           const nextName = e.object.name;
-          if (hoveredNode !== nextName) {
-            setHoveredNode(nextName);
+          if (useAnatomyStore.getState().hoveredNodeId === nextName) {
+            return;
           }
-          if (useAnatomyStore.getState().hoveredNodeId !== nextName) {
-            setStoreHoveredNode(nextName);
+          const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
+          if (now - lastHoverTimeRef.current < 16) {
+            return;
           }
+          lastHoverTimeRef.current = now;
+          setStoreHoveredNode(nextName);
         }}
         onPointerOut={(e: { stopPropagation: () => void }) => {
           e.stopPropagation();
-          if (hoveredNode !== null) {
-            setHoveredNode(null);
-          }
           if (useAnatomyStore.getState().hoveredNodeId !== null) {
             setStoreHoveredNode(null);
+          }
+        }}
+        onDoubleClick={(e: {
+          stopPropagation: () => void;
+          object: THREE.Object3D;
+        }) => {
+          e.stopPropagation();
+          const target = animNodeByKey.get(e.object.name);
+          const resolvedId =
+            target?.item?.id ||
+            (e.object.userData?.id as string) ||
+            e.object.name;
+          if (resolvedId) {
+            useAnatomyStore.getState().focusCameraOnNode(resolvedId, true);
           }
         }}
         onClick={(e: {
@@ -965,7 +1006,7 @@ function RealSystemModel({
           if (typeof e.delta === 'number' && e.delta > 5) {
             return;
           }
-          const target = animNodes.find((d) => d.mesh === e.object);
+          const target = animNodeByKey.get(e.object.name);
           const rawName = (e.object.userData?.name as string) || e.object.name;
           const resolvedItem =
             target?.item ||
@@ -990,7 +1031,6 @@ function RealSystemModel({
               sanitizeNodeName(rawName),
               ...(resolvedItem ? [resolvedItem.id, resolvedItem.node] : []),
             ]);
-            setHoveredNode(null);
             setStoreHoveredNode(null);
             return;
           }

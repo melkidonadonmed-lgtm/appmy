@@ -4554,3 +4554,124 @@ code, pre {
   color: var(--text-muted);
   white-space: nowrap;
 }
+
+/* ==========================================================================
+   DOCK TÁTIL DE NAVEGAÇÃO E MOVIMENTAÇÃO DO BONECO 3D (ORIENTATION GIZMO)
+   ========================================================================== */
+
+.canvas-wrapper.mode-pan-active {
+  cursor: grab;
+}
+
+.canvas-wrapper.mode-pan-active:active {
+  cursor: grabbing;
+}
+
+.orientation-dock-bar {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.32rem 0.45rem;
+  background: var(--card-bg);
+  background-image: var(--surface-raised);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+}
+
+.orientation-mode-pill-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
+  padding: 0.14rem;
+  background: var(--bg-well);
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px;
+  box-shadow: var(--shadow-well);
+}
+
+.orientation-mini-btn,
+.orientation-view-btn,
+.orientation-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  min-height: 28px;
+  padding: 0.22rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.orientation-icon-btn {
+  padding: 0.22rem 0.38rem;
+}
+
+.orientation-mini-btn:hover,
+.orientation-view-btn:hover,
+.orientation-icon-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.orientation-mini-btn.active,
+.orientation-icon-btn.active {
+  background: var(--surface-active);
+  background-color: var(--bg-tertiary);
+  border-color: var(--accent);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-key);
+}
+
+.orientation-mini-btn:active,
+.orientation-view-btn:active,
+.orientation-icon-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.navigation-help-popover {
+  margin-bottom: 0.45rem;
+  padding: 0.65rem 0.85rem;
+  max-width: 340px;
+  background: var(--card-bg);
+  background-image: var(--surface-raised);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+  color: var(--text-primary);
+}
+
+.navigation-help-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.navigation-help-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  line-height: 1.38;
+}
+
+.navigation-help-list strong {
+  color: var(--text-primary);
+}
