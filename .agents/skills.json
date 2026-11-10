@@ -1,0 +1,51 @@
+{
+  "entries": [
+    {
+      "path": "C:/Users/melki/dev/repos/franklin-quebragalho/skills",
+      "include_only": [
+        "android-agy-projects",
+        "re-a-ndroid",
+        "design-md",
+        "plan-uiux",
+        "code-quality-audit-3d-physics"
+      ]
+    },
+    {
+      "path": "C:/Users/melki/.agents/skills",
+      "include_only": [
+        "agp-9-upgrade",
+        "android-cli",
+        "android-intent-security",
+        "android-permissions-security",
+        "android-profiler",
+        "android-ui-audit",
+        "anr-audit-and-fix",
+        "appfunctions",
+        "camerax",
+        "edge-to-edge",
+        "glance-appwidget-updates-and-memory",
+        "glance-canonical-layouts",
+        "jetpack-compose-performance",
+        "litert-lm",
+        "litert-runtime",
+        "ml-kit-genai-prompt-api",
+        "mlkit-agent-api",
+        "navigation-3",
+        "navigation-event",
+        "play-billing-library-version-upgrade",
+        "play-policy-insights",
+        "r8-analyzer",
+        "restore-credentials",
+        "testing-setup",
+        "verified-email"
+      ]
+    },
+    {
+      "path": "C:/Users/melki/.gemini/config/plugins/android-cli-plugin/skills",
+      "include_only": [
+        "compose-preview",
+        "device-hub"
+      ]
+    }
+  ]
+}
