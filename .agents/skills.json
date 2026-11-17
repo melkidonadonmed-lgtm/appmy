@@ -5,8 +5,6 @@
       "include_only": [
         "android-agy-projects",
         "re-a-ndroid",
-        "design-md",
-        "plan-uiux",
         "code-quality-audit-3d-physics"
       ]
     },
