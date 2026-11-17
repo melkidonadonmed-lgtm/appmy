@@ -9,7 +9,7 @@
       ]
     },
     {
-      "path": "C:/Users/melki/.agents/skills",
+      "path": "C:/Users/melki/.gemini/skill-catalog/user-skills",
       "include_only": [
         "agp-9-upgrade",
         "android-cli",
